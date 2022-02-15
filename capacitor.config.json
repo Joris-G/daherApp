@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "moldingApp",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

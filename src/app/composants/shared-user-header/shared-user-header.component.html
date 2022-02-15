@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color=primary>
+        <ion-buttons slot="start">
+            <ion-menu-button color="light"></ion-menu-button>
+            <ion-img class="logo" src="/assets/images/logoDaherFondBleu.png" (click)="navigateHome()">
+            </ion-img>
+
+        </ion-buttons>
+        <ion-title class="ion-text-uppercase ion-text-center">{{page}}</ion-title>
+        <ion-chip id="button-profil" color=light slot=end class=ion-margin-end outline (click)="isPopoverOpen=!isPopoverOpen">
+            <ion-icon name="person-circle-outline"></ion-icon>
+            <ion-label color=light>{{user?.prenom}}</ion-label>
+        </ion-chip>
+        <ion-popover [isOpen]="isPopoverOpen" trigger="button-profil" alignment="end" side="bottom">
+            <ng-template>
+                <ion-content>
+                    <ion-list>
+                        <ion-item>
+                            <ion-label>Profil</ion-label>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Préférences</ion-label>
+                            <ion-icon name="settings-outline" slot="start"></ion-icon>
+                        </ion-item>
+                    </ion-list>
+                </ion-content>
+            </ng-template>
+        </ion-popover>
+        <ion-button slot=end color="danger" (click)="logoutClick()">
+            <ion-icon slot="end" name="log-out-outline"></ion-icon>
+            <ion-label class="ion-hide-md-down">Déconnexion</ion-label>
+        </ion-button>
+    </ion-toolbar>
+</ion-header>

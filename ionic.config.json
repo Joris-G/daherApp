@@ -1,0 +1,7 @@
+{
+  "name": "moldingApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
