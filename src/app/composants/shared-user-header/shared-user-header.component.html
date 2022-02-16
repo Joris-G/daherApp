@@ -9,7 +9,7 @@
         <ion-title class="ion-text-uppercase ion-text-center">{{page}}</ion-title>
         <ion-chip id="button-profil" color=light slot=end class=ion-margin-end outline (click)="isPopoverOpen=!isPopoverOpen">
             <ion-icon name="person-circle-outline"></ion-icon>
-            <ion-label color=light>{{user?.prenom}}</ion-label>
+            <ion-label color=light>{{user?.username}}</ion-label>
         </ion-chip>
         <ion-popover [isOpen]="isPopoverOpen" trigger="button-profil" alignment="end" side="bottom">
             <ng-template>

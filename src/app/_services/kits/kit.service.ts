@@ -80,6 +80,7 @@ export class KitService {
           console.log(returnsData);
           if (returnsData.length !== 0) {
             const returnKit: Kit = {
+              id: returnsData[0].id,
               aCuirAv: returnsData[0].ACuirAv,
               aDrapAv: returnsData[0].ADrapAv,
               createdAt: returnsData[0].createdAt,
@@ -133,5 +134,9 @@ export class KitService {
       return false;
     }
     return kits.every(kit => kit.idMM === kitToTest.idMM);
+  }
+
+  getIri(kit: Kit): string {
+    return `/api/datas_kits/${kit.id}`;
   }
 }

@@ -1,5 +1,5 @@
 export interface MoldingTool {
-  idMoldingTool: number;
+  id: number;
   identification: string;
   sapToolNumber: string;
 }

@@ -16,6 +16,7 @@ export class PrintMoldingSheetPage implements OnInit {
   public molding: Molding;
   public displayedColumns: string[] = ['idMM', 'referenceSAP', 'designationSAP', 'peremptionMoins18', 'aDrapAv', 'aCuirAv'];
   public dataSource: Kit[];
+  public kitList: Kit[];
   constructor(
     private activatedRoute: ActivatedRoute,
     public moldingService: MoldingService,
@@ -40,12 +41,13 @@ export class PrintMoldingSheetPage implements OnInit {
       .then((molding: Molding) => {
         // this.molding = molding;
         this.molding = molding;
+        this.kitList = molding.kits;
       },
         () => {
           this.molding = this.moldingService.molding;
         })
       .finally(() => {
-        this.dataSource = this.molding.kits;
+        this.dataSource = this.kitList;
         JsBarcode('#barcode', this.molding.idMolding.toString(), {
           height: 20,
           displayValue: false,

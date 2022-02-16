@@ -4,7 +4,7 @@ import { MoldingTool } from 'src/app/_interface/molding-tool';
 import { environment } from 'src/environments/environment';
 
 const TOOL_TEST: MoldingTool = {
-  idMoldingTool: 1,
+  id: 1234,
   identification: '34567',
   sapToolNumber: 'OT096932'
 };
@@ -39,5 +39,9 @@ export class MoldingToolService {
             reject();
           });
     });
+  }
+
+  getIri(moldingTool: MoldingTool): string {
+    return `/api/molding_tools/${moldingTool.id}`;
   }
 }

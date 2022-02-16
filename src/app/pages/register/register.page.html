@@ -1,0 +1,90 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Création d'un utilisateur</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="home"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]=true>
+    <ion-grid fixed class="full-height ion-align-items-center ion-justify-content-center">
+        <ion-row>
+            <ion-card class=ion-padding>
+                <ion-card-header>
+                    <ion-card-title color=primary>Fiche de renseignements</ion-card-title>
+                    <ion-text color="medium">
+                        <h3>La création du compte est soumise à validation du chef d'équipe ou de l'administrateur</h3>
+                    </ion-text>
+                </ion-card-header>
+
+                <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+                    <ion-list>
+                        <ion-radio-group formControlName="role" value="">
+                            <ion-list-header>
+                                <ion-label color=secondary>Rôle demandé
+                                    <ion-text color="danger">*</ion-text>
+                                </ion-label>
+                            </ion-list-header>
+                            <ion-item>
+                                <ion-label>Méthode</ion-label>
+                                <ion-radio value="method"></ion-radio>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label>Chef d'équipe</ion-label>
+                                <ion-radio value="teamLeader"></ion-radio>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label>Compagnon</ion-label>
+                                <ion-radio value="worker"></ion-radio>
+                            </ion-item>
+                        </ion-radio-group>
+                    </ion-list>
+                    <ion-item-divider>
+                        <ion-label>Identité</ion-label>
+                    </ion-item-divider>
+                    <ion-list>
+                        <ion-item>
+                            <ion-label color=secondary position="floating">Nom
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input required formControlName="lastName" type="text"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label color=secondary position="floating">Prénom
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input required formControlName="firstName" type="text"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label color=secondary position="floating">Matricule
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input required formControlName="matricule" type="text"></ion-input>
+                        </ion-item>
+                    </ion-list>
+                    <ion-toolbar>
+                        <ion-button slot=end block color="primary" type="submit" [disabled]="registerForm.invalid">
+                            {{(language ==='FR') ? "S'enregistrer" : "Register"}}
+                        </ion-button>
+                    </ion-toolbar>
+
+                </form>
+            </ion-card>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <!-- <ion-button (click)="onClick()">
+  <ion-icon slot="start" name="add"></ion-icon>
+  {{OtherLanguage}}
+</ion-button> -->
+        <ion-button slot=end (click)="switchToEnglish()" fill="clear" shape="round">
+            EN
+        </ion-button>
+        <ion-button slot=end (click)="switchToFrench()" fill="clear" shape="round">
+            FR
+        </ion-button>
+    </ion-toolbar>
+</ion-footer>

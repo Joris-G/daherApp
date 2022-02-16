@@ -25,3 +25,17 @@ export interface Molding {
   woList?: any[];
   updatedAt?: Date;
 }
+
+export interface MoldingIri {
+  idMolding: number;
+  kits: string[];
+  moldingDay: Date;
+  moldingUser: User;
+  outillage: string;
+  aCuireAv: Date;
+  aDraperAv: Date;
+  matPolym: string;
+  matDrap: string;
+  woList?: any[];
+  updatedAt?: Date;
+}

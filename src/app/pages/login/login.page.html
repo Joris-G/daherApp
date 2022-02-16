@@ -1,25 +1,33 @@
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar>
         <ion-title>Connection</ion-title>
     </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content [fullscreen]="true">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
-        <ion-item>
-            <ion-label position="floating">Nom d'utilisateur
-                <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <ion-input required formControlName="userName" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="floating">Password
-                <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <ion-input required formControlName="password" type="password" value="123"></ion-input>
-        </ion-item>
-        <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
-            Se connecter
-        </ion-button>
-    </form>
+    <ion-grid fixed class="full-height ion-align-items-center ion-justify-content-center">
+        <ion-row>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
+                <ion-item>
+                    <ion-label position="floating">Nom d'utilisateur
+                        <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input required formControlName="userName" type="text"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Password
+                        <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input required formControlName="password" type="password" value="123"></ion-input>
+                </ion-item>
+                <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
+                    Se connecter
+                </ion-button>
+                <ion-button fill="clear" [routerLink]="['/register']"> Créer un compte
+                </ion-button>
+            </form>
+        </ion-row>
+    </ion-grid>
+
+
 </ion-content>

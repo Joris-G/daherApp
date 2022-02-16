@@ -1,4 +1,5 @@
 export interface Kit {
+  id: number;
   idMM: string;
   referenceSAP: number;
   designationSAP: string;

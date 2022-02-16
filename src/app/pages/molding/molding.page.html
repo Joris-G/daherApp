@@ -15,7 +15,7 @@
     </ion-toolbar>
 
 
-    <ion-list *ngIf="molding.kits">
+    <ion-list *ngIf="molding?.kits">
         <ion-item>
             <ion-label>Référence Sap</ion-label>
             <ion-label>Désignation</ion-label>
@@ -39,7 +39,7 @@
     <ion-toolbar>
         <ion-item>
             <ion-title>Récapitulatif</ion-title>
-            <ion-label>Outillage : {{molding.moldingTool?.sapToolNumber}}</ion-label>
+            <ion-label>Outillage : {{molding?.moldingTool?.sapToolNumber}}</ion-label>
             <ion-label>A draper avant le : {{molding?.aDraperAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
             <ion-label>A cuire avant le : {{molding?.aCuireAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
 

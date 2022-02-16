@@ -17,7 +17,7 @@ export class AuthService {
     return new Promise<boolean>((resolve, reject) => {
       if (userName === 'JorisG' && password === '123') {
         this.isAuth = true;
-        this.userService.getUserById(2)
+        this.userService.getUserById(5)
           .then((user: User) => {
             this.authUser = user;
             console.log(user);

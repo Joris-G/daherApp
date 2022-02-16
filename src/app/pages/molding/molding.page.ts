@@ -22,6 +22,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
   public pageTitle: string;
   public scanButtonText: string;
   public molding: Molding;
+
   constructor(
     public scanService: ScanService,
     public moldingService: MoldingService,
@@ -35,20 +36,13 @@ export class MoldingPage implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController
   ) {
-    this.molding = {
-      idMolding: null,
-      kits: [],
-      moldingDay: new Date(),
-      moldingTool: null,
-      moldingUser: {
-        idUser: null,
-        mail: '',
-        matricule: null,
-        nom: '',
-        prenom: '',
-        role: 'Admin'
-      }
-    };
+    // this.molding = {
+    //   idMolding: null,
+    //   kits: [],
+    //   moldingDay: new Date(),
+    //   moldingTool: null,
+    //   moldingUser: null
+    // };
 
     const id = this.activatedRoute.snapshot.paramMap.get('idMolding');
     if (id) {
@@ -213,7 +207,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
             this.userService.getUserById(2)
               .then((user) => {
                 this.molding.moldingUser = user;
-                this.moldingService.saveMolding(this.molding)
+                this.moldingService.saveMolding(this.moldingService.toIri(this.molding))
                   .then(() => {
                     console.log('tout est OK le moulage est sauvegardé');
                     resolve();
