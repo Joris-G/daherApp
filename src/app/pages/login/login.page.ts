@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/_services/users/auth.service';
 
 @Component({
@@ -16,10 +16,12 @@ export class LoginPage implements OnInit, AfterViewInit {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    public alertController: AlertController,) {
+    private alertController: AlertController,
+    private loadingController: LoadingController
+  ) {
     this.loginForm = this.formBuilder.group({
-      userName: ['JorisG', Validators.required],
-      password: ['123', Validators.required]
+      userName: ['34567', Validators.required],
+      password: ['test', Validators.required]
     });
   }
   ngAfterViewInit(): void {
@@ -31,17 +33,7 @@ export class LoginPage implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    this.authService.authenticate(
-      this.loginForm.get('userName').value,
-      this.loginForm.get('password').value)
-      .then(() => {
-        this.loginForm.reset();
-        this.router.navigate(['/home']);
-      },
-        () => {
-          this.presentAlertConfirm();
-        }
-      );
+    this.login();
   }
 
   async presentAlertConfirm() {
@@ -59,5 +51,32 @@ export class LoginPage implements OnInit, AfterViewInit {
     });
 
     await alert.present();
+
+  }
+
+  async login() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Patienter pendant la connexion',
+      spinner: 'dots'
+    });
+    await loading.present();
+    console.log('loading');
+    setTimeout(() => {
+      this.authService.authenticate(
+        this.loginForm.get('userName').value,
+        this.loginForm.get('password').value)
+        .then(() => {
+          this.loginForm.reset();
+          this.router.navigate(['/home']);
+        },
+          () => {
+            this.presentAlertConfirm();
+          },
+        )
+        .finally(() => {
+          loading.dismiss();
+        });
+    }, 2000);
   }
 }

@@ -22,7 +22,7 @@ const routes: Routes = [
       .then(m => m.MoldingPageModule)
   },
   {
-    path: 'molding/:idMolding',
+    path: 'molding/:id',
     canActivate: [RoleGuard],
     data: {
       expectedRole: 'COMPAGNON'
@@ -31,7 +31,7 @@ const routes: Routes = [
       .then(m => m.MoldingPageModule)
   },
   {
-    path: 'printMolding/:molding',
+    path: 'printMolding/:id',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/molding/print-molding-sheet/print-molding-sheet.module')
       .then(m => m.PrintMoldingSheetPageModule)
@@ -43,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
   },
 ];
 

@@ -4,7 +4,7 @@ import { User } from 'src/app/_interface/user';
 import { environment } from 'src/environments/environment';
 
 const JORIS: User = {
-  idUser: 1,
+  id: 1,
   username: 'j.grangier',
   mail: 'j.grangier@daher.com',
   matricule: 204292,
@@ -24,11 +24,11 @@ export class UsersService {
     return new Promise<User>((resolve, reject) => {
       const httpHeaders = new HttpHeaders()
         .set('content-type', 'application/json');
-      this.http.get(`${environment.apiServer}users/${idUser}`, { headers: httpHeaders })
+      this.http.get(`${environment.apiServer}users/${idUser}`, { headers: httpHeaders, withCredentials: false })
         .subscribe((returnsData: any) => {
           console.log(returnsData);
           if (returnsData.length !== 0) {
-            console.log(returnsData);
+            // console.log(returnsData);
             // this.updateDates(MOLDING);
             resolve(returnsData);
           } else {
@@ -40,14 +40,9 @@ export class UsersService {
             reject();
           });
     });
+  }
 
-
-    return new Promise<User>((resolve, reject) => {
-      if (idUser === 2) {
-        resolve(JORIS);
-      } else {
-        reject(JORIS);
-      }
-    });
+  getIri(user: User): string {
+    return `/api/users/${user.id}`;
   }
 }

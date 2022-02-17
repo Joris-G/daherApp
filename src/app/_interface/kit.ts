@@ -10,7 +10,7 @@ export interface Kit {
   aDrapAv: Date;
   aCuirAv: Date;
   decongel: Date;
-  updateAt: Date;
+  updateAt?: Date;
   status: boolean;
   createdAt: Date;
 }

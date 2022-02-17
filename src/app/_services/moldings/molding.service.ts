@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Kit } from 'src/app/_interface/kit';
 import { Molding, MoldingIri } from 'src/app/_interface/molding';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { KitService } from '../kits/kit.service';
 import { MoldingToolService } from '../moldingTools/molding-tool.service';
+import { UsersService } from '../users/users.service';
 
 /** @type {*} */
 // const MOLDING: Molding = {
@@ -237,34 +238,44 @@ export class MoldingService {
   constructor(
     private http: HttpClient,
     private kitService: KitService,
-    private moldingToolService: MoldingToolService) {
+    private moldingToolService: MoldingToolService,
+    private userService: UsersService) {
   }
   saveMolding(moldingObject: MoldingIri) {
     console.log(moldingObject);
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<Molding>((resolve, reject) => {
       const httpHeaders = new HttpHeaders()
         .set('content-type', 'application/json');
+      // .set('Access-Control-Allow-Credentials', 'true');
       this.http.post(`${environment.apiServer}moldings`, moldingObject, { headers: httpHeaders })
-        .subscribe((returnsData: any) => {
+        .subscribe((returnsData: Molding) => {
           console.log(returnsData);
-          resolve();
-          // if (returnsData.length !== 0) {
-          //   const returnMoldingTool: MoldingTool = returnsData[0];
-          //   console.log(returnMoldingTool);
-          //   resolve(returnMoldingTool);
-          //   // resolve(TOOL_TEST);
-          // } else {
-          //   reject();
-          // }
+          resolve(returnsData);
         },
           (error) => {
-            console.log(error);
+            console.error(error);
             reject();
           });
     });
   }
 
-
+  updateMolding(moldingObject: MoldingIri) {
+    console.log(moldingObject);
+    return new Promise<Molding>((resolve, reject) => {
+      const httpHeaders = new HttpHeaders()
+        .set('content-type', 'application/json');
+      // .set('Access-Control-Allow-Credentials', 'true');
+      this.http.put(`${environment.apiServer}moldings`, moldingObject, { headers: httpHeaders })
+        .subscribe((returnsData: Molding) => {
+          console.log(returnsData);
+          resolve(returnsData);
+        },
+          (error) => {
+            console.error(error);
+            reject();
+          });
+    });
+  }
 
   updateDates(molding: Molding): void {
     molding.aCuireAv = null;
@@ -282,22 +293,75 @@ export class MoldingService {
     });
   }
 
-
+  moldingServerToMoldingObject(moldingToTransform: any): Molding {
+    const newListKit: Kit[] = [];
+    moldingToTransform.kits.forEach(kitApi => {
+      let newKit: Kit = null;
+      newKit = {
+        aCuirAv: kitApi.ACuirAv,
+        aDrapAv: kitApi.ADrapAv,
+        createdAt: kitApi.createdAt,
+        decongel: kitApi.Decongel,
+        designationSAP: kitApi.DesignationSAP,
+        id: kitApi.id,
+        idMM: kitApi.idMM,
+        lotSAP: kitApi.LotSAP,
+        peremptionMoins18: kitApi.PeremptionMoins18,
+        referenceSAP: kitApi.ReferenceSAP,
+        status: kitApi.status,
+        tackLife: kitApi.TackLife,
+        timeOut: kitApi.TimeOut
+      };
+      newListKit.push(newKit);
+    });
+    moldingToTransform.kits = newListKit;
+    return moldingToTransform;
+  }
 
   getMoldingById(id: string) {
-    return new Promise<Molding>((resolve, reject) => {
-      // const molding = MOLDING;
-      // resolve(molding);
+    return new Promise((resolve, reject) => {
+      const httpHeaders = new HttpHeaders()
+        .set('content-type', 'application/json');
+      this.http.get(`${environment.apiServer}moldings/${id}`, { headers: httpHeaders })
+        .subscribe((returnsData: any) => {
+          const newListKit: Kit[] = [];
+          returnsData.kits.forEach(kitApi => {
+            let newKit: Kit = null;
+            newKit = {
+              aCuirAv: kitApi.ACuirAv,
+              aDrapAv: kitApi.ADrapAv,
+              createdAt: kitApi.createdAt,
+              decongel: kitApi.Decongel,
+              designationSAP: kitApi.DesignationSAP,
+              id: kitApi.id,
+              idMM: kitApi.idMM,
+              lotSAP: kitApi.LotSAP,
+              peremptionMoins18: kitApi.PeremptionMoins18,
+              referenceSAP: kitApi.ReferenceSAP,
+              status: kitApi.status,
+              tackLife: kitApi.TackLife,
+              timeOut: kitApi.TimeOut
+            };
+            newListKit.push(newKit);
+          });
+          returnsData.kits = newListKit;
+          console.log(returnsData);
+          resolve(returnsData);
+        },
+          (error) => {
+            console.log(error);
+            reject();
+          });
     });
   }
 
   toIri(molding: Molding): MoldingIri {
     return {
-      idMolding: molding.idMolding,
+      id: molding.id,
       kits: molding.kits.map((kit: Kit) => this.kitService.getIri(kit)),
       moldingDay: molding.moldingDay,
-      moldingUser: molding.moldingUser,
-      outillage: this.moldingToolService.getIri(molding.moldingTool),
+      moldingUser: this.userService.getIri(molding.moldingUser),
+      outillage: this.moldingToolService.getIri(molding.outillage),
       aCuireAv: molding.aCuireAv,
       aDraperAv: molding.aDraperAv,
       matPolym: this.kitService.getIri(molding.matPolym),

@@ -36,7 +36,7 @@ export class PrintMoldingSheetPage implements OnInit {
       message: 'Patienter pendant le chargement du moulage',
     });
     await loading.present();
-    const id = this.activatedRoute.snapshot.paramMap.get('molding');
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
     this.moldingService.getMoldingById(id)
       .then((molding: Molding) => {
         // this.molding = molding;
@@ -48,7 +48,7 @@ export class PrintMoldingSheetPage implements OnInit {
         })
       .finally(() => {
         this.dataSource = this.kitList;
-        JsBarcode('#barcode', this.molding.idMolding.toString(), {
+        JsBarcode('#barcode', this.molding.id.toString(), {
           height: 20,
           displayValue: false,
         });

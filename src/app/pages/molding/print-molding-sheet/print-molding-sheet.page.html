@@ -20,13 +20,13 @@
         <div class="ion-margin">
             <ion-title color=primary>Informations</ion-title>
             <div class="flex-vertical">
-                <ion-text>ID Moulage : {{molding.idMolding}}</ion-text>
+                <ion-text>ID Moulage : {{molding.id}}</ion-text>
                 <ion-text>Outillage :
-                    <span *ngIf="molding.moldingTool">{{molding.moldingTool?.sapToolNumber}} - {{molding.moldingTool?.identification}}</span>
-                    <span *ngIf="!molding.moldingTool">Pas d'outillage lié !</span>
+                    <span *ngIf="molding.outillage">{{molding.outillage?.sapToolNumber}} - {{molding.outillage?.identification}}</span>
+                    <span *ngIf="!molding.outillage">Pas d'outillage lié !</span>
                 </ion-text>
                 <ion-text>Date traçabilité : {{molding.moldingDay | date:'dd/MM/yyyy'}}</ion-text>
-                <ion-text>Fait par : {{molding.moldingUser.nom}} {{molding.moldingUser.prenom}} ({{molding.moldingUser.matricule}})</ion-text>
+                <ion-text>Fait par : {{molding.moldingUser?.nom}} {{molding.moldingUser?.prenom}} ({{molding.moldingUser?.matricule}})</ion-text>
                 <ion-text *ngIf="molding.updatedAt">
                     Date de mise à jour : {{molding.updatedAt | date: 'dd/MM/yyyy'}}
                 </ion-text>

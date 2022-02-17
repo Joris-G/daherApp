@@ -107,12 +107,6 @@ export class KitService {
             reject();
           });
     });
-    // return new Promise<Kit>((resolve, reject) => {
-    //   setTimeout(() => {
-    //     console.log(KIT[Math.floor(Math.random() * 5)]);
-    //     resolve(KIT[Math.floor(Math.random() * 5)]);
-    //   }, 200);
-    // });
   }
 
 

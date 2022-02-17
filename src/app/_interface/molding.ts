@@ -13,11 +13,11 @@ import { User } from './user';
  * @interface Molding
  */
 export interface Molding {
-  idMolding: number;
+  id: number;
   kits: Kit[];
   moldingDay: Date;
   moldingUser: User;
-  moldingTool: MoldingTool;
+  outillage: MoldingTool;
   aCuireAv?: Date;
   aDraperAv?: Date;
   matPolym?: Kit;
@@ -27,10 +27,10 @@ export interface Molding {
 }
 
 export interface MoldingIri {
-  idMolding: number;
+  id: number;
   kits: string[];
   moldingDay: Date;
-  moldingUser: User;
+  moldingUser: string;
   outillage: string;
   aCuireAv: Date;
   aDraperAv: Date;

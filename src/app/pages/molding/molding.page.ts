@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, IonButton, IonInput, LoadingController, NavController, ToastController } from '@ionic/angular';
+import { AlertButton, AlertController, IonButton, IonInput, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Kit } from 'src/app/_interface/kit';
 import { Molding } from 'src/app/_interface/molding';
 import { MoldingTool } from 'src/app/_interface/molding-tool';
@@ -8,6 +8,7 @@ import { KitService } from 'src/app/_services/kits/kit.service';
 import { MoldingService } from 'src/app/_services/moldings/molding.service';
 import { MoldingToolService } from 'src/app/_services/moldingTools/molding-tool.service';
 import { ScanService } from 'src/app/_services/scan/scan.service';
+import { AuthService } from 'src/app/_services/users/auth.service';
 import { UsersService } from 'src/app/_services/users/users.service';
 
 @Component({
@@ -34,17 +35,19 @@ export class MoldingPage implements OnInit, AfterViewInit {
     private loadingController: LoadingController,
     private userService: UsersService,
     private activatedRoute: ActivatedRoute,
-    private toastController: ToastController
+    private toastController: ToastController,
+    public authService: AuthService,
   ) {
-    // this.molding = {
-    //   idMolding: null,
-    //   kits: [],
-    //   moldingDay: new Date(),
-    //   moldingTool: null,
-    //   moldingUser: null
-    // };
+    this.molding =
+    {
+      id: null,
+      kits: [],
+      moldingDay: new Date(),
+      outillage: null,
+      moldingUser: null
+    };
 
-    const id = this.activatedRoute.snapshot.paramMap.get('idMolding');
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       this.pageTitle = 'Modification moulage';
       this.loadMoldingData(id);
@@ -99,12 +102,13 @@ export class MoldingPage implements OnInit, AfterViewInit {
         {
           text: 'Annuler',
           role: 'cancel',
-          cssClass: 'secondary',
+          cssClass: 'ion-color-secondary',
           handler: (data) => {
             console.log('Confirm Cancel', data);
           }
         }, {
           text: 'Valider',
+          cssClass: ['ion-color-primary', 'button', 'button-solid'],
           handler: (data) => {
             this.setLinkedTool(data.toolNumber);
           }
@@ -125,7 +129,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
     console.log(toolNumber);
     this.moldingToolService.getToolByToolNumber(toolNumber)
       .then((tool: MoldingTool) => {
-        this.molding.moldingTool = tool;
+        this.molding.outillage = tool;
         this.presentToast('Outillage associé !');
       });
   }
@@ -194,7 +198,10 @@ export class MoldingPage implements OnInit, AfterViewInit {
         // On demande si on veut imprimer ou non
         console.log('Kit sauvegardé. Voulez-vous imprimer ?');
         this.presentAlertConfirm();
-      });
+      },
+        () => {
+          this.saveMoldingErrorAlert();
+        });
   }
 
   saveMolding() {
@@ -204,20 +211,30 @@ export class MoldingPage implements OnInit, AfterViewInit {
           console.log('le moulage à le statut : ', moldingDatasStatus);
           if (moldingDatasStatus) {
             // sauvegarder le moulage en base de donnée
-            this.userService.getUserById(2)
-              .then((user) => {
-                this.molding.moldingUser = user;
-                this.moldingService.saveMolding(this.moldingService.toIri(this.molding))
-                  .then(() => {
-                    console.log('tout est OK le moulage est sauvegardé');
-                    resolve();
-                  },
-                    (error) => {
-                      console.log('tout n\'est pas Ok la sauvegarde a échouée');
-                      console.error(error);
-                    });
-              });
-
+            this.molding.moldingUser = this.authService.authUser;
+            if (this.molding.id === null) {
+              this.moldingService.saveMolding(this.moldingService.toIri(this.molding))
+                .then((responseMolding: Molding) => {
+                  this.molding = this.moldingService.moldingServerToMoldingObject(responseMolding);
+                  console.log('tout est OK le moulage est sauvegardé', this.molding);
+                  resolve();
+                },
+                  () => {
+                    console.log('tout n\'est pas Ok la sauvegarde a échouée');
+                    reject();
+                  });
+            } else {
+              this.moldingService.updateMolding(this.moldingService.toIri(this.molding))
+                .then((responseMolding: Molding) => {
+                  this.molding = responseMolding;
+                  console.log('tout est OK le moulage est mis à jour');
+                  resolve();
+                },
+                  () => {
+                    console.error('tout n\'est pas Ok la mise à jour du moulage a échouée');
+                    reject();
+                  });
+            }
           } else {
             console.error('sauvegarde abandonnée');
             reject();
@@ -228,7 +245,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
 
   checkMoldingDatas() {
     return new Promise<boolean>((resolve, reject) => {
-      if (this.molding.moldingTool === null) {
+      if (this.molding.outillage === null) {
         console.log('le moulage n\'a pas d\'outillage associé. Voulez-vous continuer sans outillage ?');
         this.presentAlertToolMissing()
           .then((response) => {
@@ -246,6 +263,9 @@ export class MoldingPage implements OnInit, AfterViewInit {
               console.log(message, response);
               reject(message);
             });
+      } else if (this.molding.kits.length === 0) {
+        console.log('onResolve : Il n\'y a pas de kit');
+        resolve(false);
       } else {
         resolve(true);
       }
@@ -316,8 +336,9 @@ export class MoldingPage implements OnInit, AfterViewInit {
   }
 
   printMolding() {
-    this.moldingService.molding = this.molding;
-    this.router.navigate(['/printMolding', 1]);
+    // this.moldingService.molding = this.molding;
+    console.log(this.molding);
+    this.router.navigate(['/printMolding', this.molding.id]);
   }
 
   printMoldingClick() {
@@ -342,6 +363,20 @@ export class MoldingPage implements OnInit, AfterViewInit {
     // console.log('onDidDismiss resolved with role', role);
   }
 
+  async saveMoldingErrorAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Erreur de sauvegarde',
+      subHeader: 'Le moulage n\'a pas été sauvegardé',
+      message: 'Veuillez ré-essayer',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    // console.log('onDidDismiss resolved with role', role);
+  }
 
   async presentToast(message: string) {
     const toast = await this.toastController.create({

@@ -1,6 +1,6 @@
 <app-shared-user-header [page]="pageTitle"></app-shared-user-header>
 <ion-content>
-    <ion-toolbar>
+    <ion-toolbar color=medium>
         <ion-buttons slot="start" collapse="true">
             <ion-button #scanButton fill=solid size=default (click)="switchScanState()">
                 <!-- <ion-icon slot="start" name="scan-outline"></ion-icon> -->
@@ -17,38 +17,42 @@
 
     <ion-list *ngIf="molding?.kits">
         <ion-item>
-            <ion-label>Référence Sap</ion-label>
+            <ion-label class="ion-hide-md-down">Référence Sap</ion-label>
             <ion-label>Désignation</ion-label>
             <ion-label>Péremption à -18°C</ion-label>
             <ion-label>A draper avant le</ion-label>
             <ion-label>A cuire avant le</ion-label>
         </ion-item>
         <ion-item *ngFor="let kit of molding.kits; let index = index">
-            <ion-label>{{kit.referenceSAP}} <span *ngIf="kit === molding.matDrap">(Drap)</span><span *ngIf="kit === molding.matPolym">(Pol)</span></ion-label>
+            <ion-label class="ion-hide-md-down">{{kit.referenceSAP}} <span *ngIf="kit === molding.matDrap">(Drap)</span><span *ngIf="kit === molding.matPolym">(Pol)</span></ion-label>
             <ion-label>{{kit.designationSAP}}</ion-label>
             <ion-label [color]="kitService.isPerim(kit.peremptionMoins18, molding.moldingDay) ? 'danger' : 'dark'">{{kit.peremptionMoins18 | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
             <ion-label [color]="kitService.isPerim(kit.aDrapAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aDrapAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
             <ion-label [color]="kitService.isPerim(kit.aCuirAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aCuirAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-            <ion-button (click)="removeKit(index)">
+            <ion-button class="ion-hide-md-down" (click)="removeKit(index)">
                 <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
             </ion-button>
         </ion-item>
     </ion-list>
 </ion-content>
 <ion-footer>
-    <ion-toolbar>
-        <ion-item>
-            <ion-title>Récapitulatif</ion-title>
-            <ion-label>Outillage : {{molding?.moldingTool?.sapToolNumber}}</ion-label>
+    <ion-toolbar class="ion-space-between">
+        <ion-item no-lines lines="none">
+            <ion-label>Outillage : {{molding?.outillage?.sapToolNumber}}</ion-label>
             <ion-label>A draper avant le : {{molding?.aDraperAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
             <ion-label>A cuire avant le : {{molding?.aCuireAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-
         </ion-item>
-        <ion-button (click)="saveMoldingClick()" expand="block" fill="clear" shape="round">
-            SAUVEGARDER MOULAGE
-        </ion-button>
-        <ion-button (click)="printMoldingClick()" expand="block" fill="clear" shape="round">
-            IMPRIMER
-        </ion-button>
+    </ion-toolbar>
+    <ion-toolbar color=medium>
+        <ion-buttons slot="end" collapse="true">
+            <ion-button slot=end (click)="saveMoldingClick()" fill="outline">
+                <ion-icon slot="start" name="save-outline"></ion-icon>
+                SAUVEGARDER MOULAGE
+            </ion-button>
+            <ion-button slot=end (click)="printMoldingClick()" fill="solid" color=primary>
+                <ion-icon slot="start" name="print-outline"></ion-icon>
+                IMPRIMER
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-footer>
