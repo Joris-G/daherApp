@@ -65,6 +65,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
     this.moldingService.getMoldingById(moldingId)
       .then((molding: Molding) => {
         this.molding = molding;
+        this.moldingService.updateDates(this.molding);
         this.molding.updatedAt = new Date();
         console.log(this.molding);
         loading.dismiss();

@@ -311,7 +311,9 @@ export class MoldingService {
   getMoldingById(id: string) {
     return new Promise((resolve, reject) => {
       const httpHeaders = new HttpHeaders()
-        .set('content-type', 'application/json');
+        .append('content-type', 'application/json');
+      // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
+      // .append('Access-Control-Allow-methods', 'GET, OPTIONS, POST, PUT, PATCH, DELETE');
       this.http.get(`${environment.apiServer}moldings/${id}`, { headers: httpHeaders })
         .subscribe((returnsData: any) => {
           const newListKit: Kit[] = [];

@@ -11,11 +11,14 @@ export class RequestService {
 
   createPutRequest(url: string, body: any): Promise<any> {
     const httpHeaders = new HttpHeaders()
-      .set('X-HTTP-Method-Override', '*')
-      .set('Accept', '/')
-      .set('Content-Type', 'application/json')
-      // .set('Access-Control-Allow-Credentials', 'true')
-      .set('Access-Control-Allow-Origin', '*');
+      // .append('X-HTTP-Method-Override', 'PUT')
+      // .append('Allow', 'GET, POST, PUT, OPTIONS')
+      .append('Access-Control-Request-Method', 'PUT');
+    // .append('Content-Type', 'application/merge-patch+json');
+    // .append('Accept', 'application/json');
+    // .append('Access-Control-Allow-Origins', 'http://localhost:8100/');
+    // .append('Access-Control-Allow-Credentials', 'true');
+
     return new Promise<any>((resolve, reject) => {
       this.http.put(url, body, { headers: httpHeaders })
         .subscribe((returnDatas: any) => {

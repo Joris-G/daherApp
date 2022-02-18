@@ -111,8 +111,8 @@ export class KitService {
 
 
   isPerim(dateToCheck: Date, baseDate: Date): boolean {
-    // console.log(dateToCheck);
-    return (new Date(dateToCheck) < baseDate);
+    console.log(dateToCheck, baseDate);
+    return (dateToCheck < baseDate);
   }
 
   /**

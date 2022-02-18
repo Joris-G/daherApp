@@ -62,21 +62,21 @@ export class LoginPage implements OnInit, AfterViewInit {
     });
     await loading.present();
     console.log('loading');
-    setTimeout(() => {
-      this.authService.authenticate(
-        this.loginForm.get('userName').value,
-        this.loginForm.get('password').value)
-        .then(() => {
-          this.loginForm.reset();
-          this.router.navigate(['/home']);
+    // setTimeout(() => {
+    this.authService.authenticate(
+      this.loginForm.get('userName').value,
+      this.loginForm.get('password').value)
+      .then(() => {
+        this.loginForm.reset();
+        this.router.navigate(['/home']);
+      },
+        () => {
+          this.presentAlertConfirm();
         },
-          () => {
-            this.presentAlertConfirm();
-          },
-        )
-        .finally(() => {
-          loading.dismiss();
-        });
-    }, 2000);
+      )
+      .finally(() => {
+        loading.dismiss();
+      });
+    // }, 2000);
   }
 }

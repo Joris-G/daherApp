@@ -22,11 +22,9 @@ export class AuthService {
       // this.isAuth = true;
       // resolve(true);
       // return;
-      const httpHeaders = new HttpHeaders();
-      // .set('content-type', 'application/json');
-      // .set('responseType', 'text');
-      // .set('Access-Control-Allow-Origin', 'http://localhost:8100/')
-      // .set('Access-Control-Allow-Credentials', 'true');
+      const httpHeaders = new HttpHeaders()
+        // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
+        .append('Content-Type', 'application/json');
       this.http.post(`${environment.apiServer}login`, { matricule: userName, password }, { headers: httpHeaders, withCredentials: true })
         .subscribe((returnsData: any) => {
           console.log(document.cookie);
