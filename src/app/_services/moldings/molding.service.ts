@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { KitService } from '../kits/kit.service';
 import { MoldingToolService } from '../moldingTools/molding-tool.service';
 import { UsersService } from '../users/users.service';
+import { RequestService } from '../request.service';
 
 /** @type {*} */
 // const MOLDING: Molding = {
@@ -236,10 +237,11 @@ import { UsersService } from '../users/users.service';
 export class MoldingService {
   public molding: Molding;
   constructor(
-    private http: HttpClient,
     private kitService: KitService,
     private moldingToolService: MoldingToolService,
-    private userService: UsersService) {
+    private userService: UsersService,
+    private requestService: RequestService,
+    private http: HttpClient) {
   }
   saveMolding(moldingObject: MoldingIri) {
     console.log(moldingObject);
@@ -259,22 +261,10 @@ export class MoldingService {
     });
   }
 
-  updateMolding(moldingObject: MoldingIri) {
+  updateMolding(moldingObject: MoldingIri): Promise<Molding> {
     console.log(moldingObject);
-    return new Promise<Molding>((resolve, reject) => {
-      const httpHeaders = new HttpHeaders()
-        .set('content-type', 'application/json');
-      // .set('Access-Control-Allow-Credentials', 'true');
-      this.http.put(`${environment.apiServer}moldings`, moldingObject, { headers: httpHeaders })
-        .subscribe((returnsData: Molding) => {
-          console.log(returnsData);
-          resolve(returnsData);
-        },
-          (error) => {
-            console.error(error);
-            reject();
-          });
-    });
+    const url = `${environment.apiServer}moldings`;
+    return this.requestService.createPutRequest(url, moldingObject);
   }
 
   updateDates(molding: Molding): void {

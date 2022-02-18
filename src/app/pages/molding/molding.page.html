@@ -1,15 +1,15 @@
 <app-shared-user-header [page]="pageTitle"></app-shared-user-header>
 <ion-content>
-    <ion-toolbar color=medium>
+    <ion-toolbar color=light class="ion-hide-md-down">
         <ion-buttons slot="start" collapse="true">
             <ion-button #scanButton fill=solid size=default (click)="switchScanState()">
                 <!-- <ion-icon slot="start" name="scan-outline"></ion-icon> -->
                 {{scanButtonText}}
             </ion-button>
-            <ion-input #scanInput type="text" placeholder="Id du kit" (change)="scanInputAction()" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()"></ion-input>
-            <ion-button (click)="associateToolClick()" fill=outline size=default>
+            <ion-input lines=true #scanInput type="text" placeholder="Id du kit" (change)="scanInputAction()" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()"></ion-input>
+            <ion-button (click)="associateToolClick()" fill=clear size=default>
                 <ion-icon slot="start" name="link-outline"></ion-icon>
-                Associer un outillage
+                OUTILLAGE
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -35,19 +35,43 @@
         </ion-item>
     </ion-list>
 </ion-content>
-<ion-footer>
+
+<ion-tab-bar slot="bottom" class="ion-hide-md-up">
+    <ion-tab-button tab="schedule">
+        <ion-icon name="link"></ion-icon>
+        <ion-label>Outillage</ion-label>
+        <ion-badge>6</ion-badge>
+    </ion-tab-button>
+
+    <ion-tab-button tab="speakers" (click)="kitAlertPrompt()">
+        <ion-icon name="scan"></ion-icon>
+        <ion-label>Scan kit</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="map">
+        <ion-icon name="print"></ion-icon>
+        <ion-label>Imprimer</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="about" (click)="saveMoldingClick()">
+        <ion-icon name="save"></ion-icon>
+        <ion-label>Sauvegarder</ion-label>
+    </ion-tab-button>
+</ion-tab-bar>
+
+<ion-footer class="ion-hide-md-down">
     <ion-toolbar class="ion-space-between">
-        <ion-item no-lines lines="none">
+        <ion-item lines="none">
             <ion-label>Outillage : {{molding?.outillage?.sapToolNumber}}</ion-label>
             <ion-label>A draper avant le : {{molding?.aDraperAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
             <ion-label>A cuire avant le : {{molding?.aCuireAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
         </ion-item>
     </ion-toolbar>
-    <ion-toolbar color=medium>
+    <ion-toolbar color=light>
         <ion-buttons slot="end" collapse="true">
-            <ion-button slot=end (click)="saveMoldingClick()" fill="outline">
+            <ion-button slot=end (click)="saveMoldingClick()" fill="clear">
                 <ion-icon slot="start" name="save-outline"></ion-icon>
-                SAUVEGARDER MOULAGE
+                SAUVEGARDER
             </ion-button>
             <ion-button slot=end (click)="printMoldingClick()" fill="solid" color=primary>
                 <ion-icon slot="start" name="print-outline"></ion-icon>
@@ -55,4 +79,5 @@
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
+
 </ion-footer>

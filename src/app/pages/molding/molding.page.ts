@@ -389,4 +389,42 @@ export class MoldingPage implements OnInit, AfterViewInit {
     toast.present();
   }
 
+  async kitAlertPrompt() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Scannez un kit',
+      inputs: [
+        {
+          name: 'kitnumber',
+          type: 'text',
+          placeholder: 'Scannez le kit',
+          tabindex: 1,
+          id: 'kitNumberInput',
+        }
+      ],
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'ion-color-secondary',
+          handler: (data) => {
+            console.log('Confirm Cancel', data);
+          }
+        }, {
+          text: 'Valider',
+          cssClass: ['ion-color-primary', 'button', 'button-solid'],
+          handler: (data) => {
+            this.scanInputAction();
+          }
+        }
+      ]
+    });
+
+    await alert.present().then(() => {
+      const toolNumberInput = document.getElementById('toolNumberInput');
+      if (toolNumberInput) {
+        toolNumberInput.focus();
+      }
+    });
+  }
 }

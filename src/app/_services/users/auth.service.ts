@@ -19,7 +19,10 @@ export class AuthService {
   authenticate(userName: string, password: string) {
     console.log(userName, password);
     return new Promise<boolean>((resolve, reject) => {
-      const httpHeaders = new HttpHeaders()
+      // this.isAuth = true;
+      // resolve(true);
+      // return;
+      const httpHeaders = new HttpHeaders();
       // .set('content-type', 'application/json');
       // .set('responseType', 'text');
       // .set('Access-Control-Allow-Origin', 'http://localhost:8100/')
@@ -37,18 +40,6 @@ export class AuthService {
             console.log(error);
             reject();
           });
-      // if (userName === 'JorisG' && password === '123') {
-      //   this.isAuth = true;
-      //   this.userService.getUserById(5)
-      //     .then((user: User) => {
-      //       this.authUser = user;
-      //       console.log(user);
-      //       resolve(this.isAuth);
-      //     });
-      // } else {
-      //   reject(false);
-      // }
-
     });
   }
 

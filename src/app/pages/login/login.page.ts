@@ -58,7 +58,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Patienter pendant la connexion',
-      spinner: 'dots'
+      spinner: 'lines-sharp'
     });
     await loading.present();
     console.log('loading');
