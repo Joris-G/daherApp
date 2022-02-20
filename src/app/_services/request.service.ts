@@ -1,5 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,9 @@ export class RequestService {
     // .append('Access-Control-Allow-Credentials', 'true');
 
     return new Promise<any>((resolve, reject) => {
-      this.http.put(url, body, { headers: httpHeaders })
+      this.http.put<HttpResponse<any>>(url, body, { headers: httpHeaders })
         .subscribe((returnDatas: any) => {
+          console.log(returnDatas);
           resolve(returnDatas);
         },
           (error) => {
