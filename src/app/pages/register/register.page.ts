@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Form, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { IonSlides } from '@ionic/angular';
+// import Swiper core and required modules
+
 const LANGUAGES = ['FR', 'EN'];
 @Component({
   selector: 'app-register',
@@ -7,22 +11,32 @@ const LANGUAGES = ['FR', 'EN'];
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-  public registerForm: FormGroup;
+  @ViewChild('slider') slider: IonSlides;
+  public roleForm: FormGroup;
+  public identityForm: FormGroup;
   public language: string;
-  constructor() {
-    this.registerForm = new FormGroup({
+  public slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+    allowTouchMove: false,
+  };
+
+  constructor(private router: Router) {
+    this.roleForm = new FormGroup({
+      role: new FormControl(),
+    });
+    this.identityForm = new FormGroup({
       firstName: new FormControl(),
       lastName: new FormControl(),
       matricule: new FormControl(),
-      role: new FormControl(),
     });
   }
 
   ngOnInit() {
   }
-  onRegisterSubmit() {
-    console.log(this.registerForm.value);
 
+  onRegisterSubmit() {
+    console.log(this.roleForm.value, this.identityForm.value);
   }
   switchToEnglish() {
     this.language = 'EN';
@@ -30,5 +44,10 @@ export class RegisterPage implements OnInit {
   switchToFrench() {
     this.language = 'FR';
   }
-
+  submitRole() {
+    this.slider.slideNext();
+  }
+  submitNewUser() {
+    this.router.navigate(['home']);
+  }
 }
