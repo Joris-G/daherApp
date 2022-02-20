@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { User } from 'src/app/_interface/user';
 import { environment } from 'src/environments/environment';
 import { UsersService } from './users.service';
+import user from 'src/assets/fakeDatas/user.json';
 
 @Injectable({
   providedIn: 'root'
@@ -22,22 +23,28 @@ export class AuthService {
       // this.isAuth = true;
       // resolve(true);
       // return;
-      const httpHeaders = new HttpHeaders()
-        // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
-        .append('Content-Type', 'application/json');
-      this.http.post(`${environment.apiServer}login`, { matricule: userName, password }, { headers: httpHeaders, withCredentials: true })
-        .subscribe((returnsData: any) => {
-          console.log(document.cookie);
-          console.log(returnsData);
-          this.isAuth = true;
-          this.authUser = returnsData.user;
-          this.authUser.role = 'COMPAGNON';
-          resolve(true);
-        },
-          (error) => {
-            console.log(error);
-            reject();
-          });
+      if (environment.production) {
+        const httpHeaders = new HttpHeaders()
+          // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
+          .append('Content-Type', 'application/json');
+        this.http.post(`${environment.apiServer}login`, { matricule: userName, password }, { headers: httpHeaders, withCredentials: true })
+          .subscribe((returnsData: any) => {
+            console.log(document.cookie);
+            console.log(returnsData);
+            this.isAuth = true;
+            this.authUser = returnsData.user;
+            this.authUser.role = 'COMPAGNON';
+            resolve(true);
+          },
+            (error) => {
+              console.log(error);
+              reject();
+            });
+      } else {
+        this.isAuth = true;
+        this.authUser = user;
+        resolve(true);
+      }
     });
   }
 

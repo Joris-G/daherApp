@@ -73,39 +73,43 @@ export class KitService {
 
   getKitById(id: string) {
     return new Promise((resolve, reject) => {
-      const httpHeaders = new HttpHeaders()
-        .set('content-type', 'application/json');
-      this.http.get(`${environment.apiServer}datas_kits?page=1&idMM=${id}`, { headers: httpHeaders })
-        .subscribe((returnsData: any) => {
-          console.log(returnsData);
-          if (returnsData.length !== 0) {
-            const returnKit: Kit = {
-              id: returnsData[0].id,
-              aCuirAv: returnsData[0].ACuirAv,
-              aDrapAv: returnsData[0].ADrapAv,
-              createdAt: returnsData[0].createdAt,
-              decongel: returnsData[0].Decongel,
-              designationSAP: returnsData[0].DesignationSAP,
-              idMM: returnsData[0].idMM,
-              lotSAP: returnsData[0].LotSAP,
-              peremptionMoins18: returnsData[0].PeremptionMoins18,
-              referenceSAP: returnsData[0].ReferenceSAP,
-              status: returnsData[0].status,
-              tackLife: returnsData[0].TackLife,
-              timeOut: returnsData[0].TimeOut,
-              updateAt: returnsData[0].updateAt
-            };
-            console.log(returnKit);
-            // this.updateDates(MOLDING);
-            resolve(returnKit);
-          } else {
-            reject();
-          }
-        },
-          (error) => {
-            console.log(error);
-            reject();
-          });
+      if (environment.production) {
+        const httpHeaders = new HttpHeaders()
+          .set('content-type', 'application/json');
+        this.http.get(`${environment.apiServer}datas_kits?page=1&idMM=${id}`, { headers: httpHeaders })
+          .subscribe((returnsData: any) => {
+            console.log(returnsData);
+            if (returnsData.length !== 0) {
+              const returnKit: Kit = {
+                id: returnsData[0].id,
+                aCuirAv: returnsData[0].ACuirAv,
+                aDrapAv: returnsData[0].ADrapAv,
+                createdAt: returnsData[0].createdAt,
+                decongel: returnsData[0].Decongel,
+                designationSAP: returnsData[0].DesignationSAP,
+                idMM: returnsData[0].idMM,
+                lotSAP: returnsData[0].LotSAP,
+                peremptionMoins18: returnsData[0].PeremptionMoins18,
+                referenceSAP: returnsData[0].ReferenceSAP,
+                status: returnsData[0].status,
+                tackLife: returnsData[0].TackLife,
+                timeOut: returnsData[0].TimeOut,
+                updateAt: returnsData[0].updateAt
+              };
+              console.log(returnKit);
+              // this.updateDates(MOLDING);
+              resolve(returnKit);
+            } else {
+              reject();
+            }
+          },
+            (error) => {
+              console.log(error);
+              reject();
+            });
+      } else {
+        resolve(KIT);
+      }
     });
   }
 

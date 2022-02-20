@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, IonInput, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/_services/users/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,10 @@ import { AuthService } from 'src/app/_services/users/auth.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit, AfterViewInit {
+  @ViewChild('userName') userName: IonInput;
+  @ViewChild('password') password: IonInput;
   public loginForm: FormGroup;
+
 
   constructor(
     private authService: AuthService,
@@ -20,41 +24,23 @@ export class LoginPage implements OnInit, AfterViewInit {
     private loadingController: LoadingController
   ) {
     this.loginForm = this.formBuilder.group({
-      userName: ['34567', Validators.required],
-      password: ['test', Validators.required]
+      userName: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
   ngAfterViewInit(): void {
-    this.onSubmit();
+    if (!environment.production) {
+      console.log(this.userName.value);
+      this.userName.value = 34567;
+      this.password.value = 'test';
+      this.onSubmit();
+    }
   }
 
   ngOnInit() {
-
   }
 
-  onSubmit() {
-    this.login();
-  }
-
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Erreur d\'authentification',
-      message: 'Le nom d\'utilisateur ou votre mot de passe n\'est pas correct',
-      buttons: [
-        {
-          text: 'Fermer',
-          role: 'cancel',
-          id: 'cancel-button',
-        }
-      ]
-    });
-
-    await alert.present();
-
-  }
-
-  async login() {
+  async onSubmit() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Patienter pendant la connexion',
@@ -78,5 +64,23 @@ export class LoginPage implements OnInit, AfterViewInit {
         loading.dismiss();
       });
     // }, 2000);
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Erreur d\'authentification',
+      message: 'Le nom d\'utilisateur ou votre mot de passe n\'est pas correct',
+      buttons: [
+        {
+          text: 'Fermer',
+          role: 'cancel',
+          id: 'cancel-button',
+        }
+      ]
+    });
+
+    await alert.present();
+
   }
 }

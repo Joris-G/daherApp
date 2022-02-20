@@ -45,6 +45,14 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
   },
+  {
+    path: 'admin',
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ADMIN'
+    },
+    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminPageModule)
+  },
 ];
 
 @NgModule({

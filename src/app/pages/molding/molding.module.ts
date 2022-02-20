@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { MoldingPageRoutingModule } from './molding-routing.module';
-
+import { WebcamModule } from 'ngx-webcam';
 import { MoldingPage } from './molding.page';
 import { SharedUserHeaderModule } from 'src/app/composants/shared-user-header/shared-user-header.module';
 
@@ -15,6 +15,7 @@ import { SharedUserHeaderModule } from 'src/app/composants/shared-user-header/sh
     IonicModule,
     MoldingPageRoutingModule,
     SharedUserHeaderModule,
+    WebcamModule,
   ],
   declarations: [MoldingPage]
 })

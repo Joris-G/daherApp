@@ -6,5 +6,9 @@
     <param name="android-package" value="com.google.cordova.plugin.browsertab.BrowserTab"/>
   </feature>
 
+  <feature name="BarcodeScanner">
+    <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner"/>
+  </feature>
+
   
 </widget>

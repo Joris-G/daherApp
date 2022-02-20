@@ -13,9 +13,10 @@ export class RequestService {
     const httpHeaders = new HttpHeaders()
       // .append('X-HTTP-Method-Override', 'PUT')
       // .append('Allow', 'GET, POST, PUT, OPTIONS')
-      .append('Access-Control-Request-Method', 'PUT');
-    // .append('Content-Type', 'application/merge-patch+json');
-    // .append('Accept', 'application/json');
+      // .append('Access-Control-Request-Method', 'PUT');
+      .append('Content-Type', 'application/json')
+      // .append('Content-Type', 'application/merge-patch+json');
+      .append('Accept', 'application/json');
     // .append('Access-Control-Allow-Origins', 'http://localhost:8100/');
     // .append('Access-Control-Allow-Credentials', 'true');
 

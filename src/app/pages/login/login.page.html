@@ -12,13 +12,13 @@
                     <ion-label position="floating">Nom d'utilisateur
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input required formControlName="userName" type="text"></ion-input>
+                    <ion-input #userName required formControlName="userName" type="text"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label position="floating">Password
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
-                    <ion-input required formControlName="password" type="password" value="123"></ion-input>
+                    <ion-input #password required formControlName="password" type="password" value="123"></ion-input>
                 </ion-item>
                 <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
                     Se connecter

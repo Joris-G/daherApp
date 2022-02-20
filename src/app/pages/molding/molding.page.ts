@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertButton, AlertController, IonButton, IonInput, LoadingController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, IonButton, IonInput, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Kit } from 'src/app/_interface/kit';
 import { Molding } from 'src/app/_interface/molding';
 import { MoldingTool } from 'src/app/_interface/molding-tool';
@@ -9,7 +9,6 @@ import { MoldingService } from 'src/app/_services/moldings/molding.service';
 import { MoldingToolService } from 'src/app/_services/moldingTools/molding-tool.service';
 import { ScanService } from 'src/app/_services/scan/scan.service';
 import { AuthService } from 'src/app/_services/users/auth.service';
-import { UsersService } from 'src/app/_services/users/users.service';
 
 @Component({
   selector: 'app-molding',
@@ -33,7 +32,6 @@ export class MoldingPage implements OnInit, AfterViewInit {
     public router: Router,
     public navCtrl: NavController,
     private loadingController: LoadingController,
-    private userService: UsersService,
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController,
     public authService: AuthService,
@@ -54,7 +52,6 @@ export class MoldingPage implements OnInit, AfterViewInit {
     } else {
       this.pageTitle = 'Nouveau moulage';
     }
-
   }
 
   async loadMoldingData(moldingId: string) {

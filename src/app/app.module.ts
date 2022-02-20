@@ -20,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     SharedUserHeaderModule,
     BrowserAnimationsModule,
     HttpClientModule,
+
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
