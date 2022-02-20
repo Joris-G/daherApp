@@ -263,7 +263,7 @@ export class MoldingService {
 
   updateMolding(moldingObject: MoldingIri): Promise<Molding> {
     console.log(moldingObject);
-    const url = `${environment.apiServer}moldings`;
+    const url = `${environment.apiServer}moldings/${moldingObject.id}`;
     return this.requestService.createPutRequest(url, moldingObject);
   }
 
