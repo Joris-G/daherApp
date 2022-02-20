@@ -28,6 +28,7 @@ export class LoginPage implements OnInit, AfterViewInit {
       password: ['', Validators.required]
     });
   }
+
   ngAfterViewInit(): void {
     if (!environment.production) {
       console.log(this.userName.value);
