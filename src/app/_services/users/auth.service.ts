@@ -1,8 +1,7 @@
-import { HttpClient, HttpEvent, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/_interface/user';
 import { environment } from 'src/environments/environment';
-import { UsersService } from './users.service';
 import user from 'src/assets/fakeDatas/user.json';
 
 @Injectable({
@@ -13,16 +12,13 @@ export class AuthService {
   public isAuth: boolean;
   public authUser: User;
   constructor(
-    private userService: UsersService,
     private http: HttpClient
   ) { }
 
   authenticate(userName: string, password: string) {
     console.log(userName, password);
     return new Promise<boolean>((resolve, reject) => {
-      // this.isAuth = true;
-      // resolve(true);
-      // return;
+      console.log(environment);
       if (environment.production) {
         const httpHeaders = new HttpHeaders()
           // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
@@ -38,6 +34,8 @@ export class AuthService {
           },
             (error) => {
               console.log(error);
+              this.authUser = null;
+              this.isAuth = false;
               reject();
             });
       } else {

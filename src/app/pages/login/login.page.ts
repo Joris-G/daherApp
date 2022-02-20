@@ -30,9 +30,9 @@ export class LoginPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    console.log(environment);
     if (!environment.production) {
-      console.log(this.userName.value);
-      this.userName.value = 34567;
+      this.userName.value = '34567';
       this.password.value = 'test';
       this.onSubmit();
     }
@@ -48,26 +48,23 @@ export class LoginPage implements OnInit, AfterViewInit {
       spinner: 'lines-sharp'
     });
     await loading.present();
-    console.log('loading');
-    // setTimeout(() => {
     this.authService.authenticate(
       this.loginForm.get('userName').value,
       this.loginForm.get('password').value)
       .then(() => {
-        this.loginForm.reset();
         this.router.navigate(['/home']);
+        this.loginForm.reset();
       },
         () => {
-          this.presentAlertConfirm();
+          this.presentAlertLoginError();
         },
       )
       .finally(() => {
         loading.dismiss();
       });
-    // }, 2000);
   }
 
-  async presentAlertConfirm() {
+  async presentAlertLoginError() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Erreur d\'authentification',
@@ -80,7 +77,6 @@ export class LoginPage implements OnInit, AfterViewInit {
         }
       ]
     });
-
     await alert.present();
 
   }
