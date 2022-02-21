@@ -353,7 +353,7 @@ export class MoldingService {
       id: molding.id,
       kits: molding.kits.map((kit: Kit) => this.kitService.getIri(kit)),
       moldingDay: molding.moldingDay,
-      moldingUser: this.userService.getIri(molding.moldingUser),
+      createdBy: this.userService.getIri(molding.createdBy),
       outillage: this.moldingToolService.getIri(molding.outillage),
       aCuireAv: molding.aCuireAv,
       aDraperAv: molding.aDraperAv,

@@ -26,7 +26,7 @@
                     <span *ngIf="!molding.outillage">Pas d'outillage lié !</span>
                 </ion-text>
                 <ion-text>Date traçabilité : {{molding.moldingDay | date:'dd/MM/yyyy'}}</ion-text>
-                <ion-text>Fait par : {{molding.moldingUser.username}} ({{molding.moldingUser.matricule}})</ion-text>
+                <ion-text>Fait par : {{molding.createdBy.username}} ({{molding.createdBy.matricule}})</ion-text>
                 <ion-text *ngIf="molding.updatedAt">
                     Date de mise à jour : {{molding.updatedAt | date: 'dd/MM/yyyy'}}
                 </ion-text>

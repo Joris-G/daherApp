@@ -44,7 +44,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
       kits: [],
       moldingDay: new Date(),
       outillage: null,
-      moldingUser: null
+      createdBy: null
     };
 
     const id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -218,7 +218,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
           console.log('le moulage à le statut : ', moldingDatasStatus);
           if (moldingDatasStatus) {
             // sauvegarder le moulage en base de donnée
-            this.molding.moldingUser = this.authService.authUser;
+            this.molding.createdBy = this.authService.authUser;
             if (this.molding.id === null) {
               this.moldingService.saveMolding(this.moldingService.toIri(this.molding))
                 .then((responseMolding: Molding) => {
