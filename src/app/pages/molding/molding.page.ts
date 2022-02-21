@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, IonButton, IonInput, LoadingController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, AlertInput, IonButton, IonInput, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Kit } from 'src/app/_interface/kit';
 import { Molding } from 'src/app/_interface/molding';
 import { MoldingTool } from 'src/app/_interface/molding-tool';
+import { AlertService } from 'src/app/_services/divers/alert.service';
 import { KitService } from 'src/app/_services/kits/kit.service';
 import { MoldingService } from 'src/app/_services/moldings/molding.service';
 import { MoldingToolService } from 'src/app/_services/moldingTools/molding-tool.service';
@@ -35,6 +36,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController,
     public authService: AuthService,
+    private alertService: AlertService
   ) {
     this.molding =
     {
@@ -80,6 +82,10 @@ export class MoldingPage implements OnInit, AfterViewInit {
 
   associateToolClick() {
     this.associateToolAlertPrompt();
+  }
+
+  associateCoreClick() {
+    this.alertService.simpleAlert('Fonction inactive', 'La fonction permettra de lier un nida au moulage');
   }
 
 
@@ -129,6 +135,9 @@ export class MoldingPage implements OnInit, AfterViewInit {
       .then((tool: MoldingTool) => {
         this.molding.outillage = tool;
         this.presentToast('Outillage associé !');
+      })
+      .catch(() => {
+
       });
   }
 

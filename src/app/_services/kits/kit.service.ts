@@ -73,7 +73,7 @@ export class KitService {
 
   getKitById(id: string) {
     return new Promise((resolve, reject) => {
-      if (environment.production) {
+      if (!environment.production) {
         const httpHeaders = new HttpHeaders()
           .set('content-type', 'application/json');
         this.http.get(`${environment.apiServer}datas_kits?page=1&idMM=${id}`, { headers: httpHeaders })
@@ -115,8 +115,7 @@ export class KitService {
 
 
   isPerim(dateToCheck: Date, baseDate: Date): boolean {
-    console.log(dateToCheck, baseDate);
-    return (dateToCheck < baseDate);
+    return (new Date(dateToCheck) < new Date(baseDate));
   }
 
   /**

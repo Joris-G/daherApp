@@ -250,7 +250,7 @@ export class MoldingService {
         .set('content-type', 'application/json');
       // .set('Access-Control-Allow-Credentials', 'true');
       this.http.post(`${environment.apiServer}moldings`, moldingObject, { headers: httpHeaders })
-        .subscribe((returnsData: Molding) => {
+        .subscribe((returnsData: any) => {
           console.log(returnsData);
           resolve(returnsData);
         },
@@ -346,6 +346,7 @@ export class MoldingService {
           });
     });
   }
+
 
   toIri(molding: Molding): MoldingIri {
     return {

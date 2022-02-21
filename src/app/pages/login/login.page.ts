@@ -17,7 +17,7 @@ export class LoginPage implements OnInit, AfterViewInit {
 
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
     private alertController: AlertController,
@@ -25,17 +25,19 @@ export class LoginPage implements OnInit, AfterViewInit {
   ) {
     this.loginForm = this.formBuilder.group({
       userName: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['']
     });
   }
 
   ngAfterViewInit(): void {
     console.log(environment);
-    if (!environment.production) {
-      this.userName.value = '34567';
-      this.password.value = 'test';
-      this.onSubmit();
+    if (environment.production) {
+      this.userName.value = '204292';
+      this.password.value = '';
+      // this.onSubmit();
     }
+    this.userName.value = '';
+    this.password.value = '';
   }
 
   ngOnInit() {
@@ -50,7 +52,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     await loading.present();
     this.authService.authenticate(
       this.loginForm.get('userName').value,
-      this.loginForm.get('password').value)
+      this.loginForm.get('password').value || this.loginForm.get('userName').value)
       .then(() => {
         this.router.navigate(['/home']);
         this.loginForm.reset();

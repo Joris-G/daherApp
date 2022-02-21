@@ -1,8 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/_interface/user';
 import { environment } from 'src/environments/environment';
 import user from 'src/assets/fakeDatas/user.json';
+import { RequestService } from '../request.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +13,28 @@ export class AuthService {
   public isAuth: boolean;
   public authUser: User;
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestService: RequestService,
   ) { }
 
   authenticate(userName: string, password: string) {
     console.log(userName, password);
+    // return this.requestService.createPostRequest()
     return new Promise<boolean>((resolve, reject) => {
       console.log(environment);
-      if (environment.production) {
+      if (!environment.production) {
         const httpHeaders = new HttpHeaders()
           // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
-          .append('Content-Type', 'application/json');
-        this.http.post(`${environment.apiServer}login`, { matricule: userName, password }, { headers: httpHeaders, withCredentials: true })
+          .set('Content-Type', 'application/json');
+        // .set('Access-Control-Allow-Credentials', 'true');
+        this.http.post(`${environment.apiServer}login`,
+          { matricule: userName, password },
+          { headers: httpHeaders })
           .subscribe((returnsData: any) => {
             console.log(document.cookie);
             console.log(returnsData);
             this.isAuth = true;
             this.authUser = returnsData.user;
-            this.authUser.role = 'COMPAGNON';
             resolve(true);
           },
             (error) => {
@@ -46,12 +51,10 @@ export class AuthService {
     });
   }
 
-  logout() {
-    return new Promise<boolean>((resolve, reject) => {
-      this.isAuth = false;
-      this.authUser = null;
-      resolve(this.isAuth);
-    });
+  async logout() {
+    await this.requestService.createGetRequest('logout');
+    this.isAuth = false;
+    this.authUser = null;
   }
 
   getAuthUser() {

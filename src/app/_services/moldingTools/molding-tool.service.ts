@@ -41,6 +41,22 @@ export class MoldingToolService {
     });
   }
 
+  getAllTools() {
+    return new Promise((resolve, reject) => {
+      const httpHeaders = new HttpHeaders()
+        .append('content-type', 'application/json');
+      // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
+      // .append('Access-Control-Allow-methods', 'GET, OPTIONS, POST, PUT, PATCH, DELETE');
+      this.http.get(`${environment.apiServer}molding_tools`, { headers: httpHeaders })
+        .subscribe((returnsData: any) => {
+          resolve(returnsData);
+        },
+          (error) => {
+            console.log(error);
+            reject();
+          });
+    });
+  }
   getIri(moldingTool: MoldingTool): string {
     return `/api/molding_tools/${moldingTool.id}`;
   }

@@ -11,6 +11,10 @@
                 <ion-icon slot="start" name="link-outline"></ion-icon>
                 OUTILLAGE
             </ion-button>
+            <ion-button disabled="true" (click)="associateCoreClick()" fill=clear size=default>
+                <ion-icon slot="start" name="link-outline"></ion-icon>
+                NIDA
+            </ion-button>
         </ion-buttons>
     </ion-toolbar>
 
@@ -24,7 +28,10 @@
             <ion-label>A cuire avant le</ion-label>
         </ion-item>
         <ion-item *ngFor="let kit of molding.kits; let index = index">
-            <ion-label class="ion-hide-md-down">{{kit.referenceSAP}} <span *ngIf="kit === molding.matDrap">(Drap)</span><span *ngIf="kit === molding.matPolym">(Pol)</span></ion-label>
+            <ion-label class="ion-hide-md-down">{{kit.referenceSAP}}
+                <ion-text class="strong" *ngIf="kit === molding.matDrap">(Drap)</ion-text>
+                <ion-text class="strong" *ngIf="kit === molding.matPolym">(Pol)</ion-text>
+            </ion-label>
             <ion-label>{{kit.designationSAP}}</ion-label>
             <ion-label [color]="kitService.isPerim(kit.peremptionMoins18, molding.moldingDay) ? 'danger' : 'dark'">{{kit.peremptionMoins18 | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
             <ion-label [color]="kitService.isPerim(kit.aDrapAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aDrapAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
@@ -63,8 +70,8 @@
     <ion-toolbar class="ion-space-between">
         <ion-item lines="none">
             <ion-label>Outillage : {{molding?.outillage?.sapToolNumber}}</ion-label>
-            <ion-label>A draper avant le : {{molding?.aDraperAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-            <ion-label>A cuire avant le : {{molding?.aCuireAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
+            <ion-label class="strong">A draper avant le : {{molding?.aDraperAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
+            <ion-label class="strong">A cuire avant le : {{molding?.aCuireAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
         </ion-item>
     </ion-toolbar>
     <ion-toolbar color=light>

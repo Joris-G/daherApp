@@ -25,7 +25,7 @@ const routes: Routes = [
     path: 'molding/:id',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: 'COMPAGNON'
+      expectedRole: 'ROLE_USER'
     },
     loadChildren: () => import('./pages/molding/molding.module')
       .then(m => m.MoldingPageModule)
@@ -49,7 +49,7 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ADMIN'
+      expectedRole: 'ROLE_ADMIN'
     },
     loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminPageModule)
   },

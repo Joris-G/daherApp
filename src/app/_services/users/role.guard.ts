@@ -16,9 +16,8 @@ export class RoleGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     const expectedRole = route.data.expectedRole;
-    console.log(route.data.expectedRole, expectedRole);
     if (
-      !this.auth.isAuth || this.auth.authUser.role !== expectedRole
+      !this.auth.isAuth || this.auth.authUser.roles.find(role => role === expectedRole) !== expectedRole
     ) {
       this.router.navigate(['/home']);
       return false;

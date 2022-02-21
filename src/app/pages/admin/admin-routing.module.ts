@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: AdminPage
+  },
+  {
+    path: 'admin-user',
+    loadChildren: () => import('./admin-user/admin-user.module').then(m => m.AdminUserPageModule)
+  },
+  {
+    path: 'admin-user',
+    loadChildren: () => import('./admin-user/admin-user.module').then(m => m.AdminUserPageModule)
   }
 ];
 
@@ -14,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminPageRoutingModule {}
+export class AdminPageRoutingModule { }

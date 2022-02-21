@@ -8,12 +8,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-grid class="full-height ion-align-items-center ion-justify-content-center">
+    <ion-grid class="ion-align-items-center ion-justify-content-center">
         <ion-row class="full-height">
             <ion-card class="ion-padding">
                 <ion-card-header>
                     <ion-card-title color=primary>Fiche de renseignements</ion-card-title>
-                    <ion-text color=" medium ">
+                    <ion-text color="medium">
                         <h3>La création du compte est soumise à validation du chef d'équipe ou de l'administrateur</h3>
                     </ion-text>
                 </ion-card-header>
@@ -22,29 +22,39 @@
                     <ion-slides #slider pager="false" [options]="slideOpts">
                         <ion-slide>
                             <form [formGroup]="roleForm" (submit)="submitRole()">
-                                <ion-radio-group required formControlName="role" value=" ">
-                                    <ion-list-header>
-                                        <ion-label color=secondary>Rôle demandé
-                                            <ion-text color="danger">*</ion-text>
-                                        </ion-label>
-                                    </ion-list-header>
-                                    <ion-item>
-                                        <ion-label>Méthode</ion-label>
-                                        <ion-radio value="method"></ion-radio>
-                                    </ion-item>
-                                    <ion-item>
-                                        <ion-label>Chef d'équipe</ion-label>
-                                        <ion-radio value="teamLeader"></ion-radio>
-                                    </ion-item>
-                                    <ion-item>
-                                        <ion-label>Compagnon</ion-label>
-                                        <ion-radio value="worker"></ion-radio>
-                                    </ion-item>
-                                </ion-radio-group>
-                                <ion-button color=primary type=submit expand="full" fill="solid" shape="round" strong [disabled]="roleForm.invalid">
-                                    Suivant
-                                </ion-button>
-
+                                <ion-grid class="ion-align-items-center ion-justify-content-center">
+                                    <ion-row>
+                                        <ion-col size="6">
+                                            <ion-radio-group required formControlName="service">
+                                                <ion-list-header>
+                                                    <ion-label color=secondary>Service
+                                                        <ion-text color="danger">*</ion-text>
+                                                    </ion-label>
+                                                </ion-list-header>
+                                                <ion-item *ngFor="let service of services">
+                                                    <ion-label>{{service.Nom}}</ion-label>
+                                                    <ion-radio [value]="service.id"></ion-radio>
+                                                </ion-item>
+                                            </ion-radio-group>
+                                        </ion-col>
+                                        <ion-col size="6">
+                                            <ion-radio-group required formControlName="poste">
+                                                <ion-list-header>
+                                                    <ion-label color=secondary>Rôle
+                                                        <ion-text color="danger">*</ion-text>
+                                                    </ion-label>
+                                                </ion-list-header>
+                                                <ion-item *ngFor="let role of roles">
+                                                    <ion-label>{{role.libelle}}</ion-label>
+                                                    <ion-radio [value]="role.id"></ion-radio>
+                                                </ion-item>
+                                            </ion-radio-group>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-button color=primary type=submit expand="full" fill="solid" shape="round" strong [disabled]="roleForm.invalid">
+                                        Suivant
+                                    </ion-button>
+                                </ion-grid>
                             </form>
                         </ion-slide>
                         <ion-slide>
@@ -69,11 +79,16 @@
                                         </ion-label>
                                         <ion-input required formControlName="matricule" type="text"></ion-input>
                                     </ion-item>
+                                    <ion-item *ngIf="roleForm.value.poste !==1">
+                                        <ion-label color=secondary position="floating">Mot de passe
+                                            <ion-text color="danger">*</ion-text>
+                                        </ion-label>
+                                        <ion-input formControlName="password" type="text"></ion-input>
+                                    </ion-item>
                                 </ion-list>
                                 <ion-button expand="full" fill="solid" shape="round" strong clor=primary type="submit" [disabled]="identityForm?.invalid">
                                     {{(language ==='FR') ? "S'enregistrer" : "Register"}}
                                 </ion-button>
-
                             </form>
                         </ion-slide>
                     </ion-slides>
@@ -83,12 +98,12 @@
         </ion-row>
     </ion-grid>
 </ion-content>
-<ion-footer>
+<!-- <ion-footer>
     <ion-toolbar>
-        <!-- <ion-button (click)="onClick()">
+         <ion-button (click)="onClick()">
   <ion-icon slot="start" name="add"></ion-icon>
   {{OtherLanguage}}
-</ion-button> -->
+</ion-button>
         <ion-button slot=end (click)="switchToEnglish()" fill="clear" shape="round">
             EN
         </ion-button>
@@ -96,4 +111,4 @@
             FR
         </ion-button>
     </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

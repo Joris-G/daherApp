@@ -1,11 +1,15 @@
 export interface User {
-  id: number;
-  username: string;
+  id?: number;
+  username?: string;
   nom: string;
   prenom: string;
   matricule: number;
-  mail: string;
-  role: string;
+  mail?: string;
+  roles?: string[];
+  poste?: string;
+  service?: string;
+  password?: string;
+  programmeAvion?: string[];
 }
 
 
