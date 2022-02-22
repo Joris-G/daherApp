@@ -6,7 +6,7 @@
                 <!-- <ion-icon slot="start" name="scan-outline"></ion-icon> -->
                 {{scanButtonText}}
             </ion-button>
-            <ion-input lines=true #scanInput type="text" placeholder="Id du kit" (change)="scanInputAction()" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()"></ion-input>
+            <ion-input #scanInput lines=true type="text" placeholder="Id du kit" (ionChange)="scanInputAction(scanInput.value.toString())" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()"></ion-input>
             <ion-button (click)="associateToolClick()" fill=clear size=default>
                 <ion-icon slot="start" name="link-outline"></ion-icon>
                 OUTILLAGE

@@ -160,13 +160,13 @@ export class MoldingPage implements OnInit, AfterViewInit {
   }
 
 
-  async scanInputAction() {
+  async scanInputAction(inputKit: string) {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Patienter pendant le chargement du kit',
     });
     await loading.present();
-    this.scanService.getScanInput(this.scanInput.value.toString())
+    this.scanService.getScanInput(inputKit)
       .then((kit: Kit) => {
         if (!this.kitService.kitIsInKits(kit, this.molding.kits)) {
           this.molding.kits.push(kit);
@@ -424,17 +424,13 @@ export class MoldingPage implements OnInit, AfterViewInit {
           text: 'Valider',
           cssClass: ['ion-color-primary', 'button', 'button-solid'],
           handler: (data) => {
-            this.scanInputAction();
+            if (data.kitnumber !== '') { this.scanInputAction(data.kitnumber); };
           }
         }
       ]
     });
 
     await alert.present().then(() => {
-      const toolNumberInput = document.getElementById('toolNumberInput');
-      if (toolNumberInput) {
-        toolNumberInput.focus();
-      }
     });
   }
 }
