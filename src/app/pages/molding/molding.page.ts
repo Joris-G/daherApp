@@ -131,6 +131,9 @@ export class MoldingPage implements OnInit, AfterViewInit {
 
   setLinkedTool(toolNumber: string) {
     console.log(toolNumber);
+    if (toolNumber.startsWith('OT0')) {
+      toolNumber = toolNumber.substr(3);
+    }
     this.moldingToolService.getToolByToolNumber(toolNumber)
       .then((tool: MoldingTool) => {
         this.molding.outillage = tool;
