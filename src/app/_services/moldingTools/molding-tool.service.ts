@@ -3,12 +3,6 @@ import { Injectable } from '@angular/core';
 import { MoldingTool } from 'src/app/_interface/molding-tool';
 import { environment } from 'src/environments/environment';
 
-const TOOL_TEST: MoldingTool = {
-  id: 1234,
-  identification: '34567',
-  sapToolNumber: 'OT096932'
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -27,7 +21,6 @@ export class MoldingToolService {
             const returnMoldingTool: MoldingTool = returnsData[0];
             console.log(returnMoldingTool);
             resolve(returnMoldingTool);
-            // resolve(TOOL_TEST);
           } else if (returnsData.length > 1) {
             console.log('Il y a plus d\'un outillage');
           } else {

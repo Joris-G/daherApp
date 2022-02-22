@@ -238,6 +238,9 @@ export class MoldingPage implements OnInit, AfterViewInit {
                   resolve();
                 },
                   () => {
+                    this.alertService.simpleAlert(
+                      'Sauvegarde échouée !',
+                      'La sauvegarde ne sest pas correctement effectuée. Veuillez recommencer');
                     console.error('tout n\'est pas Ok la mise à jour du moulage a échouée');
                     reject();
                   });

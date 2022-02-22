@@ -22,32 +22,26 @@ export class AuthService {
     // return this.requestService.createPostRequest()
     return new Promise<boolean>((resolve, reject) => {
       console.log(environment);
-      if (environment.production) {
-        const httpHeaders = new HttpHeaders()
-          // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
-          .set('Content-Type', 'application/json');
-        // .set('Access-Control-Allow-Credentials', 'true');
-        this.http.post(`${environment.apiServer}login`,
-          { matricule: userName, password },
-          { headers: httpHeaders })
-          .subscribe((returnsData: any) => {
-            console.log(document.cookie);
-            console.log(returnsData);
-            this.isAuth = true;
-            this.authUser = returnsData.user;
-            resolve(true);
-          },
-            (error) => {
-              console.log(error);
-              this.authUser = null;
-              this.isAuth = false;
-              reject();
-            });
-      } else {
-        this.isAuth = true;
-        this.authUser = user;
-        resolve(true);
-      }
+      const httpHeaders = new HttpHeaders()
+        // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
+        .set('Content-Type', 'application/json');
+      // .set('Access-Control-Allow-Credentials', 'true');
+      this.http.post(`${environment.apiServer}login`,
+        { matricule: userName, password },
+        { headers: httpHeaders })
+        .subscribe((returnsData: any) => {
+          console.log(document.cookie);
+          console.log(returnsData);
+          this.isAuth = true;
+          this.authUser = returnsData.user;
+          resolve(true);
+        },
+          (error) => {
+            console.log(error);
+            this.authUser = null;
+            this.isAuth = false;
+            reject();
+          });
     });
   }
 

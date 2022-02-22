@@ -8,7 +8,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-menu-button color="light"></ion-menu-button>
-        <ion-img class="logo" src="/assets/images/logoDaher.png" (click)="navigateHome()">
+        <ion-img class="logo" src="assets/images/logoDaher.png" (click)="navigateHome()">
         </ion-img>
         <ion-title class="ion-align-center">Feuille de traçabilité moulage</ion-title>
         <svg slot=end id="barcode"></svg>
@@ -22,7 +22,7 @@
             <div class="flex-vertical">
                 <ion-text>ID Moulage : {{molding.id}}</ion-text>
                 <ion-text>Outillage :
-                    <span *ngIf="molding.outillage">{{molding.outillage?.sapToolNumber}} - {{molding.outillage?.identification}}</span>
+                    <span *ngIf="molding.outillage">{{molding.outillage?.sapToolNumber}} - {{molding.outillage?.designation}}</span>
                     <span *ngIf="!molding.outillage">Pas d'outillage lié !</span>
                 </ion-text>
                 <ion-text>Date traçabilité : {{molding.moldingDay | date:'dd/MM/yyyy'}}</ion-text>
