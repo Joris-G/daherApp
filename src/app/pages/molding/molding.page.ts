@@ -162,6 +162,12 @@ export class MoldingPage implements OnInit, AfterViewInit {
     this.scanService.scanState = true;
   }
 
+  onKitInputChange() {
+    this.scanInputAction(this.scanInput.value.toString())
+      .finally(() => {
+        this.scanInput.setFocus();
+      });
+  }
 
   async scanInputAction(inputKit: string) {
     const loading = await this.loadingController.create({

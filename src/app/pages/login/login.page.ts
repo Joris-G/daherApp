@@ -30,8 +30,9 @@ export class LoginPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.userName.value = '';
-    this.password.value = '';
+    this.userName.value = '204292';
+    this.password.value = 'test';
+    this.onSubmit();
   }
 
   ngOnInit() {
