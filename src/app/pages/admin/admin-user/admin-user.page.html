@@ -1,9 +1,98 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>adminUser</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>Administration des utilisateurs</ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+    <ion-grid false>
+        <ion-row>
+            <ion-col size="8">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
+                        <ion-card-title>Utilisateurs non validé</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <table mat-table [dataSource]="users | NotActive" class="mat-elevation-z8">
+                            <!-- Username Column -->
+                            <ng-container matColumnDef="username">
+                                <th mat-header-cell *matHeaderCellDef> UserName </th>
+                                <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+                            </ng-container>
+                            <!-- nom Column -->
+                            <ng-container matColumnDef="nom">
+                                <th mat-header-cell *matHeaderCellDef> Nom </th>
+                                <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+                            </ng-container>
+                            <!-- prenom Column -->
+                            <ng-container matColumnDef="prenom">
+                                <th mat-header-cell *matHeaderCellDef> Prénom </th>
+                                <td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
+                            </ng-container>
+                            <!-- matricule Column -->
+                            <ng-container matColumnDef="matricule">
+                                <th mat-header-cell *matHeaderCellDef> Matricule </th>
+                                <td mat-cell *matCellDef="let element"> {{element.matricule}} </td>
+                            </ng-container>
+                            <!-- matricule Column -->
+                            <ng-container matColumnDef="mail">
+                                <th mat-header-cell *matHeaderCellDef> Mail </th>
+                                <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
+                            </ng-container>
+                            <!-- roles Column -->
+                            <ng-container matColumnDef="roles">
+                                <th mat-header-cell *matHeaderCellDef> Roles </th>
+                                <td mat-cell *matCellDef="let element"> {{element.roles}} </td>
+                            </ng-container>
+                            <!-- commands Column -->
+                            <ng-container matColumnDef="commands">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <ion-button expand="block" fill="solid" shape="round">
+                                        Valider
+                                    </ion-button>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedUserInactiveColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedUserInactiveColumns;"></tr>
+                        </table>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+            <ion-col size="4">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>Tableau de bord</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-card>
+                            <ion-card-header>
+                                <ion-card-subtitle>Nouveaux inscrits</ion-card-subtitle>
+                            </ion-card-header>
+                            <ion-card-content>
+                                <canvas #newUsers></canvas>
+                            </ion-card-content>
+                        </ion-card>
+
+                        <ion-card>
+                            <ion-card-header>
+                                <ion-card-subtitle>Nombre de connexions par jour</ion-card-subtitle>
+                            </ion-card-header>
+                            <ion-card-content>
+                                GRAPHIQUE ICI
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+
 
 </ion-content>
