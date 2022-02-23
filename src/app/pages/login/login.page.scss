@@ -1,4 +1,10 @@
 .full-height {
     height: 100%;
-    display: flex !important
+    display: flex !important;
+    flex-direction: column;
+}
+
+ion-title {
+    font-size: 60px !important;
+    text-transform: uppercase;
 }
