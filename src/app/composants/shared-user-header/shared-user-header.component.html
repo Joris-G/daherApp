@@ -10,7 +10,7 @@
             <ion-icon name="person-circle-outline"></ion-icon>
             <ion-label color=light>{{user?.username}}</ion-label>
         </ion-chip>
-        <ion-popover [isOpen]="isPopoverOpen" trigger="button-profil" alignment="end" side="bottom">
+        <ion-popover slot=end [isOpen]="isPopoverOpen" trigger="button-profil" alignment="end" side="bottom">
             <ng-template>
                 <ion-content>
                     <ion-list>

@@ -1,12 +1,12 @@
 <app-shared-user-header [page]="pageTitle"></app-shared-user-header>
-<ion-content>
+<ion-content [fullscreen]="true" color=medium>
     <ion-toolbar color=light class="ion-hide-md-down">
         <ion-buttons slot="start" collapse="true">
             <ion-button #scanButton fill=solid size=default (click)="switchScanState()">
                 <!-- <ion-icon slot="start" name="scan-outline"></ion-icon> -->
                 {{scanButtonText}}
             </ion-button>
-            <ion-input #scanInput lines=true type="text" placeholder="Id du kit" (change)="scanInputAction(scanInput.value.toString())" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()"></ion-input>
+            <ion-input #scanInput lines=true type="text" placeholder="Id du kit" (change)="onKitInputChange()" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()"></ion-input>
             <ion-button (click)="associateToolClick()" fill=clear size=default>
                 <ion-icon slot="start" name="link-outline"></ion-icon>
                 OUTILLAGE
@@ -20,7 +20,7 @@
 
 
     <ion-list *ngIf="molding?.kits">
-        <ion-item>
+        <ion-item class="ion-no-padding">
             <ion-label class="ion-hide-md-down">Référence Sap</ion-label>
             <ion-label>Désignation</ion-label>
             <ion-label>Péremption à -18°C</ion-label>
@@ -43,6 +43,9 @@
     </ion-list>
 </ion-content>
 
+
+
+<!-- footer -->
 <ion-tab-bar slot="bottom" class="ion-hide-md-up">
     <ion-tab-button tab="schedule">
         <ion-icon name="link"></ion-icon>

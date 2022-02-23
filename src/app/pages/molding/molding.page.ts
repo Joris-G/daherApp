@@ -131,6 +131,9 @@ export class MoldingPage implements OnInit, AfterViewInit {
 
   setLinkedTool(toolNumber: string) {
     console.log(toolNumber);
+    if (toolNumber.startsWith('OT0')) {
+      toolNumber = toolNumber.substr(3);
+    }
     this.moldingToolService.getToolByToolNumber(toolNumber)
       .then((tool: MoldingTool) => {
         this.molding.outillage = tool;
@@ -159,6 +162,12 @@ export class MoldingPage implements OnInit, AfterViewInit {
     this.scanService.scanState = true;
   }
 
+  onKitInputChange() {
+    this.scanInputAction(this.scanInput.value.toString())
+      .finally(() => {
+        this.scanInput.setFocus();
+      });
+  }
 
   async scanInputAction(inputKit: string) {
     const loading = await this.loadingController.create({
