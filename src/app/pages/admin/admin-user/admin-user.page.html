@@ -52,8 +52,11 @@
                             <ng-container matColumnDef="commands">
                                 <th mat-header-cell *matHeaderCellDef> </th>
                                 <td mat-cell *matCellDef="let element">
-                                    <ion-button expand="block" fill="solid" shape="round">
+                                    <ion-button size=small expand="block" fill="solid" shape="round" (click)="confirmUser(element, true)">
                                         Valider
+                                    </ion-button>
+                                    <ion-button size=small color=danger expand="block" fill="solid" shape="round" (click)="confirmUser(element, false)">
+                                        Rejeter
                                     </ion-button>
                                 </td>
                             </ng-container>

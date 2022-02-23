@@ -13,7 +13,7 @@ import { UsersService } from 'src/app/_services/users/users.service';
   templateUrl: './admin-user.page.html',
   styleUrls: ['./admin-user.page.scss'],
 })
-export class AdminUserPage implements OnInit, AfterViewInit, AfterViewChecked, AfterContentChecked, AfterContentInit {
+export class AdminUserPage implements OnInit {
   @ViewChild('newUsers') private newUsersCanvas: ElementRef;
 
   public users: User[];
@@ -70,20 +70,12 @@ export class AdminUserPage implements OnInit, AfterViewInit, AfterViewChecked, A
 
       });
   }
-  ngAfterContentInit(): void {
-    // this.lineChartMethod();
-  }
-  ngAfterContentChecked(): void {
-    // this.lineChartMethod();
-  }
-  ngAfterViewInit(): void {
-    this.lineChartMethod();
-  }
-  ngAfterViewChecked(): void {
-    // this.lineChartMethod();
-  }
 
   ngOnInit() {
+  }
+
+  confirmUser(element: User, state: boolean) {
+    console.log(element, state);
   }
 
   createWeeklyLabel(): string[] {
@@ -105,53 +97,21 @@ export class AdminUserPage implements OnInit, AfterViewInit, AfterViewChecked, A
       const intermediateEndDate = new Date(startDate);
       intermediateEndDate.setDate(intermediateEndDate.getDate() + 7);
       this.users.forEach((user) => {
-        console.log(
-          this.datePipe.transform(user.createdAt, 'dd/MM'),
-          this.datePipe.transform(startDate, 'dd/MM'),
-          this.datePipe.transform(intermediateEndDate, 'dd/MM')
-        );
-        console.log((user.createdAt >= startDate), (user.createdAt <= intermediateEndDate));
+        // console.log(
+        //   this.datePipe.transform(user.createdAt, 'dd/MM'),
+        //   this.datePipe.transform(startDate, 'dd/MM'),
+        //   this.datePipe.transform(intermediateEndDate, 'dd/MM')
+        // );
+        // console.log((user.createdAt >= startDate), (user.createdAt <= intermediateEndDate));
       });
 
       const filterUsers = this.users.filter((user) => (user.createdAt > startDate && user.createdAt <= intermediateEndDate)
       );
-      console.log(filterUsers);
+      // console.log(filterUsers);
       const totalUserWeek = filterUsers.length;
       totaluserPerWeekData.push(totalUserWeek);
       startDate = intermediateEndDate;
     }
     return totaluserPerWeekData;
-  }
-
-  lineChartMethod() {
-    // this.lineChart = new Chart(this.newUsersCanvas.nativeElement, {
-    //   type: 'line',
-    //   data: {
-    //     labels: this.weeklyLabels,
-    //     datasets: [
-    //       {
-    //         label: 'Evolution du nombre d\'inscription',
-    //         fill: false,
-    //         backgroundColor: 'rgba(75,192,192,0.4)',
-    //         borderColor: 'rgba(75,192,192,1)',
-    //         borderCapStyle: 'butt',
-    //         borderDash: [],
-    //         borderDashOffset: 0.0,
-    //         borderJoinStyle: 'miter',
-    //         pointBorderColor: 'rgba(75,192,192,1)',
-    //         pointBackgroundColor: '#fff',
-    //         pointBorderWidth: 1,
-    //         pointHoverRadius: 5,
-    //         pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-    //         pointHoverBorderColor: 'rgba(220,220,220,1)',
-    //         pointHoverBorderWidth: 2,
-    //         pointRadius: 1,
-    //         pointHitRadius: 10,
-    //         data: this.weeklyUsers,
-    //         spanGaps: false,
-    //       }
-    //     ]
-    //   }
-    // });
   }
 }
