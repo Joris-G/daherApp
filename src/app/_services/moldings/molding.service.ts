@@ -347,6 +347,9 @@ export class MoldingService {
     });
   }
 
+  getMoldings() {
+    return this.requestService.createGetRequest('moldings');
+  }
 
   toIri(molding: Molding): MoldingIri {
     return {
