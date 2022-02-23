@@ -44,9 +44,7 @@ export class UsersService {
   }
 
   getUsers() {
-    return new Promise<User>((resolve, reject) => {
-      const httpHeaders = new HttpHeaders()
-        .set('content-type', 'application/json');
+    return new Promise<User[]>((resolve, reject) => {
       this.requestService.createGetRequest(`users`)
         .then((returnsData: any) => {
           console.log(returnsData);

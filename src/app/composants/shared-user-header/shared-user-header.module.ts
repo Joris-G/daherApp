@@ -10,9 +10,8 @@ import { IonicModule } from '@ionic/angular';
     SharedUserHeaderComponent,
   ],
   imports: [
-
     IonicModule,
   ],
-  exports: [SharedUserHeaderComponent,]
+  exports: [SharedUserHeaderComponent]
 })
 export class SharedUserHeaderModule { }

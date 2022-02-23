@@ -1,22 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/_interface/user';
 import { AuthService } from 'src/app/_services/users/auth.service';
 
 @Component({
-  selector: 'app-shared-user-header',
-  templateUrl: './shared-user-header.component.html',
-  styleUrls: ['./shared-user-header.component.scss'],
+  selector: 'app-shared-admin-header',
+  templateUrl: './shared-admin-header.component.html',
+  styleUrls: ['./shared-admin-header.component.scss'],
 })
-export class SharedUserHeaderComponent implements OnInit {
-
-  @Input() page: string;
+export class SharedAdminHeaderComponent implements OnInit {
   public user: User;
-  public isPopoverOpen = false;
-
   constructor(
     public authService: AuthService,
-    private router: Router) {
+    private router: Router
+  ) {
     this.user = this.authService.authUser;
   }
 

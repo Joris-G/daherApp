@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, IonInput, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/_services/users/auth.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
