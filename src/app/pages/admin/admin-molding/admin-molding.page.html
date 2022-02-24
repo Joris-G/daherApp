@@ -7,13 +7,16 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" color=light>
     <ion-grid false>
         <ion-row>
             <ion-col size="8">
                 <ion-card>
                     <ion-card-header>
-                        <ion-card-title>Liste des moulages</ion-card-title>
+                        <ion-toolbar class=ion-no-margin>
+                            <ion-card-title>Liste des moulages</ion-card-title>
+                            <ion-spinner slot=end *ngIf="moldingListLoading" name="circles"></ion-spinner>
+                        </ion-toolbar>
                     </ion-card-header>
                     <ion-card-content>
                         <table mat-table [dataSource]="moldings" class="mat-elevation-z8">
