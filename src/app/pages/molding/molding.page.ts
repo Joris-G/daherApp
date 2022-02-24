@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatAccordion } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, AlertInput, IonButton, IonInput, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Kit } from 'src/app/_interface/kit';
@@ -19,6 +20,7 @@ import { AuthService } from 'src/app/_services/users/auth.service';
 export class MoldingPage implements OnInit, AfterViewInit {
   @ViewChild('scanInput') scanInput: IonInput;
   @ViewChild('scanButton') scanButton: IonButton;
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 
   public pageTitle: string;
   public scanButtonText: string;
@@ -162,14 +164,20 @@ export class MoldingPage implements OnInit, AfterViewInit {
     this.scanService.scanState = true;
   }
 
-  onKitInputChange() {
-    this.scanInputAction(this.scanInput.value.toString())
-      .finally(() => {
-        this.scanInput.setFocus();
-      });
+  onKitInputChange(inputValue: string) {
+    const typeAction: string = null;
+    // test de la valeur dans le scan. Identifier puis lancer la bonne fonction
+    const regexKit = new RegExp('^([0-9]){8}-[0-9]$');
+    if (inputValue.match(regexKit)) {
+      this.scanInputAction(inputValue, typeAction)
+        .finally(() => {
+          this.scanInput.setFocus();
+        });
+    }
+
   }
 
-  async scanInputAction(inputKit: string) {
+  async scanInputAction(inputKit: string, actionType: string) {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Patienter pendant le chargement du kit',

@@ -1,32 +1,89 @@
 <app-shared-user-header [page]="pageTitle"></app-shared-user-header>
 <ion-content [fullscreen]="true" color=medium>
     <ion-toolbar color=light class="ion-hide-md-down">
-        <ion-buttons slot="start" collapse="true">
-            <ion-button #scanButton fill=solid size=default (click)="switchScanState()">
-                <!-- <ion-icon slot="start" name="scan-outline"></ion-icon> -->
-                {{scanButtonText}}
-            </ion-button>
-            <ion-input #scanInput lines=true type="text" placeholder="Id du kit" (change)="onKitInputChange()" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()"></ion-input>
-            <ion-button (click)="associateToolClick()" fill=clear size=default>
-                <ion-icon slot="start" name="link-outline"></ion-icon>
-                OUTILLAGE
-            </ion-button>
-            <ion-button disabled="true" (click)="associateCoreClick()" fill=clear size=default>
-                <ion-icon slot="start" name="link-outline"></ion-icon>
-                NIDA
-            </ion-button>
-        </ion-buttons>
+        <ion-button slot=start size=small #scanButton fill=solid size=default (click)="switchScanState()">
+            <!-- <ion-icon slot="start" name="scan-outline"></ion-icon> -->
+            {{scanButtonText}}
+        </ion-button>
+        <ion-input slot=start #scanInput type="text" placeholder="Id du kit" (change)="onKitInputChange(scanInput.value.toString())" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()"></ion-input>
+        <ion-button size=small slot=start (click)="associateToolClick()" fill=clear size=default>
+            <ion-icon slot="start" name="link-outline"></ion-icon>
+            OUTILLAGE
+        </ion-button>
+        <ion-button size=small slot=start disabled="false" (click)="associateCoreClick()" fill=clear size=default>
+            <ion-icon slot="start" name="link-outline"></ion-icon>
+            NIDA
+        </ion-button>
+
+        <ion-button size=small slot=end (click)="accordion.openAll()">Expand All</ion-button>
+        <ion-button size=small slot=end (click)="accordion.closeAll()">Collapse All</ion-button>
     </ion-toolbar>
 
+    <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    List des Kits
+                </mat-panel-title>
+                <mat-panel-description>
+                    List des Kits
+                </mat-panel-description>
+            </mat-expansion-panel-header>
 
-    <ion-list *ngIf="molding?.kits">
-        <ion-item class="ion-no-padding">
+            <ion-list *ngIf="molding?.kits">
+                <ion-list-header lines="inset" color=light>
+                    <ion-label class="ion-hide-md-down">Référence Sap</ion-label>
+                    <ion-label>Désignation</ion-label>
+                    <ion-label>Péremption à -18°C</ion-label>
+                    <ion-label>A draper avant le</ion-label>
+                    <ion-label>A cuire avant le</ion-label>
+                </ion-list-header>
+                <ion-item *ngFor="let kit of molding.kits; let index = index">
+                    <ion-label class="ion-hide-md-down">{{kit.referenceSAP}}
+                        <ion-text class="strong" *ngIf="kit === molding.matDrap">(Drap)</ion-text>
+                        <ion-text class="strong" *ngIf="kit === molding.matPolym">(Pol)</ion-text>
+                    </ion-label>
+                    <ion-label>{{kit.designationSAP}}</ion-label>
+                    <ion-label [color]="kitService.isPerim(kit.peremptionMoins18, molding.moldingDay) ? 'danger' : 'dark'">{{kit.peremptionMoins18 | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
+                    <ion-label [color]="kitService.isPerim(kit.aDrapAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aDrapAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
+                    <ion-label [color]="kitService.isPerim(kit.aCuirAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aCuirAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
+                    <ion-button class="ion-hide-md-down" (click)="removeKit(index)">
+                        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                    </ion-button>
+                </ion-item>
+            </ion-list>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Liste des nidas
+                </mat-panel-title>
+                <mat-panel-description>
+                    Liste des nidas
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ion-list>
+                <ion-item>
+                    <ion-label>
+                        ]C201W028551~1020M0225104~5220M0225104001
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
+
+
+    <!-- <ion-list *ngIf="molding?.kits">
+        <ion-list-header lines="inset" color=light>
             <ion-label class="ion-hide-md-down">Référence Sap</ion-label>
             <ion-label>Désignation</ion-label>
             <ion-label>Péremption à -18°C</ion-label>
             <ion-label>A draper avant le</ion-label>
             <ion-label>A cuire avant le</ion-label>
-        </ion-item>
+        </ion-list-header>
         <ion-item *ngFor="let kit of molding.kits; let index = index">
             <ion-label class="ion-hide-md-down">{{kit.referenceSAP}}
                 <ion-text class="strong" *ngIf="kit === molding.matDrap">(Drap)</ion-text>
@@ -40,7 +97,16 @@
                 <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
             </ion-button>
         </ion-item>
-    </ion-list>
+        <ion-list-header lines="inset" color=light>
+            <ion-label>Liste des nidas</ion-label>
+            <ion-label>Numéro de lot</ion-label>
+        </ion-list-header>
+        <ion-item>
+            <ion-label>
+                ]C201W028551~1020M0225104~5220M0225104001
+            </ion-label>
+        </ion-item>
+    </ion-list> -->
 </ion-content>
 
 
