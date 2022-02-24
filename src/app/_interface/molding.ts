@@ -1,3 +1,4 @@
+import { Core } from './core';
 import { Kit } from './kit';
 import { MoldingTool } from './molding-tool';
 import { User } from './user';
@@ -14,6 +15,12 @@ import { User } from './user';
  */
 export interface Molding {
   id: number;
+  composants?:
+  {
+    kits: Kit[];
+    cores: Core[];
+    tools: (MoldingTool | User)[];
+  };
   kits: Kit[];
   moldingDay: Date;
   createdBy: User;
