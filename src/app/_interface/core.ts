@@ -1,4 +1,4 @@
 export interface Core {
-  id?: number;
+  idCore?: number;
   batchNumber: string;
 }

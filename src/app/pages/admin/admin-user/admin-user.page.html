@@ -17,7 +17,7 @@
                         <ion-card-title>Utilisateurs non validé</ion-card-title>
                     </ion-card-header>
                     <ion-card-content>
-                        <table mat-table [dataSource]="users | NotActive" class="mat-elevation-z8">
+                        <table mat-table [dataSource]="users | NotActive">
                             <!-- Username Column -->
                             <ng-container matColumnDef="username">
                                 <th mat-header-cell *matHeaderCellDef> UserName </th>

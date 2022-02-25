@@ -15,12 +15,7 @@ import { User } from './user';
  */
 export interface Molding {
   id: number;
-  composants?:
-  {
-    kits: Kit[];
-    cores: Core[];
-    tools: (MoldingTool | User)[];
-  };
+  cores: Core[];
   kits: Kit[];
   moldingDay: Date;
   createdBy: User;

@@ -6,6 +6,7 @@ import { Kit } from 'src/app/_interface/kit';
 import { Molding } from 'src/app/_interface/molding';
 import { MoldingTool } from 'src/app/_interface/molding-tool';
 import { AlertService } from 'src/app/_services/divers/alert.service';
+import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { KitService } from 'src/app/_services/kits/kit.service';
 import { MoldingService } from 'src/app/_services/moldings/molding.service';
 import { MoldingToolService } from 'src/app/_services/moldingTools/molding-tool.service';
@@ -29,20 +30,21 @@ export class MoldingPage implements OnInit, AfterViewInit {
   constructor(
     public scanService: ScanService,
     public moldingService: MoldingService,
-    public moldingToolService: MoldingToolService,
     public alertController: AlertController,
     public kitService: KitService,
     public router: Router,
     public navCtrl: NavController,
+    private loadingService: LoadingService,
     private loadingController: LoadingController,
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController,
     public authService: AuthService,
-    private alertService: AlertService
+    private alertService: AlertService,
   ) {
     this.molding =
     {
       id: null,
+      cores: [],
       kits: [],
       moldingDay: new Date(),
       outillage: null,
@@ -116,7 +118,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
           text: 'Valider',
           cssClass: ['ion-color-primary', 'button', 'button-solid'],
           handler: (data) => {
-            this.setLinkedTool(data.toolNumber);
+            // this.setLinkedTool(data.toolNumber);
           }
         }
       ]
@@ -130,21 +132,6 @@ export class MoldingPage implements OnInit, AfterViewInit {
     });
   }
 
-
-  setLinkedTool(toolNumber: string) {
-    console.log(toolNumber);
-    if (toolNumber.startsWith('OT0')) {
-      toolNumber = toolNumber.substr(3);
-    }
-    this.moldingToolService.getToolByToolNumber(toolNumber)
-      .then((tool: MoldingTool) => {
-        this.molding.outillage = tool;
-        this.presentToast('Outillage associé !');
-      })
-      .catch(() => {
-
-      });
-  }
 
   switchScanState() {
     this.scanService.scanState = !this.scanService.scanState;
@@ -164,46 +151,38 @@ export class MoldingPage implements OnInit, AfterViewInit {
     this.scanService.scanState = true;
   }
 
-  onKitInputChange(inputValue: string) {
-    const typeAction: string = null;
-    // test de la valeur dans le scan. Identifier puis lancer la bonne fonction
-    const regexKit = new RegExp('^([0-9]){8}-[0-9]$');
-    if (inputValue.match(regexKit)) {
-      this.scanInputAction(inputValue, typeAction)
-        .finally(() => {
-          this.scanInput.setFocus();
-        });
-    }
-
-  }
-
-  async scanInputAction(inputKit: string, actionType: string) {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Patienter pendant le chargement du kit',
-    });
-    await loading.present();
-    this.scanService.getScanInput(inputKit)
-      .then((kit: Kit) => {
-        if (!this.kitService.kitIsInKits(kit, this.molding.kits)) {
-          this.molding.kits.push(kit);
-          this.moldingService.updateDates(this.molding);
-          this.presentToast('Kit ajouté !');
-        } else {
-          this.presentToast('Le kit a déjà été scanné');
-          console.log('kit en doublon');
+  onInputChange(inputValue: string) {
+    this.loadingService.startLoading();
+    this.scanService.getScanInput(inputValue)
+      .then((data: any) => {
+        console.log(data);
+        if (Object.getOwnPropertyNames(data).includes('idMM')) {
+          if (!this.kitService.kitIsInKits(data, this.molding.kits)) {
+            this.molding.kits.push(data);
+            this.moldingService.updateDates(this.molding);
+            // this.presentToast('Kit ajouté !');
+          } else {
+            this.presentToast('Le kit a déjà été scanné');
+            console.log('kit en doublon');
+          }
+        } else if (Object.getOwnPropertyNames(data).includes('sapToolNumber')) {
+          this.molding.outillage = data;
+          this.presentToast('Outillage associé !');
+        } else if (Object.getOwnPropertyNames(data).includes('idCore')) {
+          this.presentToast('Nida Ajouté !');
+          this.molding.cores.push(data);
         }
       })
       .catch(() => {
-        this.wrongKitInputAlert();
-        console.error('Le kit scanné ne semble pas être un kit');
+        console.error('Catch get scan input');
       })
       .finally(() => {
-        this.scanInput.value = '';
-        loading.dismiss();
+        this.loadingService.stopLoading()
+          .then(() => {
+            this.scanInput.value = '';
+            this.scanInput.setFocus();
+          });
       });
-    const { role, data } = await loading.onDidDismiss();
-    // console.log('Loading dismissed!');
   }
 
   removeKit(index: number) {
@@ -216,6 +195,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
     }
   }
 
+
   saveMoldingClick() {
     this.saveMolding()
       .then(() => {
@@ -227,6 +207,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
           this.saveMoldingErrorAlert();
         });
   }
+
 
   saveMolding() {
     return new Promise<void>((resolve, reject) => {
@@ -441,7 +422,7 @@ export class MoldingPage implements OnInit, AfterViewInit {
           text: 'Valider',
           cssClass: ['ion-color-primary', 'button', 'button-solid'],
           handler: (data) => {
-            if (data.kitnumber !== '') { this.scanInputAction(data.kitnumber); };
+            // if (data.kitnumber !== '') { this.scanInputAction(data.kitnumber, 'test'); };
           }
         }
       ]
