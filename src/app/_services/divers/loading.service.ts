@@ -7,7 +7,6 @@ import { LoadingController } from '@ionic/angular';
 export class LoadingService {
   public loading: any;
   constructor(private loadingController: LoadingController) {
-    console.log('test service loading');
   }
 
   startLoading() {

@@ -2,13 +2,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MoldingTool } from 'src/app/_interface/molding-tool';
 import { environment } from 'src/environments/environment';
+import { RequestService } from '../request.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoldingToolService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private requestService: RequestService
+  ) { }
 
   getToolByToolNumber(toolNumber: string) {
     return new Promise((resolve, reject) => {
@@ -52,5 +56,11 @@ export class MoldingToolService {
   }
   getIri(moldingTool: MoldingTool): string {
     return `/api/molding_tools/${moldingTool.id}`;
+  }
+
+  createTool(toolToCreate: MoldingTool) {
+    const tool: any = toolToCreate;
+    tool.sapToolNumber = parseInt(toolToCreate.sapToolNumber.substring(2), 10);
+    return this.requestService.createPostRequest('molding_tools', tool);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { IonSpinner } from '@ionic/angular';
 import { Molding } from 'src/app/_interface/molding';
 import { MoldingService } from 'src/app/_services/moldings/molding.service';
@@ -12,7 +13,8 @@ export class AdminMoldingPage implements OnInit {
   // public properties
   public moldingListLoading: boolean;
   public moldings: Molding[];
-  public displayedMoldingColumns: string[] = ['id', 'moldingDay', 'createdBy', 'outillage'];
+  public dataSource: MatTableDataSource<Molding>;
+  public displayedMoldingColumns: string[] = ['status', 'id', 'moldingDay', 'createdBy', 'outillage', 'commands'];
   // private properties
   private refreshTime = 10000;
   constructor(
@@ -36,6 +38,15 @@ export class AdminMoldingPage implements OnInit {
       .then((moldings: Molding[]) => {
         this.moldings = moldings;
         this.moldingListLoading = false;
+        this.moldings.forEach((molding: Molding) => {
+          molding.status = false;
+        });
+        this.dataSource = new MatTableDataSource(this.moldings);
       });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

@@ -1,11 +1,11 @@
-<ion-header [translucent]="false">
+<ion-header [translucent]="true">
     <ion-toolbar color=primary>
         <ion-buttons slot="start">
-            <ion-menu-button color="light"></ion-menu-button>
+            <ion-menu-button autoHide color="light"></ion-menu-button>
             <ion-img class="ion-hide-sm-down logo" src="assets/images/logoDaherFondBleu.png" (click)="navigateHome()">
             </ion-img>
         </ion-buttons>
-        <ion-title class="ion-text-uppercase ion-text-center">{{page}}</ion-title>
+        <ion-title class="ion-text-uppercase ion-text-center">{{page.pageTitle}}</ion-title>
         <ion-chip id="button-profil" color=light slot=end class=ion-margin-end outline (click)="isPopoverOpen=!isPopoverOpen">
             <ion-icon name="person-circle-outline"></ion-icon>
             <ion-label color=light>{{user?.username}}</ion-label>
@@ -21,6 +21,10 @@
                             <ion-label>Préférences</ion-label>
                             <ion-icon name="settings-outline" slot="start"></ion-icon>
                         </ion-item>
+                        <ion-item button routerLink="/admin">
+                            <ion-label>Administration</ion-label>
+                            <ion-icon name="construct-outline" slot="start"></ion-icon>
+                        </ion-item>
                         <ion-item color="danger" class="ion-hide-sm-up" (click)="logoutClick()">
                             <ion-icon slot="start" name="log-out-outline"></ion-icon>
                             <ion-label>Déconnexion</ion-label>
@@ -35,3 +39,22 @@
         </ion-button>
     </ion-toolbar>
 </ion-header>
+<ion-menu #menu side="start" type="push" [contentId]="page.contentId">
+    <ion-header>
+        <ion-toolbar color="succes">
+            <ion-title>
+                {{page.menuTitle}}
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <!-- <ion-item button *ngFor="let menuItem of page.menuItems" [routerLink]="menuItem.path"> -->
+            <ion-item button *ngFor="let menuItem of page.menuItems" [routerLink]="menuItem.path" routerDirection="forward">
+                <ion-label>
+                    {{menuItem.title}}
+                </ion-label>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>

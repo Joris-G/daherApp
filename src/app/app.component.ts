@@ -8,7 +8,9 @@ import { AuthService } from './_services/users/auth.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public page: string;
+  public page: any = {
+    contentId: 'content'
+  };
   constructor(
     private alertController: AlertController,
     private authService: AuthService) {

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiServer: 'http://152.60.136.236:81/Tracakit-api/public/index.php/api/'
-
+  apiServer: 'http://152.60.136.236:81/Tracakit-api/public/index.php/api/',
+  toolApiServer: 'http://localhost/apiTooling/'
 };
 
 /*

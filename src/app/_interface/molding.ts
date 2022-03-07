@@ -26,6 +26,7 @@ export interface Molding {
   matDrap?: Kit;
   woList?: any[];
   updatedAt?: Date;
+  status?: boolean;
 }
 
 export interface MoldingIri {

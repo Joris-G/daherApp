@@ -1,21 +1,17 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonInput, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 const MENU_ITEMS = [
   {
-    title: 'Nouveau moulage',
+    title: 'Moulage',
     path: '/molding',
     type: 'button',
   },
   {
-    title: 'Modifier moulage',
-    path: '',
-    type: 'normal',
-    options: {
-      qualityOnly: true,
-      input: true,
-    }
+    title: 'Outillage',
+    path: '/tooling',
+    type: 'button',
   }
 ];
 
@@ -24,19 +20,37 @@ const MENU_ITEMS = [
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
-  @ViewChild('inputIdMolding') inputIdMolding: IonInput;
+export class HomePage implements OnInit, AfterViewInit, AfterViewChecked {
+  public page: any;
   public menuItems: any;
-  constructor(public router: Router,
+  constructor(
+    public router: Router,
     public navCtrl: NavController) {
-    this.menuItems = MENU_ITEMS;
+  }
+  ngAfterViewChecked(): void {
+    console.log('after view checked home page');
+    this.page = {
+      pageTitle: 'ACCUEIL',
+      menuItems: MENU_ITEMS,
+      contentId: 'home-content'
+    };
+  }
+  ngAfterViewInit(): void {
+    console.log('after view init home page');
+    this.page = {
+      pageTitle: 'ACCUEIL',
+      menuItems: MENU_ITEMS,
+      contentId: 'home-content'
+    };
+  }
+  ngOnInit(): void {
+    console.log('init home page');
+    this.page = {
+      pageTitle: 'ACCUEIL',
+      menuItems: MENU_ITEMS,
+      contentId: 'home-content'
+    };
   }
 
-  idMoldingInputChange() {
 
-    if (this.inputIdMolding.value !== '') {
-      console.log(this.inputIdMolding.value);
-      this.router.navigate([`/molding`, this.inputIdMolding.value]);
-    }
-  }
 }

@@ -14,7 +14,6 @@ export class LoginPage implements OnInit, AfterViewInit {
   @ViewChild('password') password: IonInput;
   public loginForm: FormGroup;
 
-
   constructor(
     public authService: AuthService,
     private formBuilder: FormBuilder,
@@ -29,12 +28,13 @@ export class LoginPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.userName.value = '204292';
-    this.password.value = 'test';
-    this.onSubmit();
+    // this.userName.value = '';
+    // this.password.value = '';
+    // this.onSubmit();
   }
 
   ngOnInit() {
+
   }
 
   async onSubmit() {

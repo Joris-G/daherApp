@@ -6,7 +6,7 @@ import { RoleGuard } from './_services/users/role.guard';
 const routes: Routes = [
   {
     path: 'home',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () => import('./pages/home/home.module')
       .then(m => m.HomePageModule)
   },
@@ -15,32 +15,6 @@ const routes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full'
   },
-  // {
-  //   path: '**',
-  //   redirectTo: '',
-  //   pathMatch: 'full'
-  // },
-  {
-    path: 'molding',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/molding/molding.module')
-      .then(m => m.MoldingPageModule)
-  },
-  {
-    path: 'molding/:id',
-    canActivate: [RoleGuard],
-    data: {
-      expectedRole: 'ROLE_USER'
-    },
-    loadChildren: () => import('./pages/molding/molding.module')
-      .then(m => m.MoldingPageModule)
-  },
-  {
-    path: 'printMolding/:id',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/molding/print-molding-sheet/print-molding-sheet.module')
-      .then(m => m.PrintMoldingSheetPageModule)
-  },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module')
@@ -48,15 +22,23 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
+    loadChildren: () => import('./pages/register/register.module')
+      .then(m => m.RegisterPageModule)
+  },
+  {
+    path: 'molding',
+    loadChildren: () => import('./pages/molding/molding.module')
+      .then(m => m.MoldingPageModule)
+  },
+  {
+    path: 'tooling',
+    loadChildren: () => import('./pages/tool-request/tool-request.module')
+      .then(m => m.ToolRequestPageModule)
   },
   {
     path: 'admin',
-    canActivate: [RoleGuard],
-    data: {
-      expectedRole: 'ROLE_ADMIN'
-    },
-    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminPageModule)
+    loadChildren: () => import('./pages/admin/admin.module')
+      .then(m => m.AdminPageModule)
   },
 ];
 

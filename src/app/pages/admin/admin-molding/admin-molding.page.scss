@@ -1,3 +1,8 @@
 ion-toolbar {
     --min-height: 0 !important;
 }
+
+mat-table,
+table {
+    width: 100%;
+}
