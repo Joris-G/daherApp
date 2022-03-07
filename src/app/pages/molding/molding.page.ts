@@ -69,7 +69,6 @@ export class MoldingPage implements OnInit, AfterViewInit, AfterViewChecked {
 
 
   idMoldingInputChange() {
-
     if (this.inputIdMolding.value !== '') {
       console.log(this.inputIdMolding.value);
       this.router.navigate([`/create-molding`, this.inputIdMolding.value]);

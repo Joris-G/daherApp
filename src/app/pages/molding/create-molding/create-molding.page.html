@@ -15,8 +15,7 @@
             NIDA
         </ion-button>
 
-        <ion-button size=small slot=end (click)="accordion.openAll()">Expand All</ion-button>
-        <ion-button size=small slot=end (click)="accordion.closeAll()">Collapse All</ion-button>
+        <ion-button size=small slot=end (click)="(expanded = !expanded) ? accordion.openAll() : accordion.closeAll()">{{(!expanded) ? 'Développer tout' : 'Replier tout'}}</ion-button>
     </ion-toolbar>
 
     <mat-accordion class="example-headers-align" multi>
@@ -69,7 +68,7 @@
             <ion-list>
                 <ion-item>
                     <ion-label *ngFor="let core of molding.cores">
-                        {{core.batchNumber}}
+                        {{core.batchNumber.batch2}}
                     </ion-label>
                 </ion-item>
             </ion-list>

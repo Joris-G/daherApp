@@ -24,7 +24,7 @@ export class ScanService {
   getScanInput(scanInputValue: string) {
     console.log(scanInputValue);
 
-    return new Promise((resolve, reject) => {
+    return new Promise<Kit | MoldingTool | Core>((resolve, reject) => {
       // test de la valeur dans le scan. Identifier puis lancer la bonne fonction
       const regexKit = new RegExp('^([0-9]){8}-[0-9]$');
       const regexSapToolNumber = new RegExp('^OT([0-9]){6}$');
@@ -56,7 +56,7 @@ export class ScanService {
           });
 
       } else if (scanInputValue.match(regexNidaHexcel)) {
-        this.coreService.getCoreByBatchNumber(scanInputValue.split('~')[2])
+        this.coreService.getCoreByBatchNumber(scanInputValue)
           .then((core: Core) => {
             resolve(core);
           });

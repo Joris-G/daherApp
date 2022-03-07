@@ -13,15 +13,19 @@
         </ion-row>
         <ion-row class="ion-align-items-center">
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
+
                 <ion-item>
                     <ion-label position="floating">Nom d'utilisateur
                         <ion-text color="danger">*</ion-text>
                     </ion-label>
                     <ion-input autocapitalize="on" #userName required formControlName="userName" type="text" autocomplete=off autofocus="true" inputmode=numeric value="204292"></ion-input>
+                    <ion-note>
+                        Le nom d'utilisateur est le numéro de matricule présent sur le badge
+                    </ion-note>
                 </ion-item>
                 <ion-item>
                     <ion-label position="floating">Password
-                        <ion-text color="danger">*</ion-text>
+                        <!-- <ion-text color="danger">*</ion-text> -->
                     </ion-label>
                     <ion-input #password formControlName="password" type="password" value=""></ion-input>
                 </ion-item>

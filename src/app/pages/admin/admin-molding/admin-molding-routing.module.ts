@@ -10,8 +10,8 @@ const routes: Routes = [
     component: AdminMoldingPage
   },
   {
-    path: 'molding/:id',
-    component: MoldingPage
+    path: 'create-molding/:id',
+    loadChildren: () => import('../../molding/create-molding/create-molding.module').then(m => m.CreateMoldingPageModule)
   }
 ];
 

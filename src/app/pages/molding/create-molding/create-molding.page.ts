@@ -20,7 +20,7 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
   @ViewChild('scanButton') scanButton: IonInput;
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('kitPanel') kitPanel: MatExpansionPanel;
-
+  public expanded = false;
   public scanButtonText: string;
   public molding: Molding;
 
@@ -169,7 +169,7 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
           this.presentToast('Outillage associé !');
         } else if (Object.getOwnPropertyNames(data).includes('idCore')) {
           this.presentToast('Nida Ajouté !');
-          this.molding.cores.push(data);
+          this.molding.cores.unshift(data);
         }
       })
       .catch(() => {
