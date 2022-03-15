@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/_services/users/auth.guard';
+import { AuthService } from 'src/app/_services/users/auth.service';
 import { RoleGuard } from 'src/app/_services/users/role.guard';
 import { HomePage } from './home.page';
 
@@ -49,4 +50,8 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HomePageRoutingModule { }
+export class HomePageRoutingModule {
+  constructor() {
+  }
+
+}

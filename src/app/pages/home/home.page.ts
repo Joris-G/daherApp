@@ -44,23 +44,14 @@ export class HomePage implements OnInit, AfterViewInit {
       menuItems: MENU_ITEMS,
       contentId: 'home-content'
     };
-    this.redirectPreferedPage();
   }
+
   ngOnInit(): void {
     console.log('init home page');
     this.page = {
       pageTitle: 'ACCUEIL',
       menuItems: MENU_ITEMS,
       contentId: 'home-content'
-    };
-  }
-
-  redirectPreferedPage(): void {
-    if (this.authService.authUser) {
-      this.authService.authUser.service = 'MOULAGE';
-      if (this.authService.authUser.service === 'MOULAGE') {
-        this.router.navigate(['molding']);
-      };
     };
   }
 }

@@ -17,15 +17,15 @@ const MENU_ITEMS = [
       input: true,
     }
   },
-  {
-    title: 'Mes moulages'
-  },
-  {
-    title: 'Liste des moulages'
-  },
-  {
-    title: 'Entretien B15 - Frekote'
-  }
+  // {
+  //   title: 'Mes moulages'
+  // },
+  // {
+  //   title: 'Liste des moulages'
+  // },
+  // {
+  //   title: 'Entretien B15 - Frekote'
+  // }
 ];
 @Component({
   selector: 'app-molding',
@@ -39,6 +39,17 @@ export class MoldingPage implements OnInit, AfterViewInit, AfterViewChecked {
     public router: Router,
   ) {
   }
+
+  ionViewDidLoad() {
+    console.log('test DID LOAD');
+    this.page = {
+      pageTitle: 'MODULE MOULAGE',
+      menuTitle: 'Menu Moulage',
+      menuItems: MENU_ITEMS,
+      contentId: 'molding-content'
+    };
+  }
+
   ngAfterViewChecked(): void {
     console.log('after view checked molding page');
     this.page = {
@@ -48,17 +59,12 @@ export class MoldingPage implements OnInit, AfterViewInit, AfterViewChecked {
       contentId: 'molding-content'
     };
   }
+
   ngAfterViewInit(): void {
-    console.log('after view init molding page');
-    this.page = {
-      pageTitle: 'MODULE MOULAGE',
-      menuTitle: 'Menu Moulage',
-      menuItems: MENU_ITEMS,
-      contentId: 'molding-content'
-    };
+    console.log('after view INIT molding page');
   }
   ngOnInit(): void {
-    console.log('init molding page');
+    console.log('INIT molding page');
     this.page = {
       pageTitle: 'MODULE MOULAGE',
       menuTitle: 'Menu Moulage',

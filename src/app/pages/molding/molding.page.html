@@ -31,19 +31,19 @@
         </ion-content>
     </ion-menu> -->
     <!-- <ion-card class="menu-item-card" [button]="(menuItem.type === 'button')" *ngFor="let menuItem of page.menuItems" [routerLink]="(menuItem.type ==='button') ? menuItem.path : null">
-    <ion-card-header>
-        <ion-card-title>
-            <ion-icon *ngIf="menuItem.options?.qualityOnly" name="shield-half-outline"></ion-icon>
-            {{menuItem.title}}
-        </ion-card-title>
-    </ion-card-header>
-    <ion-card-content *ngIf="menuItem.options?.input">
-        <ion-item shape=round>
-            <ion-label>Id Moulage</ion-label>
-            <ion-input #inputIdMolding type="text" placeholder="" (change)="idMoldingInputChange()"></ion-input>
-            <ion-note slot=helper>Entrer un numéro d'ID ou scanner le code barre de la feuille de moulage</ion-note>
-        </ion-item>
-    </ion-card-content>
-</ion-card> -->
+        <ion-card-header>
+            <ion-card-title>
+                <ion-icon *ngIf="menuItem.options?.qualityOnly" name="shield-half-outline"></ion-icon>
+                {{menuItem.title}}
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content *ngIf="menuItem.options?.input">
+            <ion-item shape=round>
+                <ion-label>Id Moulage</ion-label>
+                <ion-input #inputIdMolding type="text" placeholder="" (change)="idMoldingInputChange()"></ion-input>
+                <ion-note slot=helper>Entrer un numéro d'ID ou scanner le code barre de la feuille de moulage</ion-note>
+            </ion-item>
+        </ion-card-content>
+    </ion-card> -->
     <ion-router-outlet></ion-router-outlet>
 </ion-content>

@@ -10,10 +10,11 @@ export class AlertService {
     private alertController: AlertController
   ) { }
 
-  async simpleAlert(header: string, message: string) {
+  async simpleAlert(header: string, subHeader: string, message: string) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'simple-alert',
       header,
+      subHeader,
       message,
       buttons: [
         {

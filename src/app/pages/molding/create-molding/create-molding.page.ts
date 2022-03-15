@@ -47,7 +47,7 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
       outillage: null,
       createdBy: null
     };
-
+    console.log('test');
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       // this.pageTitle = 'Modification moulage';
@@ -88,7 +88,11 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
   }
 
   associateCoreClick() {
-    this.alertService.simpleAlert('Fonction inactive', 'La fonction permettra de lier un nida au moulage');
+    this.alertService.simpleAlert(
+      'Message d\'information',
+      'Fonction inactive',
+      'La fonction permettra de lier un nida au moulage'
+    );
   }
 
 
@@ -238,6 +242,7 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
                 },
                   () => {
                     this.alertService.simpleAlert(
+                      'Message d\'erreur',
                       'Sauvegarde échouée !',
                       'La sauvegarde ne sest pas correctement effectuée. Veuillez recommencer');
                     console.error('tout n\'est pas Ok la mise à jour du moulage a échouée');

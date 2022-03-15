@@ -104,6 +104,7 @@ export class RegisterPage implements OnInit {
       .then((user: User) => {
         if (user.roles.includes('ROLE_CE_MOULAGE')) {
           this.alertService.simpleAlert(
+            'Message d\'information',
             'Enregistrement effectué !',
             'Vous êtes bien enregistré. Vous allez être redirigé vers la page de connexion'
           )
@@ -112,6 +113,7 @@ export class RegisterPage implements OnInit {
             });
         } else {
           this.alertService.simpleAlert(
+            'Message d\'information',
             'Enregistrement effectué !',
             'Vous êtes bien enregistré. Votre demande nécessite une validation. Vous allez être redirigé vers la page de connexion'
           )

@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonInput, LoadingController } from '@ionic/angular';
+import { AlertController, IonInput, LoadingController, NavController } from '@ionic/angular';
+import { UpdateAppService } from 'src/app/_services/applicationUpdates/update-app.service';
 import { AuthService } from 'src/app/_services/users/auth.service';
 
 @Component({
@@ -19,7 +20,9 @@ export class LoginPage implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private alertController: AlertController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private updateService: UpdateAppService,
+    private navControler: NavController
   ) {
     this.loginForm = this.formBuilder.group({
       userName: ['', Validators.required],
@@ -48,8 +51,23 @@ export class LoginPage implements OnInit, AfterViewInit {
       this.loginForm.get('userName').value,
       this.loginForm.get('password').value || this.loginForm.get('userName').value)
       .then(() => {
-        this.router.navigate(['/home']);
-        this.loginForm.reset();
+        this.updateService.showUpdates()
+          .then(() => {
+            console.log(this.getSpecialRole(this.authService.authUser.roles));
+            switch (this.getSpecialRole(this.authService.authUser.roles)) {
+              case 'ROLE_MOULEUR':
+                this.navControler.navigateForward('molding');
+                break;
+              case 'ROLE_ADMIN':
+                this.navControler.navigateForward('admin');
+                break;
+              default:
+                this.navControler.navigateForward('home');
+                break;
+            }
+            this.loginForm.reset();
+          });
+
       },
         () => {
           this.presentAlertLoginError();
@@ -75,5 +93,9 @@ export class LoginPage implements OnInit, AfterViewInit {
     });
     await alert.present();
 
+  }
+
+  getSpecialRole(userRoles: any): string {
+    return userRoles[0];
   }
 }

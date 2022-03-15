@@ -39,7 +39,7 @@
         </ion-button>
     </ion-toolbar>
 </ion-header>
-<ion-menu #menu side="start" type="push" [contentId]="page.contentId">
+<ion-menu autoHide open=true #menu side="start" type="push" [contentId]="page.contentId">
     <ion-header>
         <ion-toolbar color="succes">
             <ion-title>
@@ -50,7 +50,7 @@
     <ion-content>
         <ion-list>
             <!-- <ion-item button *ngFor="let menuItem of page.menuItems" [routerLink]="menuItem.path"> -->
-            <ion-item button *ngFor="let menuItem of page.menuItems" [routerLink]="menuItem.path" routerDirection="forward">
+            <ion-item [button]="true" *ngFor="let menuItem of page.menuItems" [routerLink]="menuItem.path" routerDirection="forward">
                 <ion-label>
                     {{menuItem.title}}
                 </ion-label>

@@ -6,7 +6,7 @@ import { RoleGuard } from './_services/users/role.guard';
 const routes: Routes = [
   {
     path: 'home',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/home/home.module')
       .then(m => m.HomePageModule)
   },
@@ -48,4 +48,6 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+
+export class AppRoutingModule {
+}
