@@ -23,11 +23,11 @@ export class UsersService {
     private http: HttpClient,
     private requestService: RequestService) { }
 
-  getUserById(idUser: number) {
+  getUserById(idUser: string) {
     return new Promise<User>((resolve, reject) => {
       const httpHeaders = new HttpHeaders()
         .set('content-type', 'application/json');
-      this.requestService.createGetRequest(`users/${idUser}`)
+      this.requestService.createGetRequest(environment.usineApi + `users/${idUser}`)
         .then((returnsData: any) => {
           console.log(returnsData);
           if (returnsData.length !== 0) {
@@ -45,7 +45,7 @@ export class UsersService {
 
   getUsers() {
     return new Promise<User[]>((resolve, reject) => {
-      this.requestService.createGetRequest(`users`)
+      this.requestService.createGetRequest(environment.usineApi + `users`)
         .then((returnsData: any) => {
           console.log(returnsData);
           if (returnsData.length !== 0) {
@@ -62,7 +62,7 @@ export class UsersService {
   }
 
   registerUser(userObj: User) {
-    return this.requestService.createPostRequest('users', userObj);
+    return this.requestService.createPostRequest(environment.usineApi + 'users', userObj);
   }
 
   getIri(user: User): string {

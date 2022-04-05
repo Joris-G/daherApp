@@ -1,0 +1,96 @@
+<div class="pdf page">
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col class="border" size="8">CAUSE DE LA DEMANDE : cocher la case correspondante</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="border" size="2">Qualité</ion-col>
+            <ion-col class="border" size="2">Arrêt de chaine</ion-col>
+            <ion-col class="border" size="2">Dév</ion-col>
+            <ion-col class="border" size="2">amelio continue</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="border" size="2"></ion-col>
+            <ion-col class="border" size="2"></ion-col>
+            <ion-col class="border" size="2"></ion-col>
+            <ion-col class="border" size="2"></ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid fixed class="table">
+        <ion-row>
+            <ion-col class="border" size="2">Direction Qualité</ion-col>
+            <ion-col class="border" size="5">
+                <ion-row>
+                    <ion-col size="12"></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12"> DEMANDE D'ACTION CORRECTIVE/REPARATION OUTILLAGE</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12"></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12"> Désignation outillage: {{request.maintenance.outillage.designation}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12"> Référence outillage: {{request.maintenance.outillage.identification}}</ion-col>
+                </ion-row>
+            </ion-col>
+            <ion-col class="border" size="5">
+                <ion-row>
+                    <ion-col size="12">Diffusion: Service outillage</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12"></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">N° d'OT SAP : {{request.maintenance.outillage.sapToolNumber}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="6">Emetteur : {{request.maintenance.userCreat}}</ion-col>
+                    <ion-col size="6">Sigle : </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">Le : {{request.createdAt}}</ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid fixed class="table">
+        <ion-row>
+            <ion-col class="border" size="1">Rep.</ion-col>
+            <ion-col class="border" size="3">NON CONFORMITES</ion-col>
+            <ion-col class="border" size="3">ACTIONS CORRECTIVES</ion-col>
+            <ion-col class="border" size="1">Responsable A.C.</ion-col>
+            <ion-col class="border" size="1">Délai A.C.</ion-col>
+            <ion-col size="3">
+                <ion-row>
+                    <ion-col class="border" size="12">Réalisation</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col class="border" size="6">Date</ion-col>
+                    <ion-col class="border" size="6">Visa</ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let maintenaceItem of request.maintenance.maintenanceItems">
+            <ion-col class="border" size="1">{{maintenaceItem.rep}}</ion-col>
+            <ion-col class="border" size="3">{{maintenaceItem.nonConformite}}</ion-col>
+            <ion-col class="border" size="3">{{maintenaceItem.actionsCorrectives}}</ion-col>
+            <ion-col class="border" size="1">{{maintenaceItem.respo}}</ion-col>
+            <ion-col class="border" size="1">{{maintenaceItem.delaiAction}}</ion-col>
+            <ion-col class="border" size="1">{{maintenaceItem.dateReal | date:"dd/MM/yyyy"}}</ion-col>
+            <ion-col class="border" size="1">{{maintenaceItem.userReal}}</ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid fixed class="border">
+        <ion-row>
+            <ion-col size="4">Attestation de conformité : Visa Qualité </ion-col>
+            <ion-col size="4">Date :</ion-col>
+            <ion-col size="4">Archivage : Ligne Outillage</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12">Après réalisation des travaux, attestation de conformité et archivage DIAE/RO, retour au demandeur</ion-col>
+        </ion-row>
+    </ion-grid>
+</div>

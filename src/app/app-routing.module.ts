@@ -32,11 +32,17 @@ const routes: Routes = [
   },
   {
     path: 'tooling',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/tool-request/tool-request.module')
       .then(m => m.ToolRequestPageModule)
   },
   {
     path: 'admin',
+    canActivate: [RoleGuard],
+    data:
+    {
+      expectedRole: ['ROLE_CE_MOULAGE', 'ROLE_ADMIN'],
+    },
     loadChildren: () => import('./pages/admin/admin.module')
       .then(m => m.AdminPageModule)
   },

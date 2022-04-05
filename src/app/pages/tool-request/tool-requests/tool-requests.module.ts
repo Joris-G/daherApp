@@ -8,7 +8,9 @@ import { ToolRequestsPageRoutingModule } from './tool-requests-routing.module';
 
 import { ToolRequestsPage } from './tool-requests.page';
 import { SharedUserHeaderModule } from 'src/app/composants/shared-user-header/shared-user-header.module';
-
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr, 'fr');
 @NgModule({
   imports: [
     CommonModule,

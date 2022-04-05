@@ -1,0 +1,112 @@
+<div class="pdf page" id="toExport">
+    <ion-grid class="header">
+        <ion-row>
+            <ion-col size="6">Processus « Développer modifier un avion»</ion-col>
+            <ion-col size="6" class="ion-float-right">FORMALISME A VENIR</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12">« Fournir un avion » / « Développer modifier une aérostructure »</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">« Fournir une aérostructure » / « Maintenir un aéronef »</ion-col>
+            <ion-col size="6" class="ion-float-right">Doc de rattachement : (A VENIR)</ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid class="table content" no-padding>
+        <ion-row>
+            <ion-col size="3">
+                <ion-img class="logo" src="assets/images/logoDaher.png"></ion-img>
+            </ion-col>
+            <ion-col size="3" [style.font-size]="'16px'" class="ion-text-center">MESURE 3D DE DEMANDE OUTILLAGE
+            </ion-col>
+            <ion-col size="3">
+                <ion-row>
+                    <ion-col size="12">N° réf. : </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">Date de demande : {{toolRequest?.controle?.createdAt | date :'dd/MM/yyyy'}}
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+            <ion-col size="3">page 1/1
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12">Demandeur : {{toolRequest?.controle?.userCreat.username}}</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">N° outillage : OT0{{toolRequest?.controle?.outillage?.sapToolNumber}}</ion-col>
+            <ion-col size="6">Oi ou Eotp : {{toolRequest?.controle?.ligneBudgetaire}}</ion-col>
+        </ion-row>
+        <ion-row>
+
+            <ion-col size="12" class="item-rows">
+                <ion-row>
+                    <ion-col size="12" [style.font-weight]="'bold'" class="ion-text-center">DEMANDEUR</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12" *ngIf="toolRequest?.controle?.refPlan">
+                        <ion-label class="etiquette">Référence réglementaire : </ion-label> {{toolRequest?.controle?.refPlan}}/{{toolRequest?.controle?.indPlan}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label class="etiquette">Format du modèle 3D fourni si nécessaire : </ion-label> {{toolRequest?.controle?.cheminCAO}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label class="etiquette">But du contrôle, de l'essai ou de l'expertise : </ion-label>{{toolRequest?.controle?.ctrlReasons}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label class="etiquette">Détails de la mesure : </ion-label>{{toolRequest?.controle?.detailsControle}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label class="etiquette">Précision demandée et attendue : </ion-label>{{toolRequest?.controle?.tolerances}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label class="etiquette">Date de mise à disposition au service outillage :</ion-label> {{toolRequest?.controle?.dispoOut | date :'dd/MM/yyyy'}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label class="etiquette">Date butoir demandée : </ion-label>{{toolRequest?.controle?.dateBesoin | date :'dd/MM/yyyy'}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label class="etiquette">Types de rapport :</ion-label>
+                        <ion-item *ngFor="let type of typeRapport| keyvalue">
+                            <ion-label [style.text-decoration]="(toolRequest?.controle?.typeRapport === type.value) ? '':'line-through'">{{type.value}}</ion-label>
+                            <!-- <ion-radio slot="start" [value]="moyen.key" chec></ion-radio> -->
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" class="item-rows">
+                <ion-row>
+                    <ion-col size="12" [style.font-weight]="'bold'" class="ion-text-center">MESURE 3D OUTILLAGE</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">Date d’intervention : {{toolRequest?.controle?.interventionDate | date :'dd/MM/yyyy'}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">Moyen de mesure :
+                        <ion-item *ngFor="let moyen of moyenMesure | keyvalue">
+                            <ion-label [style.text-decoration]="(toolRequest?.controle?.moyenMesure === moyen.value) ? '':'line-through'">{{moyen.value}}</ion-label>
+                            <!-- <ion-radio slot="start" [value]="moyen.key" chec></ion-radio> -->
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">Informations complémentaires : {{toolRequest?.controle?.infosComplementaire}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">Date : {{toolRequest?.controle?.createdAt | date :'dd/MM/yyyy'}} Nom et Signature : {{toolRequest?.controle?.userCreat.nom}}
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>

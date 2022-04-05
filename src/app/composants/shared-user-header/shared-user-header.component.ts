@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/_services/users/auth.service';
   styleUrls: ['./shared-user-header.component.scss'],
 })
 export class SharedUserHeaderComponent implements OnInit, OnChanges, AfterViewChecked, AfterViewInit {
-  @Input() page: any;
+  @Input() pageTitle: string;
   @ViewChild('menu') menu: any;
   public user: User;
   public isPopoverOpen = false;
@@ -18,9 +18,11 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges, AfterViewCh
     public authService: AuthService,
     private router: Router) {
   }
+
   ngAfterViewInit(): void {
-    this.menu.open();
+    // this.menu.open();
   }
+
   ngAfterViewChecked(): void {
     // this.menu.open();
   }
@@ -32,6 +34,7 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges, AfterViewCh
   ngOnInit() {
     // console.log(this.page);
   }
+
   logoutClick() {
     this.authService.logout()
       .then(() => {
@@ -42,8 +45,8 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges, AfterViewCh
   navigateHome() {
     this.router.navigate(['/home']);
   }
-  navigate(path: string) {
 
+  navigate(path: string) {
     // this.router.navigate([path]);
     // this.router.navigateByUrl(path);
   }

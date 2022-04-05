@@ -8,14 +8,18 @@ import { ToolRequestPageRoutingModule } from './tool-request-routing.module';
 
 import { ToolRequestPage } from './tool-request.page';
 import { SharedUserHeaderModule } from 'src/app/composants/shared-user-header/shared-user-header.module';
+import { MenuModule } from 'src/app/composants/menu/menu.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     IonicModule,
     ToolRequestPageRoutingModule,
-    SharedUserHeaderModule
+    SharedUserHeaderModule,
+    MenuModule
   ],
   declarations: [ToolRequestPage]
 })

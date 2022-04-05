@@ -13,6 +13,7 @@ export interface User {
   password?: string;
   programmeAvion?: string[];
   createdAt?: Date;
+  telephone?: number;
 }
 
 

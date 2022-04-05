@@ -7,7 +7,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" color=light>
+<ion-content [fullscreen]="false" color=light>
     <ion-grid false>
         <ion-row>
             <ion-col size="8">
@@ -15,10 +15,13 @@
                     <ion-card-header>
                         <ion-toolbar class=ion-no-margin>
                             <ion-card-title>Liste des moulages</ion-card-title>
+                            <ion-button size=small slot=end (click)="getMoldings()">
+                                <ion-icon size=small slot="icon-only" name="refresh"></ion-icon>
+                            </ion-button>
                             <ion-spinner slot=end *ngIf="moldingListLoading" name="circles"></ion-spinner>
                         </ion-toolbar>
                     </ion-card-header>
-                    <ion-card-content>
+                    <ion-card-content *ngIf="moldings">
                         <ion-input type="text" placeholder="Numéro d'OT" (ionInput)="applyFilter($event)"></ion-input>
 
                         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" fixedLayout=true>
@@ -47,14 +50,14 @@
                             <!-- Outillage Column -->
                             <ng-container matColumnDef="outillage">
                                 <th mat-header-cell *matHeaderCellDef> Outillage </th>
-                                <td mat-cell *matCellDef="let element"> {{element.outillage.sapToolNumber}} </td>
+                                <td mat-cell *matCellDef="let element"> {{element.outillage.sapToolNumber}} - {{element.outillage.designation}}</td>
                             </ng-container>
 
                             <!-- commands Column -->
                             <ng-container matColumnDef="commands">
                                 <th mat-header-cell *matHeaderCellDef> </th>
                                 <td mat-cell *matCellDef="let element">
-                                    <ion-button size=small expand="block" fill="solid" shape="round" [routerLink]="'create-molding/'+element.id">
+                                    <ion-button size=small expand="block" fill="solid" shape="round" [routerLink]="'/molding/create-molding/'+element.id">
                                         Editer
                                     </ion-button>
                                 </td>

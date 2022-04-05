@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
 
 const ROLES = [
@@ -16,6 +17,6 @@ export class RoleService {
   ) { }
 
   getRoles() {
-    return this.requestService.createGetRequest('postes');
+    return this.requestService.createGetRequest(environment.usineApi + 'postes');
   }
 }

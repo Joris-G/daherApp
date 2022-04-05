@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AlertController, IonInput, LoadingController, NavController } from '@ionic/angular';
 import { UpdateAppService } from 'src/app/_services/applicationUpdates/update-app.service';
 import { AuthService } from 'src/app/_services/users/auth.service';
+import { environment } from 'src/environments/environment';
+import { isDevMode } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -31,9 +33,13 @@ export class LoginPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.userName.value = '';
-    // this.password.value = '';
-    // this.onSubmit();
+    if (isDevMode()) {
+      this.loginForm.setValue({
+        userName: environment.username,
+        password: environment.password
+      });
+      this.onSubmit();
+    }
   }
 
   ngOnInit() {
@@ -59,7 +65,10 @@ export class LoginPage implements OnInit, AfterViewInit {
                 this.navControler.navigateForward('molding');
                 break;
               case 'ROLE_ADMIN':
-                this.navControler.navigateForward('admin');
+                this.navControler.navigateForward('tooling');
+                break;
+              case 'ROLE_RESP_OUTIL':
+                this.navControler.navigateForward('tooling');
                 break;
               default:
                 this.navControler.navigateForward('home');

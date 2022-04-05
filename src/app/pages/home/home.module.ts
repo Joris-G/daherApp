@@ -6,6 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { SharedUserHeaderModule } from '../../composants/shared-user-header/shared-user-header.module';
+import { MenuModule } from 'src/app/composants/menu/menu.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { SharedUserHeaderModule } from '../../composants/shared-user-header/shar
     IonicModule,
     HomePageRoutingModule,
     SharedUserHeaderModule,
+    MenuModule
   ],
   declarations: [HomePage]
 })

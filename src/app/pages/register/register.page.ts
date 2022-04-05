@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, IonSlides, LoadingController } from '@ionic/angular';
 import { User } from 'src/app/_interface/user';
@@ -46,9 +46,31 @@ export class RegisterPage implements OnInit {
       firstName: new FormControl(),
       lastName: new FormControl(),
       matricule: new FormControl(),
-      password: new FormControl()
-    });
+      telephone: new FormControl(),
+      password: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(12),
+          Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,12}$')])),
+      confirmPassword: new FormControl('', Validators.required)
+    }, this.matchingPasswords('password', 'confirmPassword'));
     this.getDatas();
+  }
+
+  matchingPasswords(passwordKey: string, confirmPasswordKey: string): ValidatorFn {
+    // TODO maybe use this https://github.com/yuyang041060120/ng2-validation#notequalto-1
+    return (group: FormGroup): { [key: string]: any } => {
+      const password = group.controls[passwordKey];
+      const confirmPassword = group.controls[confirmPasswordKey];
+
+      if (password.value !== confirmPassword.value) {
+        return {
+          mismatchedPasswords: true
+        };
+      }
+    };
   }
 
   async getDatas() {
@@ -62,7 +84,6 @@ export class RegisterPage implements OnInit {
     const serviceProm = this.serviceService.getServices();
     Promise.all([serviceProm, roleProm])
       .then((res: any[]) => {
-        console.log(res);
         this.services = res[0];
         this.roles = res[1];
       })
@@ -74,6 +95,7 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnInit() {
+    this.language = 'FR';
   }
 
   switchToEnglish() {
@@ -82,6 +104,7 @@ export class RegisterPage implements OnInit {
   switchToFrench() {
     this.language = 'FR';
   }
+
   submitRole() {
     console.log(this.roleForm.value, this.identityForm.value);
     if (this.roleForm.value.poste !== 1) {

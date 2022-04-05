@@ -1,36 +1,59 @@
-<app-shared-user-header [page]="page"></app-shared-user-header>
-<ion-content [fullscreen]="true" color=medium [id]="page.contentId">
-    <!-- <ion-menu #menu side="start" type="push" contentId="tooling-content" max-edge-start=10>
+<app-shared-user-header [pageTitle]="page.pageTitle"></app-shared-user-header>
+<ion-content [fullscreen]="false" color=medium>
+    <ion-menu open=true #menu side="start" type="push" contentId="tooling-content">
         <ion-header>
             <ion-toolbar color="succes">
-                <ion-title>Menu outillage</ion-title>
+                <ion-title>
+                    {{page.menuTitle}}
+                </ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content>
             <ion-list>
-                <ion-item-group>
-                    <ion-item-divider>
-                        <ion-label>Nouvelles demandes</ion-label>
-                    </ion-item-divider>
-                    <ion-item [routerLink]="['new-tool']">
-                        <ion-label>Création outillage</ion-label>
+                <ion-item-divider>
+                    <ion-label color=secondary>Faire une demande</ion-label>
+                </ion-item-divider>
+                <ion-menu-toggle auto-hide="true">
+                    <ion-item [disabled]="true" [button]="true" routerDirection="forward" (click)="navigate('tooling/new-tool')">
+                        <ion-label>
+                            Nouvel outillage (SBO)
+                        </ion-label>
                     </ion-item>
-                    <ion-item>Maintenance / Modification</ion-item>
-                    <ion-item routerLink="admin-molding">Controle 3D</ion-item>
-                </ion-item-group>
-                <ion-item-group>
-                    <ion-item-divider>
-                        <ion-label>Consulter</ion-label>
-                    </ion-item-divider>
-                    <ion-item [routerLink]="['tool-requests']">
-                        <ion-label>Liste des demandes</ion-label>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="true">
+                    <ion-item [button]="true" routerDirection="forward" (click)="navigate('tooling/repair-tool')">
+                        <ion-label>
+                            Maintenance et réparation
+                        </ion-label>
                     </ion-item>
-                    <ion-item>Liste des outillages</ion-item>
-                    <ion-item routerLink="">Planning maintenances</ion-item>
-                    <ion-item routerLink="">Entretien B15 - Frekote</ion-item>
-                </ion-item-group>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="true">
+                    <ion-item [button]="true" routerDirection="forward" (click)="navigate('tooling/3D-tool')">
+                        <ion-label>
+                            Contrôle 3D
+                        </ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-item-divider>
+                    <ion-label color=secondary>Suivi</ion-label>
+                </ion-item-divider>
+                <ion-menu-toggle auto-hide="true">
+                    <ion-item [button]="true" routerDirection="root" (click)="navigate('tooling/tool-request-list')">
+                        <ion-label>
+                            Liste des demandes outillages
+                        </ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="true">
+                    <ion-item [button]="true" (click)="navigate('tooling/tool-list')" routerDirection="root">
+                        <ion-label>
+                            Liste des outillages
+                        </ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
             </ion-list>
+
         </ion-content>
-    </ion-menu> -->
+    </ion-menu>
     <ion-router-outlet id="tooling-content"></ion-router-outlet>
 </ion-content>

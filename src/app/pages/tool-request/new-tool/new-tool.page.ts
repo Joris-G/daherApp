@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ProgramsService } from 'src/app/_services/programs/programs.service';
@@ -5,8 +6,8 @@ import { Editor } from 'ngx-editor';
 import { ToolRequest } from 'src/app/_interface/tool-request';
 import { UsersService } from 'src/app/_services/users/users.service';
 import { AuthService } from 'src/app/_services/users/auth.service';
-import { MoldingToolService } from 'src/app/_services/moldingTools/molding-tool.service';
-import { MoldingTool } from 'src/app/_interface/molding-tool';
+import { ToolService } from 'src/app/_services/tools/tool.service';
+import { Tool } from 'src/app/_interface/tool';
 import { ToolRequestService } from 'src/app/_services/toolRequest/tool-request.service';
 import { RequestType } from 'src/app/_enums/request-type';
 import { MatStepLabel, MatStepper } from '@angular/material/stepper';
@@ -29,9 +30,6 @@ const MENU_ITEMS = [
   styleUrls: ['./new-tool.page.scss'],
 })
 export class NewToolPage implements OnInit {
-  @ViewChild('stepper') stepper: MatStepper;
-  public requestTypeFormEditable: boolean;
-  public newToolFormEditable: boolean;
   public page: any;
   public requestTypeForm: FormGroup;
   public newToolForm: FormGroup;
@@ -40,14 +38,14 @@ export class NewToolPage implements OnInit {
   public editor: Editor;
   public html: '';
   requestTypeEnum: typeof RequestType = RequestType;
-  private newTool: MoldingTool;
+  private newTool: Tool;
 
 
   constructor(
     private formBuilder: FormBuilder,
     private programService: ProgramsService,
     private authService: AuthService,
-    private toolService: MoldingToolService,
+    private toolService: ToolService,
     private userService: UsersService,
     private toolRequestService: ToolRequestService,
     private router: Router,
@@ -70,16 +68,11 @@ export class NewToolPage implements OnInit {
   }
 
   ngOnInit() {
-    this.requestTypeForm = this.formBuilder.group({
-      requestType: new FormControl()
-    });
-    this.requestTypeFormEditable = true;
     this.newToolForm = this.formBuilder.group({
       sapToolNumber: new FormControl(),
       identification: new FormControl(),
       designation: new FormControl()
     });
-    this.newToolFormEditable = true;
     this.newToolRequestForm = this.formBuilder.group({
       aircraftProgram: new FormControl(),
       title: new FormControl(),
@@ -87,11 +80,7 @@ export class NewToolPage implements OnInit {
       needDate: new FormControl()
     });
   }
-  setRequestTypeClick() {
-    this.stepper.next();
-    console.log(this.requestTypeForm.value);
-    this.requestTypeFormEditable = false;
-  }
+
   createToolClick() {
     // on créé l'OT en BDD
     this.toolService.createTool({
@@ -99,10 +88,8 @@ export class NewToolPage implements OnInit {
       identification: this.newToolForm.value.identification,
       sapToolNumber: this.newToolForm.value.sapToolNumber
     })
-      .then((tool: MoldingTool) => {
-        this.newToolFormEditable = false;
+      .then((tool: Tool) => {
         this.newTool = tool;
-        this.stepper.next();
       })
       .catch(() => {
         // on affiche une erreur si l'OT n'a pas été créé
@@ -112,13 +99,13 @@ export class NewToolPage implements OnInit {
   createToolRequestClick() {
     // on créé la toolRequest si l'OT est créé correctement
     const toolRequest: ToolRequest = {
-      requestType: RequestType.newTool,
-      title: this.newToolRequestForm.value.title,
-      description: this.newToolRequestForm.value.description,
-      needDate: this.newToolRequestForm.value.needDate,
-      requestDate: new Date(),
-      requestor: this.authService.authUser,
-      tool: this.newTool
+      type: RequestType.newTool,
+      // title: this.newToolRequestForm.value.title,
+      // Description: this.newToolRequestForm.value.description,
+      dateBesoin: this.newToolRequestForm.value.needDate,
+      createdAt: new Date(),
+      demandeur: this.authService.authUser,
+      toolSAP: this.toolService.getIri(this.newTool)
     };
     // on soummet la toolrequest
     this.toolRequestService.createToolRequest(toolRequest)

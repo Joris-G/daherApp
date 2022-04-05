@@ -1,0 +1,195 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Nouvelle demande de contrôle 3D</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="false" color=light>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="4">
+                <form class="main-form" [formGroup]="controlForm" (ngSubmit)="submitControlForm()">
+                    <ion-card color=light padding>
+                        <ion-card-header>
+                            <ion-card-title class="ion-text-uppercase">L'outillage</ion-card-title>
+                        </ion-card-header>
+                        <ion-item>
+                            <ion-label>Outillage SAP :</ion-label>
+                            <ion-input formControlName="outillage" #toolNumber type="text" placeholder="n°OT SAP ou n° Equipement SAP" (change)="toolOnChange(toolNumber.value.toString())"></ion-input>
+                        </ion-item>
+                        <!-- Datetime in overlay -->
+                        <ion-item button id="open-modal">
+                            <ion-label>Date de mise à disposition au service outillage</ion-label>
+                            <ion-text slot="end" *ngIf="toolRequest?.controle?.dispoOut">
+                                {{toolRequest.controle.dispoOut | date:"dd/MM/yyyy "}}</ion-text>
+                            <ion-icon slot=end icon="calendar-outline"></ion-icon>
+                            <ion-modal trigger="open-modal">
+                                <ng-template>
+                                    <ion-content>
+                                        <ion-datetime #dispoTool presentation="date" formControlName="dispoTool" display-format="EEEE DD.MMMM.YYYY" (ngModelChange)="toolRequest.controle.dispoOut= dateValue(dispoTool.value)">
+                                            <div slot="title">Date de mise à disposition au service outillage</div>
+                                        </ion-datetime>
+                                    </ion-content>
+                                </ng-template>
+                            </ion-modal>
+                        </ion-item>
+                        <div class="flex-row">
+                            <ion-item>
+                                <ion-label>Référence
+                                    <ion-text color="danger">*</ion-text>
+                                </ion-label>
+                                <ion-input required formControlName="refPlan" type="text" placeholder="indiquer n° de plan"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label>Indice plan
+                                    <ion-text color="danger">*</ion-text>
+                                </ion-label>
+                                <ion-input required formControlName="indPlan" type="text" placeholder="indiquer l 'indice du plan"></ion-input>
+                            </ion-item>
+                        </div>
+                        <ion-item>
+                            <ion-label>Format du modèle 3D fourni si nécessaire
+                                <!-- <ion-text color="danger">*</ion-text> -->
+                            </ion-label>
+                            <ion-input formControlName="caoPath" type="text" placeholder="Fournir CAO et / ou chemin d’accès"></ion-input>
+
+                        </ion-item>
+                    </ion-card>
+                    <ion-card>
+                        <ion-card-header color=light>
+                            <ion-card-title class="ion-text-uppercase">Le contrôle</ion-card-title>
+                        </ion-card-header>
+                        <ion-item>
+                            <ion-label>But du contrôle, de l'essai ou de l 'expertise
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-textarea autoGrow required formControlName="ctrlReasons" type="text"></ion-textarea>
+                            <!-- <ion-note>Descriptif de la mesure demandée (contrôle réception, suite à choc, déménagement d’outillage ou autre)</ion-note> -->
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Détails de la mesure
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-textarea autoGrow required formControlName="ctrlDetails" type="text" placeholder="lieux, référentiel..."></ion-textarea>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Précision demandée et attendue
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-textarea autoGrow required formControlName="precisionTolerances" type="text" placeholder="IT plans et spécifications de définition"></ion-textarea>
+                        </ion-item>
+                    </ion-card>
+                    <ion-card>
+                        <!-- Datetime in overlay -->
+                        <ion-item button id="open-date-butoir">
+                            <ion-label>Date butoir demandée</ion-label>
+                            <ion-icon slot=end icon="calendar-outline"></ion-icon>
+                            <ion-text slot="end">
+                                {{toolRequest.controle.dateBesoin | date:"dd/MM/yyyy"}}</ion-text>
+                            <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
+                            <ion-modal trigger="open-date-butoir">
+                                <ng-template>
+                                    <ion-content>
+                                        <ion-datetime #needDate presentation="date" formControlName="needDate" display-format="DD.MM.YYYY" (ngModelChange)="toolRequest.controle.dateBesoin = dateValue(needDate.value)">
+                                            <div slot="title">Date butoir demandée</div>
+                                        </ion-datetime>
+                                    </ion-content>
+                                </ng-template>
+                            </ion-modal>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Oi ou Eotp
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input #ligneBudgetaire required formControlName="ligneBudgetaire" type="text" placeholder="Indiquez le n° pour imputation"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Types de rapport</ion-label>
+                            <!-- <ion-radio slot="start" [value]="moyen.key" chec></ion-radio> -->
+                            <ion-select required #typeRapportSelect formControlName="typeRapport" (change)="toolRequest.controle.typeRapport = typeRapportSelect.value">
+                                <ion-select-option *ngFor="let type of typeRapport| keyvalue" [value]="type.value">{{type.value}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-card>
+                    <ion-card *ngIf="canManage">
+                        <ion-card-header color=light>
+                            <ion-card-title class="ion-text-uppercase">La Mesure</ion-card-title>
+                        </ion-card-header>
+                        <!-- Datetime in overlay -->
+                        <ion-item button id="open-date-interv">
+                            <ion-label>Date d'intervention</ion-label>
+                            <ion-icon slot=end icon="calendar-outline"></ion-icon>
+                            <!-- <ion-text slot="end" *ngIf="toolRequest?.controle?.interventionDate">
+                                {{toolRequest?.controle?.interventionDate | date:"dd/MM/yyyy"}}</ion-text> -->
+                            <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
+                            <ion-modal trigger="open-date-interv">
+                                <ng-template>
+                                    <ion-content>
+                                        <ion-datetime #interventionDate presentation="date" formControlName="interventionDate" display-format="DD.MM.YYYY" (ngModelChange)="toolRequest.controle.interventionDate = dateValue(interventionDate.value)">
+                                            <div slot="title">Date d'intervention</div>
+                                        </ion-datetime>
+                                    </ion-content>
+                                </ng-template>
+                            </ion-modal>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Informations complémentaires
+                            </ion-label>
+                            <ion-input #infosComplementaire (ionChange)="toolRequest.controle.infosComplementaire = infosComplementaire.value.toString()" formControlName="infosComplementaire" type="text" placeholder="Information complémentaire"></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label>Moyen de mesure</ion-label>
+                            <!-- <ion-radio slot="start" [value]="moyen.key" chec></ion-radio> -->
+                            <ion-select #moyenMesureSelect formControlName="moyenMesure" (ionChange)="toolRequest.controle.moyenMesure = moyenMesureSelect.value">
+                                <ion-select-option *ngFor="let type of moyenMesure | keyvalue" [value]="type.value">{{type.value}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-card>
+                </form>
+            </ion-col>
+            <ion-col size="8">
+                <!-- <app-controleddd [toolRequest]="toolRequest"></app-controleddd> -->
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+    <!-- <app-controleddd></app-controleddd> -->
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-item *ngIf="canManage">
+            <ion-label>Affecter</ion-label>
+            <ion-select multiple="true" placeholder="Séléctionner une personne">
+                <ion-select-option *ngFor="let user of userList" [value]="user">{{user.nom}} {{user.prenom}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-item *ngIf="canManage">
+            <ion-label>Changer le statut</ion-label>
+            <ion-select #statut multiple="false" placeholder="Séléctionner un statut" (change)="toolRequest.statut = statut.value">
+                <ion-select-option value="nouvelle">NOUVELLE</ion-select-option>
+                <ion-select-option value="refuser">Refuser</ion-select-option>
+                <ion-select-option value="accepter">Accepter</ion-select-option>
+                <ion-select-option value="annuler">Annuler</ion-select-option>
+                <ion-select-option value="enCours">En cours de réalisation</ion-select-option>
+                <ion-select-option value="fini">Terminée</ion-select-option>
+                <ion-select-option value="clot">Cloturer</ion-select-option>
+            </ion-select>
+            <ion-label (click)="updateForm()">Ok
+                <ion-icon slot="end" name="checkmark-circle"></ion-icon>
+            </ion-label>
+        </ion-item>
+        <ion-button slot=end (click)="pdfExportClick()">
+            <ion-icon slot="end" name="document-attach-outline"></ion-icon>
+            Exporter pdf
+        </ion-button>
+        <ion-button slot=end block color="success" *ngIf="!canUpDate" [disabled]="controlForm.invalid" (click)="submitControlForm()">
+            <ion-icon slot="end" name="send-outline"></ion-icon>
+            Envoyer
+        </ion-button>
+        <ion-button slot=end block color="success" *ngIf="canUpDate" [disabled]="controlForm.invalid" (click)="updateForm()">
+            <ion-icon slot="end" name="send-outline"></ion-icon>
+            Mettre à jour
+        </ion-button>
+    </ion-toolbar>
+</ion-footer>

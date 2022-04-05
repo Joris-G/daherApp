@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Core } from 'src/app/_interface/core';
 import { Kit } from 'src/app/_interface/kit';
-import { MoldingTool } from 'src/app/_interface/molding-tool';
+import { Tool } from 'src/app/_interface/tool';
 import { CoreService } from '../core/core.service';
 import { AlertService } from '../divers/alert.service';
 import { LoadingService } from '../divers/loading.service';
 import { KitService } from '../kits/kit.service';
-import { MoldingToolService } from '../moldingTools/molding-tool.service';
+import { ToolService } from '../tools/tool.service';
 
 
 @Injectable({
@@ -17,14 +17,14 @@ export class ScanService {
   public scanState: boolean;
   constructor(
     private kitService: KitService,
-    private moldingToolService: MoldingToolService,
+    private toolService: ToolService,
     private coreService: CoreService) {
   }
 
   getScanInput(scanInputValue: string) {
     console.log(scanInputValue);
 
-    return new Promise<Kit | MoldingTool | Core>((resolve, reject) => {
+    return new Promise<Kit | Tool | Core>((resolve, reject) => {
       // test de la valeur dans le scan. Identifier puis lancer la bonne fonction
       const regexKit = new RegExp('^([0-9]){8}-[0-9]$');
       const regexSapToolNumber = new RegExp('^OT([0-9]){6}$');
@@ -44,8 +44,8 @@ export class ScanService {
         if (scanInputValue.startsWith('OT0')) {
           scanInputValue = scanInputValue.substr(3);
         }
-        this.moldingToolService.getToolByToolNumber(scanInputValue)
-          .then((tool: MoldingTool) => {
+        this.toolService.getToolByToolNumber(scanInputValue)
+          .then((tool: Tool) => {
             resolve(tool);
           },
             () => {

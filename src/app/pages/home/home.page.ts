@@ -21,7 +21,7 @@ const MENU_ITEMS = [
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit, AfterViewInit {
+export class HomePage implements OnInit {
   public page: any;
   public menuItems: any;
   constructor(
@@ -29,16 +29,9 @@ export class HomePage implements OnInit, AfterViewInit {
     public navCtrl: NavController,
     public authService: AuthService) {
   }
-  // ngAfterViewChecked(): void {
-  //   console.log('after view checked home page');
-  //   this.page = {
-  //     pageTitle: 'ACCUEIL',
-  //     menuItems: MENU_ITEMS,
-  //     contentId: 'home-content'
-  //   };
-  // }
-  ngAfterViewInit(): void {
-    console.log('after view init home page');
+
+
+  ionViewWillEnter() {
     this.page = {
       pageTitle: 'ACCUEIL',
       menuItems: MENU_ITEMS,
@@ -47,7 +40,6 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log('init home page');
     this.page = {
       pageTitle: 'ACCUEIL',
       menuItems: MENU_ITEMS,

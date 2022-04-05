@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { IonSpinner } from '@ionic/angular';
 import { Molding } from 'src/app/_interface/molding';
@@ -9,26 +9,36 @@ import { MoldingService } from 'src/app/_services/moldings/molding.service';
   templateUrl: './admin-molding.page.html',
   styleUrls: ['./admin-molding.page.scss'],
 })
-export class AdminMoldingPage implements OnInit {
+export class AdminMoldingPage implements OnInit, OnDestroy, AfterViewChecked {
   // public properties
   public moldingListLoading: boolean;
   public moldings: Molding[];
   public dataSource: MatTableDataSource<Molding>;
   public displayedMoldingColumns: string[] = ['status', 'id', 'moldingDay', 'createdBy', 'outillage', 'commands'];
   // private properties
-  private refreshTime = 10000;
+  private refreshData;
   constructor(
     private moldingService: MoldingService
   ) {
 
   }
+  ngAfterViewChecked(): void {
+    // indicators to be reloaded with interval
+
+  }
+  ngOnDestroy(): void {
+  }
+
+  ionViewDidEnter() {
+    this.getMoldings();
+  }
 
   ngOnInit() {
-    this.getMoldings();
+    // this.getMoldings();
     // indicators to be reloaded with interval
-    setInterval(() => {
-      this.getMoldings();
-    }, this.refreshTime);
+    // this.refreshData = setInterval(() => {
+    //   this.getMoldings();
+    // }, this.refreshTime);
 
   }
 

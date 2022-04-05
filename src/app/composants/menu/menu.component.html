@@ -1,0 +1,21 @@
+<ion-menu autoHide open=true #menu side="start" type="push" [contentId]="page.contentId">
+    <ion-header>
+        <ion-toolbar color="succes">
+            <ion-title>
+                {{page.menuTitle}}
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <!-- <ion-item button *ngFor="let menuItem of page.menuItems" [routerLink]="menuItem.path"> -->
+            <ion-item [button]="true" *ngFor="let menuItem of page.menuItems" [routerLink]="menuItem.path" routerDirection="forward">
+                <ion-label>
+                    {{menuItem.title}}
+                </ion-label>
+                <ion-input *ngIf="menuItem.options?.input" #inputIdMolding type="text" placeholder="" (change)="idMoldingInputChange()"></ion-input>
+                <ion-note *ngIf="menuItem.options?.input" slot=helper>Entrer un numéro d'ID ou scanner le code barre de la feuille de moulage</ion-note>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>

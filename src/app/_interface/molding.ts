@@ -1,6 +1,6 @@
 import { Core } from './core';
 import { Kit } from './kit';
-import { MoldingTool } from './molding-tool';
+import { Tool } from './tool';
 import { User } from './user';
 
 /**
@@ -19,7 +19,7 @@ export interface Molding {
   kits: Kit[];
   moldingDay: Date;
   createdBy: User;
-  outillage: MoldingTool;
+  outillage: Tool;
   aCuireAv?: Date;
   aDraperAv?: Date;
   matPolym?: Kit;

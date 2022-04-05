@@ -4,231 +4,9 @@ import { Molding, MoldingIri } from 'src/app/_interface/molding';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { KitService } from '../kits/kit.service';
-import { MoldingToolService } from '../moldingTools/molding-tool.service';
+import { ToolService } from '../tools/tool.service';
 import { UsersService } from '../users/users.service';
 import { RequestService } from '../request.service';
-
-/** @type {*} */
-// const MOLDING: Molding = {
-//   idMolding: 1,
-//   moldingDay: new Date(),
-//   aCuireAv: new Date(),
-//   aDraperAv: new Date(12, 10, 1991),
-//   moldingUser: {
-//     idUser: 1,
-//     mail: 'j.grangier@daher.com',
-//     matricule: 204292,
-//     nom: 'GRANGIER',
-//     prenom: 'Joris',
-//     role: 'Admin'
-//   },
-//   moldingTool: {
-//     idMoldingTool: 1,
-//     identification: '19650Z01-73P5522000C003',
-//     sapToolNumber: 'OT096902'
-//   },
-//   kits: [
-//     {
-//       id: 0,
-//       idMM: '53456765-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     },
-//     {
-//       id: 0,
-//       idMM: '53456765-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234, createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     },
-//     {
-//       id: 0,
-//       idMM: '52345675-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     },
-//     {
-//       id: 0,
-//       idMM: '54345678-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     }, {
-//       id: 0,
-//       idMM: '54345678-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     }, {
-//       id: 0,
-//       idMM: '54345678-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     }, {
-//       id: 0,
-//       idMM: '54345678-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     }, {
-//       id: 0,
-//       idMM: '54345678-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     }, {
-//       id: 0,
-//       idMM: '54345678-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     }, {
-//       id: 0,
-//       idMM: '54345678-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     }, {
-//       id: 0,
-//       idMM: '54345678-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     }, {
-//       id: 0,
-//       idMM: '54345678-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     }, {
-//       id: 0,
-//       idMM: '54345678-1',
-//       designationSAP: 'KIT TEST',
-//       lotSAP: '',
-//       aCuirAv: new Date(22, 2, 22),
-//       aDrapAv: new Date(21, 2, 22),
-//       decongel: new Date(21, 2, 22),
-//       peremptionMoins18: new Date(21, 2, 22),
-//       referenceSAP: 717223,
-//       tackLife: 123,
-//       timeOut: 1234,
-//       createdAt: new Date(),
-//       status: true,
-//       updateAt: new Date()
-//     }
-//   ]
-// };
-
 
 @Injectable({
   providedIn: 'root'
@@ -238,7 +16,7 @@ export class MoldingService {
   public molding: Molding;
   constructor(
     private kitService: KitService,
-    private moldingToolService: MoldingToolService,
+    private toolService: ToolService,
     private userService: UsersService,
     private requestService: RequestService,
     private http: HttpClient) {
@@ -249,7 +27,7 @@ export class MoldingService {
       const httpHeaders = new HttpHeaders()
         .set('content-type', 'application/json');
       // .set('Access-Control-Allow-Credentials', 'true');
-      this.http.post(`${environment.apiServer}moldings`, moldingObject, { headers: httpHeaders })
+      this.http.post(environment.apiServer + environment.moldingApi, moldingObject, { headers: httpHeaders })
         .subscribe((returnsData: any) => {
           console.log(returnsData);
           resolve(returnsData);
@@ -263,7 +41,7 @@ export class MoldingService {
 
   updateMolding(moldingObject: MoldingIri): Promise<Molding> {
     console.log(moldingObject);
-    const url = `${environment.apiServer}moldings/${moldingObject.id}`;
+    const url = environment.moldingApi + 'moldings/' + moldingObject.id;
     return this.requestService.createPutRequest(url, moldingObject);
   }
 
@@ -310,12 +88,8 @@ export class MoldingService {
 
   getMoldingById(id: string) {
     return new Promise((resolve, reject) => {
-      const httpHeaders = new HttpHeaders()
-        .append('content-type', 'application/json');
-      // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
-      // .append('Access-Control-Allow-methods', 'GET, OPTIONS, POST, PUT, PATCH, DELETE');
-      this.http.get(`${environment.apiServer}moldings/${id}`, { headers: httpHeaders })
-        .subscribe((returnsData: any) => {
+      this.requestService.createGetRequest(environment.moldingApi + 'moldings/' + id)
+        .then((returnsData: any) => {
           const newListKit: Kit[] = [];
           returnsData.kits.forEach(kitApi => {
             let newKit: Kit = null;
@@ -348,7 +122,7 @@ export class MoldingService {
   }
 
   getMoldings() {
-    return this.requestService.createGetRequest('moldings');
+    return this.requestService.createGetRequest(environment.moldingApi + 'moldings');
   }
 
   toIri(molding: Molding): MoldingIri {
@@ -357,7 +131,7 @@ export class MoldingService {
       kits: molding.kits.map((kit: Kit) => this.kitService.getIri(kit)),
       moldingDay: molding.moldingDay,
       createdBy: this.userService.getIri(molding.createdBy),
-      outillage: this.moldingToolService.getIri(molding.outillage),
+      outillage: this.toolService.getIri(molding.outillage),
       aCuireAv: molding.aCuireAv,
       aDraperAv: molding.aDraperAv,
       matPolym: this.kitService.getIri(molding.matPolym),
