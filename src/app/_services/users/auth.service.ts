@@ -18,14 +18,10 @@ export class AuthService {
   ) { }
 
   authenticate(userName: string, password: string) {
-    console.log(userName, password);
-    // return this.requestService.createPostRequest()
     return new Promise<boolean>((resolve, reject) => {
       this.requestService.createPostRequest(environment.usineApi + 'login',
         { matricule: userName, password })
         .then((returnsData: any) => {
-          console.log(document.cookie);
-          console.log(returnsData);
           this.isAuth = true;
           this.authUser = returnsData.user;
           resolve(true);

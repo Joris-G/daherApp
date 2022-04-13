@@ -33,20 +33,20 @@ export interface ToolRequest {
 
 
 export interface ToolRequestIri {
-  id?: number;
-  requestDate: Date;
-  requestType: RequestType;
-  requestor: string;
-  tool: string;
-  title: string;
-  description: string;
+  id: number;
+  createdAt: Date;
+  requestType?: RequestType;
+  requestor?: string;
+  tool?: string;
+  title?: string;
+  description?: string;
   imgUrl?: string;
   fileUrl?: string;
-  needDate: Date;
+  needDate?: Date;
   affectedTo?: string;
   affectationDate?: Date;
   requestStatus?: RequestStatus;
   realizationDate?: Date;
   toolingNote?: string;
-  statut?: string;
+  statut: string;
 }

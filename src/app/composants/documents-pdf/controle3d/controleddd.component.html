@@ -14,25 +14,25 @@
     </ion-grid>
     <ion-grid class="table content" no-padding>
         <ion-row>
-            <ion-col size="3">
+            <ion-col size="2">
                 <ion-img class="logo" src="assets/images/logoDaher.png"></ion-img>
             </ion-col>
-            <ion-col size="3" [style.font-size]="'16px'" class="ion-text-center">MESURE 3D DE DEMANDE OUTILLAGE
+            <ion-col size="5" [style.font-size]="'16px'" class="ion-text-center">MESURE 3D DE DEMANDE OUTILLAGE
             </ion-col>
-            <ion-col size="3">
+            <ion-col size="4">
                 <ion-row>
                     <ion-col size="12">N° réf. : </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">Date de demande : {{toolRequest?.controle?.createdAt | date :'dd/MM/yyyy'}}
+                    <ion-col size="12">Date de demande : {{toolRequest?.createdAt | date :'dd/MM/yyyy'}}
                     </ion-col>
                 </ion-row>
             </ion-col>
-            <ion-col size="3">page 1/1
+            <ion-col size="1">page 1/1
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col size="12">Demandeur : {{toolRequest?.controle?.userCreat.username}}</ion-col>
+            <ion-col size="12">Demandeur : {{toolRequest?.controle.demandeur.username}}</ion-col>
         </ion-row>
         <ion-row>
             <ion-col size="6">N° outillage : OT0{{toolRequest?.controle?.outillage?.sapToolNumber}}</ion-col>
@@ -45,36 +45,66 @@
                     <ion-col size="12" [style.font-weight]="'bold'" class="ion-text-center">DEMANDEUR</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12" *ngIf="toolRequest?.controle?.refPlan">
-                        <ion-label class="etiquette">Référence réglementaire : </ion-label> {{toolRequest?.controle?.refPlan}}/{{toolRequest?.controle?.indPlan}}</ion-col>
+                    <ion-col size="6">
+                        <ion-label class="etiquette">Référence réglementaire : </ion-label>
+                    </ion-col>
+                    <ion-col size="6">
+                        {{toolRequest?.controle.refPlan}}/{{toolRequest?.controle.indPlan}}
+                    </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">
-                        <ion-label class="etiquette">Format du modèle 3D fourni si nécessaire : </ion-label> {{toolRequest?.controle?.cheminCAO}}</ion-col>
+                    <ion-col size="6">
+                        <ion-label class="etiquette">Format du modèle 3D fourni si nécessaire : </ion-label>
+                    </ion-col>
+                    <ion-col size="6">
+                        {{toolRequest?.controle.cheminCAO}}
+                    </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">
-                        <ion-label class="etiquette">But du contrôle, de l'essai ou de l'expertise : </ion-label>{{toolRequest?.controle?.ctrlReasons}}</ion-col>
+                    <ion-col size="6">
+                        <ion-label class="etiquette">But du contrôle, de l'essai ou de l'expertise : </ion-label>
+                    </ion-col>
+                    <ion-col size="6" [innerHtml]="toolRequest?.controle.description">
+
+                    </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">
-                        <ion-label class="etiquette">Détails de la mesure : </ion-label>{{toolRequest?.controle?.detailsControle}}</ion-col>
+                    <ion-col size="6">
+                        <ion-label class="etiquette">Détails de la mesure : </ion-label>
+                    </ion-col>
+                    <ion-col size="6">
+                        {{toolRequest?.controle.detailsControle}}
+                    </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">
-                        <ion-label class="etiquette">Précision demandée et attendue : </ion-label>{{toolRequest?.controle?.tolerances}}</ion-col>
+                    <ion-col size="6">
+                        <ion-label class="etiquette">Précision demandée et attendue : </ion-label>
+                    </ion-col>
+                    <ion-col size="6">
+                        {{toolRequest?.controle.tolerances}}
+                    </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">
-                        <ion-label class="etiquette">Date de mise à disposition au service outillage :</ion-label> {{toolRequest?.controle?.dispoOut | date :'dd/MM/yyyy'}}</ion-col>
+                    <ion-col size="6">
+                        <ion-label class="etiquette">Date de mise à disposition au service outillage :</ion-label>
+                    </ion-col>
+                    <ion-col size="6">
+                        {{toolRequest?.controle?.dispoOut | date :'dd/MM/yyyy'}}
+                    </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">
-                        <ion-label class="etiquette">Date butoir demandée : </ion-label>{{toolRequest?.controle?.dateBesoin | date :'dd/MM/yyyy'}}</ion-col>
+                    <ion-col size="6">
+                        <ion-label class="etiquette">Date butoir demandée : </ion-label>
+                    </ion-col>
+                    <ion-col size="6">
+                        {{toolRequest?.controle?.dateBesoin | date :'dd/MM/yyyy'}}
+                    </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">
+                    <ion-col size="6">
                         <ion-label class="etiquette">Types de rapport :</ion-label>
+                    </ion-col>
+                    <ion-col size="6">
                         <ion-item *ngFor="let type of typeRapport| keyvalue">
                             <ion-label [style.text-decoration]="(toolRequest?.controle?.typeRapport === type.value) ? '':'line-through'">{{type.value}}</ion-label>
                             <!-- <ion-radio slot="start" [value]="moyen.key" chec></ion-radio> -->
@@ -103,7 +133,7 @@
                     <ion-col size="12">Informations complémentaires : {{toolRequest?.controle?.infosComplementaire}}</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">Date : {{toolRequest?.controle?.createdAt | date :'dd/MM/yyyy'}} Nom et Signature : {{toolRequest?.controle?.userCreat.nom}}
+                    <ion-col size="12">Date : {{toolRequest?.controle?.createdAt | date :'dd/MM/yyyy'}} Nom et Signature : {{toolRequest?.userReal?.nom}}
                     </ion-col>
                 </ion-row>
             </ion-col>

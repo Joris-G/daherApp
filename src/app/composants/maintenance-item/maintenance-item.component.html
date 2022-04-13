@@ -11,22 +11,26 @@
                 <ion-label>Non conformité
                     <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-textarea autoGrow required type="text" #nonConformite formControlName="nonConformite" (change)="maintenanceItem.nonConformite = nonConformite.value"></ion-textarea>
+                <ion-textarea autoGrow required type="text" #nonConformite formControlName="nonConformite" (change)="maintenanceItem.nonConformite = nonConformite.value">
+
+                </ion-textarea>
             </ion-item>
             <ion-item>
                 <ion-label>Action corrective
                     <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-textarea autoGrow required type="text" placeholder="" #actionsCorrectives formControlName="actionsCorrectives" (change)="maintenanceItem.actionsCorrectives = actionsCorrectives.value"></ion-textarea>
+                <ion-textarea autoGrow required type="text" placeholder="" #actionsCorrectives formControlName="actionsCorrectives" (change)="maintenanceItem.actionsCorrectives = actionsCorrectives.value">
+
+                </ion-textarea>
             </ion-item>
             <!-- Datetime in overlay -->
-            <ion-item button id="open-date-butoir">
+            <ion-item button [id]="'open-date-butoir' + maintenanceItem.rep">
                 <ion-label>Date butoir demandée</ion-label>
                 <ion-icon slot=end icon="calendar-outline"></ion-icon>
                 <ion-text slot="end">
                     {{maintenanceItem.delaiAction | date:"dd/MM/yyyy"}}</ion-text>
                 <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
-                <ion-modal trigger="open-date-butoir">
+                <ion-modal [trigger]="'open-date-butoir' + maintenanceItem.rep">
                     <ng-template>
                         <ion-content>
                             <ion-datetime #delaiAction presentation="date" formControlName="delaiAction" display-format="DD.MM.YYYY" (ngModelChange)="maintenanceItem.delaiAction = dateValue(delaiAction.value)">
@@ -38,15 +42,14 @@
             </ion-item>
         </form>
         <ion-buttons slot="primary">
-            <ion-button *ngIf="!validate" slot="start" (click)="validateItem()" [disabled]="maintenanceItemForm.invalid">
+            <ion-button *ngIf="!validate" slot="start" (click)="validateItemClick()" [disabled]="maintenanceItemForm.invalid">
                 <ion-icon slot="start" name="checkmark"></ion-icon>
                 Valider Item
             </ion-button>
-            <ion-button *ngIf="validate" slot="end" (click)="validateItem()" [disabled]="maintenanceItemForm.invalid">
+            <ion-button slot="end" (click)="removeItemClick()">
                 <ion-icon slot="start" name="trash-outline"></ion-icon>
                 Supprimer Item
             </ion-button>
         </ion-buttons>
     </ion-card-content>
-
 </ion-card>

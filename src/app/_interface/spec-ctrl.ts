@@ -7,15 +7,15 @@ export interface SpecCtrl {
   // equipement?: Equipement;
   createdAt?: Date;
   modifiedAt?: Date;
-  userCreat: User | string;
+  userCreat?: string;
+  demandeur?: User;
   userModif?: User;
   image?: string;
   fichier?: string;
   refPlan: string;
   indPlan: string;
   cheminCAO: string;
-  description?: string;
-  ctrlReasons: string;
+  description: string;
 
   detailsControle: string;
   tolerances: string;
@@ -44,7 +44,6 @@ export interface SpecCtrlIri {
   indPlan: string;
   cheminCAO: string;
   description?: string;
-  ctrlReasons?: string;
 
   detailsControle: string;
   tolerances: string;

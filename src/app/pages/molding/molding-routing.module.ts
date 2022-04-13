@@ -9,11 +9,6 @@ const routes: Routes = [
     component: MoldingPage,
     canActivate: [AuthGuard],
     children: [
-      // {
-      //   path: '',
-      //   redirectTo: 'create-molding',
-      //   pathMatch: 'full'
-      // },
       {
         path: 'print-molding-sheet',
         canActivate: [AuthGuard],

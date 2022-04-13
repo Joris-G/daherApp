@@ -24,7 +24,33 @@
                             <form [formGroup]="roleForm" (submit)="submitRole()">
                                 <ion-grid class="ion-align-items-center ion-justify-content-center">
                                     <ion-row>
-                                        <ion-col size="6">
+                                        <ion-col size="3">
+                                            <ion-radio-group required formControlName="site">
+                                                <ion-list-header>
+                                                    <ion-label color=primary>Site
+                                                        <ion-text color="danger">*</ion-text>
+                                                    </ion-label>
+                                                </ion-list-header>
+                                                <ion-item *ngFor="let site of sites">
+                                                    <ion-label>{{site.nom}}</ion-label>
+                                                    <ion-radio [value]="site.id"></ion-radio>
+                                                </ion-item>
+                                            </ion-radio-group>
+                                        </ion-col>
+                                        <ion-col size="3">
+                                            <ion-radio-group required formControlName="unite">
+                                                <ion-list-header>
+                                                    <ion-label color=primary>Unite
+                                                        <ion-text color="danger">*</ion-text>
+                                                    </ion-label>
+                                                </ion-list-header>
+                                                <ion-item *ngFor="let unite of unites">
+                                                    <ion-label>{{unite.nom}}</ion-label>
+                                                    <ion-radio [value]="unite.id"></ion-radio>
+                                                </ion-item>
+                                            </ion-radio-group>
+                                        </ion-col>
+                                        <ion-col size="3">
                                             <ion-radio-group required formControlName="service">
                                                 <ion-list-header>
                                                     <ion-label color=primary>Service
@@ -32,12 +58,12 @@
                                                     </ion-label>
                                                 </ion-list-header>
                                                 <ion-item *ngFor="let service of services">
-                                                    <ion-label>{{service.Nom}}</ion-label>
+                                                    <ion-label>{{service.nom}}</ion-label>
                                                     <ion-radio [value]="service.id"></ion-radio>
                                                 </ion-item>
                                             </ion-radio-group>
                                         </ion-col>
-                                        <ion-col size="6">
+                                        <ion-col size="3">
                                             <ion-radio-group required formControlName="poste">
                                                 <ion-list-header>
                                                     <ion-label color=primary>Rôle

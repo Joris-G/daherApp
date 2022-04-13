@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { GroupeAffectation } from 'src/app/_interface/groupe-affectation';
 import { User } from 'src/app/_interface/user';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
@@ -11,61 +12,78 @@ const JORIS: User = {
   matricule: 204292,
   nom: 'GRANGIER',
   prenom: 'JORIS',
-  roles: ['COMPAGNON']
+  roles: ['COMPAGNON'],
+
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-
   constructor(
     private http: HttpClient,
     private requestService: RequestService) { }
 
+
+  /**
+   *
+   *
+   * @param idUser c'est l'id de l'utilisateur en base de donnée
+   * @return retourne une Promise<User>
+   * @memberof UsersService
+   */
   getUserById(idUser: string) {
-    return new Promise<User>((resolve, reject) => {
-      const httpHeaders = new HttpHeaders()
-        .set('content-type', 'application/json');
-      this.requestService.createGetRequest(environment.usineApi + `users/${idUser}`)
-        .then((returnsData: any) => {
-          console.log(returnsData);
-          if (returnsData.length !== 0) {
-            resolve(returnsData);
-          } else {
-            reject();
-          }
-        },
-          (error) => {
-            console.log(error);
-            reject();
-          });
-    });
+    return this.requestService.createGetRequest(environment.usineApi + `users/${idUser}`);
   }
 
-  getUsers() {
-    return new Promise<User[]>((resolve, reject) => {
-      this.requestService.createGetRequest(environment.usineApi + `users`)
-        .then((returnsData: any) => {
-          console.log(returnsData);
-          if (returnsData.length !== 0) {
-            resolve(returnsData);
-          } else {
-            reject();
-          }
-        },
-          (error) => {
-            console.log(error);
-            reject();
-          });
-    });
+
+  /**
+   *
+   *
+   * @param  [filters] ajoute des filtres pour la recherche d'utilisateurs
+   * @return retourne une Promise<User[]>
+   * @memberof UsersService
+   */
+  getUsers(filters?: string) {
+    return this.requestService.createGetRequest(environment.usineApi + `users`);
   }
 
+
+  /**
+   *
+   *
+   * @param userObj un objet User
+   * @return retourne une Promise<User>
+   * @memberof UsersService
+   */
   registerUser(userObj: User) {
     return this.requestService.createPostRequest(environment.usineApi + 'users', userObj);
   }
 
-  getIri(user: User): string {
-    return `/api/users/${user.id}`;
+
+
+  /**
+   *
+   *
+   * @param user un object User ou l'iri d'un user
+   * @return  retourne l'iri du user
+   * @memberof UsersService
+   */
+  getIri(user: User | string): string {
+    if (typeof (user) == 'string') {
+      return user;
+    } else {
+      return `/api/users/${user.id}`;
+    }
   }
+
+  getGroups() {
+    return this.requestService.createGetRequest(environment.usineApi + `groupe_affectations`);
+  }
+
+  createGroup(groupObj: GroupeAffectation) {
+    return this.requestService.createPostRequest(environment.usineApi + `groupe_affectations`, groupObj);
+  }
+
+
 }

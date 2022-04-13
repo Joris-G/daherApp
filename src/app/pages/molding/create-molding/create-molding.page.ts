@@ -155,7 +155,7 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
   }
 
   onInputChange(inputValue: string) {
-    this.loadingService.startLoading();
+    this.loadingService.startLoading('Patienter pendant le chargement du kit');
     this.scanService.getScanInput(inputValue)
       .then((data: any) => {
         console.log(data);

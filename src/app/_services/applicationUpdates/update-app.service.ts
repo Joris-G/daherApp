@@ -9,6 +9,23 @@ import { AuthService } from '../users/auth.service';
 })
 export class UpdateAppService {
 
+  private tableUpdates = [
+    {
+      id: 1,
+      dateUpdate: new Date(2022, 4, 14),
+      description:
+        'Pour associer un outillage à un moulage il suffit de scanner le numéro d\'OT dans l\'OF.' +
+        'Vous devez le scanner comme un kit',
+      title: 'Module Moulage'
+    },
+    {
+      id: 2,
+      dateUpdate: new Date(2022, 4, 14),
+      description: 'Le module outillage est ouvert pour test',
+      title: 'Module Outillage'
+    },
+  ];
+
   constructor(
     private authService: AuthService,
     private alertService: AlertService,
@@ -30,24 +47,35 @@ export class UpdateAppService {
     return new Promise((resolve, reject) => {
       this.getUpdatesToShow()
         .then((updates: Update[]) => {
-          updates.forEach((update: Update) => {
-            this.alertService.simpleAlert('Info sur la mise à jours', update.title, update.description)
-              .then(() => {
-                resolve(true);
-              });
-          });
+          if (updates) {
+            console.log('bonjour', updates);
+            updates.forEach((update: Update) => {
+              this.alertService.simpleAlert('Info sur la mise à jours', update.title, update.description)
+                .then(() => {
+                  console.log('hello');
+                  resolve(true);
+                });
+            });
+          } else {
+            console.log('toto');
+            resolve(true);
+          }
+
         });
     });
   }
 
+
+
   getUpdates(day1?: Date, day2?: Date): Promise<any> {
     return new Promise((resolve, reject) => {
-      resolve([{
-        id: 1,
-        dateUpdate: new Date(),
-        description: 'Le scan de l\'outillage de moulage est effectif. Il suffit de le scanner au même endroit qu\'un kit',
-        title: 'Scan outillage de moulage à la place de la saisie'
-      }]);
+      const updates = this.tableUpdates.filter(update => update.dateUpdate > new Date(this.authService.authUser.lastCon));
+      if (updates.length > 0) {
+        resolve(updates);
+      } else {
+        resolve(null);
+      }
+
     });
     // return this.requestService.createGetRequest('');
   }

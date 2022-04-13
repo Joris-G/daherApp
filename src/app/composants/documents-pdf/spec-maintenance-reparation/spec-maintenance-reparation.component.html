@@ -19,7 +19,7 @@
     <ion-grid fixed class="table">
         <ion-row>
             <ion-col class="border" size="2">Direction Qualité</ion-col>
-            <ion-col class="border" size="5">
+            <ion-col class="border" size="7">
                 <ion-row>
                     <ion-col size="12"></ion-col>
                 </ion-row>
@@ -30,13 +30,13 @@
                     <ion-col size="12"></ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12"> Désignation outillage: {{request.maintenance.outillage.designation}}</ion-col>
+                    <ion-col size="12"> Désignation outillage: {{toolRequest.maintenance?.outillage?.designation}}</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12"> Référence outillage: {{request.maintenance.outillage.identification}}</ion-col>
+                    <ion-col size="12"> Référence outillage: {{toolRequest.maintenance?.outillage?.identification}}</ion-col>
                 </ion-row>
             </ion-col>
-            <ion-col class="border" size="5">
+            <ion-col class="border" size="3">
                 <ion-row>
                     <ion-col size="12">Diffusion: Service outillage</ion-col>
                 </ion-row>
@@ -44,14 +44,14 @@
                     <ion-col size="12"></ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">N° d'OT SAP : {{request.maintenance.outillage.sapToolNumber}}</ion-col>
+                    <ion-col size="12">N° d'OT SAP : OT{{toolRequest.maintenance?.outillage?.sapToolNumber}}</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="6">Emetteur : {{request.maintenance.userCreat}}</ion-col>
+                    <ion-col size="6">Emetteur : {{toolRequest.maintenance.userCreat.username}}</ion-col>
                     <ion-col size="6">Sigle : </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12">Le : {{request.createdAt}}</ion-col>
+                    <ion-col size="12">Le : {{toolRequest.createdAt | date:"dd/MM/yyyy"}}</ion-col>
                 </ion-row>
             </ion-col>
         </ion-row>
@@ -63,23 +63,23 @@
             <ion-col class="border" size="3">ACTIONS CORRECTIVES</ion-col>
             <ion-col class="border" size="1">Responsable A.C.</ion-col>
             <ion-col class="border" size="1">Délai A.C.</ion-col>
-            <ion-col size="3">
+            <ion-col class="border" size="3">
                 <ion-row>
-                    <ion-col class="border" size="12">Réalisation</ion-col>
+                    <ion-col size="12">Réalisation</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col class="border" size="6">Date</ion-col>
-                    <ion-col class="border" size="6">Visa</ion-col>
+                    <ion-col size="6">Date</ion-col>
+                    <ion-col size="6">Visa</ion-col>
                 </ion-row>
             </ion-col>
         </ion-row>
-        <ion-row *ngFor="let maintenaceItem of request.maintenance.maintenanceItems">
+        <ion-row *ngFor="let maintenaceItem of toolRequest.maintenance.itemActionCorrective">
             <ion-col class="border" size="1">{{maintenaceItem.rep}}</ion-col>
             <ion-col class="border" size="3">{{maintenaceItem.nonConformite}}</ion-col>
             <ion-col class="border" size="3">{{maintenaceItem.actionsCorrectives}}</ion-col>
             <ion-col class="border" size="1">{{maintenaceItem.respo}}</ion-col>
-            <ion-col class="border" size="1">{{maintenaceItem.delaiAction}}</ion-col>
-            <ion-col class="border" size="1">{{maintenaceItem.dateReal | date:"dd/MM/yyyy"}}</ion-col>
+            <ion-col class="border" size="1">{{maintenaceItem.delaiAction | date:"dd/MM/yy"}}</ion-col>
+            <ion-col class="border" size="1">{{maintenaceItem.dateReal | date:"dd/MM/yy"}}</ion-col>
             <ion-col class="border" size="1">{{maintenaceItem.userReal}}</ion-col>
         </ion-row>
     </ion-grid>

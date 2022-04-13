@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { IonRadioGroup } from '@ionic/angular';
 import { SpecMaintRep } from 'src/app/_interface/spec-maint-rep';
 import { ToolRequest } from 'src/app/_interface/tool-request';
 
@@ -8,8 +9,8 @@ import { ToolRequest } from 'src/app/_interface/tool-request';
   styleUrls: ['./spec-maintenance-reparation.component.scss'],
 })
 export class SpecMaintenanceReparationComponent implements OnInit {
-
-  @Input() request: ToolRequest;
+  @Input() toolRequest: ToolRequest;
+  @ViewChild('groupTest') groupTest: IonRadioGroup;
 
   constructor() { }
 

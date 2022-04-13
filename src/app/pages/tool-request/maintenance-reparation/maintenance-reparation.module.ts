@@ -9,6 +9,8 @@ import { MaintenanceReparationPage } from './maintenance-reparation.page';
 import { MaintenanceItemComponentModule } from 'src/app/composants/maintenance-item/maintenance-item.module';
 import { SpecMaintenanceReparationModule } from
   'src/app/composants/documents-pdf/spec-maintenance-reparation/spec-maintenance-reparation.module';
+import { ToolInputModule } from 'src/app/composants/tool-input/tool-input.module';
+import { ToolRequestFooterModule } from 'src/app/composants/tool-request-footer/tool-request-footer.module';
 
 @NgModule({
   imports: [
@@ -19,6 +21,8 @@ import { SpecMaintenanceReparationModule } from
     MaintenanceReparationPageRoutingModule,
     MaintenanceItemComponentModule,
     SpecMaintenanceReparationModule,
+    ToolInputModule,
+    ToolRequestFooterModule,
   ],
   declarations: [MaintenanceReparationPage]
 })

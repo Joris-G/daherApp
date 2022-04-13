@@ -33,7 +33,14 @@ export class ToolRequestPage implements OnInit {
   }
 
   navigate(url: string) {
-    this.navCtrl.navigateRoot(url);
+    this.navCtrl.navigateRoot(url)
+      .then(() => {
+
+      })
+      .catch((err) => {
+        console.error(err);
+
+      });
     // this.router.navigateByUrl(url);
   }
 }

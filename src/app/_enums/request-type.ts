@@ -1,5 +1,5 @@
 export enum RequestType {
-  newTool = 1,
-  modifyAndMaintain = 2,
-  tridimCheck = 3
+  sbo = 1,
+  maintenance = 2,
+  controle = 3
 }

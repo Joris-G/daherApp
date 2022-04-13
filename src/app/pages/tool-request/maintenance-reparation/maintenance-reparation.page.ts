@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { IonSelect, LoadingController, NavController } from '@ionic/angular';
 import { RequestType } from 'src/app/_enums/request-type';
 import { MaintenanceItem, SpecMaintRep } from 'src/app/_interface/spec-maint-rep';
-import { Tool } from 'src/app/_interface/tool';
 import { ToolRequest } from 'src/app/_interface/tool-request';
+import { User } from 'src/app/_interface/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
-import { PdfService } from 'src/app/_services/divers/pdf.service';
+import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { ToolRequestService } from 'src/app/_services/toolRequest/tool-request.service';
-import { ToolService } from 'src/app/_services/tools/tool.service';
 import { AuthService } from 'src/app/_services/users/auth.service';
+import { RoleGuard } from 'src/app/_services/users/role.guard';
 
 @Component({
   selector: 'app-maintenance-reparation',
@@ -16,16 +18,36 @@ import { AuthService } from 'src/app/_services/users/auth.service';
   styleUrls: ['./maintenance-reparation.page.scss'],
 })
 export class MaintenanceReparationPage implements OnInit {
+  @ViewChild('statut') ctrlStatut: IonSelect;
+  public canManage: boolean;
+  public canUpDate = false;
   public toolRequest: ToolRequest;
   public maintRepForm: FormGroup;
+  public page = {
+    title: 'Maintenance et Réparation'
+  };
+  public userList: User[];
 
   constructor(
-    private pdfService: PdfService,
     private toolRequestService: ToolRequestService,
     private authService: AuthService,
-    private toolService: ToolService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private navCtrl: NavController,
+    private loadingService: LoadingService,
+    private roleGuard: RoleGuard,
+    private activatedRoute: ActivatedRoute,
   ) { }
+
+  ionViewWillEnter() {
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    if (id) {
+      this.loadingService.startLoading('Patienter pendant le chargement');
+      this.loadMaintenanceData(id);
+      // this.canUpDate = true;
+    } else {
+      this.canUpDate = false;
+    }
+  }
 
   ngOnInit() {
     this.maintRepForm = new FormGroup(
@@ -46,11 +68,10 @@ export class MaintenanceReparationPage implements OnInit {
       dateBesoin: new Date(),
       demandeur: this.authService.authUser,
       toolSAP: null,
-      type: RequestType.modifyAndMaintain,
+      type: RequestType.maintenance,
 
       maintenance:
       {
-        description: '',
         dateBesoin: null,
         userCreat: this.authService.authUser,
         outillage: null,
@@ -60,63 +81,125 @@ export class MaintenanceReparationPage implements OnInit {
         sigle: '',
         userValideur: null,
         dateValid: new Date(),
-        maintenanceItems: [],
+        itemActionCorrective: [],
         rep: [],
       }
     };
   }
 
+  loadMaintenanceData(idDemande: string) {
+    this.toolRequest = null;
+    this.toolRequestService.getToolRequest(idDemande)
+      .then((responseRequest: ToolRequest) => {
+        this.toolRequestService.getMaintenance(responseRequest.maintenance.id)
+          .then((responseMaint: SpecMaintRep) => {
+            this.toolRequest = responseRequest;
+            this.toolRequest.maintenance = responseMaint;
+            this.toolRequest.maintenance.itemActionCorrective.map((item: MaintenanceItem, index: number) => item.rep = index + 1);
+            this.maintRepForm.patchValue({
+              outillage: this.toolRequest.maintenance.outillage,
+              needDate: this.toolRequest.maintenance.dateBesoin,
+              equipment: this.toolRequest.maintenance.equipement,
+              image: this.toolRequest.maintenance.image,
+              fichier: this.toolRequest.maintenance.fichier,
+              sigle: this.toolRequest.maintenance.sigle,
+              userValideur: this.toolRequest.maintenance.userReal,
+              dateValid: this.toolRequest.maintenance.dateValid,
+            });
+            this.page.title = 'Modification demande de maintenance : ID ' + this.toolRequest.id;
+            if (this.toolRequest.statut === 'NOUVELLE') {
+              this.canUpDate = true;
+              console.log(this.canUpDate);
+              this.canManage = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN', 'ROLE_METHODES']);
+            } else {
+              this.canUpDate = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN', 'ROLE_METHODES']);
+              this.canManage = this.canUpDate;
+              console.log(this.canUpDate);
+            }
+            this.loadingService.stopLoading();
+          });
+      },
+        () => {
+          this.navCtrl.back();
+        })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   dateValue(dateValue: string): Date {
     return new Date(dateValue);
   }
+
   onValidateItem(ev: MaintenanceItem, item: MaintenanceItem) {
     item = ev;
-    console.log(this.toolRequest.maintenance.maintenanceItems);
+    console.log(this.toolRequest.maintenance.itemActionCorrective);
   }
+
+  onRemoveItem(ev: MaintenanceItem, item: MaintenanceItem) {
+    this.toolRequest.maintenance.itemActionCorrective.splice(item.rep - 1, 1);
+    console.log(this.toolRequest.maintenance.itemActionCorrective);
+  }
+
   upDateSpec() {
     this.toolRequest.maintenance.dateBesoin = this.maintRepForm.controls.dateBesoin.value;
-    this.toolRequest.maintenance.description = this.maintRepForm.controls.description.value;
     this.toolRequest.maintenance.image = this.maintRepForm.controls.image.value;
     this.toolRequest.maintenance.fichier = this.maintRepForm.controls.fichier.value;
   }
 
-  toolOnChange(inputOTValue: string) {
-
-    console.log(inputOTValue);
-    switch (inputOTValue.length) {
-      case 7:
-        // this.toolService.getEquipement()
-        break;
-      case 8:
-        if (inputOTValue.startsWith('OT')) {
-          this.toolService.getToolByToolNumber(inputOTValue.substring(inputOTValue.length - 5))
-            .then((responseTool: Tool) => {
-              this.toolRequest.maintenance.outillage = responseTool;
-            },
-              (message: string) => {
-                this.alertService.simpleAlert('Erreur', 'Le serveur outillage à renvoyé une erreur :', message);
-                this.maintRepForm.controls.outillage.setValue('');
-              })
-            .catch((error) => {
-              console.error(error);
-            });
-        }
-        break;
-      default:
-        break;
-    }
-  }
   addMaintenanceItem() {
     const maintenanceItem: MaintenanceItem = {
-      rep: this.toolRequest.maintenance.maintenanceItems.length + 1
+      rep: this.toolRequest.maintenance.itemActionCorrective.length + 1
     };
-    this.toolRequest.maintenance.maintenanceItems.push(maintenanceItem);
+    this.toolRequest.maintenance.itemActionCorrective.push(maintenanceItem);
+    console.log(this.toolRequest.maintenance.itemActionCorrective);
   }
+
   submitMaintenanceForm() {
-
+    this.toolRequestService.createMaintenanceRequest(this.toolRequest.maintenance)
+      .then(() => {
+        this.maintRepForm.reset();
+        this.alertService.simpleAlert(
+          'Message de l\'application',
+          'Création d\'une demande',
+          'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes')
+          .then(() => {
+            this.navCtrl.navigateForward('tooling/tool-request-list');
+          });
+      },
+        () => {
+          console.log('reject');
+        })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
-  pdfExportClick() {
+  updateForm() {
+    this.loadingService.startLoading('Patienter pendant la mise à jour de la demande');
+    this.toolRequestService.updateRequest(this.toolRequest)
+      .then((responseUpdatedRequest) => {
+        console.log(responseUpdatedRequest);
+        this.toolRequestService.updateMainteanceRequest(this.toolRequest)
+          .then(() => {
+            this.maintRepForm.reset();
+            this.loadingService.stopLoading();
+            this.alertService.simpleAlert(
+              'Message de l\'application',
+              'Mise à jour d\'une demande',
+              'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes')
+              .then(() => {
+                this.navCtrl.navigateForward('tooling/tool-request-list');
+              });
 
+          })
+          .catch((error) => {
+            this.alertService.simpleAlert(
+              'Erreur',
+              'Mise à jour d\'une demande',
+              'La demande n\'a pas pu être modifiée. Vérifiez les données');
+            console.error(error);
+          });
+      });
   }
 }

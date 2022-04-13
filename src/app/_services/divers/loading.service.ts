@@ -9,10 +9,10 @@ export class LoadingService {
   constructor(private loadingController: LoadingController) {
   }
 
-  startLoading() {
+  startLoading(message: string) {
     this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Patienter pendant le chargement du kit',
+      message,
     })
       .then((response) => {
         response.present();

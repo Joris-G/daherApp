@@ -16,6 +16,26 @@ export class LoginPage implements OnInit, AfterViewInit {
   @ViewChild('userName') userName: IonInput;
   @ViewChild('password') password: IonInput;
   public loginForm: FormGroup;
+  private reRouteOpts = [
+    {
+      roles: ['ROLE_MOULEUR'],
+      route: 'molding'
+    },
+    {
+      roles: ['ROLE_ADMIN'],
+      route: 'home'
+    },
+    {
+      roles: ['ROLE_RESP_OUTIL'],
+      route: 'tooling'
+    },
+    {
+      roles: ['ROLE_MOULEUR'],
+      route: 'molding'
+    }
+  ];
+
+
 
   constructor(
     public authService: AuthService,
@@ -57,23 +77,21 @@ export class LoginPage implements OnInit, AfterViewInit {
       this.loginForm.get('userName').value,
       this.loginForm.get('password').value || this.loginForm.get('userName').value)
       .then(() => {
+        console.log('là');
         this.updateService.showUpdates()
           .then(() => {
-            console.log(this.getSpecialRole(this.authService.authUser.roles));
-            switch (this.getSpecialRole(this.authService.authUser.roles)) {
-              case 'ROLE_MOULEUR':
-                this.navControler.navigateForward('molding');
-                break;
-              case 'ROLE_ADMIN':
-                this.navControler.navigateForward('tooling');
-                break;
-              case 'ROLE_RESP_OUTIL':
-                this.navControler.navigateForward('tooling');
-                break;
-              default:
-                this.navControler.navigateForward('home');
-                break;
-            }
+            console.log('ici');
+          },
+            () => {
+              console.log('tata');
+            })
+          .finally(() => {
+            console.log('coucou');
+            this.reRouteOpts.forEach((routeOpt) => {
+              if (this.authService.authUser.roles.find(role => routeOpt.roles.find(roleOpt => roleOpt === role))) {
+                this.navControler.navigateForward(routeOpt.route);
+              }
+            });
             this.loginForm.reset();
           });
 

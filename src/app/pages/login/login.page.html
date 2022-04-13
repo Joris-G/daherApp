@@ -6,11 +6,6 @@
 
 <ion-content [fullscreen]="true">
     <ion-grid fixed class="full-height ion-align-items-center ion-justify-content-center">
-        <!-- <ion-row>
-            <ion-col size="12">
-                <ion-title color=primary>Application traçabilité</ion-title>
-            </ion-col>
-        </ion-row> -->
         <ion-row class="ion-align-items-center">
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
 
@@ -25,7 +20,6 @@
                 </ion-item>
                 <ion-item>
                     <ion-label position="floating">Password
-                        <!-- <ion-text color="danger">*</ion-text> -->
                     </ion-label>
                     <ion-input #password formControlName="password" type="password" value=""></ion-input>
                 </ion-item>
@@ -37,6 +31,4 @@
             </form>
         </ion-row>
     </ion-grid>
-
-
 </ion-content>

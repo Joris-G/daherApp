@@ -6,6 +6,8 @@ import { User } from 'src/app/_interface/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { RoleService } from 'src/app/_services/users/role.service';
 import { SericesService } from 'src/app/_services/users/serices.service';
+import { SiteService } from 'src/app/_services/users/site.service';
+import { UniteService } from 'src/app/_services/users/unite.service';
 import { UsersService } from 'src/app/_services/users/users.service';
 // import Swiper core and required modules
 
@@ -27,10 +29,14 @@ export class RegisterPage implements OnInit {
   };
   public services: any;
   public roles: any;
+  public unites: any;
+  public sites: any;
 
   constructor(
     private router: Router,
     private serviceService: SericesService,
+    private siteService: SiteService,
+    private uniteService: UniteService,
     private roleService: RoleService,
     private loadingController: LoadingController,
     private userService: UsersService,
@@ -41,6 +47,8 @@ export class RegisterPage implements OnInit {
     this.roleForm = new FormGroup({
       poste: new FormControl(),
       service: new FormControl(),
+      site: new FormControl(),
+      unite: new FormControl(),
     });
     this.identityForm = new FormGroup({
       firstName: new FormControl(),
@@ -79,13 +87,17 @@ export class RegisterPage implements OnInit {
       message: 'Patienter pendant le chargement des services',
     });
     await loading.present();
-
     const roleProm = this.roleService.getRoles();
     const serviceProm = this.serviceService.getServices();
-    Promise.all([serviceProm, roleProm])
+    const uniteProm = this.uniteService.getUnites();
+    const siteProm = this.siteService.getSites();
+    Promise.all([serviceProm, roleProm, siteProm, uniteProm])
       .then((res: any[]) => {
         this.services = res[0];
         this.roles = res[1];
+        this.sites = res[2];
+        this.unites = res[3];
+
       })
       .finally(() => {
         loading.dismiss();
@@ -121,7 +133,9 @@ export class RegisterPage implements OnInit {
       poste: `/api/postes/${this.roleForm.value.poste}`,
       service: `/api/services/${this.roleForm.value.service}`,
       password: this.identityForm.value.password || '',
-      programmeAvion: [`/api/programme_avions/${1}`]
+      programmeAvion: [`/api/programme_avions/${1}`],
+      site: `/api/usines/${this.roleForm.value.site}`,
+      unite: `/api/divisions/${this.roleForm.value.unite}`,
     };
     this.userService.registerUser(userToRegister)
       .then((user: User) => {

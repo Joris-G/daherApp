@@ -4,17 +4,13 @@ import { User } from './user';
 
 export interface SpecMaintRep {
   id?: number;
-  outillage: Tool;
+  outillage?: Tool;
   equipement?: string;
   dateBesoin: Date;
-  nonConformite?: string[];
-  actionsCorrectives?: string[];
   respo?: string[];
-  delaiAction?: string[];
   userReal?: string[];
   dateReal?: string[];
   rep?: string[];
-  description: string;
   createdAt?: Date;
   modifiedAt?: Date;
   userCreat: User;
@@ -26,22 +22,20 @@ export interface SpecMaintRep {
   sigle?: string;
   causeDem?: string;
   dateValid?: Date;
-  maintenanceItems?: MaintenanceItem[];
+  itemActionCorrective?: MaintenanceItem[];
 }
 
 export interface SpecMaintRepIri {
   id?: number;
-  outillage: string;
+  outillage?: string;
   equipement?: string;
   dateBesoin: Date;
-  nonConformite?: string[];
-  actionsCorrectives?: string[];
+  itemActionCorrective?: string[];
   respo?: string[];
   delaiAction?: string[];
   userReal?: string[];
   dateReal?: string[];
   rep?: string[];
-  description: string;
   createdAt?: Date;
   modifiedAt?: Date;
   userCreat: string;
@@ -53,7 +47,6 @@ export interface SpecMaintRepIri {
   sigle?: string;
   causeDem?: string;
   dateValid?: Date;
-  maintenanceItems?: string[];
 }
 
 export interface MaintenanceItem {
@@ -64,4 +57,15 @@ export interface MaintenanceItem {
   userReal?: string;
   dateReal?: Date;
   rep: number;
+  id?: number;
 }
+
+// export interface MaintenanceItemIri {
+//   nonConformite?: string;
+//   actionsCorrectives?: string;
+//   respo?: string;
+//   delaiAction?: Date;
+//   userReal?: string;
+//   dateReal?: Date;
+//   rep: number;
+// }

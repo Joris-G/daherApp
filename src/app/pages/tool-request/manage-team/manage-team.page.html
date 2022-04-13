@@ -1,0 +1,89 @@
+<ion-header>
+    <ion-toolbar color=dark>
+        <ion-title>{{page.title}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-popover trigger="trigger-button" triggerAction="click" side="top" alignment="center" component="toolInputComponent">
+        <ng-template>
+            <ion-content>Créer un groupe</ion-content>
+            <ion-input #inputGroup type="text" placeholder="Nom du groupe"></ion-input>
+            <ion-button (click)="addGroupClick(inputGroup.value.toString())" expand="block" color=primary>
+                Ajouter
+            </ion-button>
+        </ng-template>
+    </ion-popover>
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col size=3>
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>Groupe d'affectation</ion-card-title>
+                    </ion-card-header>
+                    <ion-toolbar>
+                        <ion-buttons slot="start">
+                            <ion-button (click)="newGroupClick()" id="trigger-button">
+                                <ion-icon slot="start" name="add"></ion-icon>
+                                Créer
+                            </ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                    <ion-list>
+                        <ion-item *ngFor="let group of groups">
+                            <ion-label>
+                                {{group.libelle}}
+                            </ion-label>
+                        </ion-item>
+                    </ion-list>
+                </ion-card>
+            </ion-col>
+            <ion-col size=9>
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>Liste des utilisateurs</ion-card-title>
+                    </ion-card-header>
+                    <mat-table #table [dataSource]="toolsUserDataSource">
+                        <ng-container matColumnDef="nom">
+                            <mat-header-cell *matHeaderCellDef> Nom </mat-header-cell>
+                            <mat-cell *matCellDef="let user"> {{user.nom}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="prenom">
+                            <mat-header-cell *matHeaderCellDef> Prénom </mat-header-cell>
+                            <mat-cell *matCellDef="let user"> {{user.prenom}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="groupeAffectation">
+                            <mat-header-cell *matHeaderCellDef> Groupe </mat-header-cell>
+                            <mat-cell *matCellDef="let user">
+                                <ion-list *ngIf="user.groupeAffectations.length > 0">
+                                    <ion-item *ngFor="let group of user.groupeAffectations">
+                                        {{group.libelle}}
+                                    </ion-item>
+                                </ion-list>
+                                <ion-item *ngIf="user.groupeAffectations.length === 0">
+                                    <ion-select #select multiple="true" placeholder="Selectionner un groupe" (ionChange)="addGroupToUser(select.value, user)">
+                                        <ion-select-option *ngFor="let group of groups" [value]="group">
+                                            {{group.libelle}}</ion-select-option>
+                                    </ion-select>
+                                </ion-item>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="progAvion">
+                            <mat-header-cell *matHeaderCellDef> Programme avion </mat-header-cell>
+                            <mat-cell *matCellDef="let user"> {{user.programmeAvion}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="lastCon">
+                            <mat-header-cell *matHeaderCellDef> Dernière connexion </mat-header-cell>
+                            <mat-cell *matCellDef="let user"> {{user.lastCon | date:"EEE dd/MM/yy"}} </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                    </mat-table>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+</ion-content>

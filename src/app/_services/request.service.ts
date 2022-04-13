@@ -62,7 +62,7 @@ export class RequestService {
         },
           (error) => {
             console.error(error);
-            reject();
+            reject(error);
           });
     });
   }

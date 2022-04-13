@@ -14,7 +14,7 @@ const routes: Routes = [
         path: 'new-tool',
         canActivate: [RoleGuard],
         data: {
-          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL']
+          expectedRole: ['ROLE_USER']
         },
         loadChildren: () => import('../../pages/tool-request/new-tool/new-tool.module')
           .then(m => m.NewToolPageModule)
@@ -23,7 +23,7 @@ const routes: Routes = [
         path: 'tool-request-list',
         canActivate: [RoleGuard],
         data: {
-          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL']
+          expectedRole: ['ROLE_USER']
         },
         loadChildren: () => import('../../pages/tool-request/tool-requests/tool-requests.module')
           .then(m => m.ToolRequestsPageModule)
@@ -41,7 +41,7 @@ const routes: Routes = [
         path: 'repair-tool',
         canActivate: [RoleGuard],
         data: {
-          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL']
+          expectedRole: ['ROLE_USER']
         },
         loadChildren: () => import('./maintenance-reparation/maintenance-reparation.module').then(m => m.MaintenanceReparationPageModule)
       },
@@ -49,7 +49,7 @@ const routes: Routes = [
         path: 'repair-tool/:id',
         canActivate: [RoleGuard],
         data: {
-          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL']
+          expectedRole: ['ROLE_USER']
         },
         loadChildren: () => import('./maintenance-reparation/maintenance-reparation.module').then(m => m.MaintenanceReparationPageModule)
       },
@@ -57,7 +57,7 @@ const routes: Routes = [
         path: '3D-tool',
         canActivate: [RoleGuard],
         data: {
-          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL']
+          expectedRole: ['ROLE_USER']
         },
         loadChildren: () => import('./control3-d/control.module').then(m => m.Control3DPageModule)
       },
@@ -65,9 +65,25 @@ const routes: Routes = [
         path: '3D-tool/:id',
         canActivate: [RoleGuard],
         data: {
-          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL']
+          expectedRole: ['ROLE_USER']
         },
         loadChildren: () => import('./control3-d/control.module').then(m => m.Control3DPageModule)
+      },
+      {
+        path: 'manage-tool-team',
+        canActivate: [RoleGuard],
+        data: {
+          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL']
+        },
+        loadChildren: () => import('./manage-team/manage-team.module').then(m => m.ManageTeamPageModule)
+      },
+      {
+        path: 'tool-indicators',
+        canActivate: [RoleGuard],
+        data: {
+          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_METHODES']
+        },
+        loadChildren: () => import('./indicators/indicators.module').then(m => m.IndicatorsPageModule)
       },
     ]
   },

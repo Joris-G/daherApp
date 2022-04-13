@@ -1,3 +1,5 @@
+import { GroupeAffectation } from './groupe-affectation';
+
 export interface User {
   id?: number;
   username?: string;
@@ -14,6 +16,8 @@ export interface User {
   programmeAvion?: string[];
   createdAt?: Date;
   telephone?: number;
+  unite?: string;
+  site?: string;
+  groupeAffectations?: GroupeAffectation[];
 }
-
 

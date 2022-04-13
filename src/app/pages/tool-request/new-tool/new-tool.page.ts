@@ -99,7 +99,7 @@ export class NewToolPage implements OnInit {
   createToolRequestClick() {
     // on créé la toolRequest si l'OT est créé correctement
     const toolRequest: ToolRequest = {
-      type: RequestType.newTool,
+      type: RequestType.sbo,
       // title: this.newToolRequestForm.value.title,
       // Description: this.newToolRequestForm.value.description,
       dateBesoin: this.newToolRequestForm.value.needDate,
@@ -109,7 +109,7 @@ export class NewToolPage implements OnInit {
     };
     // on soummet la toolrequest
     this.toolRequestService.createToolRequest(toolRequest)
-      .then((toolRequest: ToolRequest) => {
+      .then(() => {
         // Si la toolRequest est créé
         this.newToolForm.reset();
         this.newToolRequestForm.reset();

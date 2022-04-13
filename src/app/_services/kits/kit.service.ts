@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Kit } from 'src/app/_interface/kit';
 import { environment } from 'src/environments/environment';
+import { RequestService } from '../request.service';
 
 // const KIT: any[] = [
 //   {
@@ -69,14 +70,16 @@ import { environment } from 'src/environments/environment';
 })
 export class KitService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private requestService: RequestService
+  ) { }
 
   getKitById(id: string) {
     return new Promise((resolve, reject) => {
       const httpHeaders = new HttpHeaders()
         .set('content-type', 'application/json');
-      this.http.get(`${environment.apiServer}datas_kits?page=1&idMM=${id}`, { headers: httpHeaders })
-        .subscribe((returnsData: any) => {
+      this.requestService.createGetRequest(environment.moldingApi + `datas_kits?page=1&idMM=${id}`)
+        .then((returnsData: any) => {
           console.log(returnsData);
           if (returnsData.length !== 0) {
             const returnKit: Kit = {

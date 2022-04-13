@@ -15,6 +15,11 @@ export class MoldingPage implements OnInit, AfterViewChecked {
     public navCtrl: NavController,
   ) {
   }
+
+  ionViewWillEnter() {
+    this.menu.open();
+  }
+
   ngAfterViewChecked(): void {
     // console.log('after view checked molding page');
     this.page = {

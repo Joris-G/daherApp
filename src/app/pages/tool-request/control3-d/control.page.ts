@@ -1,19 +1,16 @@
-import { AfterContentChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController, NavController } from '@ionic/angular';
+import { IonSelect, IonTextarea, LoadingController, NavController } from '@ionic/angular';
 import { MoyenMesure, SpecCtrl, TypeRapport } from 'src/app/_interface/spec-ctrl';
-import { Tool } from 'src/app/_interface/tool';
 import { ToolRequest } from 'src/app/_interface/tool-request';
 import { User } from 'src/app/_interface/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
+import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { PdfService } from 'src/app/_services/divers/pdf.service';
 import { ToolRequestService } from 'src/app/_services/toolRequest/tool-request.service';
-import { ToolService } from 'src/app/_services/tools/tool.service';
 import { AuthService } from 'src/app/_services/users/auth.service';
 import { RoleGuard } from 'src/app/_services/users/role.guard';
-import { RoleService } from 'src/app/_services/users/role.service';
-import { UsersService } from 'src/app/_services/users/users.service';
 
 @Component({
   selector: 'app-control',
@@ -21,51 +18,55 @@ import { UsersService } from 'src/app/_services/users/users.service';
   styleUrls: ['./control.page.scss'],
 })
 export class Control3DPage implements OnInit {
-  // public toolRequest.controle: toolRequest.controle;
+  @ViewChild('ctrlReasons') ctrlReasons: IonTextarea;
+  @ViewChild('statut') ctrlStatut: IonSelect;
   public toolRequest: ToolRequest;
   public controlForm: FormGroup;
   public typeRapport = TypeRapport;
   public canManage: boolean;
   public canUpDate = false;
-  public userList: User[];
   public moyenMesure: MoyenMesure;
+  public page = {
+    title: 'Nouvelle demande de contrôle 3D'
+  };
 
 
   constructor(
-    private pdfService: PdfService,
     private toolRequestService: ToolRequestService,
     private authService: AuthService,
-    private toolService: ToolService,
     private alertService: AlertService,
     private activatedRoute: ActivatedRoute,
     private roleGuard: RoleGuard,
-    private userService: UsersService,
     private navCtrl: NavController,
     private loadingControler: LoadingController,
     public formBuilder: FormBuilder,
-  ) { }
+    private loaderService: LoadingService
+  ) {
+  }
 
   ionViewWillEnter() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
-      // this.pageTitle = 'Modification moulage';
-      console.log('did enter');
+      this.loaderService.startLoading('Patienter pendant le chargement');
       this.loadControlData(id);
-      // this.canUpDate = true;
     } else {
-      console.log('test');
       this.canUpDate = false;
     }
-    this.loadUsers();
   }
 
+
+  test() {
+    this.ctrlReasons.getInputElement()
+      .then((htmlElement) => {
+        this.toolRequest.controle.description = htmlElement.innerHTML;
+      });
+  }
 
   upDateSpec() {
     console.log('updateSpec');
     this.toolRequest.controle.cheminCAO = this.controlForm.controls.caoPath.value;
     this.toolRequest.controle.refPlan = this.controlForm.controls.refPlan.value;
     this.toolRequest.controle.indPlan = this.controlForm.controls.indPlan.value;
-    this.toolRequest.controle.ctrlReasons = this.controlForm.controls.ctrlReasons.value;
     this.toolRequest.controle.description = this.controlForm.controls.ctrlReasons.value;
     this.toolRequest.controle.detailsControle = this.controlForm.controls.ctrlDetails.value;
     this.toolRequest.controle.typeRapport = this.controlForm.controls.typeRapport.value;
@@ -102,8 +103,8 @@ export class Control3DPage implements OnInit {
       }
     );
     this.toolRequest = {
-      createdAt: null,
-      demandeur: '',
+      createdAt: new Date(),
+      demandeur: this.authService.authUser,
       toolSAP: '',
       dateBesoin: new Date(),
       type: '',
@@ -111,7 +112,7 @@ export class Control3DPage implements OnInit {
         refPlan: '',
         indPlan: '',
         cheminCAO: '',
-        ctrlReasons: '',
+        description: '',
         detailsControle: '',
         tolerances: '',
         dispoOut: new Date(),
@@ -121,7 +122,7 @@ export class Control3DPage implements OnInit {
         moyenMesure: MoyenMesure.bras,
         infosComplementaire: '',
         // reportDate: new Date(),
-        userCreat: this.authService.authUser,
+        demandeur: this.authService.authUser,
         outillage: null,
         ligneBudgetaire: '',
         visaControleur: ''
@@ -133,81 +134,57 @@ export class Control3DPage implements OnInit {
     this.controlForm.reset();
   }
 
-  loadUsers() {
-    this.userService.getUsers()
-      .then((responseUsers: User[]) => {
-        this.userList = responseUsers;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
 
-  async loadControlData(idDemande: string) {
-    const loading = await this.loadingControler.create({
-      cssClass: 'my-custom-class',
-      message: 'Patienter pendant le chargement',
-      spinner: 'lines-sharp'
-    });
-    await loading.present();
+  loadControlData(idDemande: string) {
     this.toolRequestService.getToolRequest(idDemande)
       .then((responseRequest: ToolRequest) => {
-        this.toolRequest = responseRequest;
-        this.toolRequestService.getControl(this.toolRequest.controle.id)
-          .then((controle: SpecCtrl) => {
-            console.log(controle);
-            this.toolRequest.controle = controle;
-            this.toolService.getToolById(controle.outillage.toString().substr(controle.outillage.toString().length - 1, 1))
-              .then((toolResponse: Tool) => {
-                this.toolRequest.controle.outillage = toolResponse;
-
-                this.userService.getUserById(controle.userCreat.toString().substr(controle.userCreat.toString().length - 1, 1))
-                  .then((user: User) => {
-                    this.toolRequest.controle.userCreat = user;
-                    console.log(this.toolRequest);
-                    this.controlForm.patchValue({
-                      refPlan: this.toolRequest.controle.refPlan,
-                      indPlan: this.toolRequest.controle.indPlan,
-                      caoPath: this.toolRequest.controle.cheminCAO,
-                      ctrlReasons: this.toolRequest.controle.ctrlReasons || this.toolRequest.controle.description,
-                      ctrlDetails: this.toolRequest.controle.detailsControle,
-                      precisionTolerances: this.toolRequest.controle.tolerances,
-                      dispoTool: this.toolRequest.controle.dispoOut,
-                      needDate: this.toolRequest.controle.dateBesoin,
-                      typeRapport: this.toolRequest.controle.typeRapport,
-                      interventionDate: this.toolRequest.controle.interventionDate,
-                      moyenMesure: this.toolRequest.controle.moyenMesure,
-                      infoComplementaires: this.toolRequest.controle.infosComplementaire,
-                      outillage: this.toolRequest.controle.outillage.sapToolNumber,
-                      ligneBudgetaire: this.toolRequest.controle.ligneBudgetaire,
-                      statut: this.toolRequest.statut,
-                    });
-                    loading.dismiss();
-                    if (this.toolRequest.statut === 'NOUVELLE') {
-                      this.canUpDate = true;
-                      console.log(this.canUpDate);
-                      this.canManage = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
-                    } else {
-                      this.canUpDate = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
-                      this.canManage = this.canUpDate;
-                      console.log(this.canUpDate);
-                    }
-                  });
-              });
+        this.toolRequestService.getControl(responseRequest.controle.id)
+          .then((responseControle: SpecCtrl) => {
+            console.log(responseRequest);
+            this.toolRequest = responseRequest;
+            this.toolRequest.controle = responseControle;
+            // this.ctrlStatut.value = this.toolRequest.statut;
+            this.controlForm.patchValue({
+              refPlan: this.toolRequest.controle.refPlan,
+              indPlan: this.toolRequest.controle.indPlan,
+              caoPath: this.toolRequest.controle.cheminCAO,
+              ctrlReasons: this.toolRequest.controle.description,
+              ctrlDetails: this.toolRequest.controle.detailsControle,
+              precisionTolerances: this.toolRequest.controle.tolerances,
+              dispoTool: this.toolRequest.controle.dispoOut,
+              needDate: this.toolRequest.controle.dateBesoin,
+              typeRapport: this.toolRequest.controle.typeRapport,
+              interventionDate: this.toolRequest.controle.interventionDate,
+              moyenMesure: this.toolRequest.controle.moyenMesure,
+              infoComplementaires: this.toolRequest.controle.infosComplementaire,
+              outillage: this.toolRequest.controle.outillage.sapToolNumber,
+              ligneBudgetaire: this.toolRequest.controle.ligneBudgetaire,
+              statut: this.toolRequest.statut,
+            });
+            this.page.title = 'Modification demande de contrôle 3D : ID ' + this.toolRequest.id;
+            this.loaderService.stopLoading();
           });
 
-
-
-      })
-      .finally(() => {
-
-      })
+        if (this.toolRequest.statut === 'NOUVELLE') {
+          this.canUpDate = true;
+          console.log(this.canUpDate);
+          this.canManage = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN', 'ROLE_METHODES']);
+        } else {
+          this.canUpDate = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN', 'ROLE_METHODES']);
+          this.canManage = this.canUpDate;
+          console.log(this.canUpDate);
+        }
+      },
+        () => {
+          this.navCtrl.back();
+        })
       .catch((error) => {
         console.error(error);
       });
   }
 
   submitControlForm() {
+    this.loaderService.startLoading('Envoie de la demande en cours');
     this.upDateSpec();
     console.log(this.toolRequest.controle);
     this.toolRequestService.createControlRequest(this.toolRequest.controle)
@@ -222,60 +199,44 @@ export class Control3DPage implements OnInit {
           });
 
       })
+      .finally(() => {
+        this.loaderService.stopLoading();
+      })
       .catch((error) => {
         console.error(error);
       });
   }
 
   updateForm() {
-    this.toolRequestService.updateControlRequest(this.toolRequest.controle)
-      .then(() => {
-        this.controlForm.reset();
-        this.alertService.simpleAlert(
-          'Message de l\'application',
-          'Mise à jour d\'une demande',
-          'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes')
+    this.loaderService.startLoading('Chargement de la mise à jour');
+    this.toolRequestService.updateRequest(this.toolRequest)
+      .then((responseUpdatedRequest) => {
+        console.log(responseUpdatedRequest);
+        this.toolRequestService.updateControlRequest(this.toolRequest)
           .then(() => {
-            this.navCtrl.navigateForward('tooling/tool-request-list');
+            this.loaderService.stopLoading();
+            this.controlForm.reset();
+            this.alertService.simpleAlert(
+              'Message de l\'application',
+              'Mise à jour d\'une demande',
+              'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes')
+              .then(() => {
+                this.navCtrl.navigateForward('tooling/tool-request-list');
+              });
+
+          })
+          .catch((error) => {
+            this.alertService.simpleAlert(
+              'Erreur',
+              'Mise à jour d\'une demande',
+              'La demande n\'a pas pu être modifiée. Vérifiez les données');
+            console.error(error);
           });
 
-      })
-      .catch((error) => {
-        this.alertService.simpleAlert(
-          'Erreur',
-          'Mise à jour d\'une demande',
-          'La demande n\'a pas pu être modifiée. Vérifiez les données');
-        console.error(error);
       });
   }
 
-  pdfExportClick() {
-    this.pdfService.openPDF(document.getElementById('toExport'));
-  }
-
-  toolOnChange(inputOTValue: string) {
-    switch (inputOTValue.length) {
-      case 7:
-        // this.toolService.getEquipement()
-        break;
-      case 8:
-        if (inputOTValue.startsWith('OT')) {
-          this.toolService.getToolByToolNumber(inputOTValue.substring(inputOTValue.length - 5))
-            .then((responseTool: Tool) => {
-              this.toolRequest.controle.outillage = responseTool;
-            },
-              (message: string) => {
-                this.alertService.simpleAlert('Erreur', 'Le serveur outillage à renvoyé une erreur :', message);
-                this.controlForm.controls.outillage.setValue('');
-              })
-            .catch((error) => {
-              console.error(error);
-            });
-        }
-        break;
-      default:
-        break;
-    }
+  onChangeStatut(event: any) {
+    this.toolRequest.statut = event;
   }
 }
-

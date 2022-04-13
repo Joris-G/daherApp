@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonMenu } from '@ionic/angular';
 
 @Component({
   selector: 'app-admin',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit {
-
+  @ViewChild('menu') menu: IonMenu;
   constructor() { }
 
   ngOnInit() {
   }
-
+  ionViewWillEnter() {
+    this.menu.open();
+  }
 }

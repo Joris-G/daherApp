@@ -45,9 +45,26 @@
                     </ion-item>
                 </ion-menu-toggle>
                 <ion-menu-toggle auto-hide="true">
-                    <ion-item [button]="true" (click)="navigate('tooling/tool-list')" routerDirection="root">
+                    <ion-item [disabled]="true" [button]="true" (click)="navigate('tooling/tool-list')" routerDirection="root">
                         <ion-label>
                             Liste des outillages
+                        </ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-item-divider>
+                    <ion-label color=secondary>L'équipe</ion-label>
+                </ion-item-divider>
+                <ion-menu-toggle auto-hide="true">
+                    <ion-item [button]="true" routerDirection="root" (click)="navigate('tooling/manage-tool-team')">
+                        <ion-label>
+                            Gestion de l'équipe
+                        </ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-menu-toggle auto-hide="true">
+                    <ion-item [disabled]="true" [button]="true" (click)="navigate('tooling/tool-indicators')" routerDirection="root">
+                        <ion-label>
+                            Indicateurs
                         </ion-label>
                     </ion-item>
                 </ion-menu-toggle>

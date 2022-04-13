@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Kit } from 'src/app/_interface/kit';
 import { Molding, MoldingIri } from 'src/app/_interface/molding';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { KitService } from '../kits/kit.service';
 import { ToolService } from '../tools/tool.service';
@@ -21,22 +21,10 @@ export class MoldingService {
     private requestService: RequestService,
     private http: HttpClient) {
   }
+
+
   saveMolding(moldingObject: MoldingIri) {
-    console.log(moldingObject);
-    return new Promise<Molding>((resolve, reject) => {
-      const httpHeaders = new HttpHeaders()
-        .set('content-type', 'application/json');
-      // .set('Access-Control-Allow-Credentials', 'true');
-      this.http.post(environment.apiServer + environment.moldingApi, moldingObject, { headers: httpHeaders })
-        .subscribe((returnsData: any) => {
-          console.log(returnsData);
-          resolve(returnsData);
-        },
-          (error) => {
-            console.error(error);
-            reject();
-          });
-    });
+    return this.requestService.createPostRequest(environment.moldingApi + 'moldings', moldingObject);
   }
 
   updateMolding(moldingObject: MoldingIri): Promise<Molding> {
