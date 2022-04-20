@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonSlides, LoadingController } from '@ionic/angular';
-import { User } from 'src/app/_interface/user';
+import { IonSlides, LoadingController } from '@ionic/angular';
+import { User, UserIri } from 'src/app/_interface/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { RoleService } from 'src/app/_services/users/role.service';
 import { SericesService } from 'src/app/_services/users/serices.service';
@@ -21,7 +21,8 @@ export class RegisterPage implements OnInit {
   @ViewChild('slider') slider: IonSlides;
   public roleForm: FormGroup;
   public identityForm: FormGroup;
-  public language: string;
+
+
   public slideOpts = {
     initialSlide: 0,
     speed: 400,
@@ -40,36 +41,45 @@ export class RegisterPage implements OnInit {
     private roleService: RoleService,
     private loadingController: LoadingController,
     private userService: UsersService,
-    private alertController: AlertController,
     private alertService: AlertService,
-
+    private formBuilder: FormBuilder
   ) {
-    this.roleForm = new FormGroup({
-      poste: new FormControl(),
-      service: new FormControl(),
-      site: new FormControl(),
-      unite: new FormControl(),
-    });
-    this.identityForm = new FormGroup({
-      firstName: new FormControl(),
-      lastName: new FormControl(),
-      matricule: new FormControl(),
-      telephone: new FormControl(),
-      password: new FormControl(
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(12),
-          Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,12}$')])),
-      confirmPassword: new FormControl('', Validators.required)
-    }, this.matchingPasswords('password', 'confirmPassword'));
+    this.createForms();
+  }
+
+  ngOnInit(): void {
     this.getDatas();
   }
 
+  createForms() {
+    this.roleForm = this.formBuilder.group({
+      poste: [''],
+      service: [''],
+      site: [''],
+      unite: [''],
+    });
+    this.identityForm = this.formBuilder.group({
+      firstName: [''],
+      lastName: [''],
+      matricule: [''],
+      telephone: [''],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(12),
+          Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,12}$')]],
+      confirmPassword: ['', [
+        Validators.required,
+        this.matchingPasswords('password', 'confirmPassword')
+      ]]
+    });
+  }
+
   matchingPasswords(passwordKey: string, confirmPasswordKey: string): ValidatorFn {
-    // TODO maybe use this https://github.com/yuyang041060120/ng2-validation#notequalto-1
     return (group: FormGroup): { [key: string]: any } => {
+      console.log(group);
       const password = group.controls[passwordKey];
       const confirmPassword = group.controls[confirmPasswordKey];
 
@@ -106,17 +116,6 @@ export class RegisterPage implements OnInit {
     // console.log('Loading dismissed!');
   }
 
-  ngOnInit() {
-    this.language = 'FR';
-  }
-
-  switchToEnglish() {
-    this.language = 'EN';
-  }
-  switchToFrench() {
-    this.language = 'FR';
-  }
-
   submitRole() {
     console.log(this.roleForm.value, this.identityForm.value);
     if (this.roleForm.value.poste !== 1) {
@@ -124,9 +123,11 @@ export class RegisterPage implements OnInit {
     }
     this.slider.slideNext();
   }
+
+
   submitNewUser() {
     console.log(this.roleForm.value, this.identityForm.value);
-    const userToRegister: User = {
+    const userToRegister: UserIri = {
       matricule: Number.parseInt(this.identityForm.value.matricule, 10),
       nom: this.identityForm.value.lastName,
       prenom: this.identityForm.value.firstName,

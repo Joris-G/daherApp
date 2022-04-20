@@ -30,7 +30,7 @@ export class RoleGuard implements CanActivate {
       );
     }
     return (
-      this.auth.isAuth && isRole
+      this.auth.isAuth && isRole && this.auth.authUser.isActive
     );
   }
 

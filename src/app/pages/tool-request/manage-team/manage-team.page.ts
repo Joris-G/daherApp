@@ -16,7 +16,7 @@ export class ManageTeamPage implements OnInit {
     title: 'Gérer l\'équipe'
   };
   public toolsUserDataSource: MatTableDataSource<User> = new MatTableDataSource();
-  public displayedColumns = ['nom', 'prenom', 'groupeAffectation', 'lastCon'];
+  public displayedColumns = ['nom', 'prenom', 'groupeAffectation', 'lastCon', 'buttons'];
   public groups: any;
   private programs: any[];
   constructor(
@@ -30,6 +30,7 @@ export class ManageTeamPage implements OnInit {
 
 
   }
+
   getToolUsers() {
     this.userService.getUsers()
       .then((responseUsers: User[]) => {
@@ -80,9 +81,15 @@ export class ManageTeamPage implements OnInit {
     }
 
   }
-  addGroupToUser(selectOpt: GroupeAffectation, user: User) {
-    const optToAdd = selectOpt;
-    console.log(optToAdd);
-    user.groupeAffectations.push(optToAdd[0]);
+
+
+  addGroupToUser(selectOpt: GroupeAffectation[], user: User) {
+    user.groupeAffectations = selectOpt;
+  }
+
+
+  updateUser(user: User) {
+    this.userService.updateUser(user);
+    this.userService.addUserToGroup(user, user.groupeAffectations);
   }
 }

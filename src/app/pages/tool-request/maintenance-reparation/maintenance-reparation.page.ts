@@ -110,9 +110,9 @@ export class MaintenanceReparationPage implements OnInit {
             if (this.toolRequest.statut === 'NOUVELLE') {
               this.canUpDate = true;
               console.log(this.canUpDate);
-              this.canManage = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN', 'ROLE_METHODES']);
+              this.canManage = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
             } else {
-              this.canUpDate = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN', 'ROLE_METHODES']);
+              this.canUpDate = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
               this.canManage = this.canUpDate;
               console.log(this.canUpDate);
             }

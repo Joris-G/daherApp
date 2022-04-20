@@ -4,6 +4,7 @@ import { User } from 'src/app/_interface/user';
 import { PdfService } from 'src/app/_services/divers/pdf.service';
 import { UsersService } from 'src/app/_services/users/users.service';
 import { EventEmitter } from '@angular/core';
+import { GroupeAffectation } from 'src/app/_interface/groupe-affectation';
 
 @Component({
   selector: 'app-tool-request-footer',
@@ -47,7 +48,30 @@ export class ToolRequestFooterComponent implements OnInit {
    */
   @Output() evStatusChange: EventEmitter<string> = new EventEmitter();
 
+
+  /**
+   *
+   *
+   * @type {EventEmitter<string>}
+   * @memberof ToolRequestFooterComponent
+   */
+  @Output() evAffectationChange: EventEmitter<GroupeAffectation> = new EventEmitter();
+
+  /**
+   *
+   *
+   * @type {EventEmitter<any>}
+   * @memberof ToolRequestFooterComponent
+   */
   @Output() evSubmit: EventEmitter<any> = new EventEmitter();
+
+
+  /**
+   *
+   *
+   * @type {EventEmitter<any>}
+   * @memberof ToolRequestFooterComponent
+   */
   @Output() evUpdate: EventEmitter<any> = new EventEmitter();
 
   /**
@@ -59,6 +83,14 @@ export class ToolRequestFooterComponent implements OnInit {
   public userList: User[];
 
 
+  /**
+   *
+   *
+   * @type {GroupeAffectation[]}
+   * @memberof ToolRequestFooterComponent
+   */
+  public affectationGroups: GroupeAffectation[];
+
   constructor(
     private userService: UsersService,
     private pdfService: PdfService,
@@ -66,6 +98,7 @@ export class ToolRequestFooterComponent implements OnInit {
 
   ngOnInit() {
     this.loadUsers();
+    this.loadAffectationGroups();
   }
 
   loadUsers() {
@@ -78,12 +111,27 @@ export class ToolRequestFooterComponent implements OnInit {
       });
   }
 
-  statusChange(status) {
+  loadAffectationGroups() {
+    this.userService.getGroups()
+      .then((responseGroups: GroupeAffectation[]) => {
+        this.affectationGroups = responseGroups;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  affectationChange(affectationGroup: any) {
+    this.evAffectationChange.emit(affectationGroup.target.value);
+  }
+
+  statusChange(status: any) {
     this.evStatusChange.emit(status.target.value);
   }
 
   pdfExportClick() {
-    this.pdfService.openPDF(document.getElementById('toExport'));
+    console.log(this.form, document.getElementById('toExport'));
+    this.pdfService.openPDF(document.getElementById('toExport'), 'test impression');
   }
 
   submitClick() {

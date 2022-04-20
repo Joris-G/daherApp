@@ -84,7 +84,7 @@
                             </form>
                         </ion-slide>
                         <ion-slide>
-                            <form [formGroup]="identityForm" (submit)="submitNewUser()">
+                            <form formGroupName="identityForm" (submit)="submitNewUser()">
                                 <ion-grid fixed class="ion-align-items-center ion-justify-content-center">
                                     <ion-row>
                                         <ion-col size="12">
@@ -145,9 +145,6 @@
                                         </ion-col>
                                     </ion-row>
                                 </ion-grid>
-                                <ion-button color=primary type=submit fill="solid" strong type="submit" [disabled]="identityForm?.invalid">
-                                    {{(language ==='FR') ? "S'enregistrer" : "Register"}}
-                                </ion-button>
                             </form>
                         </ion-slide>
                     </ion-slides>

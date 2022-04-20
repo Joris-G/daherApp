@@ -14,3 +14,15 @@
 .mat-table {
     width: 100%
 }
+
+.mat-row:hover .mat-cell {
+    border-color: currentColor;
+}
+
+.filter-item {
+    width: auto;
+}
+
+.filters {
+    display: flex;
+}

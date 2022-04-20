@@ -26,4 +26,8 @@ export class AlertService {
     });
     await alert.present();
   }
+
+  async presentAlertConfirm(confirmFunction, cancelFunction) {
+
+  }
 }

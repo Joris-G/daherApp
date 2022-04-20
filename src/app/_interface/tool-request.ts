@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { RequestStatus } from '../_enums/request-status';
 import { RequestType } from '../_enums/request-type';
+import { GroupeAffectation } from './groupe-affectation';
 import { SpecCtrl } from './spec-ctrl';
 import { SpecMaintRep } from './spec-maint-rep';
 import { Tool } from './tool';
@@ -12,7 +13,7 @@ export interface ToolRequest {
   createdAt: Date;
   dateBesoin: Date;
   toolSAP: Tool | string;
-  groupeAffectation?: User;
+  groupeAffectation?: GroupeAffectation;
   dateAffectation?: Date;
   statut?: string;
   toolingNote?: string;
@@ -44,6 +45,7 @@ export interface ToolRequestIri {
   fileUrl?: string;
   needDate?: Date;
   affectedTo?: string;
+  groupeAffectation?: string;
   affectationDate?: Date;
   requestStatus?: RequestStatus;
   realizationDate?: Date;

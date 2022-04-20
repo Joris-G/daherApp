@@ -4,99 +4,56 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="false">
-    <ion-grid>
-        <ion-row>
-            <ion-col size="4">
-                <form class="main-form" [formGroup]="maintRepForm">
-                    <ion-card color=light padding>
-                        <ion-card-header>
-                            <ion-card-title class="ion-text-uppercase">L'outillage</ion-card-title>
-                        </ion-card-header>
-                        <app-tool-input (evOnToolChange)="toolRequest.maintenance.outillage = $event" [tool]="toolRequest?.maintenance?.outillage"></app-tool-input>
-                    </ion-card>
-                    <ion-card color="light">
-                        <ion-card-header class="flex-row" color=light>
-                            <ion-title class="ion-text-uppercase">La maintenance</ion-title>
-                            <ion-button (click)="addMaintenanceItem()" size=small>
-                                <ion-icon slot="start" name="add"></ion-icon>
-                                Ajouter maintenance
-                            </ion-button>
-                        </ion-card-header>
-                        <ion-card-content>
-                            <!-- <ion-item color=light> -->
-                            <app-maintenance-item *ngFor="let maintenanceItem of toolRequest?.maintenance?.itemActionCorrective" [maintenanceItem]="maintenanceItem" (evValidateItem)="onValidateItem($event,maintenanceItem)" (evRemoveItem)="onRemoveItem($event,maintenanceItem)"></app-maintenance-item>
-                            <!-- </ion-item> -->
-                        </ion-card-content>
-                    </ion-card>
-                    <ion-card>
-                        <!-- Datetime in overlay -->
-                        <ion-item button id="open-date-besoin">
-                            <ion-label>Date butoir demandée</ion-label>
-                            <ion-icon slot=end icon="calendar-outline"></ion-icon>
-                            <ion-text slot="end">
-                                {{toolRequest?.maintenance?.dateBesoin | date:"dd/MM/yyyy"}}</ion-text>
-                            <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
-                            <ion-modal trigger="open-date-besoin">
-                                <ng-template>
-                                    <ion-content>
-                                        <ion-datetime #popoverDatetime2 presentation="date" formControlName="needDate" display-format="DD.MM.YYYY" (ngModelChange)="toolRequest.maintenance.dateBesoin = dateValue(popoverDatetime2.value)">
-                                            <div slot="title">Date butoir demandée</div>
-                                        </ion-datetime>
-                                    </ion-content>
-                                </ng-template>
-                            </ion-modal>
+<ion-content [fullscreen]="false" scrollY="false">
+    <div class="content">
+        <form class="main-form" [formGroup]="maintRepForm">
+            <ion-card color=light padding>
+                <ion-card-header>
+                    <ion-card-title class="ion-text-uppercase">L'outillage</ion-card-title>
+                </ion-card-header>
+                <app-tool-input (evOnToolChange)="toolRequest.maintenance.outillage = $event" [tool]="toolRequest?.maintenance?.outillage"></app-tool-input>
+            </ion-card>
+            <ion-card color="light">
+                <ion-card-header class="flex-row" color=light>
+                    <ion-title class="ion-text-uppercase">La maintenance</ion-title>
+                    <ion-button (click)="addMaintenanceItem()" size=small>
+                        <ion-icon slot="start" name="add"></ion-icon>
+                        Ajouter maintenance
+                    </ion-button>
+                </ion-card-header>
+                <ion-card-content>
+                    <!-- <ion-item color=light> -->
+                    <app-maintenance-item *ngFor="let maintenanceItem of toolRequest?.maintenance?.itemActionCorrective" [maintenanceItem]="maintenanceItem" (evValidateItem)="onValidateItem($event,maintenanceItem)" (evRemoveItem)="onRemoveItem($event,maintenanceItem)" [canUpdate]="canUpDate"></app-maintenance-item>
+                    <!-- </ion-item> -->
+                </ion-card-content>
+            </ion-card>
+            <ion-card>
+                <!-- Datetime in overlay -->
+                <ion-item button id="open-date-besoin">
+                    <ion-label>Date butoir demandée</ion-label>
+                    <ion-icon slot=end icon="calendar-outline"></ion-icon>
+                    <ion-text slot="end">
+                        {{toolRequest?.maintenance?.dateBesoin | date:"dd/MM/yyyy"}}</ion-text>
+                    <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
+                    <ion-modal trigger="open-date-besoin">
+                        <ng-template>
+                            <ion-content>
+                                <ion-datetime #popoverDatetime2 presentation="date" formControlName="needDate" display-format="DD.MM.YYYY" (ngModelChange)="toolRequest.maintenance.dateBesoin = dateValue(popoverDatetime2.value)">
+                                    <div slot="title">Date butoir demandée</div>
+                                </ion-datetime>
+                            </ion-content>
+                        </ng-template>
+                    </ion-modal>
 
-                        </ion-item>
+                </ion-item>
 
 
-                    </ion-card>
-                </form>
-            </ion-col>
-            <ion-col size="8">
-                <app-spec-maintenance-reparation *ngIf="toolRequest" [toolRequest]="toolRequest"></app-spec-maintenance-reparation>
-            </ion-col>
-        </ion-row>
-        <ion-row>
+            </ion-card>
+        </form>
+        <app-spec-maintenance-reparation *ngIf="toolRequest" [toolRequest]="toolRequest"></app-spec-maintenance-reparation>
+    </div>
 
-        </ion-row>
-    </ion-grid>
-
-
-    <!-- <app-controleddd></app-controleddd> -->
 </ion-content>
 <ion-footer>
-    <!-- <ion-toolbar>
-        <ion-item *ngIf="canManage">
-            <ion-label>Affecter</ion-label>
-            <ion-select multiple="true" placeholder="Séléctionner une personne">
-                <ion-select-option *ngFor="let user of userList" [value]="user">{{user.nom}} {{user.prenom}}</ion-select-option>
-            </ion-select>
-        </ion-item>
-        <ion-item *ngIf="canManage">
-            <ion-label>Changer le statut</ion-label>
-            <ion-select #statut multiple="false" placeholder="Séléctionner un statut" (ionChange)="toolRequest.statut = statut.value">
-                <ion-select-option value="NOUVELLE">Nouvelle</ion-select-option>
-                <ion-select-option value="REFUSEE">Refusée</ion-select-option>
-                <ion-select-option value="ACCEPTEE">Acceptée</ion-select-option>
-                <ion-select-option value="ANNULEE">Annulée</ion-select-option>
-                <ion-select-option value="EN COURS DE REALISATION">En cours de réalisation</ion-select-option>
-                <ion-select-option value="TERMINEE">Terminée</ion-select-option>
-                <ion-select-option value="CLOTUREE">Cloturée</ion-select-option>
-            </ion-select>
-        </ion-item>
-        <ion-button slot=end (click)="pdfExportClick()">
-            <ion-icon slot="end" name="document-attach-outline"></ion-icon>
-            Exporter pdf
-        </ion-button>
-        <ion-button slot=end block color="success" *ngIf="!canUpDate" [disabled]="maintRepForm.invalid" (click)="submitMaintenanceForm()">
-            <ion-icon slot="end" name="send-outline"></ion-icon>
-            Envoyer
-        </ion-button>
-        <ion-button slot=end block color="success" *ngIf="canUpDate" [disabled]="maintRepForm.invalid" (click)="updateForm()">
-            <ion-icon slot="end" name="send-outline"></ion-icon>
-            Mettre à jour
-        </ion-button>
-    </ion-toolbar> -->
-    <app-tool-request-footer (evStatusChange)="toolRequest.statut = $event" (evSubmit)="submitMaintenanceForm()" (evUpdate)="updateForm()" [canManage]="canManage" [canUpdate]="canUpDate" [form]="maintRepForm"></app-tool-request-footer>
+    <app-tool-request-footer (evStatusChange)="toolRequest.statut = $event" (evSubmit)="submitMaintenanceForm()" (evUpdate)="updateForm()" (evAffectationChange)="toolRequest.groupeAffectation= $event" [canManage]="canManage" [canUpdate]="canUpDate" [form]="maintRepForm"></app-tool-request-footer>
 </ion-footer>

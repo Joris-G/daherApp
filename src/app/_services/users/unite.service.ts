@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Division } from 'src/app/_interface/division';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
 
@@ -13,5 +14,13 @@ export class UniteService {
 
   getUnites() {
     return this.requestService.createGetRequest(environment.usineApi + 'divisions');
+  }
+
+  getIri(unite: Division | string): string {
+    if (typeof (unite) == 'string') {
+      return unite;
+    } else {
+      return `/api/services/${unite.id}`;
+    }
   }
 }

@@ -55,12 +55,12 @@
                         <ng-container matColumnDef="groupeAffectation">
                             <mat-header-cell *matHeaderCellDef> Groupe </mat-header-cell>
                             <mat-cell *matCellDef="let user">
-                                <ion-list *ngIf="user.groupeAffectations.length > 0">
-                                    <ion-item *ngFor="let group of user.groupeAffectations">
+                                <ion-list *ngIf="user.groupeAffected.length > 0">
+                                    <ion-label *ngFor="let group of user.groupeAffected">
                                         {{group.libelle}}
-                                    </ion-item>
+                                    </ion-label>
                                 </ion-list>
-                                <ion-item *ngIf="user.groupeAffectations.length === 0">
+                                <ion-item *ngIf="user.groupeAffected.length === 0">
                                     <ion-select #select multiple="true" placeholder="Selectionner un groupe" (ionChange)="addGroupToUser(select.value, user)">
                                         <ion-select-option *ngFor="let group of groups" [value]="group">
                                             {{group.libelle}}</ion-select-option>
@@ -76,7 +76,14 @@
                             <mat-header-cell *matHeaderCellDef> Dernière connexion </mat-header-cell>
                             <mat-cell *matCellDef="let user"> {{user.lastCon | date:"EEE dd/MM/yy"}} </mat-cell>
                         </ng-container>
-
+                        <ng-container matColumnDef="buttons">
+                            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                            <mat-cell *matCellDef="let user">
+                                <ion-button size=small (click)="updateUser(user)" expand="block" fill="clear" shape="round">
+                                    Sauver
+                                </ion-button>
+                            </mat-cell>
+                        </ng-container>
                         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
                     </mat-table>

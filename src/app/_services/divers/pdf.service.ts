@@ -121,7 +121,7 @@ export class PdfService {
 
   }
 
-  openPDF(divToConvert: HTMLElement): void {
+  openPDF(divToConvert: HTMLElement, fileName: string): void {
 
     html2canvas(divToConvert, {
       scale: 1,
@@ -138,7 +138,7 @@ export class PdfService {
 
       const ratio = widthRatio > heightRatio ? heightRatio : widthRatio;
       PDF.addImage(FILEURI, 'png', 0, 0, canvas.width * ratio, canvas.height * ratio,);
-      PDF.save('angular-demo.pdf');
+      PDF.save(fileName + '.pdf');
     });
   }
 }

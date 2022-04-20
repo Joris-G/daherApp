@@ -1,28 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { NavController } from '@ionic/angular';
+import { IonSelect, NavController } from '@ionic/angular';
 import { ToolRequest } from 'src/app/_interface/tool-request';
 import { User } from 'src/app/_interface/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { ToolRequestService } from 'src/app/_services/toolRequest/tool-request.service';
+import { AuthGuard } from 'src/app/_services/users/auth.guard';
+import { AuthService } from 'src/app/_services/users/auth.service';
+import { RoleGuard } from 'src/app/_services/users/role.guard';
+import { UsersService } from 'src/app/_services/users/users.service';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
 @Component({
   selector: 'app-tool-requests',
   templateUrl: './tool-requests.page.html',
   styleUrls: ['./tool-requests.page.scss'],
+  animations: [
+    trigger('openClose', [
+      // animation triggers go here
+      state('open', style({
+        backgroundColor: 'DarkOrange',
+        opacity: '0.7'
+      })),
+    ])
+  ]
 })
 export class ToolRequestsPage implements OnInit {
   public displayedRequestColumns: string[] = ['statut', 'id', 'tool', 'createdAt', 'userCreat', 'needDate', 'buttons'];
   public requestList: ToolRequest[];
   public tableRequestsDataSource: MatTableDataSource<ToolRequest> = new MatTableDataSource();
-  public authUser: User;
+  public isAdmin = false;
   public filterSelectObjects = [];
   private filterValues = {};
+  private activeFilters = [];
   constructor(
     private toolRequestService: ToolRequestService,
     private alertControleService: AlertService,
     private navCtrl: NavController,
     private loaderService: LoadingService,
+    private authGuard: RoleGuard
   ) {
     this.filterSelectObjects = [
       {
@@ -51,6 +74,7 @@ export class ToolRequestsPage implements OnInit {
 
   ionViewWillEnter() {
     this.updateRequestList();
+    this.isAdmin = this.authGuard.isRole(['ROLE_ADMIN']);
   }
 
 
@@ -60,13 +84,10 @@ export class ToolRequestsPage implements OnInit {
 
   createFilter() {
     const filterFunction = (request: ToolRequest, filter: string): boolean => {
-      console.log(request, filter);
       const searchTerms = JSON.parse(filter);
-      console.log(searchTerms);
       let isFilterSet = false;
       for (const col in searchTerms) {
         if (col) {
-          console.log(col);
           if (searchTerms[col].toString() !== '') {
             isFilterSet = true;
           } else {
@@ -98,6 +119,9 @@ export class ToolRequestsPage implements OnInit {
     this.filterValues = {};
     this.filterSelectObjects.forEach((value, key) => {
       value.modelValue = undefined;
+    });
+    this.activeFilters.forEach((filter: IonSelect) => {
+      filter.value = '';
     });
     this.tableRequestsDataSource.filter = '';
   }
@@ -188,6 +212,7 @@ export class ToolRequestsPage implements OnInit {
    */
   filterChange(filter: any, event: any) {
     console.log(filter, event);
+    this.activeFilters.push(event.target);
     this.filterValues[filter.columnProp] = event.target.value.trim();
     console.log(this.filterValues[filter.columnProp]);
     console.log(JSON.stringify(this.filterValues));
@@ -204,5 +229,12 @@ export class ToolRequestsPage implements OnInit {
     const filterValue = (typeEvent.target as HTMLInputElement).value;
     this.tableRequestsDataSource.filter = filterValue.trim().toLowerCase();
     console.log(typeEvent);
+  }
+
+  removeRequestClick(request: ToolRequest) {
+    this.toolRequestService.removeRequest(request)
+      .then(() => {
+        this.updateRequestList();
+      });
   }
 }

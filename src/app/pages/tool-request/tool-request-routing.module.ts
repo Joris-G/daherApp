@@ -73,7 +73,7 @@ const routes: Routes = [
         path: 'manage-tool-team',
         canActivate: [RoleGuard],
         data: {
-          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL']
+          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL']
         },
         loadChildren: () => import('./manage-team/manage-team.module').then(m => m.ManageTeamPageModule)
       },
@@ -81,7 +81,7 @@ const routes: Routes = [
         path: 'tool-indicators',
         canActivate: [RoleGuard],
         data: {
-          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_METHODES']
+          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL']
         },
         loadChildren: () => import('./indicators/indicators.module').then(m => m.IndicatorsPageModule)
       },

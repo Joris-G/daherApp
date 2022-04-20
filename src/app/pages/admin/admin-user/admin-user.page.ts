@@ -28,10 +28,6 @@ export class AdminUserPage implements OnInit {
   ) {
     this.userService.getUsers()
       .then((users: User[]) => {
-        users.forEach((user: User, index) => {
-          user.isActive = false;
-          user.createdAt = new Date(2022, 0, 1 + index);
-        });
         this.users = users;
         this.weeklyLabels = this.createWeeklyLabel();
         this.weeklyUsers = this.createWeeklyUserData();
@@ -94,6 +90,7 @@ export class AdminUserPage implements OnInit {
     let startDate = new Date(2022, 0, 1);
     const totaluserPerWeekData: number[] = [];
     while (startDate < endDate) {
+
       const intermediateEndDate = new Date(startDate);
       intermediateEndDate.setDate(intermediateEndDate.getDate() + 7);
       this.users.forEach((user) => {
@@ -104,12 +101,14 @@ export class AdminUserPage implements OnInit {
         // );
         // console.log((user.createdAt >= startDate), (user.createdAt <= intermediateEndDate));
       });
-
-      const filterUsers = this.users.filter((user) => (user.createdAt > startDate && user.createdAt <= intermediateEndDate)
+      console.log(startDate, intermediateEndDate);
+      console.log(this.users);
+      const filterUsers = this.users.filter((user) => (new Date(user.createdAt) > startDate && new Date(user.createdAt) <= intermediateEndDate)
       );
-      // console.log(filterUsers);
+      console.log(filterUsers);
       const totalUserWeek = filterUsers.length;
       totaluserPerWeekData.push(totalUserWeek);
+
       startDate = intermediateEndDate;
     }
     return totaluserPerWeekData;

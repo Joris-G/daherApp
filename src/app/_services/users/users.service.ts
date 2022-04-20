@@ -1,9 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interface/groupe-affectation';
-import { User } from 'src/app/_interface/user';
+import { ProgrammeAvion } from 'src/app/_interface/programme-avion';
+import { User, UserIri } from 'src/app/_interface/user';
 import { environment } from 'src/environments/environment';
+import { ProgramsService } from '../programs/programs.service';
 import { RequestService } from '../request.service';
+import { RoleService } from './role.service';
+import { SericesService } from './serices.service';
+import { UniteService } from './unite.service';
+import { UsineService } from './usine.service';
 
 const JORIS: User = {
   id: 1,
@@ -21,8 +27,13 @@ const JORIS: User = {
 })
 export class UsersService {
   constructor(
-    private http: HttpClient,
-    private requestService: RequestService) { }
+    private requestService: RequestService,
+    private roleService: RoleService,
+    private serviceService: SericesService,
+    private programService: ProgramsService,
+    private uniteService: UniteService,
+    private usineService: UsineService
+  ) { }
 
 
   /**
@@ -56,7 +67,7 @@ export class UsersService {
    * @return retourne une Promise<User>
    * @memberof UsersService
    */
-  registerUser(userObj: User) {
+  registerUser(userObj: UserIri) {
     return this.requestService.createPostRequest(environment.usineApi + 'users', userObj);
   }
 
@@ -85,5 +96,24 @@ export class UsersService {
     return this.requestService.createPostRequest(environment.usineApi + `groupe_affectations`, groupObj);
   }
 
+  updateUser(user: User) {
+    const userToUpdate: UserIri = {
+      matricule: user.matricule,
+      nom: user.nom,
+      prenom: user.prenom,
+      poste: this.roleService.getIri(user.poste),
+      service: this.serviceService.getIri(user.service),
+      programmeAvion: user.programmeAvion.map((progAvion: ProgrammeAvion) => this.programService.getIri(progAvion)),
+      unite: this.uniteService.getIri(user.unite),
+      site: this.usineService.getIri(user.site),
+    };
+    return this.requestService.createPutRequest(environment.usineApi + `users/${user.id}`, userToUpdate);
+  }
+
+  addUserToGroup(user: User, groups: GroupeAffectation[]) {
+    for (const group of groups) {
+      this.requestService.createPatchRequest(environment.usineApi + 'groupe_affectations/' + group.id + '/addUsers', [this.getIri(user)]);
+    }
+  }
 
 }

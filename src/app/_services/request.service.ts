@@ -10,6 +10,9 @@ export class RequestService {
   private httpHeaders = new HttpHeaders()
     .append('Content-Type', 'application/json')
     .append('Accept', 'application/json');
+  private patchHttpHeaders = new HttpHeaders()
+    .append('Content-Type', 'application/merge-patch+json')
+    .append('Accept', 'application/json');
   constructor(private http: HttpClient) {
   }
   createPostRequest(url: string, body: any): Promise<any> {
@@ -42,7 +45,7 @@ export class RequestService {
   }
   createPatchRequest(url: string, body: any) {
     return new Promise<any>((resolve, reject) => {
-      this.http.patch<HttpResponse<any>>(environment.apiServer + url, body, { headers: this.httpHeaders })
+      this.http.patch<HttpResponse<any>>(environment.apiServer + url, body, { headers: this.patchHttpHeaders })
         .subscribe((returnDatas: any) => {
           console.log(returnDatas);
           resolve(returnDatas);
@@ -56,6 +59,20 @@ export class RequestService {
   createGetRequest(url: string) {
     return new Promise<any>((resolve, reject) => {
       this.http.get(environment.apiServer + url, { headers: this.httpHeaders })
+        .subscribe((returnDatas: any) => {
+          console.log(returnDatas);
+          resolve(returnDatas);
+        },
+          (error) => {
+            console.error(error);
+            reject(error);
+          });
+    });
+  }
+
+  createDeleteRequest(url: string) {
+    return new Promise<any>((resolve, reject) => {
+      this.http.delete(environment.apiServer + environment.toolApi + url, { headers: this.httpHeaders })
         .subscribe((returnDatas: any) => {
           console.log(returnDatas);
           resolve(returnDatas);

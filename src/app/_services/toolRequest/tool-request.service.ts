@@ -177,4 +177,15 @@ export class ToolRequestService {
   getMaintenance(id: number) {
     return this.requestService.createGetRequest(environment.toolApi + 'maintenances/' + id);
   }
+
+  removeRequest(request: ToolRequest) {
+    return new Promise((resolve, reject) => {
+      this.requestService.createDeleteRequest('demandes/' + request.id);
+      // if (request.controle) {
+      //   this.requestService.createDeleteRequest('controles/' + request.controle.id);
+      // } else if (request.maintenance) {
+      //   this.requestService.createDeleteRequest('maintenances/' + request.maintenance.id);
+      // }
+    });
+  }
 }

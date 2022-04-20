@@ -1,8 +1,8 @@
 <ion-toolbar>
     <ion-item *ngIf="canManage">
         <ion-label>Affecter</ion-label>
-        <ion-select multiple="true" placeholder="Séléctionner une personne">
-            <ion-select-option *ngFor="let user of userList" [value]="user">{{user.nom}} {{user.prenom}}</ion-select-option>
+        <ion-select multiple="true" placeholder="Séléctionner une personne" (ionChange)="affectationChange($event)">
+            <ion-select-option *ngFor="let affectationGroup of affectationGroups" [value]="affectationGroup">{{affectationGroup.libelle}}</ion-select-option>
         </ion-select>
     </ion-item>
     <ion-item *ngIf="canManage">

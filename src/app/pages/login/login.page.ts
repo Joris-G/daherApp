@@ -18,21 +18,17 @@ export class LoginPage implements OnInit, AfterViewInit {
   public loginForm: FormGroup;
   private reRouteOpts = [
     {
-      roles: ['ROLE_MOULEUR'],
+      roles: ['ROLE_MOULEUR', '	ROLE_RESP_MOULAGE', 'ROLE_CE_MOULAGE'],
       route: 'molding'
     },
     {
-      roles: ['ROLE_ADMIN'],
-      route: 'home'
-    },
-    {
-      roles: ['ROLE_RESP_OUTIL'],
+      roles: ['ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL', 'ROLE_OUTILLEUR'],
       route: 'tooling'
     },
     {
-      roles: ['ROLE_MOULEUR'],
-      route: 'molding'
-    }
+      roles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_METHODE'],
+      route: 'home'
+    },
   ];
 
 
@@ -77,24 +73,15 @@ export class LoginPage implements OnInit, AfterViewInit {
       this.loginForm.get('userName').value,
       this.loginForm.get('password').value || this.loginForm.get('userName').value)
       .then(() => {
-        console.log('là');
-        this.updateService.showUpdates()
-          .then(() => {
-            console.log('ici');
-          },
-            () => {
-              console.log('tata');
-            })
-          .finally(() => {
-            console.log('coucou');
-            this.reRouteOpts.forEach((routeOpt) => {
-              if (this.authService.authUser.roles.find(role => routeOpt.roles.find(roleOpt => roleOpt === role))) {
-                this.navControler.navigateForward(routeOpt.route);
-              }
-            });
-            this.loginForm.reset();
-          });
-
+        this.updateService.showUpdates();
+        this.reRouteOpts.forEach((routeOpt) => {
+          if (this.authService.authUser.roles.find(role => routeOpt.roles.find(roleOpt => roleOpt === role))) {
+            this.navControler.navigateForward(routeOpt.route);
+          } else {
+            this.navControler.navigateForward('home');
+          }
+        });
+        this.loginForm.reset();
       },
         () => {
           this.presentAlertLoginError();

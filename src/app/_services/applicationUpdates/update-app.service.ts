@@ -12,7 +12,7 @@ export class UpdateAppService {
   private tableUpdates = [
     {
       id: 1,
-      dateUpdate: new Date(2022, 4, 14),
+      dateUpdate: new Date(2022, 3, 20),
       description:
         'Pour associer un outillage à un moulage il suffit de scanner le numéro d\'OT dans l\'OF.' +
         'Vous devez le scanner comme un kit',
@@ -20,7 +20,7 @@ export class UpdateAppService {
     },
     {
       id: 2,
-      dateUpdate: new Date(2022, 4, 14),
+      dateUpdate: new Date(2022, 3, 20),
       description: 'Le module outillage est ouvert pour test',
       title: 'Module Outillage'
     },
@@ -29,8 +29,6 @@ export class UpdateAppService {
   constructor(
     private authService: AuthService,
     private alertService: AlertService,
-    private requestService: RequestService
-
   ) {
   }
 
@@ -48,28 +46,19 @@ export class UpdateAppService {
       this.getUpdatesToShow()
         .then((updates: Update[]) => {
           if (updates) {
-            console.log('bonjour', updates);
             updates.forEach((update: Update) => {
-              this.alertService.simpleAlert('Info sur la mise à jours', update.title, update.description)
-                .then(() => {
-                  console.log('hello');
-                  resolve(true);
-                });
+              this.alertService.simpleAlert('Info sur la mise à jours', update.title, update.description);
             });
-          } else {
-            console.log('toto');
-            resolve(true);
           }
-
         });
     });
   }
 
 
 
-  getUpdates(day1?: Date, day2?: Date): Promise<any> {
+  getUpdates(day1?: Date): Promise<any> {
     return new Promise((resolve, reject) => {
-      const updates = this.tableUpdates.filter(update => update.dateUpdate > new Date(this.authService.authUser.lastCon));
+      const updates = this.tableUpdates.filter(update => update.dateUpdate > new Date(day1));
       if (updates.length > 0) {
         resolve(updates);
       } else {
@@ -81,8 +70,7 @@ export class UpdateAppService {
   }
 
   private getUpdatesToShow(): Promise<Update[]> {
-    const day = new Date();
     const lastConnection = this.authService.authUser.lastCon;
-    return this.getUpdates(lastConnection, day);
+    return this.getUpdates(lastConnection);
   }
 }

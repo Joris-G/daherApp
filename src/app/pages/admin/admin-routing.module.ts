@@ -9,7 +9,6 @@ const routes: Routes = [
   {
     path: '',
     component: AdminPage,
-    canActivate: [AuthGuard, RoleGuard],
     data: {
       expectedRole: ['ROLE_CE_MOULAGE', 'ROLE_ADMIN', 'ROLE_METHODES']
     },
