@@ -6,6 +6,8 @@ import {
 import Chart, { ChartConfiguration } from 'chart.js/auto';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/_interface/user';
+import { AlertService } from 'src/app/_services/divers/alert.service';
+import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { UsersService } from 'src/app/_services/users/users.service';
 
 @Component({
@@ -25,6 +27,8 @@ export class AdminUserPage implements OnInit {
   constructor(
     private userService: UsersService,
     private datePipe: DatePipe,
+    private loadingService: LoadingService,
+    private alertService: AlertService,
   ) {
     this.userService.getUsers()
       .then((users: User[]) => {
@@ -103,14 +107,33 @@ export class AdminUserPage implements OnInit {
       });
       console.log(startDate, intermediateEndDate);
       console.log(this.users);
-      const filterUsers = this.users.filter((user) => (new Date(user.createdAt) > startDate && new Date(user.createdAt) <= intermediateEndDate)
-      );
-      console.log(filterUsers);
+      const filterUsers = this.users
+        .filter((user) => (
+          new Date(user.createdAt) > startDate
+          &&
+          new Date(user.createdAt) <= intermediateEndDate)
+        );
       const totalUserWeek = filterUsers.length;
       totaluserPerWeekData.push(totalUserWeek);
 
       startDate = intermediateEndDate;
     }
     return totaluserPerWeekData;
+  }
+
+  deleteUser(user: User) {
+    this.loadingService.startLoading('Suppression de l\'utilisateur');
+    this.userService.deleteUser(user.id)
+      .then(() => {
+        this.loadingService.stopLoading();
+      })
+      .catch((err) => {
+        this.alertService.simpleAlert(
+          'Erreur',
+          'Suppression d\'un utilisateur',
+          'Une erreur est survenue pendant la suppression de l\'utilisateur. ' + err.message
+        );
+        this.loadingService.stopLoading();
+      });
   }
 }

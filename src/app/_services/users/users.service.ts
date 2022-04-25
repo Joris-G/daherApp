@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interface/groupe-affectation';
 import { ProgrammeAvion } from 'src/app/_interface/programme-avion';
 import { User, UserIri } from 'src/app/_interface/user';
+import { GroupeAffectationIri } from 'src/app/_interface/groupe-affectation';
 import { environment } from 'src/environments/environment';
 import { ProgramsService } from '../programs/programs.service';
 import { RequestService } from '../request.service';
@@ -10,6 +11,7 @@ import { RoleService } from './role.service';
 import { SericesService } from './serices.service';
 import { UniteService } from './unite.service';
 import { UsineService } from './usine.service';
+import { promise } from 'selenium-webdriver';
 
 const JORIS: User = {
   id: 1,
@@ -110,10 +112,33 @@ export class UsersService {
     return this.requestService.createPutRequest(environment.usineApi + `users/${user.id}`, userToUpdate);
   }
 
-  addUserToGroup(user: User, groups: GroupeAffectation[]) {
-    for (const group of groups) {
-      this.requestService.createPatchRequest(environment.usineApi + 'groupe_affectations/' + group.id + '/addUsers', [this.getIri(user)]);
-    }
+  addUserToGroup(user: User) {
+    return new Promise<User>(async (resolve, reject) => {
+      for (const group of user.groupeAffectations) {
+        const groupAffectationIri: GroupeAffectationIri = {
+          libelle: group.libelle,
+          population: group.population.map(userGroup => this.getIri(userGroup))
+        };
+        groupAffectationIri.population.push(this.getIri(user));
+        await this.requestService.createPatchRequest(
+          environment.usineApi + 'groupe_affectations/' + group.id + '/addUsers',
+          { population: groupAffectationIri.population }
+        )
+          .then((responseGroup) => {
+            user.groupeAffectations = responseGroup;
+          });
+      }
+      resolve(user);
+    });
+
+  }
+
+  getUsersByService(serviceId: string) {
+    return this.requestService.createGetRequest(environment.usineApi + `services/${serviceId}`);
+  }
+
+  deleteUser(userId: number) {
+    return this.requestService.createDeleteRequest(environment.usineApi + `users/${userId}`);
   }
 
 }

@@ -1,0 +1,39 @@
+<ion-modal [isOpen]="userState" trigger="trigger-button" (ionModalDidDismiss)="userState=false; stateChangeEv.emit(false)">
+    <ng-template>
+        <ion-header>
+            <ion-toolbar>
+                <ion-title> Fiche utilisateur : {{user.nom}} {{user.prenom}}</ion-title>
+                <ion-icon button slot="end" name="close-outline" size="large" (click)="userState=false; log(userState)"></ion-icon>
+            </ion-toolbar>
+        </ion-header>
+
+        <ion-content>
+            <ion-item>
+                <ion-label>Nom</ion-label>
+                <ion-input type="text" [value]="user.nom"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Prénom</ion-label>
+                <ion-input type="text" [value]="user.prenom"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Matricule</ion-label>
+                <ion-input type="text" [value]="user.matricule"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>E-Mail</ion-label>
+                <ion-input type="text" [value]="user.mail"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Téléphone</ion-label>
+                <ion-input type="text" [value]="user.telephone"></ion-input>
+            </ion-item>
+        </ion-content>
+
+        <ion-footer>
+            <ion-toolbar>
+                <ion-title>Footer</ion-title>
+            </ion-toolbar>
+        </ion-footer>
+    </ng-template>
+</ion-modal>

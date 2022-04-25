@@ -27,7 +27,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     },
     {
       roles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_METHODE'],
-      route: 'home'
+      route: 'tooling/manage-tool-team'
     },
   ];
 
@@ -59,6 +59,12 @@ export class LoginPage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    Notification.requestPermission().then((result) => {
+      console.log(result);
+      const img = 'assets/images/logoDaher.png';
+      const text = 'Coucou ! Votre tâche "' + '" arrive maintenant à échéance.';
+      const notification = new Notification('Liste de trucs à faire', { body: text, icon: img });
+    });
 
   }
 
@@ -112,4 +118,8 @@ export class LoginPage implements OnInit, AfterViewInit {
   getSpecialRole(userRoles: any): string {
     return userRoles[0];
   }
+
+
+
+
 }

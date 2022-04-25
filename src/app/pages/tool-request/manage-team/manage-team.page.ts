@@ -1,6 +1,6 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { IonSelect } from '@ionic/angular';
 import { GroupeAffectation } from 'src/app/_interface/groupe-affectation';
 import { User } from 'src/app/_interface/user';
 import { ProgramsService } from 'src/app/_services/programs/programs.service';
@@ -16,6 +16,7 @@ export class ManageTeamPage implements OnInit {
     title: 'Gérer l\'équipe'
   };
   public toolsUserDataSource: MatTableDataSource<User> = new MatTableDataSource();
+  public selection = new SelectionModel<User>(true, []);
   public displayedColumns = ['nom', 'prenom', 'groupeAffectation', 'lastCon', 'buttons'];
   public groups: any;
   private programs: any[];
@@ -27,8 +28,6 @@ export class ManageTeamPage implements OnInit {
   ngOnInit() {
     this.getGroups();
     this.getToolUsers();
-
-
   }
 
   getToolUsers() {
@@ -62,13 +61,6 @@ export class ManageTeamPage implements OnInit {
       });
   }
 
-  test() {
-    console.log('test');
-  }
-
-  newGroupClick() {
-
-  }
   addGroupClick(inputGroup: string) {
     if (inputGroup) {
       const affectGroup: GroupeAffectation = {
@@ -85,11 +77,26 @@ export class ManageTeamPage implements OnInit {
 
   addGroupToUser(selectOpt: GroupeAffectation[], user: User) {
     user.groupeAffectations = selectOpt;
+    user.isUpdated = true;
   }
 
 
   updateUser(user: User) {
-    this.userService.updateUser(user);
-    this.userService.addUserToGroup(user, user.groupeAffectations);
+    this.userService.addUserToGroup(user)
+      .then((responseUser: User) => {
+        user = responseUser;
+        this.getToolUsers();
+      });
+  }
+
+  removeUsersOfTeam(users: User[]) {
+    users.forEach((user) => {
+      this.userService.addUserToGroup(user)
+        .then((responseUser: User) => {
+          user = responseUser;
+          this.getToolUsers();
+        });
+    });
+
   }
 }

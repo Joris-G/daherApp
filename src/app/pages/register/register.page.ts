@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn, Validators, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonSlides, LoadingController } from '@ionic/angular';
 import { User, UserIri } from 'src/app/_interface/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
+import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { RoleService } from 'src/app/_services/users/role.service';
 import { SericesService } from 'src/app/_services/users/serices.service';
 import { SiteService } from 'src/app/_services/users/site.service';
@@ -21,7 +22,8 @@ export class RegisterPage implements OnInit {
   @ViewChild('slider') slider: IonSlides;
   public roleForm: FormGroup;
   public identityForm: FormGroup;
-
+  public registerForm: FormGroup;
+  public currentpage = 0;
 
   public slideOpts = {
     initialSlide: 0,
@@ -39,7 +41,7 @@ export class RegisterPage implements OnInit {
     private siteService: SiteService,
     private uniteService: UniteService,
     private roleService: RoleService,
-    private loadingController: LoadingController,
+    private loadingService: LoadingService,
     private userService: UsersService,
     private alertService: AlertService,
     private formBuilder: FormBuilder
@@ -49,40 +51,44 @@ export class RegisterPage implements OnInit {
 
   ngOnInit(): void {
     this.getDatas();
+
+  }
+
+  ionViewDidEnter() {
+    this.slider.ionSlideWillChange.subscribe(() => {
+      this.slider.getActiveIndex().then((responsePageIndex) => {
+        this.currentpage = responsePageIndex;
+        console.log(this.currentpage);
+      });
+    });
   }
 
   createForms() {
-    this.roleForm = this.formBuilder.group({
-      poste: [''],
-      service: [''],
-      site: [''],
-      unite: [''],
+    this.registerForm = this.formBuilder.group({
+      roleForm: this.formBuilder.group({
+        poste: [''],
+        service: [''],
+        site: [''],
+        unite: [''],
+      }),
+      identityForm: this.formBuilder.group({
+        firstName: [''],
+        lastName: [''],
+        matricule: [''],
+        telephone: [''],
+        password: [
+          ''],
+        confirmPassword: ['']
+      })
     });
-    this.identityForm = this.formBuilder.group({
-      firstName: [''],
-      lastName: [''],
-      matricule: [''],
-      telephone: [''],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(12),
-          Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,12}$')]],
-      confirmPassword: ['', [
-        Validators.required,
-        this.matchingPasswords('password', 'confirmPassword')
-      ]]
-    });
+    console.log(this.registerForm);
   }
 
-  matchingPasswords(passwordKey: string, confirmPasswordKey: string): ValidatorFn {
+  matchingPasswords(passwordKey: string, confirmPasswordKey: string, formGroup: FormGroup): ValidatorFn {
     return (group: FormGroup): { [key: string]: any } => {
-      console.log(group);
-      const password = group.controls[passwordKey];
-      const confirmPassword = group.controls[confirmPasswordKey];
-
+      const password = formGroup.controls.identityForm.value[passwordKey];
+      const confirmPassword = formGroup.controls.identityForm.value[confirmPasswordKey];
+      console.log(password.value !== confirmPassword.value);
       if (password.value !== confirmPassword.value) {
         return {
           mismatchedPasswords: true
@@ -92,11 +98,7 @@ export class RegisterPage implements OnInit {
   }
 
   async getDatas() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Patienter pendant le chargement des services',
-    });
-    await loading.present();
+    this.loadingService.startLoading('Patienter pendant le chargement des services');
     const roleProm = this.roleService.getRoles();
     const serviceProm = this.serviceService.getServices();
     const uniteProm = this.uniteService.getUnites();
@@ -110,37 +112,43 @@ export class RegisterPage implements OnInit {
 
       })
       .finally(() => {
-        loading.dismiss();
+        this.loadingService.stopLoading();
       });
-    const { role, data } = await loading.onDidDismiss();
-    // console.log('Loading dismissed!');
   }
 
   submitRole() {
-    console.log(this.roleForm.value, this.identityForm.value);
-    if (this.roleForm.value.poste !== 1) {
-      this.identityForm.get('password').setValidators(Validators.required);
+    if (this.registerForm.controls.roleForm.value.poste !== 1) {
+      this.registerForm.controls.identityForm.get('password').setValidators([
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(12),
+        Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,12}$')]);
+      this.registerForm.controls.identityForm.get('confirmPassword').setValidators([
+        Validators.required,
+        this.matchingPasswords('password', 'confirmPassword', this.registerForm)
+      ]);
     }
     this.slider.slideNext();
   }
 
 
   submitNewUser() {
-    console.log(this.roleForm.value, this.identityForm.value);
+    this.loadingService.startLoading('Patienter pendant l\'enregistrement');
     const userToRegister: UserIri = {
-      matricule: Number.parseInt(this.identityForm.value.matricule, 10),
-      nom: this.identityForm.value.lastName,
-      prenom: this.identityForm.value.firstName,
-      poste: `/api/postes/${this.roleForm.value.poste}`,
-      service: `/api/services/${this.roleForm.value.service}`,
-      password: this.identityForm.value.password || '',
+      matricule: Number.parseInt(this.registerForm.controls.identityForm.value.matricule, 10),
+      nom: this.registerForm.controls.identityForm.value.lastName,
+      prenom: this.registerForm.controls.identityForm.value.firstName,
+      poste: `/api/postes/${this.registerForm.controls.roleForm.value.poste}`,
+      service: `/api/services/${this.registerForm.controls.roleForm.value.service}`,
+      password: this.registerForm.controls.identityForm.value.password || '',
       programmeAvion: [`/api/programme_avions/${1}`],
-      site: `/api/usines/${this.roleForm.value.site}`,
-      unite: `/api/divisions/${this.roleForm.value.unite}`,
+      site: `/api/usines/${this.registerForm.controls.roleForm.value.site}`,
+      unite: `/api/divisions/${this.registerForm.controls.roleForm.value.unite}`,
     };
     this.userService.registerUser(userToRegister)
       .then((user: User) => {
-        if (user.roles.includes('ROLE_CE_MOULAGE')) {
+        this.loadingService.stopLoading();
+        if (user.roles.includes('ROLE_CE_MOULAGE') || user.roles.includes('ROLE_CE_OUTILLAGE')) {
           this.alertService.simpleAlert(
             'Message d\'information',
             'Enregistrement effectué !',
@@ -159,8 +167,9 @@ export class RegisterPage implements OnInit {
               this.router.navigate(['login']);
             });
         }
-
-
-      });
+      },
+        () => {
+          this.loadingService.stopLoading();
+        });
   }
 }

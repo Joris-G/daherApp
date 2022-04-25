@@ -58,7 +58,8 @@
                                 "type": "initial",
                                 "maximumWarning": "2mb",
                                 "maximumError": "5mb"
-                            }]
+                            }],
+                            "baseHref": "./"
                         },
                         "ci": {
                             "progress": false

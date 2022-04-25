@@ -18,11 +18,11 @@
                     </ion-text>
                 </ion-card-header>
                 <ion-card-content>
-                    <!-- <form [formGroup]="registerForm " (ngSubmit)="onRegisterSubmit() "> -->
-                    <ion-slides #slider pager="false" [options]="slideOpts">
-                        <ion-slide>
-                            <form [formGroup]="roleForm" (submit)="submitRole()">
-                                <ion-grid class="ion-align-items-center ion-justify-content-center">
+                    <form [formGroup]="registerForm">
+                        <ion-slides #slider pager="false" [options]="slideOpts">
+                            <ion-slide>
+                                <!-- <form [formGroup]="roleForm" (submit)="submitRole()"> -->
+                                <ion-grid class="ion-align-items-center ion-justify-content-center" formGroupName="roleForm">
                                     <ion-row>
                                         <ion-col size="3">
                                             <ion-radio-group required formControlName="site">
@@ -64,7 +64,7 @@
                                             </ion-radio-group>
                                         </ion-col>
                                         <ion-col size="3">
-                                            <ion-radio-group required formControlName="poste">
+                                            <ion-radio-group required name="poste" formControlName="poste">
                                                 <ion-list-header>
                                                     <ion-label color=primary>Rôle
                                                         <ion-text color="danger">*</ion-text>
@@ -78,14 +78,12 @@
                                         </ion-col>
                                     </ion-row>
                                 </ion-grid>
-                                <ion-button color=primary type=submit fill="solid" strong [disabled]="roleForm.invalid">
-                                    Suivant
-                                </ion-button>
-                            </form>
-                        </ion-slide>
-                        <ion-slide>
-                            <form formGroupName="identityForm" (submit)="submitNewUser()">
-                                <ion-grid fixed class="ion-align-items-center ion-justify-content-center">
+
+                                <!-- </form> -->
+                            </ion-slide>
+                            <ion-slide>
+                                <!-- <form [formGroup]="roleForm" (submit)="submitNewUser()"> -->
+                                <ion-grid fixed class="ion-align-items-center ion-justify-content-center" formGroupName="identityForm">
                                     <ion-row>
                                         <ion-col size="12">
                                             <ion-label>Identité</ion-label>
@@ -112,17 +110,17 @@
                                     </ion-row>
                                     <ion-row>
                                         <ion-col size="12">
-                                            <ion-item *ngIf="roleForm.value.poste !==1">
+                                            <ion-item *ngIf="registerForm.controls.roleForm.value.poste !==1">
                                                 <ion-label color=primary position="floating">Mot de passe
                                                     <ion-text color="danger">*</ion-text>
                                                 </ion-label>
-                                                <ion-input type="password" formControlName="password"></ion-input>
+                                                <ion-input type="password" name="password" formControlName="password"></ion-input>
                                             </ion-item>
-                                            <ion-item *ngIf="roleForm.value.poste !==1">
+                                            <ion-item *ngIf="registerForm.controls.roleForm.value.poste !==1">
                                                 <ion-label color=primary position="floating">Répéter mot de passe
                                                     <ion-text color="danger">*</ion-text>
                                                 </ion-label>
-                                                <ion-input formControlName="confirmPassword" type="password"></ion-input>
+                                                <ion-input formControlName="confirmPassword" name="confirmPassword" type="password"></ion-input>
                                             </ion-item>
                                         </ion-col>
                                     </ion-row>
@@ -145,26 +143,22 @@
                                         </ion-col>
                                     </ion-row>
                                 </ion-grid>
-                            </form>
-                        </ion-slide>
-                    </ion-slides>
+                                <!-- </form> -->
+                            </ion-slide>
+                        </ion-slides>
+                    </form>
                 </ion-card-content>
-                <!-- </form> -->
             </ion-card>
         </ion-row>
     </ion-grid>
 </ion-content>
-<!-- <ion-footer>
+<ion-footer>
     <ion-toolbar>
-         <ion-button (click)="onClick()">
-  <ion-icon slot="start" name="add"></ion-icon>
-  {{OtherLanguage}}
-</ion-button>
-        <ion-button slot=end (click)="switchToEnglish()" fill="clear" shape="round">
-            EN
+        <ion-button *ngIf="currentpage===0" slot=end color=primary (click)="submitRole()" fill="solid" strong [disabled]="registerForm.controls.roleForm.invalid">
+            Suivant
         </ion-button>
-        <ion-button slot=end (click)="switchToFrench()" fill="clear" shape="round">
-            FR
+        <ion-button *ngIf="currentpage!==0" slot=end (click)="submitNewUser()" [disabled]="registerForm.invalid">
+            S'enregistrer
         </ion-button>
     </ion-toolbar>
-</ion-footer> -->
+</ion-footer>

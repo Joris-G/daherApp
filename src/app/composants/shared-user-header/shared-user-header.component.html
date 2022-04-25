@@ -14,7 +14,7 @@
             <ng-template>
                 <ion-content>
                     <ion-list>
-                        <ion-item>
+                        <ion-item button id="trigger-button" (click)="isUserOpen = true; isPopoverOpen = !isPopoverOpen; log(isUserOpen)">
                             <ion-label>Profil</ion-label>
                         </ion-item>
                         <ion-item>
@@ -39,3 +39,6 @@
         </ion-button>
     </ion-toolbar>
 </ion-header>
+<ion-content>
+    <app-user-sheet [user]="user" [userState]="isUserOpen" (stateChangeEv)="isUserOpen = $event"></app-user-sheet>
+</ion-content>

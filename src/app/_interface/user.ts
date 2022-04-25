@@ -20,6 +20,7 @@ export interface User {
   unite?: string;
   site?: string;
   groupeAffectations?: GroupeAffectation[];
+  isUpdated?: boolean;
 }
 
 export interface UserIri {

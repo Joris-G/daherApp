@@ -12,19 +12,11 @@ const routes: Routes = [
     children: [
       {
         path: 'new-tool',
-        canActivate: [RoleGuard],
-        data: {
-          expectedRole: ['ROLE_USER']
-        },
         loadChildren: () => import('../../pages/tool-request/new-tool/new-tool.module')
           .then(m => m.NewToolPageModule)
       },
       {
         path: 'tool-request-list',
-        canActivate: [RoleGuard],
-        data: {
-          expectedRole: ['ROLE_USER']
-        },
         loadChildren: () => import('../../pages/tool-request/tool-requests/tool-requests.module')
           .then(m => m.ToolRequestsPageModule)
       },
@@ -39,34 +31,18 @@ const routes: Routes = [
       },
       {
         path: 'repair-tool',
-        canActivate: [RoleGuard],
-        data: {
-          expectedRole: ['ROLE_USER']
-        },
         loadChildren: () => import('./maintenance-reparation/maintenance-reparation.module').then(m => m.MaintenanceReparationPageModule)
       },
       {
         path: 'repair-tool/:id',
-        canActivate: [RoleGuard],
-        data: {
-          expectedRole: ['ROLE_USER']
-        },
         loadChildren: () => import('./maintenance-reparation/maintenance-reparation.module').then(m => m.MaintenanceReparationPageModule)
       },
       {
         path: '3D-tool',
-        canActivate: [RoleGuard],
-        data: {
-          expectedRole: ['ROLE_USER']
-        },
         loadChildren: () => import('./control3-d/control.module').then(m => m.Control3DPageModule)
       },
       {
         path: '3D-tool/:id',
-        canActivate: [RoleGuard],
-        data: {
-          expectedRole: ['ROLE_USER']
-        },
         loadChildren: () => import('./control3-d/control.module').then(m => m.Control3DPageModule)
       },
       {

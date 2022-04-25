@@ -1,13 +1,10 @@
 <ion-header>
     <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-        </ion-buttons>
         <ion-title>Administration des utilisateurs</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content color=light>
     <ion-grid false>
         <ion-row>
             <ion-col size="8">
@@ -17,7 +14,8 @@
                         <ion-card-title>Utilisateurs non validé</ion-card-title>
                     </ion-card-header>
                     <ion-card-content>
-                        <table mat-table [dataSource]="users | NotActive">
+                        <!-- <table mat-table [dataSource]="users | NotActive"> -->
+                        <table mat-table [dataSource]="users">
                             <!-- Username Column -->
                             <ng-container matColumnDef="username">
                                 <th mat-header-cell *matHeaderCellDef> UserName </th>
@@ -51,12 +49,15 @@
                             <!-- commands Column -->
                             <ng-container matColumnDef="commands">
                                 <th mat-header-cell *matHeaderCellDef> </th>
-                                <td mat-cell *matCellDef="let element">
-                                    <ion-button size=small expand="block" fill="solid" shape="round" (click)="confirmUser(element, true)">
+                                <td mat-cell *matCellDef="let user">
+                                    <ion-button size=small (click)="confirmUser(user, true)">
                                         Valider
                                     </ion-button>
-                                    <ion-button size=small color=danger expand="block" fill="solid" shape="round" (click)="confirmUser(element, false)">
+                                    <ion-button size=small color=danger (click)="confirmUser(user, false)">
                                         Rejeter
+                                    </ion-button>
+                                    <ion-button size=small (click)="deleteUser(user)">
+                                        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
                                     </ion-button>
                                 </td>
                             </ng-container>
@@ -94,8 +95,4 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-
-
-
-
 </ion-content>

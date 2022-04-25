@@ -7,3 +7,17 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.content-container {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+
+.control-form {
+    overflow-y: auto;
+}
+
+.print-preview {
+    overflow-y: auto;
+}

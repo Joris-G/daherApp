@@ -17,7 +17,7 @@ export class RequestService {
   }
   createPostRequest(url: string, body: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.http.post<HttpResponse<any>>(environment.apiServer + url, body, { headers: this.httpHeaders })
+      this.http.post<HttpResponse<any>>(environment.apiServer + url, body, { headers: this.httpHeaders, })
         .subscribe((returnDatas: any) => {
           console.log(returnDatas);
           resolve(returnDatas);
@@ -72,7 +72,7 @@ export class RequestService {
 
   createDeleteRequest(url: string) {
     return new Promise<any>((resolve, reject) => {
-      this.http.delete(environment.apiServer + environment.toolApi + url, { headers: this.httpHeaders })
+      this.http.delete(environment.apiServer + url, { headers: this.httpHeaders })
         .subscribe((returnDatas: any) => {
           console.log(returnDatas);
           resolve(returnDatas);

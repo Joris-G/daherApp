@@ -1,5 +1,5 @@
-import { AfterViewChecked, AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { AfterViewChecked, AfterViewInit, Component, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/_interface/user';
 import { AuthService } from 'src/app/_services/users/auth.service';
 
@@ -13,12 +13,15 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges, AfterViewCh
   @ViewChild('menu') menu: any;
   public user: User;
   public isPopoverOpen = false;
+  public isUserOpen = false;
 
   constructor(
     public authService: AuthService,
     private router: Router) {
   }
-
+  log(text) {
+    console.log(text);
+  }
   ngAfterViewInit(): void {
     // this.menu.open();
   }

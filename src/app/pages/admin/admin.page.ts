@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonMenu } from '@ionic/angular';
+import { IonMenu, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-admin',
@@ -7,12 +7,25 @@ import { IonMenu } from '@ionic/angular';
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit {
-  @ViewChild('menu') menu: IonMenu;
-  constructor() { }
+  @ViewChild('menuAdmin') menuAdmin: IonMenu;
+  constructor(
+    private navCtrl: NavController,
+  ) { }
 
   ngOnInit() {
   }
   ionViewWillEnter() {
-    this.menu.open();
+    this.menuAdmin.open();
+  }
+  navigate(url: string) {
+    this.navCtrl.navigateRoot(url)
+      .then(() => {
+
+      })
+      .catch((err) => {
+        console.error(err);
+
+      });
+    // this.router.navigateByUrl(url);
   }
 }

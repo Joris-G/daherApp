@@ -9,19 +9,24 @@ const routes: Routes = [
   {
     path: '',
     component: AdminPage,
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: ['ROLE_CE_MOULAGE', 'ROLE_ADMIN', 'ROLE_METHODES']
+      expectedRole: ['ROLE_ADMIN']
     },
     children:
       [{
         path: 'admin-user',
-        loadChildren: () => import('./admin-user/admin-user.module').then(m => m.AdminUserPageModule)
+        loadChildren: () => import('./admin-user/admin-user.module').then(m => m.AdminUserPageModule),
+        canActivate: [RoleGuard],
+        data: {
+          expectedRole: ['ROLE_ADMIN']
+        },
       },
       {
         path: 'admin-molding',
         canActivate: [RoleGuard],
         data: {
-          expectedRole: ['ROLE_CE_MOULAGE', 'ROLE_ADMIN', 'ROLE_METHODES']
+          expectedRole: ['ROLE_ADMIN']
         },
         loadChildren: () => import('./admin-molding/admin-molding.module').then(m => m.AdminMoldingPageModule)
       }]
