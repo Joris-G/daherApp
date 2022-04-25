@@ -11,7 +11,7 @@ const routes: Routes = [
       .then(m => m.HomePageModule)
   },
   {
-    path: '',
+    path: '**',
     redirectTo: '/home',
     pathMatch: 'full'
   },

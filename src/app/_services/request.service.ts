@@ -13,8 +13,13 @@ export class RequestService {
   private patchHttpHeaders = new HttpHeaders()
     .append('Content-Type', 'application/merge-patch+json')
     .append('Accept', 'application/json');
+  private deleteHttpHeaders = new HttpHeaders()
+
+    .append('Accept', '*/*');
   constructor(private http: HttpClient) {
   }
+
+
   createPostRequest(url: string, body: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.http.post<HttpResponse<any>>(environment.apiServer + url, body, { headers: this.httpHeaders, })
@@ -72,7 +77,7 @@ export class RequestService {
 
   createDeleteRequest(url: string) {
     return new Promise<any>((resolve, reject) => {
-      this.http.delete(environment.apiServer + url, { headers: this.httpHeaders })
+      this.http.delete(environment.apiServer + url, { headers: this.deleteHttpHeaders })
         .subscribe((returnDatas: any) => {
           console.log(returnDatas);
           resolve(returnDatas);

@@ -171,9 +171,12 @@ export class ToolRequestService {
     return this.requestService.createGetRequest(environment.toolApi + 'demandes');
   }
 
+
   getControl(idControle: number) {
     return this.requestService.createGetRequest(environment.toolApi + 'controles/' + idControle);
   }
+
+
   getMaintenance(id: number) {
     return this.requestService.createGetRequest(environment.toolApi + 'maintenances/' + id);
   }

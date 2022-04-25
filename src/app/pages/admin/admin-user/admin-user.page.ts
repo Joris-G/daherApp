@@ -19,7 +19,7 @@ export class AdminUserPage implements OnInit {
   @ViewChild('newUsers') private newUsersCanvas: ElementRef;
 
   public users: User[];
-  displayedUserInactiveColumns: string[] = ['username', 'nom', 'prenom', 'matricule', 'mail', 'roles', 'commands'];
+  displayedUserInactiveColumns: string[] = ['id', 'username', 'nom', 'prenom', 'matricule', 'mail', 'roles', 'commands'];
   private lineChart: any;
   private weeklyLabels: string[] = [];
   private weeklyUsers: number[] = [];
