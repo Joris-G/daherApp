@@ -4,6 +4,10 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content color=light [fullscreen]="true">
+    <div class="graph">
+        <app-indicator-graph *ngIf="requestTypeDistribution" [indicator]="{name: 'Répartition', repartitionObj: requestTypeDistribution}"></app-indicator-graph>
+        <app-indicator-number [indicator]="{name : 'En cours', value: onGoingRequestCount}"></app-indicator-number>
+        <app-indicator-number [indicator]="{name : 'Ouvertes', value: openRequestCount}"></app-indicator-number>
+    </div>
 </ion-content>

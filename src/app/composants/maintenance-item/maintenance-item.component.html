@@ -7,25 +7,27 @@
     </ion-card-header>
     <ion-card-content>
         <form [formGroup]="maintenanceItemForm">
-            <ion-item-divider>
-                <ion-label>Description</ion-label>
-            </ion-item-divider>
             <ion-item>
                 <ion-label>Non conformité
                     <ion-text color="danger">*</ion-text>
                 </ion-label>
                 <ion-textarea autoGrow required type="text" #nonConformite formControlName="nonConformite" (change)="maintenanceItem.nonConformite = nonConformite.value">
-
                 </ion-textarea>
             </ion-item>
             <ion-item>
                 <ion-label>Action corrective
                     <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-textarea autoGrow required type="text" placeholder="" #actionsCorrectives formControlName="actionsCorrectives" (change)="maintenanceItem.actionsCorrectives = actionsCorrectives.value">
-
+                <ion-textarea autoGrow required type="text" #actionsCorrectives formControlName="actionsCorrectives" (change)="maintenanceItem.actionsCorrectives = actionsCorrectives.value">
                 </ion-textarea>
             </ion-item>
+
+            <ion-item button>
+                <ion-icon name="download" slot="start"></ion-icon>
+                <ion-icon name="image" slot="start"></ion-icon>
+                <ion-label>Joindre une image</ion-label>
+            </ion-item>
+
             <!-- Datetime in overlay -->
             <ion-item button [id]="'open-date-butoir' + maintenanceItem.rep">
                 <ion-label>Date butoir demandée</ion-label>

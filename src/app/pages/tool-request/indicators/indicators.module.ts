@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { IndicatorsPageRoutingModule } from './indicators-routing.module';
 
 import { IndicatorsPage } from './indicators.page';
+import { ComponentModule } from 'src/app/composants/component/component.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    IndicatorsPageRoutingModule
+    IndicatorsPageRoutingModule,
+    ComponentModule,
   ],
   declarations: [IndicatorsPage]
 })
-export class IndicatorsPageModule {}
+export class IndicatorsPageModule { }

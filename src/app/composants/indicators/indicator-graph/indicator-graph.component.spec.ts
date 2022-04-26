@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { UserSheetComponent } from './user-sheet.component';
 
-describe('UserSheetComponent', () => {
-  let component: UserSheetComponent;
-  let fixture: ComponentFixture<UserSheetComponent>;
+import { IndicatorGraphComponent } from './indicator-graph.component';
+
+describe('IndicatorGraphComponent', () => {
+  let component: IndicatorGraphComponent;
+  let fixture: ComponentFixture<IndicatorGraphComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [UserSheetComponent],
+      declarations: [ IndicatorGraphComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UserSheetComponent);
+    fixture = TestBed.createComponent(IndicatorGraphComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

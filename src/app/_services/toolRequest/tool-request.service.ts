@@ -167,7 +167,7 @@ export class ToolRequestService {
     return this.requestService.createGetRequest(environment.toolApi + 'demandes/' + idRequest);
   }
 
-  getToolRequests() {
+  getToolRequests(): Promise<ToolRequest[]> {
     return this.requestService.createGetRequest(environment.toolApi + 'demandes');
   }
 

@@ -4,8 +4,8 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="false" scrollY="false">
-    <div class="content">
+<ion-content [fullscreen]="false">
+    <div class="content-container">
         <form class="main-form" [formGroup]="maintRepForm">
             <ion-card color=light padding>
                 <ion-card-header>
@@ -23,7 +23,8 @@
                 </ion-card-header>
                 <ion-card-content>
                     <!-- <ion-item color=light> -->
-                    <app-maintenance-item *ngFor="let maintenanceItem of toolRequest?.maintenance?.itemActionCorrective" [maintenanceItem]="maintenanceItem" (evValidateItem)="onValidateItem($event,maintenanceItem)" (evRemoveItem)="onRemoveItem($event,maintenanceItem)" [canUpdate]="canUpDate"></app-maintenance-item>
+                    <app-maintenance-item *ngFor="let maintenanceItem of toolRequest?.maintenance?.itemActionCorrective.reverse()" [maintenanceItem]="maintenanceItem" (evValidateItem)="onValidateItem($event,maintenanceItem)" (evRemoveItem)="onRemoveItem($event,maintenanceItem)"
+                        [canUpdate]="canUpDate"></app-maintenance-item>
                     <!-- </ion-item> -->
                 </ion-card-content>
             </ion-card>

@@ -76,7 +76,7 @@
                     </ion-row>
                 </ion-col>
             </ion-row>
-            <ion-row *ngFor="let maintenaceItem of toolRequest.maintenance.itemActionCorrective">
+            <ion-row *ngFor="let maintenaceItem of toolRequest.maintenance.itemActionCorrective.reverse()">
                 <ion-col class="border" size="1">{{maintenaceItem.rep}}</ion-col>
                 <ion-col class="border" size="3">{{maintenaceItem.nonConformite}}</ion-col>
                 <ion-col class="border" size="3">{{maintenaceItem.actionsCorrectives}}</ion-col>

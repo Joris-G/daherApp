@@ -77,7 +77,7 @@ export class RequestService {
 
   createDeleteRequest(url: string) {
     return new Promise<any>((resolve, reject) => {
-      this.http.delete(environment.apiServer + url, { headers: this.deleteHttpHeaders })
+      this.http.delete(environment.apiServer + url, { headers: this.httpHeaders })
         .subscribe((returnDatas: any) => {
           console.log(returnDatas);
           resolve(returnDatas);

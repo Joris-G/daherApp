@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControlName } from '@angular/forms';
 import { User } from 'src/app/_interface/user';
 
 @Component({
