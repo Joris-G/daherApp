@@ -14,10 +14,12 @@ export class SharedAdminHeaderComponent implements OnInit {
     public authService: AuthService,
     private router: Router
   ) {
-    this.user = this.authService.authUser;
+
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.user = this.authService.authUser;
+  }
   logoutClick() {
     this.authService.logout()
       .then(() => {

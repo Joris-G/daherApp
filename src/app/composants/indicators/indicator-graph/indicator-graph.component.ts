@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-indicator-graph',
@@ -23,13 +24,19 @@ export class IndicatorGraphComponent implements OnInit, AfterViewInit {
         labels: Object.entries(this.indicator.repartitionObj).map(test => test[0]),
         datasets: [
           {
-            label: this.indicator.name,
-            backgroundColor: ['red', 'yellow'],
-            borderColor: 'rgba(75,192,192,1)',
+            label: `Prefix-${this.indicator.name}`,
+            backgroundColor: ['#505F69', '#6EB4CD'],
+            borderColor: '#E1E1D7',
+            borderWidth: 1,
             borderJoinStyle: 'miter',
             data: Object.entries(this.indicator.repartitionObj).map(test => test[1]),
           }
         ]
+
+      },
+      options: {
+        plugins: {
+        }
       }
     });
     this.pieChart.update();

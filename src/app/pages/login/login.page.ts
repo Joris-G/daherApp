@@ -27,7 +27,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     },
     {
       roles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_METHODE'],
-      route: 'tooling/manage-tool-team'
+      route: 'tooling/tool-indicators'
     },
   ];
 
@@ -41,12 +41,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     private loadingController: LoadingController,
     private updateService: UpdateAppService,
     private navControler: NavController
-  ) {
-    this.loginForm = this.formBuilder.group({
-      userName: ['', Validators.required],
-      password: ['']
-    });
-  }
+  ) { }
 
   ngAfterViewInit(): void {
     if (isDevMode()) {
@@ -59,7 +54,14 @@ export class LoginPage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      userName: ['', Validators.required],
+      password: ['']
+    });
     Notification.requestPermission().then((result) => {
+      if (!('Notification' in window)) {
+        alert('Ce navigateur ne prend pas en charge la notification de bureau')
+      }
       console.log(result);
       const img = 'assets/images/logoDaher.png';
       const text = 'Coucou ! Votre tâche "' + '" arrive maintenant à échéance.';

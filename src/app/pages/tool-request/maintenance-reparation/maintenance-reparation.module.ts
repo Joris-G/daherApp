@@ -11,6 +11,7 @@ import { SpecMaintenanceReparationModule } from
   'src/app/composants/documents-pdf/spec-maintenance-reparation/spec-maintenance-reparation.module';
 import { ToolInputModule } from 'src/app/composants/tool-input/tool-input.module';
 import { ToolRequestFooterModule } from 'src/app/composants/tool-request-footer/tool-request-footer.module';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { ToolRequestFooterModule } from 'src/app/composants/tool-request-footer/
     SpecMaintenanceReparationModule,
     ToolInputModule,
     ToolRequestFooterModule,
+    EditorModule,
   ],
   declarations: [MaintenanceReparationPage]
 })

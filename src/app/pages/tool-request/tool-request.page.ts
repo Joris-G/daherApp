@@ -34,8 +34,7 @@ export class ToolRequestPage implements OnInit {
     public roleGuard: RoleGuard,
     private userService: UsersService,
     private toolRequestService: ToolRequestService,
-  ) {
-  }
+  ) { }
 
   ionViewWillEnter() {
     this.page = {

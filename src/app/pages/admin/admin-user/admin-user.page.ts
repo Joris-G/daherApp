@@ -30,6 +30,10 @@ export class AdminUserPage implements OnInit {
     private loadingService: LoadingService,
     private alertService: AlertService,
   ) {
+
+  }
+
+  ngOnInit() {
     this.userService.getUsers()
       .then((users: User[]) => {
         this.users = users;
@@ -69,9 +73,6 @@ export class AdminUserPage implements OnInit {
         this.lineChart.update();
 
       });
-  }
-
-  ngOnInit() {
   }
 
   confirmUser(element: User, state: boolean) {

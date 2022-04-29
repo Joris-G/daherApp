@@ -60,24 +60,32 @@
                     <ion-card-header color=light>
                         <ion-card-title class="ion-text-uppercase">Le contrôle</ion-card-title>
                     </ion-card-header>
-                    <ion-item>
+
+                    <ion-item fill="outline" lines=none>
                         <ion-label>But du contrôle, de l'essai ou de l 'expertise
                             <ion-text color="danger">*</ion-text>
                         </ion-label>
-                        <ion-textarea autoGrow required #ctrlReasons formControlName="ctrlReasons" type="text" (ionChange)="test()"></ion-textarea>
+                        <editor slot="" formControlName="ctrlReasons" [init]="{
+                      plugins: 'lists link image table wordcount',
+                      base_url: '/tinymce',
+                      suffix: '.min',
+                      menubar: false,
+                      statusbar:false
+                    }" required #ctrlReasons (ionChange)="test()"></editor>
+                        <!-- <ion-textarea autoGrow required #ctrlReasons formControlName=" ctrlReasons " type="text " (ionChange)="test() "></ion-textarea> -->
                         <!-- <ion-note>Descriptif de la mesure demandée (contrôle réception, suite à choc, déménagement d’outillage ou autre)</ion-note> -->
                     </ion-item>
                     <ion-item>
                         <ion-label>Détails de la mesure
                             <ion-text color="danger">*</ion-text>
                         </ion-label>
-                        <ion-textarea autoGrow required #ctrlDetails formControlName="ctrlDetails" type="text" placeholder="lieux, référentiel..." (ionChange)="toolRequest.controle.detailsControle = ctrlDetails.value.toString()"></ion-textarea>
+                        <ion-textarea autoGrow required #ctrlDetails formControlName="ctrlDetails" type="text" placeholder="lieux, référentiel..." (ionChange)="toolRequest.controle.detailsControle=ctrlDetails.value.toString()"></ion-textarea>
                     </ion-item>
                     <ion-item>
                         <ion-label>Précision demandée et attendue
                             <ion-text color="danger">*</ion-text>
                         </ion-label>
-                        <ion-textarea autoGrow required #tolerance formControlName="precisionTolerances" type="text" placeholder="IT plans et spécifications de définition" (ionChange)="toolRequest.controle.tolerances = tolerance.value.toString()"></ion-textarea>
+                        <ion-textarea autoGrow required #tolerance formControlName="precisionTolerances" type="text" placeholder="IT plans et spécifications de définition" (ionChange)="toolRequest.controle.tolerances=tolerance.value.toString()"></ion-textarea>
                     </ion-item>
                 </ion-card>
                 <ion-card>
@@ -87,11 +95,11 @@
                         <ion-icon slot=end icon="calendar-outline"></ion-icon>
                         <ion-text slot="end">
                             {{toolRequest.controle.dateBesoin | date:"dd/MM/yyyy"}}</ion-text>
-                        <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
-                        <ion-modal trigger="open-date-butoir">
+                        <!-- <ion-button id="open-modal ">Open Datetime Modal</ion-button> -->
+                        <ion-modal trigger="open-date-butoir ">
                             <ng-template>
                                 <ion-content>
-                                    <ion-datetime #needDate presentation="date" formControlName="needDate" display-format="DD.MM.YYYY" (ngModelChange)="toolRequest.controle.dateBesoin = dateValue(needDate.value)">
+                                    <ion-datetime #needDate presentation="date" formControlName="needDate" display-format="DD.MM.YYYY" (ngModelChange)="toolRequest.controle.dateBesoin=dateValue(needDate.value)">
                                         <div slot="title">Date butoir demandée</div>
                                     </ion-datetime>
                                 </ion-content>
@@ -102,11 +110,11 @@
                         <ion-label>Oi ou Eotp
                             <ion-text color="danger">*</ion-text>
                         </ion-label>
-                        <ion-input #ligneBudgetaire required formControlName="ligneBudgetaire" type="text" placeholder="Indiquez le n° pour imputation" (ionChange)="toolRequest.controle.ligneBudgetaire = ligneBudgetaire.value.toString()"></ion-input>
+                        <ion-input #ligneBudgetaire required formControlName="ligneBudgetaire" type="text" placeholder="Indiquez le n° pour imputation" (ionChange)="toolRequest.controle.ligneBudgetaire=ligneBudgetaire.value.toString()"></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>Types de rapport</ion-label>
-                        <ion-select required #typeRapportSelect formControlName="typeRapport" (change)="toolRequest.controle.typeRapport = typeRapportSelect.value">
+                        <ion-select required #typeRapportSelect formControlName="typeRapport" (change)="toolRequest.controle.typeRapport=typeRapportSelect.value">
                             <ion-select-option *ngFor="let type of typeRapport| keyvalue" [value]="type.value">{{type.value}}</ion-select-option>
                         </ion-select>
                     </ion-item>
@@ -119,13 +127,13 @@
                     <ion-item button id="open-date-interv">
                         <ion-label>Date d'intervention</ion-label>
                         <ion-icon slot=end icon="calendar-outline"></ion-icon>
-                        <ion-text slot="end" *ngIf="toolRequest?.controle?.interventionDate">
+                        <ion-text slot="end " *ngIf="toolRequest?.controle?.interventionDate">
                             {{toolRequest?.controle?.interventionDate | date:"dd/MM/yyyy"}}</ion-text>
-                        <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
+                        <!-- <ion-button id="open-modal ">Open Datetime Modal</ion-button> -->
                         <ion-modal trigger="open-date-interv">
                             <ng-template>
                                 <ion-content>
-                                    <ion-datetime #interventionDate presentation="date" formControlName="interventionDate" display-format="DD.MM.YYYY" (ionChange)="toolRequest.controle.interventionDate = dateValue(interventionDate.value)">
+                                    <ion-datetime #interventionDate presentation="date" formControlName="interventionDate" display-format="DD.MM.YYYY" (ionChange)="toolRequest.controle.interventionDate=dateValue(interventionDate.value)">
                                         <div slot="title">Date d'intervention</div>
                                     </ion-datetime>
                                 </ion-content>
@@ -135,12 +143,12 @@
                     <ion-item>
                         <ion-label>Informations complémentaires
                         </ion-label>
-                        <ion-input #infosComplementaire (ionChange)="toolRequest.controle.infosComplementaire = infosComplementaire.value.toString()" formControlName="infosComplementaire" type="text" placeholder="Information complémentaire"></ion-input>
+                        <ion-input #infosComplementaire (ionChange)="toolRequest.controle.infosComplementaire=infosComplementaire.value.toString()" formControlName="infosComplementaire" type="text" placeholder="Information complémentaire"></ion-input>
                     </ion-item>
 
                     <ion-item>
                         <ion-label>Moyen de mesure</ion-label>
-                        <ion-select #moyenMesureSelect formControlName="moyenMesure" (ionChange)="toolRequest.controle.moyenMesure = moyenMesureSelect.value">
+                        <ion-select #moyenMesureSelect formControlName="moyenMesure" (ionChange)="toolRequest.controle.moyenMesure=moyenMesureSelect.value">
                             <ion-select-option *ngFor="let moyen of moyenMesure | keyvalue" [value]="moyen.value">{{moyen.value}}</ion-select-option>
                         </ion-select>
                     </ion-item>

@@ -17,8 +17,7 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges, AfterViewCh
 
   constructor(
     public authService: AuthService,
-    private router: Router) {
-  }
+    private router: Router) { }
   log(text) {
     console.log(text);
   }

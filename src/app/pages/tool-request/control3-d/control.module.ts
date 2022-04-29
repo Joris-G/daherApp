@@ -7,7 +7,7 @@ import { Control3DPage } from './control.page';
 import { ControledddModule } from 'src/app/composants/documents-pdf/controle3d/controleddd.module';
 import { ToolInputModule } from 'src/app/composants/tool-input/tool-input.module';
 import { ToolRequestFooterModule } from 'src/app/composants/tool-request-footer/tool-request-footer.module';
-
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 @NgModule({
   imports: [
@@ -19,7 +19,11 @@ import { ToolRequestFooterModule } from 'src/app/composants/tool-request-footer/
     ControledddModule,
     ToolInputModule,
     ToolRequestFooterModule,
+    EditorModule
   ],
-  declarations: [Control3DPage]
+  declarations: [Control3DPage],
+  providers: [
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
+  ]
 })
 export class Control3DPageModule { }

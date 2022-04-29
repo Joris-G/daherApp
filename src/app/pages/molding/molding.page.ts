@@ -13,8 +13,7 @@ export class MoldingPage implements OnInit, AfterViewChecked {
   constructor(
     public router: Router,
     public navCtrl: NavController,
-  ) {
-  }
+  ) { }
 
   ionViewWillEnter() {
     this.menu.open();

@@ -46,7 +46,15 @@ export class ToolRequestsPage implements OnInit {
     private navCtrl: NavController,
     private loaderService: LoadingService,
     private authGuard: RoleGuard
-  ) {
+  ) { }
+
+  ionViewWillEnter() {
+    this.updateRequestList();
+    this.isAdmin = this.authGuard.isRole(['ROLE_ADMIN']);
+  }
+
+
+  ngOnInit() {
     this.filterSelectObjects = [
       {
         name: 'Statut',
@@ -70,15 +78,6 @@ export class ToolRequestsPage implements OnInit {
       //   options: []
       // },
     ];
-  }
-
-  ionViewWillEnter() {
-    this.updateRequestList();
-    this.isAdmin = this.authGuard.isRole(['ROLE_ADMIN']);
-  }
-
-
-  ngOnInit() {
     this.tableRequestsDataSource.filterPredicate = this.createFilter();
   }
 

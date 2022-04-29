@@ -5,12 +5,12 @@
             <!-- <ion-icon slot="start" name="scan-outline"></ion-icon> -->
             {{scanButtonText}}
         </ion-button>
-        <ion-input slot=start #scanInput type="text" placeholder="Id du composant" (change)="onInputChange(scanInput.value.toString())" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()"></ion-input>
-        <ion-button size=small slot=start (click)="associateToolClick()" fill=clear size=default>
+        <ion-input slot=start #scanInput type="text" placeholder="scan KIT, Outillage" (change)="onInputChange(scanInput.value.toString())" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()"></ion-input>
+        <!-- <ion-button size=small slot=start (click)="associateToolClick()" fill=clear size=default>
             <ion-icon slot="start" name="link-outline"></ion-icon>
             OUTILLAGE
-        </ion-button>
-        <ion-button size=small slot=start disabled="false" (click)="associateCoreClick()" fill=clear size=default>
+        </ion-button> -->
+        <ion-button size=small slot=start disabled="true" (click)="associateCoreClick()" fill=clear size=default>
             <ion-icon slot="start" name="link-outline"></ion-icon>
             NIDA
         </ion-button>
@@ -134,7 +134,9 @@
 <ion-footer class="ion-hide-md-down">
     <ion-toolbar class="ion-space-between">
         <ion-item lines="none">
-            <ion-label>Outillage : {{molding?.outillage?.sapToolNumber}}</ion-label>
+            <ion-label>Outillage :
+                <ion-label *ngIf="molding.outillage"> OT0{{molding.outillage.sapToolNumber}} {{molding.outillage.designation}}</ion-label>
+            </ion-label>
             <ion-label class="strong">A draper avant le : {{molding?.aDraperAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
             <ion-label class="strong">A cuire avant le : {{molding?.aCuireAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
         </ion-item>

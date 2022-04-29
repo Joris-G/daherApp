@@ -41,8 +41,7 @@ export class Control3DPage implements OnInit {
     private loadingControler: LoadingController,
     public formBuilder: FormBuilder,
     private loaderService: LoadingService
-  ) {
-  }
+  ) { }
 
   ionViewWillEnter() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -58,6 +57,7 @@ export class Control3DPage implements OnInit {
   test() {
     this.ctrlReasons.getInputElement()
       .then((htmlElement) => {
+        console.log(htmlElement);
         this.toolRequest.controle.description = htmlElement.innerHTML;
       });
   }
@@ -133,7 +133,6 @@ export class Control3DPage implements OnInit {
   ionViewDidLeave() {
     this.controlForm.reset();
   }
-
 
   loadControlData(idDemande: string) {
     this.toolRequestService.getToolRequest(idDemande)

@@ -22,8 +22,7 @@ export class PrintMoldingSheetPage implements OnInit {
     public moldingService: MoldingService,
     private loadingController: LoadingController,
     public kitService: KitService,
-    private router: Router) {
-  }
+    private router: Router) { }
 
   ngOnInit() {
     this.loadMoldingSheet();

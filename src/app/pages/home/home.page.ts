@@ -27,8 +27,7 @@ export class HomePage implements OnInit {
   constructor(
     public router: Router,
     public navCtrl: NavController,
-    public authService: AuthService) {
-  }
+    public authService: AuthService) { }
 
 
   ionViewWillEnter() {

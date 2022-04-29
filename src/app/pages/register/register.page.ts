@@ -46,10 +46,11 @@ export class RegisterPage implements OnInit {
     private alertService: AlertService,
     private formBuilder: FormBuilder
   ) {
-    this.createForms();
+
   }
 
   ngOnInit(): void {
+    this.createForms();
     this.getDatas();
 
   }

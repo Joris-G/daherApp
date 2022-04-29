@@ -19,9 +19,7 @@ export class AdminMoldingPage implements OnInit, OnDestroy, AfterViewChecked {
   private refreshData;
   constructor(
     private moldingService: MoldingService
-  ) {
-
-  }
+  ) { }
   ngAfterViewChecked(): void {
     // indicators to be reloaded with interval
 

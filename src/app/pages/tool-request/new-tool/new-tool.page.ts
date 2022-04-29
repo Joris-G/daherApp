@@ -51,6 +51,9 @@ export class NewToolPage implements OnInit {
     private router: Router,
 
   ) {
+  }
+
+  ngOnInit() {
     this.page = {
       pageTitle: 'Création d\'une demande',
       menuTitle: 'Menu outillage',
@@ -65,9 +68,6 @@ export class NewToolPage implements OnInit {
 
     this.editor = new Editor();
     this.editor.setContent('html');
-  }
-
-  ngOnInit() {
     this.newToolForm = this.formBuilder.group({
       sapToolNumber: new FormControl(),
       identification: new FormControl(),
