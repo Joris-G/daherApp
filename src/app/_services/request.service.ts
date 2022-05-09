@@ -44,7 +44,7 @@ export class RequestService {
         headers: (this.apiToken !== '') ? new HttpHeaders()
           .append('Content-Type', 'application/json')
           .append('Accept', 'application/json')
-          .append('X-Auth-Token', localStorage.getItem('token')) : this.httpHeaders
+          .append('x-auth-token', localStorage.getItem('token')) : this.httpHeaders
       });
   }
 
@@ -53,7 +53,7 @@ export class RequestService {
       headers: (this.apiToken !== '') ? new HttpHeaders()
         .append('Content-Type', 'application/json')
         .append('Accept', 'application/json')
-        .append('X-Auth-Token', localStorage.getItem('token')) : this.httpHeaders
+        .append('x-auth-token', localStorage.getItem('token')) : this.httpHeaders
     });
   }
 
@@ -62,7 +62,7 @@ export class RequestService {
       headers: (this.apiToken !== '') ? new HttpHeaders()
         .append('Content-Type', 'application/json')
         .append('Accept', 'application/json')
-        .append('X-Auth-Token', localStorage.getItem('token')) : this.patchHttpHeaders
+        .append('x-auth-token', localStorage.getItem('token')) : this.patchHttpHeaders
     });
   }
 

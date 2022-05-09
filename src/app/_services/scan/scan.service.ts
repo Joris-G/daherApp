@@ -31,6 +31,7 @@ export class ScanService {
    */
   getScanInput(scanInputValue: string): Observable<Kit | Tool | Core | undefined> {
     const typeInput = this.getTypeInput(scanInputValue);
+    console.log(typeInput);
     if (typeInput) {
       let obs: Observable<Kit | Tool | Core | undefined>;
       switch (typeInput) {
@@ -43,11 +44,12 @@ export class ScanService {
         case 'tool':
           obs = this.sendTool(scanInputValue);
           break;
-
-        default:
+        case '':
+          console.log('default');
           obs = of(undefined);
           break;
       }
+      console.log(obs);
       return obs;
     }
   }

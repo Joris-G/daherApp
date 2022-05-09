@@ -3,6 +3,7 @@ import { IonInput } from '@ionic/angular';
 import { Core } from 'src/app/_interfaces/molding/core';
 import { Kit } from 'src/app/_interfaces/molding/kit';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
+import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { ScanService } from 'src/app/_services/scan/scan.service';
 
@@ -57,7 +58,8 @@ export class ScanMoldingInputComponent implements AfterViewInit {
    */
   constructor(
     private scanService: ScanService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private alertService: AlertService,
   ) { }
 
 
@@ -123,13 +125,22 @@ export class ScanMoldingInputComponent implements AfterViewInit {
   onInputChange(inputValue: string): void {
     this.loadingService.startLoading('Patienter pendant le chargement du kit');
     const getScanInput$ = this.scanService.getScanInput(inputValue);
-    getScanInput$.subscribe(input => {
-      this.evOnInput.emit(input);
-      this.scanInput.value = '';
+    if (getScanInput$) {
+      getScanInput$.subscribe(input => {
+        this.evOnInput.emit(input);
+        this.scanInput.value = '';
+        this.loadingService.stopLoading();
+        setTimeout(() => {
+          this.scanInput.setFocus();
+        }, 300);
+      });
+    } else {
       this.loadingService.stopLoading();
-      setTimeout(() => {
-        this.scanInput.setFocus();
-      }, 300);
-    });
+      this.alertService.simpleAlert(
+        'Erreur lors du scan',
+        'L\'élement scanné ne correspond à rien de connu',
+        'Ré-essayer ou contacter j.grangier 06.87.89.24.25');
+    }
+
   }
 }

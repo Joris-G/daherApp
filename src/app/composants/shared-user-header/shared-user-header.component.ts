@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/_interfaces/user';
 import { AuthService } from 'src/app/_services/users/auth.service';
@@ -39,7 +39,7 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges, AfterViewCh
 
   logoutClick() {
     this.authService.logout()
-      .then(() => {
+      .subscribe(() => {
         this.router.navigate(['/login']);
       });
   }

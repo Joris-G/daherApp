@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AlertController, IonInput, LoadingController, NavController } from '@ionic/angular';
 import { UpdateAppService } from 'src/app/_services/applicationUpdates/update-app.service';
 import { AuthService } from 'src/app/_services/users/auth.service';
 import { environment } from 'src/environments/environment';
 import { isDevMode } from '@angular/core';
+import { LoadingService } from 'src/app/_services/divers/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -36,9 +36,8 @@ export class LoginPage implements OnInit, AfterViewInit {
   constructor(
     public authService: AuthService,
     private formBuilder: FormBuilder,
-    private router: Router,
     private alertController: AlertController,
-    private loadingController: LoadingController,
+    private loadingService: LoadingService,
     private updateService: UpdateAppService,
     private navControler: NavController
   ) { }
@@ -58,29 +57,24 @@ export class LoginPage implements OnInit, AfterViewInit {
       userName: ['', Validators.required],
       password: ['']
     });
-    Notification.requestPermission().then((result) => {
-      if (!('Notification' in window)) {
-        alert('Ce navigateur ne prend pas en charge la notification de bureau');
-      }
-      console.log(result);
-      const img = 'assets/images/logoDaher.png';
-      const text = 'Coucou ! Votre tâche "' + '" arrive maintenant à échéance.';
-      const notification = new Notification('Liste de trucs à faire', { body: text, icon: img });
-    });
+    // Notification.requestPermission().then((result) => {
+    //   if (!('Notification' in window)) {
+    //     alert('Ce navigateur ne prend pas en charge la notification de bureau');
+    //   }
+    //   console.log(result);
+    //   const img = 'assets/images/logoDaher.png';
+    //   const text = 'Coucou ! Votre tâche "' + '" arrive maintenant à échéance.';
+    //   const notification = new Notification('Liste de trucs à faire', { body: text, icon: img });
+    // });
 
   }
 
-  async onSubmit() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Patienter pendant la connexion',
-      spinner: 'lines-sharp'
-    });
-    await loading.present();
+  onSubmit() {
+    this.loadingService.startLoading('Patienter pendant la connexion');
     this.authService.authenticate(
       this.loginForm.get('userName').value,
       this.loginForm.get('password').value || this.loginForm.get('userName').value)
-      .then(() => {
+      .subscribe(() => {
         this.updateService.showUpdates();
         this.reRouteOpts.forEach((routeOpt) => {
           if (this.authService.authUser.roles.find(role => routeOpt.roles.find(roleOpt => roleOpt === role))) {
@@ -90,14 +84,14 @@ export class LoginPage implements OnInit, AfterViewInit {
           }
         });
         this.loginForm.reset();
+        this.loadingService.stopLoading();
       },
         () => {
+          this.loadingService.stopLoading();
           this.presentAlertLoginError();
+
         },
-      )
-      .finally(() => {
-        loading.dismiss();
-      });
+      );
   }
 
   async presentAlertLoginError() {

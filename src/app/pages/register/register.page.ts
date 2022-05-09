@@ -30,10 +30,10 @@ export class RegisterPage implements OnInit {
     speed: 400,
     allowTouchMove: false,
   };
-  public services: any;
-  public roles: any;
-  public unites: any;
-  public sites: any;
+  public services$: any;
+  public roles$: any;
+  public unites$: any;
+  public sites$: any;
 
   constructor(
     private router: Router,
@@ -98,23 +98,12 @@ export class RegisterPage implements OnInit {
     };
   }
 
-  async getDatas() {
-    this.loadingService.startLoading('Patienter pendant le chargement des services');
-    const roleProm = this.roleService.getRoles();
-    const serviceProm = this.serviceService.getServices();
-    const uniteProm = this.uniteService.getUnites();
-    const siteProm = this.siteService.getSites();
-    Promise.all([serviceProm, roleProm, siteProm, uniteProm])
-      .then((res: any[]) => {
-        this.services = res[0];
-        this.roles = res[1];
-        this.sites = res[2];
-        this.unites = res[3];
-
-      })
-      .finally(() => {
-        this.loadingService.stopLoading();
-      });
+  getDatas() {
+    // this.loadingService.startLoading('Patienter pendant le chargement des services');
+    this.roles$ = this.roleService.getRoles();
+    this.services$ = this.serviceService.getServices();
+    this.unites$ = this.uniteService.getUnites();
+    this.sites$ = this.siteService.getSites();
   }
 
   submitRole() {

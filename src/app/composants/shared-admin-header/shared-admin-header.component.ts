@@ -22,7 +22,7 @@ export class SharedAdminHeaderComponent implements OnInit {
   }
   logoutClick() {
     this.authService.logout()
-      .then(() => {
+      .subscribe(() => {
         this.router.navigate(['/login']);
       });
   }
