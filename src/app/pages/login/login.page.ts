@@ -27,7 +27,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     },
     {
       roles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_METHODE'],
-      route: 'tooling/tool-indicators'
+      route: 'molding/create-molding'
     },
   ];
 
@@ -60,7 +60,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     });
     Notification.requestPermission().then((result) => {
       if (!('Notification' in window)) {
-        alert('Ce navigateur ne prend pas en charge la notification de bureau')
+        alert('Ce navigateur ne prend pas en charge la notification de bureau');
       }
       console.log(result);
       const img = 'assets/images/logoDaher.png';

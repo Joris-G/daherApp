@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GroupeAffectation } from 'src/app/_interface/groupe-affectation';
-import { ProgrammeAvion } from 'src/app/_interface/programme-avion';
-import { User, UserIri } from 'src/app/_interface/user';
-import { GroupeAffectationIri } from 'src/app/_interface/groupe-affectation';
+import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
+import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
+import { User, UserIri } from 'src/app/_interfaces/user';
+import { GroupeAffectationIri } from 'src/app/_interfaces/groupe-affectation';
 import { environment } from 'src/environments/environment';
 import { ProgramsService } from '../programs/programs.service';
 import { RequestService } from '../request.service';
@@ -11,7 +11,7 @@ import { RoleService } from './role.service';
 import { SericesService } from './serices.service';
 import { UniteService } from './unite.service';
 import { UsineService } from './usine.service';
-import { promise } from 'selenium-webdriver';
+import { Observable } from 'rxjs';
 
 const JORIS: User = {
   id: 1,
@@ -90,12 +90,12 @@ export class UsersService {
     }
   }
 
-  getGroups() {
-    return this.requestService.createGetRequest(environment.usineApi + `groupe_affectations`);
+  getGroups(): Observable<GroupeAffectation[]> {
+    return this.requestService.createGetRequest(`${environment.usineApi}groupe_affectations`);
   }
 
-  createGroup(groupObj: GroupeAffectation) {
-    return this.requestService.createPostRequest(environment.usineApi + `groupe_affectations`, groupObj);
+  createGroup(groupObj: GroupeAffectation): Observable<GroupeAffectation> {
+    return this.requestService.createPostRequest(`${environment.usineApi}groupe_affectations`, groupObj);
   }
 
   updateUser(user: User) {
@@ -108,8 +108,9 @@ export class UsersService {
       programmeAvion: user.programmeAvion.map((progAvion: ProgrammeAvion) => this.programService.getIri(progAvion)),
       unite: this.uniteService.getIri(user.unite),
       site: this.usineService.getIri(user.site),
+      telephone: user.telephone
     };
-    return this.requestService.createPutRequest(environment.usineApi + `users/${user.id}`, userToUpdate);
+    return this.requestService.createPutRequest(`${environment.usineApi}users/${user.id}`, userToUpdate);
   }
 
   addUserToGroup(user: User) {
@@ -121,10 +122,10 @@ export class UsersService {
         };
         groupAffectationIri.population.push(this.getIri(user));
         await this.requestService.createPatchRequest(
-          environment.usineApi + 'groupe_affectations/' + group.id + '/addUsers',
+          `${environment.usineApi}groupe_affectations/$${group.id}/addUsers`,
           { population: groupAffectationIri.population }
         )
-          .then((responseGroup) => {
+          .subscribe((responseGroup) => {
             user.groupeAffectations = responseGroup;
           });
       }
@@ -133,12 +134,12 @@ export class UsersService {
 
   }
 
-  getUsersByService(serviceId: string) {
-    return this.requestService.createGetRequest(environment.usineApi + `services/${serviceId}`);
+  getUsersByService(serviceId: string): Observable<User[]> {
+    return this.requestService.createGetRequest(`${environment.usineApi}services/${serviceId}`);
   }
 
   deleteUser(userId: number) {
-    return this.requestService.createDeleteRequest(environment.usineApi + `users/${userId}`);
+    return this.requestService.createDeleteRequest(`${environment.usineApi}users/${userId}`);
   }
 
 }

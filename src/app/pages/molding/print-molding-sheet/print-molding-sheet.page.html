@@ -22,7 +22,7 @@
             <div class="flex-vertical">
                 <ion-text>ID Moulage : {{molding.id}}</ion-text>
                 <ion-text>Outillage :
-                    <span *ngIf="molding.outillage">{{molding.outillage?.sapToolNumber}} - {{molding.outillage?.designation}}</span>
+                    <span *ngIf="molding.outillage">{{molding.outillage.sapToolNumber}} - {{molding.outillage.designation}}</span>
                     <span *ngIf="!molding.outillage">Pas d'outillage lié !</span>
                 </ion-text>
                 <ion-text>Date traçabilité : {{molding.moldingDay | date:'dd/MM/yyyy'}}</ion-text>
@@ -32,7 +32,7 @@
                 </ion-text>
             </div>
         </div>
-        <div *ngIf="molding" class="ion-margin">
+        <div class="ion-margin">
             <ion-title color=danger>Récapitulatif</ion-title>
             <div class="important">A draper avant le : {{molding.aDraperAv | date:'dd/MM/yyyy à HH:mm'}}</div>
             <div class="important">A polymériser avant le : {{molding.aCuireAv | date:'dd/MM/yyyy à HH:mm'}}</div>

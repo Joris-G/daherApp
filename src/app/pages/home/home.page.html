@@ -1,7 +1,7 @@
 <app-shared-user-header [pageTitle]="page.pageTitle"></app-shared-user-header>
 <ion-content [fullscreen]="false" color=medium>
     <!-- <app-menu [page]="page"></app-menu> -->
-    <ion-card class="menu-item-card" [button]="(menuItem.type === 'button')" *ngFor="let menuItem of page.menuItems" [routerLink]="(menuItem.type ==='button') ? menuItem.path : ''">
+    <ion-card class="menu-item-card" [button]="(menuItem.type === 'button')" *ngFor="let menuItem of page.menuItems" routerDirection="root" [routerLink]="(menuItem.type ==='button') ? menuItem.path : ''">
         <ion-card-header>
             <ion-card-title>
                 <ion-icon *ngIf="menuItem.options?.qualityOnly" name="shield-half-outline"></ion-icon>

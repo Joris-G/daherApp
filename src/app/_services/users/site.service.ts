@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Usine } from 'src/app/_interfaces/usine';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
 
@@ -10,7 +12,7 @@ export class SiteService {
     private requestService: RequestService
   ) { }
 
-  getSites() {
-    return this.requestService.createGetRequest(environment.usineApi + 'usines');
+  getSites(): Observable<Usine[]> {
+    return this.requestService.createGetRequest(`${environment.usineApi}usines`);
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Service } from 'src/app/_interface/service';
+import { Observable } from 'rxjs';
+import { Service } from 'src/app/_interfaces/service';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
 
@@ -10,8 +11,8 @@ export class SericesService {
 
   constructor(private requestService: RequestService) { }
 
-  getServices() {
-    return this.requestService.createGetRequest(environment.usineApi + 'services');
+  getServices(): Observable<Service[]> {
+    return this.requestService.createGetRequest(`${environment.usineApi}services`);
 
   }
 

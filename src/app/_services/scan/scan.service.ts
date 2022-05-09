@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Core } from 'src/app/_interface/core';
-import { Kit } from 'src/app/_interface/kit';
-import { Tool } from 'src/app/_interface/tool';
-import { CoreService } from '../core/core.service';
-import { AlertService } from '../divers/alert.service';
-import { LoadingService } from '../divers/loading.service';
-import { KitService } from '../kits/kit.service';
-import { ToolService } from '../tools/tool.service';
+import { from, Observable, of } from 'rxjs';
+import { Core } from 'src/app/_interfaces/molding/core';
+import { Kit } from 'src/app/_interfaces/molding/kit';
+import { Tool } from 'src/app/_interfaces/tooling/tool';
+import { CoreService } from 'src/app/_services/molding/core/core.service';
+import { KitService } from 'src/app/_services/molding/kits/kit.service';
+import { ToolService } from 'src/app/_services/tooling/tools/tool.service';
 
-
-@Injectable({
-  providedIn: 'root'
-})
+const REGEXKIT = new RegExp('^([0-9]){8}-[0-9]$');
+const REGEXSAPTOOLNUMBER = new RegExp('^OT([0-9]){6}$');
+const REGEXNIDAHEXCEL = new RegExp('^]C201');
+@Injectable()
 export class ScanService {
 
   public scanState: boolean;
@@ -21,50 +20,64 @@ export class ScanService {
     private coreService: CoreService) {
   }
 
-  getScanInput(scanInputValue: string) {
-    console.log(scanInputValue);
 
-    return new Promise<Kit | Tool | Core>((resolve, reject) => {
-      // test de la valeur dans le scan. Identifier puis lancer la bonne fonction
-      const regexKit = new RegExp('^([0-9]){8}-[0-9]$');
-      const regexSapToolNumber = new RegExp('^OT([0-9]){6}$');
-      const regexNidaHexcel = new RegExp('^]C201');
-      if (scanInputValue.match(regexKit)) {
-        console.log('kit');
-        this.kitService.getKitById(scanInputValue)
-          .then((kit: Kit) => {
-            resolve(kit);
-          },
-            () => {
-              reject();
-            }
-          );
-      } else if (scanInputValue.match(regexSapToolNumber)) {
-        console.log('tool');
-        if (scanInputValue.startsWith('OT0')) {
-          scanInputValue = scanInputValue.substr(3);
-        }
-        this.toolService.getToolByToolNumber(scanInputValue)
-          .then((tool: Tool) => {
-            resolve(tool);
-          },
-            () => {
-              reject();
-            })
-          .catch(() => {
-            console.error('catch get molding Tool ');
-          });
+  /**
+   * Flux du traitement du scan
+   * Reste à faire : Développer la partie Core, densification, ...
+   *
+   * @param scanInputValue
+   * @return retourne un objet Kit ou Tool
+   * @memberof ScanService
+   */
+  getScanInput(scanInputValue: string): Observable<Kit | Tool | Core | undefined> {
+    const typeInput = this.getTypeInput(scanInputValue);
+    if (typeInput) {
+      let obs: Observable<Kit | Tool | Core | undefined>;
+      switch (typeInput) {
+        case 'kit':
+          obs = this.sendKit(scanInputValue);
+          break;
+        case 'core':
+          obs = this.sendCore(scanInputValue);
+          break;
+        case 'tool':
+          obs = this.sendTool(scanInputValue);
+          break;
 
-      } else if (scanInputValue.match(regexNidaHexcel)) {
-        this.coreService.getCoreByBatchNumber(scanInputValue)
-          .then((core: Core) => {
-            resolve(core);
-          });
-      } else {
-        reject();
+        default:
+          obs = of(undefined);
+          break;
       }
-    });
+      return obs;
+    }
   }
 
 
+
+  getTypeInput(inputValue: string): string {
+    if (inputValue.match(REGEXKIT)) {
+      return 'kit';
+    } else if (inputValue.match(REGEXSAPTOOLNUMBER)) {
+      return 'tool';
+    } else if (inputValue.match(REGEXNIDAHEXCEL)) {
+      return 'core';
+    }
+    return '';
+  }
+
+
+  private sendKit(kitInput: string): Observable<Kit> {
+    return this.kitService.getKitById(kitInput);
+  }
+
+  private sendTool(toolInput: string): Observable<Tool> {
+    if (toolInput.startsWith('OT0')) {
+      toolInput = toolInput.substr(3);
+    }
+    return this.toolService.getToolByToolNumber(toolInput);
+  }
+
+  private sendCore(coreInput: string): Observable<Core> {
+    return this.coreService.getCoreByBatchNumber(coreInput);
+  }
 }

@@ -27,50 +27,5 @@
             </ion-list>
         </ion-content>
     </ion-menu>
-    <!-- <ion-menu #menu side="start" type="push" contentId="molding-content">
-        <ion-header>
-            <ion-toolbar color="succes">
-                <ion-title>Menu moulage</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content>
-            <ion-list>
-                <ion-item-group>
-                    <ion-item-divider>
-                        <ion-label>Nouveau moulage</ion-label>
-                    </ion-item-divider>
-                    <ion-item [routerLink]="['create-molding']">
-                        <ion-label>Création outillage</ion-label>
-                    </ion-item>
-                    <ion-item>Modification</ion-item>
-                    <ion-item [routerLink]="['molding-list']">Mes moulages</ion-item>
-                </ion-item-group>
-                <ion-item-group>
-                    <ion-item-divider>
-                        <ion-label>Consulter</ion-label>
-                    </ion-item-divider>
-                    <ion-item [routerLink]="['molding-list']">
-                        <ion-label>Liste des moulages</ion-label>
-                    </ion-item>
-                    <ion-item routerLink="">Entretien B15 - Frekote</ion-item>
-                </ion-item-group>
-            </ion-list>
-        </ion-content>
-    </ion-menu> -->
-    <!-- <ion-card class="menu-item-card" [button]="(menuItem.type === 'button')" *ngFor="let menuItem of page.menuItems" [routerLink]="(menuItem.type ==='button') ? menuItem.path : null">
-        <ion-card-header>
-            <ion-card-title>
-                <ion-icon *ngIf="menuItem.options?.qualityOnly" name="shield-half-outline"></ion-icon>
-                {{menuItem.title}}
-            </ion-card-title>
-        </ion-card-header>
-        <ion-card-content *ngIf="menuItem.options?.input">
-            <ion-item shape=round>
-                <ion-label>Id Moulage</ion-label>
-                <ion-input #inputIdMolding type="text" placeholder="" (change)="idMoldingInputChange()"></ion-input>
-                <ion-note slot=helper>Entrer un numéro d'ID ou scanner le code barre de la feuille de moulage</ion-note>
-            </ion-item>
-        </ion-card-content>
-    </ion-card> -->
     <ion-router-outlet id="molding-content"></ion-router-outlet>
 </ion-content>

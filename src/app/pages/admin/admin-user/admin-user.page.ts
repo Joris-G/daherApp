@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/_interface/user';
+import { User } from 'src/app/_interfaces/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { UsersService } from 'src/app/_services/users/users.service';
@@ -35,7 +35,7 @@ export class AdminUserPage implements OnInit {
 
   ngOnInit() {
     this.userService.getUsers()
-      .then((users: User[]) => {
+      .subscribe((users: User[]) => {
         this.users = users;
         this.weeklyLabels = this.createWeeklyLabel();
         this.weeklyUsers = this.createWeeklyUserData();
@@ -125,10 +125,9 @@ export class AdminUserPage implements OnInit {
   deleteUser(user: User) {
     this.loadingService.startLoading('Suppression de l\'utilisateur');
     this.userService.deleteUser(user.id)
-      .then(() => {
+      .subscribe(() => {
         this.loadingService.stopLoading();
-      })
-      .catch((err) => {
+      }, (err) => {
         this.alertService.simpleAlert(
           'Erreur',
           'Suppression d\'un utilisateur',

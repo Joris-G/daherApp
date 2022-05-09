@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/_services/users/auth.guard';
+import { CreateMoldingPage } from '../../pages/molding/create-molding/create-molding.page';
 import { MoldingPage } from './molding.page';
+import { PrintMoldingSheetPage } from './print-molding-sheet/print-molding-sheet.page';
 
 const routes: Routes = [
   {
@@ -10,23 +12,29 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: 'print-molding-sheet/:id',
+        canActivate: [AuthGuard],
+        component: PrintMoldingSheetPage
+      },
+      {
         path: 'print-molding-sheet',
         canActivate: [AuthGuard],
-        loadChildren: () => import('../../pages/molding/print-molding-sheet/print-molding-sheet.module')
-          .then(m => m.PrintMoldingSheetPageModule)
+        component: PrintMoldingSheetPage
       },
       {
         path: 'create-molding',
         canActivate: [AuthGuard],
-        loadChildren: () => import('../../pages/molding/create-molding/create-molding.module')
-          .then(m => m.CreateMoldingPageModule)
+        component: CreateMoldingPage,
       },
       {
         path: 'create-molding/:id',
         canActivate: [AuthGuard],
-        loadChildren: () => import('../../pages/molding/create-molding/create-molding.module')
-          .then(m => m.CreateMoldingPageModule),
+        component: CreateMoldingPage,
       },
+      {
+        path: '**',
+        redirectTo: ''
+      }
     ]
   },
 ];

@@ -1,27 +1,30 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, IonInput, LoadingController, NavController, ToastController } from '@ionic/angular';
-import { Molding } from 'src/app/_interface/molding';
+import { AlertController, NavController } from '@ionic/angular';
+import { Core } from 'src/app/_interfaces/molding/core';
+import { Kit } from 'src/app/_interfaces/molding/kit';
+import { Molding } from 'src/app/_interfaces/molding/molding';
+import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
-import { KitService } from 'src/app/_services/kits/kit.service';
-import { MoldingService } from 'src/app/_services/moldings/molding.service';
+import { KitService } from 'src/app/_services/molding/kits/kit.service';
+import { MoldingService } from 'src/app/_services/molding/moldings/molding.service';
 import { ScanService } from 'src/app/_services/scan/scan.service';
 import { AuthService } from 'src/app/_services/users/auth.service';
+import { RoleGuard } from 'src/app/_services/users/role.guard';
 
 @Component({
   selector: 'app-create-molding',
   templateUrl: './create-molding.page.html',
   styleUrls: ['./create-molding.page.scss'],
 })
-export class CreateMoldingPage implements OnInit, AfterViewInit {
-  @ViewChild('scanInput') scanInput: IonInput;
-  @ViewChild('scanButton') scanButton: IonInput;
+
+export class CreateMoldingPage implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('kitPanel') kitPanel: MatExpansionPanel;
   public expanded = false;
-  public scanButtonText: string;
+  public isAdmin = false;
   public molding: Molding;
 
   constructor(
@@ -32,37 +35,62 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
     public router: Router,
     public navCtrl: NavController,
     private loadingService: LoadingService,
-    private loadingController: LoadingController,
     private activatedRoute: ActivatedRoute,
-    private toastController: ToastController,
     public authService: AuthService,
     private alertService: AlertService,
+    private roleGuard: RoleGuard,
   ) { }
 
-  async loadMoldingData(moldingId: string) {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Patienter pendant le chargement du moulage',
-    });
-    this.moldingService.getMoldingById(moldingId)
-      .then((molding: Molding) => {
-        this.molding = molding;
-        this.moldingService.updateDates(this.molding);
-        this.molding.updatedAt = new Date();
-        console.log(this.molding);
-        loading.dismiss();
-      });
+
+  /**
+   * A la réception d'un objet on détermine de quel objet l'input est question puis on traite.
+   *
+   * @param  inputValue C'est l'objet retourné par le composant scan input
+   * @return
+   * @memberof CreateMoldingPage
+   */
+  onInput(inputValue: Tool | Kit | Core | undefined) {
+    if (Kit.isKit(inputValue)) {
+      this.onKitInput(inputValue as Kit);
+      return;
+    }
+    if (Tool.isTool(inputValue)) {
+      this.onToolInput(inputValue as Tool);
+      return;
+    }
+    if (Core.isCore(inputValue)) {
+      this.onCoreInput(inputValue as Core);
+      return;
+    }
+
   }
 
-  ngAfterViewInit(): void {
-    this.scanButtonText = 'SCAN INACTIF';
-    this.scanButton.color = 'danger';
-    this.scanService.scanState = false;
-    console.log('after view init', this.scanButton);
+
+  ionViewWillEnter() {
+    this.molding =
+    {
+      id: null,
+      cores: [],
+      kits: [],
+      moldingDay: new Date(),
+      outillage: null,
+      createdBy: null
+    };
+  }
+
+  ionViewWillLeave() {
+    this.molding =
+    {
+      id: null,
+      cores: [],
+      kits: [],
+      moldingDay: new Date(),
+      outillage: null,
+      createdBy: null
+    };
   }
 
   ngOnInit() {
-    console.log('init');
     this.molding =
     {
       id: null,
@@ -74,128 +102,22 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
     };
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
-      // this.pageTitle = 'Modification moulage';
       this.loadMoldingData(id);
-    } else {
-      // this.pageTitle = 'Nouveau moulage';
     }
-  }
 
-  associateToolClick() {
-    this.associateToolAlertPrompt();
-  }
-
-  associateCoreClick() {
-    this.alertService.simpleAlert(
-      'Message d\'information',
-      'Fonction inactive',
-      'La fonction permettra de lier un nida au moulage'
-    );
+    this.isAdmin = this.roleGuard.isRole(['ROLE_ADMIN']);
   }
 
 
-  async associateToolAlertPrompt() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Associer l\'outillage de moulage',
-      inputs: [
-        {
-          name: 'toolNumber',
-          type: 'text',
-          placeholder: 'Scannez l\'outillage',
-          tabindex: 1,
-          id: 'toolNumberInput',
-        }
-      ],
-      buttons: [
-        {
-          text: 'Annuler',
-          role: 'cancel',
-          cssClass: 'ion-color-secondary',
-          handler: (data) => {
-            console.log('Confirm Cancel', data);
-          }
-        }, {
-          text: 'Valider',
-          cssClass: ['ion-color-primary', 'button', 'button-solid'],
-          handler: (data) => {
-            // this.setLinkedTool(data.toolNumber);
-          }
-        }
-      ]
-    });
-
-    await alert.present().then(() => {
-      const toolNumberInput = document.getElementById('toolNumberInput');
-      if (toolNumberInput) {
-        toolNumberInput.focus();
-      }
-    });
-  }
-
-
-  switchScanState() {
-    this.scanService.scanState = !this.scanService.scanState;
-    if (this.scanService.scanState) {
-      this.scanInput.setFocus();
-    }
-  }
-
-  inputOnBlur() {
-    this.scanButton.color = 'danger';
-    this.scanButtonText = 'SCAN INACTIF';
-    this.scanService.scanState = false;
-  }
-  inputOnFocus() {
-    this.scanButton.color = 'success';
-    this.scanButtonText = 'SCAN ACTIF';
-    this.scanService.scanState = true;
-  }
-
-  onInputChange(inputValue: string) {
-    this.loadingService.startLoading('Patienter pendant le chargement du kit');
-    this.scanService.getScanInput(inputValue)
-      .then((data: any) => {
-        console.log(data);
-        if (Object.getOwnPropertyNames(data).includes('idMM')) {
-          if (!this.kitService.kitIsInKits(data, this.molding.kits)) {
-            this.molding.kits.unshift(data);
-            this.moldingService.updateDates(this.molding);
-            // this.presentToast('Kit ajouté !');
-          } else {
-            this.presentToast('Le kit a déjà été scanné');
-            console.log('kit en doublon');
-          }
-        } else if (Object.getOwnPropertyNames(data).includes('sapToolNumber')) {
-          this.molding.outillage = data;
-          this.presentToast('Outillage associé !');
-        } else if (Object.getOwnPropertyNames(data).includes('idCore')) {
-          this.presentToast('Nida Ajouté !');
-          this.molding.cores.unshift(data);
-        }
-      })
-      .catch(() => {
-        console.error('Catch get scan input');
-      })
-      .finally(() => {
-        this.loadingService.stopLoading()
-          .then(() => {
-            setTimeout(() => {
-              this.switchScanState();
-              this.scanInput.value = '';
-            }, 1000);
-          });
-      });
-  }
-
-  removeKit(index: number) {
-    try {
-      this.molding.kits.splice(index, 1);
-      console.log(`Kit removed ${index}`);
-      this.moldingService.updateDates(this.molding);
-    } catch (error) {
-      console.error(error);
-    }
+  /**
+   * Supprime un kit de la liste de kit. Cette fonction n'a pas d'incidence tant que le moualge n'est pas sauvegardé
+   *
+   * @param index Index du kit dans la liste des kits
+   * @memberof CreateMoldingPage
+   */
+  removeKitClick(index: number) {
+    this.molding.kits.splice(index, 1);
+    this.moldingService.updateDates(this.molding);
   }
 
 
@@ -205,13 +127,24 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
         this.saveMolding()
           .then(() => {
             // On demande si on veut imprimer ou non
-            console.log('Kit sauvegardé. Voulez-vous imprimer ?');
-            this.presentAlertConfirm();
+            this.alertService.presentAlertConfirm(
+              'Enregistrement effectué',
+              'Voulez-vous imprimer la fiche ?')
+              .then(() => { this.printMolding(); });
           },
             () => {
-              this.saveMoldingErrorAlert();
+              this.alertService.simpleAlert(
+                'Erreur de sauvegarde',
+                'Le moulage n\'a pas été sauvegardé',
+                'Veuillez ré-essayer'
+              );
             });
-      });
+      },
+        () => {
+          console.error('test');
+
+        }
+      );
   }
 
 
@@ -221,8 +154,8 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
       this.molding.createdBy = this.authService.authUser;
       if (this.molding.id === null) {
         this.moldingService.saveMolding(this.moldingService.toIri(this.molding))
-          .then((responseMolding: Molding) => {
-            this.molding = this.moldingService.moldingServerToMoldingObject(responseMolding);
+          .subscribe((responseMolding: Molding) => {
+            this.molding = responseMolding;
             resolve();
           },
             () => {
@@ -231,7 +164,7 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
             });
       } else {
         this.moldingService.updateMolding(this.moldingService.toIri(this.molding))
-          .then((responseMolding: Molding) => {
+          .subscribe((responseMolding: Molding) => {
             this.molding = responseMolding;
             console.log('tout est OK le moulage est mis à jour');
             resolve();
@@ -252,8 +185,8 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
     console.log('start check data');
     return new Promise<boolean>((resolve, reject) => {
       if (this.molding.outillage === null) {
-        console.log('le moulage n\'a pas d\'outillage associé. Voulez-vous continuer sans outillage ?');
-        this.presentAlertToolMissing()
+        const missingTollMsg = 'L\'outillage de moulage n\'est pas associé. Voulez-vous continuer sans outillage ?';
+        this.alertService.presentAlertConfirm('Alerte', missingTollMsg)
           .then((response) => {
             if (response) {
               console.log('onResolve : Je veux continuer sans outillage', response);
@@ -279,74 +212,6 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
 
   }
 
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Enregistrement effectué',
-      message: 'Voulez-vous imprimer la fiche ?',
-      buttons: [
-        {
-          text: 'Non',
-          role: 'cancel',
-          cssClass: ['ion-color-primary', 'ion-button'],
-          id: 'cancel-button',
-          handler: () => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Oui',
-          id: 'confirm-button',
-          cssClass: 'ion-color-danger',
-          handler: () => {
-            this.printMolding();
-          },
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  presentAlertToolMissing() {
-    return new Promise<boolean>((resolve, reject) => {
-      this.alertController.create({
-        cssClass: 'my-custom-class',
-        header: 'Alerte',
-        message: 'L\'outillage de moulage n\'est pas associé. voulez-vous continuer sans outillage ?',
-        buttons: [
-          {
-            text: 'Non',
-            role: 'cancel',
-            cssClass: ['ion-color-primary', 'ion-button'],
-            id: 'cancel-button',
-            handler: () => {
-              console.log('Response false');
-              resolve(false);
-            }
-          }, {
-            text: 'Oui',
-            id: 'confirm-button',
-            cssClass: 'ion-color-danger',
-            handler: () => {
-              console.log('Response true');
-              resolve(true);
-            },
-          }
-        ]
-      })
-        .then((alert) => {
-          alert.present();
-        });
-    });
-
-  }
-
-  printMolding() {
-    // this.moldingService.molding = this.molding;
-    console.log(this.molding);
-    this.router.navigate(['/printMolding', this.molding.id]);
-  }
-
   printMoldingClick() {
     this.saveMolding()
       .then(() => {
@@ -354,80 +219,166 @@ export class CreateMoldingPage implements OnInit, AfterViewInit {
       });
   }
 
-  async wrongKitInputAlert() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Erreur Kit',
-      subHeader: 'Kit non conforme',
-      message: 'Il semble y avoir un problème avec le kit scanné. Vérifier le kit et essayer de nouveau.',
-      buttons: ['OK']
-    });
 
-    await alert.present();
-
-    const { role } = await alert.onDidDismiss();
-    // console.log('onDidDismiss resolved with role', role);
+  /**
+   * Navigue vers l'impression des moulages
+   *
+   * @private
+   * @memberof CreateMoldingPage
+   */
+  private printMolding() {
+    this.router.navigate(['molding/print-molding-sheet', this.molding.id]);
   }
 
-  async saveMoldingErrorAlert() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Erreur de sauvegarde',
-      subHeader: 'Le moulage n\'a pas été sauvegardé',
-      message: 'Veuillez ré-essayer',
-      buttons: ['OK']
-    });
-
-    await alert.present();
-
-    const { role } = await alert.onDidDismiss();
-    // console.log('onDidDismiss resolved with role', role);
+  /**
+   * Charge le moulage dans la page
+   *
+   * @private
+   * @param moldingId
+   * @memberof CreateMoldingPage
+   */
+  private loadMoldingData(moldingId: string) {
+    this.loadingService.startLoading('Patienter pendant le chargement du moulage');
+    this.moldingService.getMoldingById(moldingId)
+      .subscribe((molding: Molding) => {
+        this.molding = molding;
+        this.moldingService.updateDates(this.molding);
+        this.molding.updatedAt = new Date();
+        this.loadingService.stopLoading();
+      },
+        (error) => {
+          console.error(error);
+        });
   }
 
-  async presentToast(message: string) {
-    const toast = await this.toastController.create({
-      message,
-      duration: 1000,
-      position: 'bottom',
-      translucent: true,
-      animated: true,
-    });
-    toast.present();
+  /**
+   * On  traite une entrée d'un kit
+   *
+   * @private
+   * @param kitObj
+   * @memberof CreateMoldingPage
+   */
+  private onKitInput(kitObj: Kit) {
+    if (!this.kitService.kitIsInKits(kitObj, this.molding.kits)) {
+      console.log('kit not in kits');
+      this.molding.kits.unshift(kitObj);
+      this.moldingService.updateDates(this.molding);
+      // this.presentToast('Kit ajouté !');
+    } else {
+      this.alertService.presentToast('Le kit a déjà été scanné');
+      console.error('kit en doublon');
+    }
   }
 
-  async kitAlertPrompt() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Scannez un kit',
-      inputs: [
-        {
-          name: 'kitnumber',
-          type: 'text',
-          placeholder: 'Scannez le kit',
-          tabindex: 1,
-          id: 'kitNumberInput',
-        }
-      ],
-      buttons: [
-        {
-          text: 'Annuler',
-          role: 'cancel',
-          cssClass: 'ion-color-secondary',
-          handler: (data) => {
-            console.log('Confirm Cancel', data);
-          }
-        }, {
-          text: 'Valider',
-          cssClass: ['ion-color-primary', 'button', 'button-solid'],
-          handler: (data) => {
-            // if (data.kitnumber !== '') { this.scanInputAction(data.kitnumber, 'test'); };
-          }
-        }
-      ]
-    });
 
-    await alert.present().then(() => {
-    });
+
+  /**
+   * On  traite une entrée d'un Tool
+   *
+   * @private
+   * @param toolObj
+   * @memberof CreateMoldingPage
+   */
+  private onToolInput(toolObj: Tool) {
+    this.molding.outillage = toolObj;
+    this.alertService.presentToast('Outillage associé !');
   }
 
+
+  /**
+   * On  traite une entrée d'un core
+   *
+   * @private
+   * @param coreObj
+   * @memberof CreateMoldingPage
+   */
+  private onCoreInput(coreObj: Core) {
+    this.alertService.presentToast('Nida Ajouté !');
+    //     this.molding.cores.unshift(coreObj);
+  }
+
+
+  // async kitAlertPrompt() {
+  //   const alert = await this.alertController.create({
+  //     cssClass: 'my-custom-class',
+  //     header: 'Scannez un kit',
+  //     inputs: [
+  //       {
+  //         name: 'kitnumber',
+  //         type: 'text',
+  //         placeholder: 'Scannez le kit',
+  //         tabindex: 1,
+  //         id: 'kitNumberInput',
+  //       }
+  //     ],
+  //     buttons: [
+  //       {
+  //         text: 'Annuler',
+  //         role: 'cancel',
+  //         cssClass: 'ion-color-secondary',
+  //         handler: (data) => {
+  //           console.log('Confirm Cancel', data);
+  //         }
+  //       }, {
+  //         text: 'Valider',
+  //         cssClass: ['ion-color-primary', 'button', 'button-solid'],
+  //         handler: (data) => {
+  //           // if (data.kitnumber !== '') { this.scanInputAction(data.kitnumber, 'test'); };
+  //         }
+  //       }
+  //     ]
+  //   });
+
+  //   await alert.present().then(() => {
+  //   });
+  // }
+  // associateToolClick() {
+  //   this.associateToolAlertPrompt();
+  // }
+
+  // associateCoreClick() {
+  //   this.alertService.simpleAlert(
+  //     'Message d\'information',
+  //     'Fonction inactive',
+  //     'La fonction permettra de lier un nida au moulage'
+  //   );
+  // }
+  // async associateToolAlertPrompt() {
+  //   const alert = await this.alertController.create({
+  //     cssClass: 'my-custom-class',
+  //     header: 'Associer l\'outillage de moulage',
+  //     inputs: [
+  //       {
+  //         name: 'toolNumber',
+  //         type: 'text',
+  //         placeholder: 'Scannez l\'outillage',
+  //         tabindex: 1,
+  //         id: 'toolNumberInput',
+  //       }
+  //     ],
+  //     buttons: [
+  //       {
+  //         text: 'Annuler',
+  //         role: 'cancel',
+  //         cssClass: 'ion-color-secondary',
+  //         handler: (data) => {
+  //           console.log('Confirm Cancel', data);
+  //         }
+  //       }, {
+  //         text: 'Valider',
+  //         cssClass: ['ion-color-primary', 'button', 'button-solid'],
+  //         handler: (data) => {
+  //           // this.setLinkedTool(data.toolNumber);
+  //         }
+  //       }
+  //     ]
+  //   });
+
+  //   await alert.present().then(() => {
+  //     const toolNumberInput = document.getElementById('toolNumberInput');
+  //     if (toolNumberInput) {
+  //       toolNumberInput.focus();
+  //     }
+  //   });
+  // }
 }

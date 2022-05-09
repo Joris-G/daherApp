@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInput, IonMenu, NavController } from '@ionic/angular';
 @Component({
@@ -6,10 +6,14 @@ import { IonInput, IonMenu, NavController } from '@ionic/angular';
   templateUrl: './molding.page.html',
   styleUrls: ['./molding.page.scss'],
 })
-export class MoldingPage implements OnInit, AfterViewChecked {
+export class MoldingPage {
   @ViewChild('inputIdMolding') inputIdMolding: IonInput;
   @ViewChild('menu') menu: IonMenu;
-  public page: any;
+  public page: any = {
+    pageTitle: 'MODULE MOULAGE',
+    menuTitle: 'Menu Moulage',
+    contentId: 'molding-content'
+  };
   constructor(
     public router: Router,
     public navCtrl: NavController,
@@ -19,25 +23,6 @@ export class MoldingPage implements OnInit, AfterViewChecked {
     this.menu.open();
   }
 
-  ngAfterViewChecked(): void {
-    // console.log('after view checked molding page');
-    this.page = {
-      pageTitle: 'MODULE MOULAGE',
-      menuTitle: 'Menu Moulage',
-      contentId: 'molding-content'
-    };
-  }
-
-  ngOnInit(): void {
-    console.log('INIT molding page');
-    this.page = {
-      pageTitle: 'MODULE MOULAGE',
-      menuTitle: 'Menu Moulage',
-      contentId: 'molding-content'
-    };
-  }
-
-
   idMoldingInputChange() {
     if (this.inputIdMolding.value !== '') {
       console.log(this.inputIdMolding.value);
@@ -46,7 +31,7 @@ export class MoldingPage implements OnInit, AfterViewChecked {
     }
   }
   navigate(url: string) {
-    this.navCtrl.navigateRoot(url);
+    this.navCtrl.navigateForward(url);
   }
 
 }

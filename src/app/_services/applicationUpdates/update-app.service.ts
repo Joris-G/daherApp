@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Update } from 'src/app/_interface/update';
+import { Update } from 'src/app/_interfaces/update';
 import { AlertService } from '../divers/alert.service';
-import { RequestService } from '../request.service';
 import { AuthService } from '../users/auth.service';
 
 @Injectable({
@@ -38,7 +37,7 @@ export class UpdateAppService {
    *Si la promise retourn true c'est que toutes les updates sont vues
    *Si la promise return false l'utilisateur reverra les update à sa prochaine connexion
    *
-   * @return {*}  {Promise<boolean>}
+   * @return
    * @memberof UpdateAppService
    */
   showUpdates(): Promise<boolean> {

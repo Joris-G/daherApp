@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { User } from '../_interface/user';
+import { User } from '../_interfaces/user';
 
 @Pipe({
   name: 'NotActive'

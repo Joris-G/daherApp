@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonMenu, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { AuthGuard } from 'src/app/_services/users/auth.guard';
 import { AuthService } from 'src/app/_services/users/auth.service';
 import { RoleGuard } from 'src/app/_services/users/role.guard';
 import { UsersService } from 'src/app/_services/users/users.service';
-import { User } from 'src/app/_interface/user';
-import { ToolRequestService } from 'src/app/_services/toolRequest/tool-request.service';
-import { ToolRequest } from 'src/app/_interface/tool-request';
+import { ToolRequestService } from 'src/app/_services/tooling/toolRequest/tool-request.service';
+import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
 @Component({
   selector: 'app-tool-request',
   templateUrl: './tool-request.page.html',
@@ -15,7 +13,7 @@ import { ToolRequest } from 'src/app/_interface/tool-request';
 })
 export class ToolRequestPage implements OnInit {
 
-  @ViewChild('menu') menu: IonMenu;
+  @ViewChild('menuTool') menu: IonMenu;
 
   public page: any = {
     pageTitle: 'Module Outillage',
@@ -57,24 +55,16 @@ export class ToolRequestPage implements OnInit {
 
   loadIndicators() {
     this.userService.getUsersByService('5')
-      .then((responseService: any) => {
+      .subscribe((responseService: any) => {
         this.newUsers = responseService.users.length;
       });
     this.toolRequestService.getToolRequests()
-      .then((toolRequests: ToolRequest[]) => {
+      .subscribe((toolRequests: ToolRequest[]) => {
         this.newRequests = toolRequests.filter(request => request.statut === 'NOUVELLE').length;
       });
   }
 
   navigate(url: string) {
-    this.navCtrl.navigateRoot(url)
-      .then(() => {
-
-      })
-      .catch((err) => {
-        console.error(err);
-
-      });
-    // this.router.navigateByUrl(url);
+    this.navCtrl.navigateRoot(url);
   }
 }

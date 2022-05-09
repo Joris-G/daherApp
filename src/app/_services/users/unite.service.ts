@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Division } from 'src/app/_interface/division';
+import { Observable } from 'rxjs';
+import { Division } from 'src/app/_interfaces/division';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
 
@@ -12,8 +13,8 @@ export class UniteService {
     private requestService: RequestService
   ) { }
 
-  getUnites() {
-    return this.requestService.createGetRequest(environment.usineApi + 'divisions');
+  getUnites(): Observable<Division[]> {
+    return this.requestService.createGetRequest(`${environment.usineApi}divisions`);
   }
 
   getIri(unite: Division | string): string {

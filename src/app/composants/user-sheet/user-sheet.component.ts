@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { User } from 'src/app/_interface/user';
+import { User } from 'src/app/_interfaces/user';
 
 @Component({
   selector: 'app-user-sheet',

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from 'src/app/_services/users/auth.guard';
 import { RoleGuard } from 'src/app/_services/users/role.guard';
+import { AdminMoldingPage } from './admin-molding/admin-molding.page';
+import { AdminUserPage } from './admin-user/admin-user.page';
 
 import { AdminPage } from './admin.page';
 
@@ -16,7 +17,7 @@ const routes: Routes = [
     children:
       [{
         path: 'admin-user',
-        loadChildren: () => import('./admin-user/admin-user.module').then(m => m.AdminUserPageModule),
+        component: AdminUserPage,
         canActivate: [RoleGuard],
         data: {
           expectedRole: ['ROLE_ADMIN']
@@ -28,7 +29,11 @@ const routes: Routes = [
         data: {
           expectedRole: ['ROLE_ADMIN']
         },
-        loadChildren: () => import('./admin-molding/admin-molding.module').then(m => m.AdminMoldingPageModule)
+        component: AdminMoldingPage,
+      },
+      {
+        path: '**',
+        redirectTo: ''
       }]
   },
 

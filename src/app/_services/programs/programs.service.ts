@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ProgrammeAvion } from 'src/app/_interface/programme-avion';
+import { Observable } from 'rxjs';
+import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
 
@@ -12,8 +13,8 @@ export class ProgramsService {
     private requestService: RequestService
   ) { }
 
-  getPrograms() {
-    return this.requestService.createGetRequest(environment.usineApi + 'programme_avions');
+  getPrograms(): Observable<ProgrammeAvion[]> {
+    return this.requestService.createGetRequest(`${environment.usineApi}programme_avions`);
   }
 
   getIri(programAvion: ProgrammeAvion | string): string {

@@ -1,8 +1,6 @@
-import { HttpClient, HttpEvent, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from 'src/app/_interface/user';
+import { User } from 'src/app/_interfaces/user';
 import { environment } from 'src/environments/environment';
-import user from 'src/assets/fakeDatas/user.json';
 import { RequestService } from '../request.service';
 
 @Injectable({
@@ -13,15 +11,17 @@ export class AuthService {
   public isAuth: boolean;
   public authUser: User;
   constructor(
-    private http: HttpClient,
-    private requestService: RequestService,
+    public requestService: RequestService,
   ) { }
 
   authenticate(userName: string, password: string) {
     return new Promise<boolean>((resolve, reject) => {
-      this.requestService.createPostRequest(environment.usineApi + 'login',
+      this.requestService.createPostRequest(`${environment.usineApi}login`,
         { matricule: userName, password })
-        .then((returnsData: any) => {
+        .subscribe((returnsData: any) => {
+          console.log(returnsData.user.apiToken);
+          localStorage.setItem('token', returnsData.user.apiToken);
+          this.requestService.apiToken = returnsData.user.apiToken;
           this.isAuth = true;
           this.authUser = returnsData.user;
           resolve(true);
@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   async logout() {
-    await this.requestService.createGetRequest(environment.usineApi + 'logout');
+    await this.requestService.createGetRequest(`${environment.usineApi}logout`);
     this.isAuth = false;
     this.authUser = null;
   }

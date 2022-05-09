@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn, Validators, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, ValidatorFn, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonSlides, LoadingController } from '@ionic/angular';
-import { User, UserIri } from 'src/app/_interface/user';
+import { IonSlides } from '@ionic/angular';
+import { User, UserIri } from 'src/app/_interfaces/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { RoleService } from 'src/app/_services/users/role.service';
@@ -147,7 +147,7 @@ export class RegisterPage implements OnInit {
       unite: `/api/divisions/${this.registerForm.controls.roleForm.value.unite}`,
     };
     this.userService.registerUser(userToRegister)
-      .then((user: User) => {
+      .subscribe((user: User) => {
         this.loadingService.stopLoading();
         if (user.roles.includes('ROLE_CE_MOULAGE') || user.roles.includes('ROLE_CE_OUTILLAGE')) {
           this.alertService.simpleAlert(

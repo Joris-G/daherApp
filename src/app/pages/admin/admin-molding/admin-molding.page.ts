@@ -1,8 +1,7 @@
 import { AfterViewChecked, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { IonSpinner } from '@ionic/angular';
-import { Molding } from 'src/app/_interface/molding';
-import { MoldingService } from 'src/app/_services/moldings/molding.service';
+import { Molding } from 'src/app/_interfaces/molding/molding';
+import { MoldingService } from 'src/app/_services/molding/moldings/molding.service';
 
 @Component({
   selector: 'app-admin-molding',
@@ -43,7 +42,7 @@ export class AdminMoldingPage implements OnInit, OnDestroy, AfterViewChecked {
   getMoldings() {
     this.moldingListLoading = true;
     this.moldingService.getMoldings()
-      .then((moldings: Molding[]) => {
+      .subscribe((moldings: Molding[]) => {
         this.moldings = moldings;
         this.moldingListLoading = false;
         this.moldings.forEach((molding: Molding) => {
