@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Update } from 'src/app/_interfaces/update';
 import { AlertService } from '../divers/alert.service';
 import { AuthService } from '../users/auth.service';
@@ -11,7 +12,7 @@ export class UpdateAppService {
   private tableUpdates = [
     {
       id: 1,
-      dateUpdate: new Date(2022, 3, 20),
+      dateUpdate: new Date(2022, 4, 9),
       description:
         'Pour associer un outillage à un moulage il suffit de scanner le numéro d\'OT dans l\'OF.' +
         'Vous devez le scanner comme un kit',
@@ -19,7 +20,7 @@ export class UpdateAppService {
     },
     {
       id: 2,
-      dateUpdate: new Date(2022, 3, 20),
+      dateUpdate: new Date(2022, 4, 9),
       description: 'Le module outillage est ouvert pour test',
       title: 'Module Outillage'
     },
@@ -40,36 +41,39 @@ export class UpdateAppService {
    * @return
    * @memberof UpdateAppService
    */
-  showUpdates(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.getUpdatesToShow()
-        .then((updates: Update[]) => {
-          if (updates) {
-            updates.forEach((update: Update) => {
-              this.alertService.simpleAlert('Info sur la mise à jours', update.title, update.description);
-            });
-          }
-        });
-    });
+  showUpdates() {
+    this.getUpdatesToShow()
+      .subscribe((updates: Update[]) => {
+        if (updates) {
+          updates.forEach((update: Update) => {
+            this.alertService.simpleAlert('Info sur la mise à jours', update.title, update.description);
+          });
+        }
+      });
   }
 
 
 
-  getUpdates(day1?: Date): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const updates = this.tableUpdates.filter(update => update.dateUpdate > new Date(day1));
-      if (updates.length > 0) {
-        resolve(updates);
-      } else {
-        resolve(null);
-      }
-
-    });
-    // return this.requestService.createGetRequest('');
+  private getUpdates(day1?: Date): Update[] | null {
+    const updates = this.tableUpdates.filter(update => update.dateUpdate >= new Date(day1));
+    if (updates.length > 0) {
+      return updates;
+    } else {
+      return null;
+    }
   }
 
-  private getUpdatesToShow(): Promise<Update[]> {
+
+
+  /**
+   * Quand la base des mises à jours sera faites enlever le of
+   *
+   * @private
+   * @return
+   * @memberof UpdateAppService
+   */
+  private getUpdatesToShow(): Observable<Update[]> {
     const lastConnection = this.authService.authUser.lastCon;
-    return this.getUpdates(lastConnection);
+    return of(this.getUpdates(lastConnection));
   }
 }

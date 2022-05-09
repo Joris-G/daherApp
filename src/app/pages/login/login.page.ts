@@ -1,18 +1,19 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, IonInput, LoadingController, NavController } from '@ionic/angular';
+import { IonInput, NavController } from '@ionic/angular';
 import { UpdateAppService } from 'src/app/_services/applicationUpdates/update-app.service';
 import { AuthService } from 'src/app/_services/users/auth.service';
 import { environment } from 'src/environments/environment';
 import { isDevMode } from '@angular/core';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
+import { AlertService } from 'src/app/_services/divers/alert.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit, AfterViewInit {
+export class LoginPage implements OnInit {
   @ViewChild('userName') userName: IonInput;
   @ViewChild('password') password: IonInput;
   public loginForm: FormGroup;
@@ -36,19 +37,19 @@ export class LoginPage implements OnInit, AfterViewInit {
   constructor(
     public authService: AuthService,
     private formBuilder: FormBuilder,
-    private alertController: AlertController,
     private loadingService: LoadingService,
     private updateService: UpdateAppService,
-    private navControler: NavController
+    private navControler: NavController,
+    private alertService: AlertService,
   ) { }
 
-  ngAfterViewInit(): void {
+  ionViewWillEnter(): void {
     if (isDevMode()) {
       this.loginForm.setValue({
         userName: environment.username,
         password: environment.password
       });
-      this.onSubmit();
+      // this.onSubmit();
     }
   }
 
@@ -75,47 +76,41 @@ export class LoginPage implements OnInit, AfterViewInit {
       this.loginForm.get('userName').value,
       this.loginForm.get('password').value || this.loginForm.get('userName').value)
       .subscribe(() => {
-        this.updateService.showUpdates();
-        this.reRouteOpts.forEach((routeOpt) => {
-          if (this.authService.authUser.roles.find(role => routeOpt.roles.find(roleOpt => roleOpt === role))) {
-            this.navControler.navigateForward(routeOpt.route);
-          } else {
-            this.navControler.navigateForward('home');
-          }
-        });
-        this.loginForm.reset();
-        this.loadingService.stopLoading();
+        this.afterLoginActions();
       },
-        () => {
-          this.loadingService.stopLoading();
-          this.presentAlertLoginError();
-
+        (error) => {
+          this.logginError(error);
         },
       );
   }
 
-  async presentAlertLoginError() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Erreur d\'authentification',
-      message: 'Le nom d\'utilisateur ou votre mot de passe n\'est pas correct',
-      buttons: [
-        {
-          text: 'Fermer',
-          role: 'cancel',
-          id: 'cancel-button',
-        }
-      ]
+  private afterLoginActions() {
+    this.loadingService.stopLoading()
+      .then(() => {
+        this.loginForm.reset();
+        this.reRouteUser();
+        this.updateService.showUpdates();
+      });
+
+  }
+
+  private reRouteUser() {
+    this.reRouteOpts.forEach((routeOpt) => {
+      if (this.authService.authUser.roles.find(role => routeOpt.roles.find(roleOpt => roleOpt === role))) {
+        this.navControler.navigateForward(routeOpt.route);
+      } else {
+        this.navControler.navigateForward('home');
+      }
     });
-    await alert.present();
-
   }
-
-  getSpecialRole(userRoles: any): string {
-    return userRoles[0];
+  private logginError(error: any) {
+    console.error(error);
+    this.alertService.simpleAlert(
+      'Erreur d\'authentification',
+      '',
+      'Le nom d\'utilisateur ou votre mot de passe n\'est pas correct',
+    );
+    this.loadingService.stopLoading();
   }
-
-
-
 
 }
