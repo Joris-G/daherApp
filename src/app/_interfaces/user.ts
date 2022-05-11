@@ -16,7 +16,7 @@ export interface User {
   password?: string;
   programmeAvion?: ProgrammeAvion[];
   createdAt?: Date;
-  telephone?: string[];
+  tel?: string[];
   unite?: string;
   site?: string;
   groupeAffectations?: GroupeAffectation[];
@@ -39,7 +39,7 @@ export interface UserIri {
   password?: string;
   programmeAvion?: string[];
   createdAt?: Date;
-  telephone?: string[];
+  tel?: string[];
   unite?: string;
   site?: string;
   groupeAffectations?: string[];

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonInput, NavController } from '@ionic/angular';
 import { UpdateAppService } from 'src/app/_services/applicationUpdates/update-app.service';
@@ -94,6 +94,13 @@ export class LoginPage implements OnInit {
 
   }
 
+
+  /**
+   * Trouve la route privilégiée de l'utilisateur. Puis navigue vers la route
+   *
+   * @private
+   * @memberof LoginPage
+   */
   private reRouteUser() {
     this.reRouteOpts.forEach((routeOpt) => {
       if (this.authService.authUser.roles.find(role => routeOpt.roles.find(roleOpt => roleOpt === role))) {

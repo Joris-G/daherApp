@@ -30,10 +30,10 @@ export class RegisterPage implements OnInit {
     speed: 400,
     allowTouchMove: false,
   };
-  public services$: any;
-  public roles$: any;
-  public unites$: any;
-  public sites$: any;
+  public services$: any = [];
+  public roles$: any = [];
+  public unites$: any = [];
+  public sites$: any = [];
 
   constructor(
     private router: Router,
@@ -134,6 +134,7 @@ export class RegisterPage implements OnInit {
       programmeAvion: [`/api/programme_avions/${1}`],
       site: `/api/usines/${this.registerForm.controls.roleForm.value.site}`,
       unite: `/api/divisions/${this.registerForm.controls.roleForm.value.unite}`,
+      tel: [`${this.registerForm.controls.identityForm.value.telephone}`]
     };
     this.userService.registerUser(userToRegister)
       .subscribe((user: User) => {

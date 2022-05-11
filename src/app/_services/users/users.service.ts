@@ -108,7 +108,7 @@ export class UsersService {
       programmeAvion: user.programmeAvion.map((progAvion: ProgrammeAvion) => this.programService.getIri(progAvion)),
       unite: this.uniteService.getIri(user.unite),
       site: this.usineService.getIri(user.site),
-      telephone: user.telephone
+      tel: user.tel
     };
     return this.requestService.createPutRequest(`${environment.usineApi}users/${user.id}`, userToUpdate);
   }
