@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, ValidatorFn, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
+import { Observable } from 'rxjs';
 import { User, UserIri } from 'src/app/_interfaces/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
@@ -30,10 +31,10 @@ export class RegisterPage implements OnInit {
     speed: 400,
     allowTouchMove: false,
   };
-  public services$: any = [];
-  public roles$: any = [];
-  public unites$: any = [];
-  public sites$: any = [];
+  public services$: any = new Observable<any[]>();
+  public roles$: any = new Observable<any[]>();
+  public unites$: any = new Observable<any[]>();
+  public sites$: any = new Observable<any[]>();
 
   constructor(
     private router: Router,
