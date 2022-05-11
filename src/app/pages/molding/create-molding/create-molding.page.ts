@@ -173,7 +173,7 @@ export class CreateMoldingPage implements OnInit {
               this.alertService.simpleAlert(
                 'Message d\'erreur',
                 'Sauvegarde échouée !',
-                'La sauvegarde ne sest pas correctement effectuée. Veuillez recommencer');
+                'La sauvegarde ne s\'est pas correctement effectuée. Veuillez recommencer');
               console.error('tout n\'est pas Ok la mise à jour du moulage a échouée');
               reject();
             });
@@ -216,7 +216,10 @@ export class CreateMoldingPage implements OnInit {
     this.saveMolding()
       .then(() => {
         this.printMolding();
-      });
+      },
+        () => {
+          this.printMolding();
+        });
   }
 
 

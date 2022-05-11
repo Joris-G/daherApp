@@ -1,44 +1,46 @@
 <ion-header [translucent]="true">
-    <ion-toolbar color=primary>
-        <ion-buttons slot="start">
-            <ion-menu-button autoHide=false color="light"></ion-menu-button>
-            <ion-img class="ion-hide-sm-down logo" src="assets/images/logoDaherFondBleu.png" (click)="navigateHome()">
-            </ion-img>
-        </ion-buttons>
-        <ion-title class="ion-text-uppercase ion-text-center">{{pageTitle}}</ion-title>
-        <ion-chip id="button-profil" color=light slot=end class=ion-margin-end outline (click)="isPopoverOpen=!isPopoverOpen">
-            <ion-icon name="person-circle-outline"></ion-icon>
-            <ion-label color=light>{{user?.username}}</ion-label>
-        </ion-chip>
-        <ion-popover slot=end [isOpen]="isPopoverOpen" trigger="button-profil" alignment="end" side="bottom">
-            <ng-template>
-                <ion-content>
-                    <ion-list>
-                        <ion-item button id="trigger-button" (click)="isUserOpen = true; isPopoverOpen = !isPopoverOpen; log(isUserOpen)">
-                            <ion-label>Profil</ion-label>
-                        </ion-item>
-                        <ion-item>
-                            <ion-label>Préférences</ion-label>
-                            <ion-icon name="settings-outline" slot="start"></ion-icon>
-                        </ion-item>
-                        <ion-item button routerLink="/admin">
-                            <ion-label>Administration</ion-label>
-                            <ion-icon name="construct-outline" slot="start"></ion-icon>
-                        </ion-item>
-                        <ion-item color="danger" class="ion-hide-sm-up" (click)="logoutClick()">
-                            <ion-icon slot="start" name="log-out-outline"></ion-icon>
-                            <ion-label>Déconnexion</ion-label>
-                        </ion-item>
-                    </ion-list>
-                </ion-content>
-            </ng-template>
-        </ion-popover>
-        <ion-button class="ion-hide-sm-down" slot=end color="danger" (click)="logoutClick()">
-            <ion-icon slot="end" name="log-out-outline"></ion-icon>
-            <ion-label class="ion-hide-md-down">Déconnexion</ion-label>
-        </ion-button>
-    </ion-toolbar>
+  <ion-toolbar color=primary>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide=false color="light"></ion-menu-button>
+      <ion-img class="ion-hide-sm-down logo" src="assets/images/logoDaherFondBleu.png" (click)="navigateHome()">
+      </ion-img>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase ion-text-center">{{pageTitle}}</ion-title>
+    <ion-chip id="button-profil" color=light slot=end class=ion-margin-end outline
+      (click)="isPopoverOpen=!isPopoverOpen">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label color=light>{{user?.username}}</ion-label>
+    </ion-chip>
+    <ion-popover slot=end [isOpen]="isPopoverOpen" trigger="button-profil" alignment="end" side="bottom">
+      <ng-template>
+        <ion-content>
+          <ion-list>
+            <ion-item button id="trigger-button"
+              (click)="isUserOpen = true; isPopoverOpen = !isPopoverOpen; log(isUserOpen)">
+              <ion-label>Profil</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Préférences</ion-label>
+              <ion-icon name="settings-outline" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item button routerLink="/admin">
+              <ion-label>Administration</ion-label>
+              <ion-icon name="construct-outline" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="danger" class="ion-hide-sm-up" (click)="logoutClick()">
+              <ion-icon slot="start" name="log-out-outline"></ion-icon>
+              <ion-label>Déconnexion</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ng-template>
+    </ion-popover>
+    <ion-button class="ion-hide-sm-down" slot=end color="danger" (click)="logoutClick()">
+      <ion-icon slot="end" name="log-out-outline"></ion-icon>
+      <ion-label class="ion-hide-md-down">Déconnexion</ion-label>
+    </ion-button>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-    <app-user-sheet [user]="user" [userState]="isUserOpen" (stateChangeEv)="isUserOpen = $event"></app-user-sheet>
+  <app-user-sheet [user]="user" [userState]="isUserOpen" (stateChangeEv)="isUserOpen = $event"></app-user-sheet>
 </ion-content>

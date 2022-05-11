@@ -25,7 +25,6 @@ export class MoldingPage {
 
   idMoldingInputChange() {
     if (this.inputIdMolding.value !== '') {
-      console.log(this.inputIdMolding.value);
       this.menu.close();
       this.router.navigate([`molding/create-molding`, this.inputIdMolding.value]);
     }

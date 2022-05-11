@@ -1,3 +1,9 @@
 .logo {
-    width: 100px;
+  width: 100px;
+}
+
+@media print {
+  :host {
+    display: none;
+  }
 }
