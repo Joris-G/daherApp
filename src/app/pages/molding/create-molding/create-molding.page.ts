@@ -218,7 +218,8 @@ export class CreateMoldingPage implements OnInit {
         this.printMolding();
       },
         () => {
-          this.printMolding();
+          console.error('test error molding save');
+
         });
   }
 
@@ -251,6 +252,13 @@ export class CreateMoldingPage implements OnInit {
       },
         (error) => {
           console.error(error);
+          this.loadingService.stopLoading();
+          this.alertService.simpleAlert(
+            'Erreur moulage',
+            `Erreur de récupération du moulage`,
+            `Le moulage ${moldingId} n'existe pas`,
+          );
+          this.navCtrl.navigateBack('home');
         });
   }
 
@@ -283,7 +291,7 @@ export class CreateMoldingPage implements OnInit {
    * @memberof CreateMoldingPage
    */
   private onToolInput(toolObj: Tool) {
-    this.molding.outillage = toolObj;
+    this.molding.OT = toolObj;
     this.alertService.presentToast('Outillage associé !');
   }
 

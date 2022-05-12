@@ -6,75 +6,81 @@
     </ion-toolbar>
 </ion-header> -->
 <ion-header>
-    <ion-toolbar>
-        <ion-menu-button color="light"></ion-menu-button>
-        <ion-img class="logo" src="assets/images/logoDaher.png" (click)="navigateHome()">
-        </ion-img>
-        <ion-title class="ion-align-center">Feuille de traçabilité moulage</ion-title>
-        <svg slot=end id="barcode"></svg>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-menu-button color="light"></ion-menu-button>
+    <ion-img class="logo" src="assets/images/logoDaher.png" (click)="navigateHome()">
+    </ion-img>
+    <ion-title class="ion-align-center">Feuille de traçabilité moulage</ion-title>
+    <svg slot=end id="barcode"></svg>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="molding" [fullscreen]="true">
-    <div class="content-top">
-        <div class="ion-margin">
-            <ion-title color=primary>Informations</ion-title>
-            <div class="flex-vertical">
-                <ion-text>ID Moulage : {{molding.id}}</ion-text>
-                <ion-text>Outillage :
-                    <span *ngIf="molding.outillage">{{molding.outillage.sapToolNumber}} - {{molding.outillage.designation}}</span>
-                    <span *ngIf="!molding.outillage">Pas d'outillage lié !</span>
-                </ion-text>
-                <ion-text>Date traçabilité : {{molding.moldingDay | date:'dd/MM/yyyy'}}</ion-text>
-                <ion-text>Fait par : {{molding.createdBy.username}} ({{molding.createdBy.matricule}})</ion-text>
-                <ion-text *ngIf="molding.updatedAt">
-                    Date de mise à jour : {{molding.updatedAt | date: 'dd/MM/yyyy'}}
-                </ion-text>
-            </div>
-        </div>
-        <div class="ion-margin">
-            <ion-title color=danger>Récapitulatif</ion-title>
-            <div class="important">A draper avant le : {{molding.aDraperAv | date:'dd/MM/yyyy à HH:mm'}}</div>
-            <div class="important">A polymériser avant le : {{molding.aCuireAv | date:'dd/MM/yyyy à HH:mm'}}</div>
-        </div>
+  <div class="content-top">
+    <div class="ion-margin">
+      <ion-title color=primary>Informations</ion-title>
+      <div class="flex-vertical">
+        <ion-text>ID Moulage : {{molding.id}}</ion-text>
+        <ion-text>Outillage :
+          <span *ngIf="molding.outillage">{{molding.OT.sapToolNumber}} - {{molding.OT.designation}}</span>
+          <span *ngIf="!molding.outillage">Pas d'outillage lié !</span>
+        </ion-text>
+        <ion-text>Date traçabilité : {{molding.moldingDay | date:'dd/MM/yyyy'}}</ion-text>
+        <ion-text>Fait par : {{molding.createdBy.username}} ({{molding.createdBy.matricule}})</ion-text>
+        <ion-text *ngIf="molding.updatedAt">
+          Date de mise à jour : {{molding.updatedAt | date: 'dd/MM/yyyy'}}
+        </ion-text>
+      </div>
     </div>
-    <mat-divider></mat-divider>
-    <div class="kit-list ion-margin">
-        <ion-title color=primary>Liste des kits ({{molding.kits.length}})</ion-title>
+    <div class="ion-margin">
+      <ion-title color=danger>Récapitulatif</ion-title>
+      <div class="important">A draper avant le : {{molding.aDraperAv | date:'dd/MM/yyyy à HH:mm'}}</div>
+      <div class="important">A polymériser avant le : {{molding.aCuireAv | date:'dd/MM/yyyy à HH:mm'}}</div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="kit-list ion-margin">
+    <ion-title color=primary>Liste des kits ({{molding.kits.length}})</ion-title>
 
-        <table mat-table [dataSource]="dataSource">
-            <!-- ID MM Column -->
-            <ng-container matColumnDef="idMM">
-                <th mat-header-cell *matHeaderCellDef> ID MM </th>
-                <td mat-cell *matCellDef="let element"> {{element.idMM}} </td>
-            </ng-container>
-            <!-- REFERENCE SAP Column -->
-            <ng-container matColumnDef="referenceSAP">
-                <th mat-header-cell *matHeaderCellDef> Référence SAP </th>
-                <td mat-cell *matCellDef="let element"> {{element.referenceSAP}} </td>
-            </ng-container>
-            <!-- DESIGNATION Column -->
-            <ng-container matColumnDef="designationSAP">
-                <th mat-header-cell *matHeaderCellDef> Désignation </th>
-                <td mat-cell *matCellDef="let element"> {{element.designationSAP}} </td>
-            </ng-container>
-            <!-- PEREMPTION -18°C Column -->
-            <ng-container matColumnDef="peremptionMoins18">
-                <th mat-header-cell *matHeaderCellDef> Date de péremption à -18°C </th>
-                <td mat-cell *matCellDef="let element" [style.color]="kitService.isPerim(element.peremptionMoins18, molding.moldingDay) ? 'var(--ion-color-danger)' : 'inherit'"> {{element.peremptionMoins18 | date:'dd/MM/yyyy à HH:mm'}} </td>
-            </ng-container>
-            <!-- A DRAPER AVANT Column -->
-            <ng-container matColumnDef="aDrapAv">
-                <th mat-header-cell *matHeaderCellDef> A draper avant </th>
-                <td mat-cell *matCellDef="let element" [style.color]="kitService.isPerim(element.aDrapAv, molding.moldingDay) ? 'var(--ion-color-danger)' : 'inherit'"> {{element.aDrapAv | date:'dd/MM/yyyy à HH:mm'}} </td>
-            </ng-container>
-            <!-- A POLYMERISER AVANT Column -->
-            <ng-container matColumnDef="aCuirAv">
-                <th mat-header-cell *matHeaderCellDef> A polym avant </th>
-                <td mat-cell *matCellDef="let element" [style.color]="kitService.isPerim(element.aCuirAv, molding.moldingDay) ? 'var(--ion-color-danger)' : 'inherit'"> {{element.aCuirAv | date:'dd/MM/yyyy à HH:mm'}} </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let kit; columns: displayedColumns;"></tr>
-        </table>
-    </div>
+    <table mat-table [dataSource]="dataSource">
+      <!-- ID MM Column -->
+      <ng-container matColumnDef="idMM">
+        <th mat-header-cell *matHeaderCellDef> ID MM </th>
+        <td mat-cell *matCellDef="let element"> {{element.idMM}} </td>
+      </ng-container>
+      <!-- REFERENCE SAP Column -->
+      <ng-container matColumnDef="referenceSAP">
+        <th mat-header-cell *matHeaderCellDef> Référence SAP </th>
+        <td mat-cell *matCellDef="let element"> {{element.referenceSAP}} </td>
+      </ng-container>
+      <!-- DESIGNATION Column -->
+      <ng-container matColumnDef="designationSAP">
+        <th mat-header-cell *matHeaderCellDef> Désignation </th>
+        <td mat-cell *matCellDef="let element"> {{element.designationSAP}} </td>
+      </ng-container>
+      <!-- PEREMPTION -18°C Column -->
+      <ng-container matColumnDef="peremptionMoins18">
+        <th mat-header-cell *matHeaderCellDef> Date de péremption à -18°C </th>
+        <td mat-cell *matCellDef="let element"
+          [style.color]="kitService.isPerim(element.peremptionMoins18, molding.moldingDay) ? 'var(--ion-color-danger)' : 'inherit'">
+          {{element.peremptionMoins18 | date:'dd/MM/yyyy à HH:mm'}} </td>
+      </ng-container>
+      <!-- A DRAPER AVANT Column -->
+      <ng-container matColumnDef="aDrapAv">
+        <th mat-header-cell *matHeaderCellDef> A draper avant </th>
+        <td mat-cell *matCellDef="let element"
+          [style.color]="kitService.isPerim(element.aDrapAv, molding.moldingDay) ? 'var(--ion-color-danger)' : 'inherit'">
+          {{element.aDrapAv | date:'dd/MM/yyyy à HH:mm'}} </td>
+      </ng-container>
+      <!-- A POLYMERISER AVANT Column -->
+      <ng-container matColumnDef="aCuirAv">
+        <th mat-header-cell *matHeaderCellDef> A polym avant </th>
+        <td mat-cell *matCellDef="let element"
+          [style.color]="kitService.isPerim(element.aCuirAv, molding.moldingDay) ? 'var(--ion-color-danger)' : 'inherit'">
+          {{element.aCuirAv | date:'dd/MM/yyyy à HH:mm'}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let kit; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 </ion-content>

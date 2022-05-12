@@ -123,17 +123,29 @@ export class ScanMoldingInputComponent implements AfterViewInit {
    * @memberof ScanMoldingInputComponent
    */
   onInputChange(inputValue: string): void {
-    this.loadingService.startLoading('Patienter pendant le chargement du kit');
+    this.loadingService.startLoading('Patienter pendant le chargement');
     const getScanInput$ = this.scanService.getScanInput(inputValue);
     if (getScanInput$) {
-      getScanInput$.subscribe(input => {
-        this.evOnInput.emit(input);
-        this.scanInput.value = '';
-        this.loadingService.stopLoading();
-        setTimeout(() => {
-          this.scanInput.setFocus();
-        }, 300);
-      });
+      getScanInput$.subscribe(
+        (input) => {
+          this.evOnInput.emit(input);
+          this.scanInput.value = '';
+          this.loadingService.stopLoading();
+          setTimeout(() => {
+            this.scanInput.setFocus();
+          }, 300);
+        },
+        (error) => {
+          console.error(error);
+          this.scanInput.value = '';
+          this.loadingService.stopLoading();
+          this.alertService.simpleAlert(
+            'Erreur lors du scan',
+            'L\'élement scanné ne correspond à rien de connu',
+            'Ré-essayer ou contacter j.grangier 06.87.89.24.25'
+          );
+        }
+      );
     } else {
       this.loadingService.stopLoading();
       this.alertService.simpleAlert(

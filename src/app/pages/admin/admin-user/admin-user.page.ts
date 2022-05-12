@@ -95,19 +95,8 @@ export class AdminUserPage implements OnInit {
     let startDate = new Date(2022, 0, 1);
     const totaluserPerWeekData: number[] = [];
     while (startDate < endDate) {
-
       const intermediateEndDate = new Date(startDate);
       intermediateEndDate.setDate(intermediateEndDate.getDate() + 7);
-      this.users.forEach((user) => {
-        // console.log(
-        //   this.datePipe.transform(user.createdAt, 'dd/MM'),
-        //   this.datePipe.transform(startDate, 'dd/MM'),
-        //   this.datePipe.transform(intermediateEndDate, 'dd/MM')
-        // );
-        // console.log((user.createdAt >= startDate), (user.createdAt <= intermediateEndDate));
-      });
-      console.log(startDate, intermediateEndDate);
-      console.log(this.users);
       const filterUsers = this.users
         .filter((user) => (
           new Date(user.createdAt) > startDate

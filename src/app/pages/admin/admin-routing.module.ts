@@ -10,10 +10,6 @@ const routes: Routes = [
   {
     path: '',
     component: AdminPage,
-    canActivate: [RoleGuard],
-    data: {
-      expectedRole: ['ROLE_ADMIN']
-    },
     children:
       [{
         path: 'admin-user',
@@ -36,6 +32,10 @@ const routes: Routes = [
         redirectTo: ''
       }]
   },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 
 ];
 

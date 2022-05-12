@@ -161,7 +161,7 @@ export class MoldingService {
       kits: molding.kits.map((kit: Kit) => this.kitService.getIri(kit)),
       moldingDay: molding.moldingDay,
       createdBy: this.userService.getIri(molding.createdBy),
-      outillage: (molding.outillage) ? this.toolService.getIri(molding.outillage) : null,
+      outillage: (molding.OT) ? this.toolService.getIri(molding.OT) : null,
       aCuireAv: molding.aCuireAv,
       aDraperAv: molding.aDraperAv,
       matPolym: this.kitService.getIri(molding.matPolym),

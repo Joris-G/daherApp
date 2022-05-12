@@ -2,7 +2,7 @@
   <ion-toolbar color=primary>
     <ion-buttons slot="start">
       <ion-menu-button autoHide=false color="light"></ion-menu-button>
-      <ion-img class="ion-hide-sm-down logo" src="assets/images/logoDaherFondBleu.png" (click)="navigateHome()">
+      <ion-img class="ion-hide-sm-down logo" src="assets/images/logoDaherFondBleu.png" (click)="navigate('home')">
       </ion-img>
     </ion-buttons>
     <ion-title class="ion-text-uppercase ion-text-center">{{pageTitle}}</ion-title>
@@ -23,7 +23,7 @@
               <ion-label>Préférences</ion-label>
               <ion-icon name="settings-outline" slot="start"></ion-icon>
             </ion-item>
-            <ion-item button routerLink="/admin">
+            <ion-item button (click)="navigate('admin')">
               <ion-label>Administration</ion-label>
               <ion-icon name="construct-outline" slot="start"></ion-icon>
             </ion-item>
@@ -31,16 +31,21 @@
               <ion-icon slot="start" name="log-out-outline"></ion-icon>
               <ion-label>Déconnexion</ion-label>
             </ion-item>
+            <ion-item>
+              <ion-label>
+                Version : {{version}}
+              </ion-label>
+            </ion-item>
           </ion-list>
         </ion-content>
       </ng-template>
     </ion-popover>
-    <ion-button class="ion-hide-sm-down" slot=end color="danger" (click)="logoutClick()">
+    <ion-button class="ion-hide-sm-down margin" slot=end color="danger" (click)="logoutClick()">
       <ion-icon slot="end" name="log-out-outline"></ion-icon>
       <ion-label class="ion-hide-md-down">Déconnexion</ion-label>
     </ion-button>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<!-- <ion-content>
   <app-user-sheet [user]="user" [userState]="isUserOpen" (stateChangeEv)="isUserOpen = $event"></app-user-sheet>
-</ion-content>
+</ion-content> -->

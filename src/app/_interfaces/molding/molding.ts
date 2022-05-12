@@ -19,7 +19,7 @@ export interface Molding {
   kits: Kit[];
   moldingDay: Date;
   createdBy: User;
-  outillage: Tool;
+  outillage: string;
   aCuireAv?: Date;
   aDraperAv?: Date;
   matPolym?: Kit;
@@ -27,6 +27,8 @@ export interface Molding {
   woList?: any[];
   updatedAt?: Date;
   status?: boolean;
+  userCreat?: User;
+  OT?: Tool;
 }
 
 export interface MoldingIri {
