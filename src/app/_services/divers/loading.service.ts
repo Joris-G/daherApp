@@ -28,7 +28,7 @@ export class LoadingService {
    * @param message C'est le message que verra l'utilisateur pendant le chargement
    * @memberof LoadingService
    */
-  startLoading(message: string) {
+  startLoading(message: string = 'Chargement ...') {
     this.loadingController.create({
       spinner: 'lines',
       cssClass: 'my-custom-class',

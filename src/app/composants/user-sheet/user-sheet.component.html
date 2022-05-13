@@ -8,7 +8,6 @@
         </ion-icon>
       </ion-toolbar>
     </ion-header>
-
     <ion-content>
       <ion-item>
         <ion-label>Nom</ion-label>
@@ -34,7 +33,17 @@
 
     <ion-footer>
       <ion-toolbar>
-        <ion-title>Footer</ion-title>
+        <ion-buttons slot="start">
+          <!-- <ion-button size=small (click)="confirmUser(user, true)">
+                                              <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+                                            </ion-button>
+                                            <ion-button size=small color=danger (click)="confirmUser(user, false)">
+                                              <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+                                            </ion-button> -->
+          <ion-button size=small (click)="deleteUserClick()">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-footer>
   </ng-template>

@@ -10,7 +10,8 @@ import { MoldingService } from 'src/app/_services/molding/moldings/molding.servi
 })
 export class AdminMoldingPage implements OnInit, OnDestroy, AfterViewChecked {
   // public properties
-  public moldingListLoading: boolean;
+  public moldingListLoading = false;
+  public moldingsError = false;
   public moldings: Molding[];
   public dataSource: MatTableDataSource<Molding>;
   public displayedMoldingColumns: string[] = ['status', 'id', 'moldingDay', 'createdBy', 'outillage', 'commands'];
@@ -42,14 +43,21 @@ export class AdminMoldingPage implements OnInit, OnDestroy, AfterViewChecked {
   getMoldings() {
     this.moldingListLoading = true;
     this.moldingService.getMoldings()
-      .subscribe((moldings: Molding[]) => {
-        this.moldings = moldings;
-        this.moldingListLoading = false;
-        this.moldings.forEach((molding: Molding) => {
-          molding.status = false;
+      .subscribe(
+        (moldings: Molding[]) => {
+          this.moldings = moldings;
+          this.moldingListLoading = false;
+          this.moldingsError = false;
+          this.moldings.forEach((molding: Molding) => {
+            molding.status = false;
+          });
+          this.dataSource = new MatTableDataSource(this.moldings);
+        },
+        (error) => {
+          console.error(error);
+          this.moldingListLoading = false;
+          this.moldingsError = true;
         });
-        this.dataSource = new MatTableDataSource(this.moldings);
-      });
   }
 
   applyFilter(event: Event) {

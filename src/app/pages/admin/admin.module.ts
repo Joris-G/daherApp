@@ -12,6 +12,7 @@ import { AdminUserPage } from './admin-user/admin-user.page';
 import { KitService } from 'src/app/_services/molding/kits/kit.service';
 import { MoldingService } from 'src/app/_services/molding/moldings/molding.service';
 import { UsersService } from 'src/app/_services/users/users.service';
+import { ComponentModule } from 'src/app/composants/component/component.module';
 
 @NgModule({
   imports: [
@@ -20,14 +21,16 @@ import { UsersService } from 'src/app/_services/users/users.service';
     IonicModule,
     MatTableModule,
     AdminPageRoutingModule,
-    SharedAdminHeaderModule
+    SharedAdminHeaderModule,
+    ComponentModule,
   ],
   declarations: [AdminPage, NotActivePipe, AdminUserPage, AdminMoldingPage],
   providers: [
     DatePipe,
     KitService,
     MoldingService,
-    UsersService
+    UsersService,
+
   ]
 })
 export class AdminPageModule { }

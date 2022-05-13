@@ -1,10 +1,8 @@
 import { DatePipe } from '@angular/common';
 import {
-  AfterContentChecked, AfterContentInit, AfterViewChecked,
-  AfterViewInit, Component, ElementRef, OnInit, ViewChild
+  Component, ElementRef, OnInit, ViewChild
 } from '@angular/core';
-import Chart, { ChartConfiguration } from 'chart.js/auto';
-import { Observable } from 'rxjs';
+import Chart from 'chart.js/auto';
 import { User } from 'src/app/_interfaces/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
@@ -19,7 +17,9 @@ export class AdminUserPage implements OnInit {
   @ViewChild('newUsers') private newUsersCanvas: ElementRef;
 
   public users: User[];
-  displayedUserInactiveColumns: string[] = ['id', 'username', 'nom', 'prenom', 'matricule', 'mail', 'roles', 'commands'];
+  public selectedUser: User;
+  public isUserSelected = false;
+  displayedUserInactiveColumns: string[] = ['id', 'nom', 'prenom', 'matricule', 'roles', 'commands'];
   private lineChart: any;
   private weeklyLabels: string[] = [];
   private weeklyUsers: number[] = [];
@@ -33,7 +33,14 @@ export class AdminUserPage implements OnInit {
 
   }
 
+  onSelectUser(test: any) {
+    console.log(test);
+    this.isUserSelected = true;
+    this.selectedUser = test;
+  }
+
   ngOnInit() {
+    this.loadingService.startLoading();
     this.userService.getUsers()
       .subscribe((users: User[]) => {
         this.users = users;
@@ -71,13 +78,11 @@ export class AdminUserPage implements OnInit {
           }
         });
         this.lineChart.update();
-
+        this.loadingService.stopLoading();
       });
   }
 
-  confirmUser(element: User, state: boolean) {
-    console.log(element, state);
-  }
+
 
   createWeeklyLabel(): string[] {
     const endDate = new Date();
@@ -111,18 +116,12 @@ export class AdminUserPage implements OnInit {
     return totaluserPerWeekData;
   }
 
-  deleteUser(user: User) {
-    this.loadingService.startLoading('Suppression de l\'utilisateur');
-    this.userService.deleteUser(user.id)
-      .subscribe(() => {
-        this.loadingService.stopLoading();
-      }, (err) => {
-        this.alertService.simpleAlert(
-          'Erreur',
-          'Suppression d\'un utilisateur',
-          'Une erreur est survenue pendant la suppression de l\'utilisateur. ' + err.message
-        );
-        this.loadingService.stopLoading();
-      });
+
+  statusChanged(event: any, user: User) {
+    this.confirmUser(user, event.detail.value);
+  }
+
+  private confirmUser(element: User, state: boolean) {
+    console.log(element, state);
   }
 }
