@@ -50,12 +50,12 @@
               <!-- commands Column -->
               <ng-container matColumnDef="commands">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell *matCellDef="let user">
+                <td mat-cell *matCellDef="let user" class="commands">
                   <ion-button size=small (click)="confirmUser(user, true)">
-                    Valider
+                    <ion-icon slot="start" name="checkmark-outline"></ion-icon>
                   </ion-button>
                   <ion-button size=small color=danger (click)="confirmUser(user, false)">
-                    Rejeter
+                    <ion-icon slot="start" name="close-outline"></ion-icon>
                   </ion-button>
                   <ion-button size=small (click)="deleteUser(user)">
                     <ion-icon slot="icon-only" name="trash-outline"></ion-icon>

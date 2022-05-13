@@ -5,3 +5,9 @@ mat-cell {
 table {
   width: 100%;
 }
+
+.commands {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

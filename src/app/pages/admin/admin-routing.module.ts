@@ -27,14 +27,11 @@ const routes: Routes = [
         },
         component: AdminMoldingPage,
       },
-      {
-        path: '**',
-        redirectTo: ''
-      }]
+      ]
   },
   {
     path: '**',
-    redirectTo: ''
+    redirectTo: 'home'
   }
 
 ];

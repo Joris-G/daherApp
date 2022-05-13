@@ -33,7 +33,10 @@ export class RoleGuard implements CanActivate {
 
   isRole(expectedRoles: string[]): boolean {
     // console.log(expectedRoles);
-    return expectedRoles.some((expectedRole => this.auth.authUser.roles.includes(expectedRole)));
+    if (this.auth.authUser) {
+      return expectedRoles.some((expectedRole => this.auth.authUser.roles.includes(expectedRole)));
+    }
+    return false;
   }
 
 }

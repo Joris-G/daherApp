@@ -9,7 +9,6 @@ const routes: Routes = [
   {
     path: '',
     component: MoldingPage,
-    canActivate: [AuthGuard],
     children: [
       {
         path: 'print-molding-sheet/:id',
@@ -33,7 +32,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: ''
+        redirectTo: 'home'
       }
     ]
   },
