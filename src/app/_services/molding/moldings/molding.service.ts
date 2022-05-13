@@ -67,7 +67,7 @@ export class MoldingService {
    */
   updateMolding(moldingObject: MoldingIri): Observable<Molding> {
     const url = `${environment.moldingApi}moldings/${moldingObject.id}`;
-    return this.requestService.createPutRequest(url, moldingObject);
+    return this.requestService.createPatchRequest(url, moldingObject);
   }
 
 

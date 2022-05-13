@@ -60,8 +60,8 @@ export class RequestService {
   createPatchRequest(url: string, body: any): Observable<any> {
     return this.http.patch<HttpResponse<any>>(`${environment.apiServer}${url}`, body, {
       headers: (this.apiToken !== '') ? new HttpHeaders()
-        .append('Content-Type', 'application/json')
         .append('Accept', 'application/json')
+        .append('Content-Type', 'application/merge-patch+json')
         .append('x-auth-token', localStorage.getItem('token')) : this.patchHttpHeaders
     });
   }
