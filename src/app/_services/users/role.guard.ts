@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { AlertService } from '../divers/alert.service';
 import { AuthService } from './auth.service';
 
@@ -10,6 +10,7 @@ export class RoleGuard implements CanActivate {
   constructor(
     private auth: AuthService,
     private alerteService: AlertService,
+    private router: Router,
 
   ) {
   }
@@ -25,6 +26,7 @@ export class RoleGuard implements CanActivate {
         'Autorisation',
         'Vous n\'avez pas accès à cette page'
       );
+      this.router.navigate(['home']);
     }
     return (
       this.auth.isAuth && isRole && this.auth.authUser.isActive

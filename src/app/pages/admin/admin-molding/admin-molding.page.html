@@ -46,13 +46,13 @@
                 <!-- Créé par Column -->
                 <ng-container matColumnDef="createdBy">
                   <th mat-header-cell *matHeaderCellDef> Créé par </th>
-                  <td mat-cell *matCellDef="let element"> {{element.createdBy.username}} </td>
+                  <td mat-cell *matCellDef="let element"> {{element.userCreat.username}} </td>
                 </ng-container>
                 <!-- Outillage Column -->
                 <ng-container matColumnDef="outillage">
                   <th mat-header-cell *matHeaderCellDef> Outillage </th>
-                  <td mat-cell *matCellDef="let element"> {{element.outillage.sapToolNumber}} -
-                    {{element.outillage.designation}}</td>
+                  <td mat-cell *matCellDef="let element"> {{element.OT.sapToolNumber}} -
+                    {{element.OT.designation}}</td>
                 </ng-container>
 
                 <!-- commands Column -->
