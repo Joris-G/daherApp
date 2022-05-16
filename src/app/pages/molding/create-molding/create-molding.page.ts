@@ -130,7 +130,7 @@ export class CreateMoldingPage implements OnInit {
             this.alertService.presentAlertConfirm(
               'Enregistrement effectué',
               'Voulez-vous imprimer la fiche ?')
-              .then(() => { this.printMolding(); });
+              .then((response) => { if (response) { this.printMolding(); } });
           },
             () => {
               this.alertService.simpleAlert(

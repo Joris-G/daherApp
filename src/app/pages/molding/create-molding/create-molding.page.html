@@ -94,8 +94,8 @@
   <ion-toolbar class="ion-space-between">
     <ion-item lines="none">
       <ion-label>Outillage :
-        <ion-label *ngIf="molding.outillage"> OT0{{molding.OT.sapToolNumber}} {{molding.OT.designation}}
-        </ion-label>
+        <ion-label *ngIf="molding.OT"> OT0{{molding.OT.sapToolNumber}} {{molding.OT.designation}}</ion-label>
+        <ion-label *ngIf="!molding.OT">Pas d'outillage associé</ion-label>
       </ion-label>
       <ion-label class="strong">A draper avant le : {{molding?.aDraperAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
       <ion-label class="strong">A cuire avant le : {{molding?.aCuireAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
