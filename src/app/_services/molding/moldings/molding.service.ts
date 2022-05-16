@@ -51,8 +51,8 @@ export class MoldingService {
     return this.requestService.createPostRequest(`${environment.moldingApi}moldings`, moldingObject)
       .pipe(
         map((response: any) => {
-          const responseMolding: Molding = this.moldingServerToMoldingObject(response);
-          return responseMolding;
+          response.kits = this.moldingServerToMoldingObject(response);
+          return response;
         })
       );
   }
@@ -80,17 +80,21 @@ export class MoldingService {
   updateDates(molding: Molding): void {
     molding.aCuireAv = null;
     molding.aDraperAv = null;
-    molding.kits.forEach((kit: Kit) => {
-      if (kit.aCuirAv < molding.aCuireAv || !molding.aCuireAv) {
-        molding.aCuireAv = kit.aCuirAv;
-        molding.matPolym = kit;
-      }
+    molding.matPolym = molding.kits.reduce((defPolym, kit) => (defPolym.aCuirAv > kit.aCuirAv) ? kit : defPolym);
+    molding.aCuireAv = molding.matPolym.aCuirAv;
+    molding.matDrap = molding.kits.reduce((defDrap, kit) => (defDrap.aDrapAv > kit.aDrapAv) ? kit : defDrap);
+    molding.aDraperAv = molding.matDrap.aDrapAv;
+    // molding.kits.forEach((kit: Kit) => {
+    //   if (kit.aCuirAv < molding.aCuireAv || !molding.aCuireAv) {
+    //     molding.aCuireAv = kit.aCuirAv;
+    //     molding.matPolym = kit;
+    //   }
 
-      if (kit.aDrapAv < molding.aDraperAv || !molding.aDraperAv) {
-        molding.aDraperAv = kit.aDrapAv;
-        molding.matDrap = kit;
-      }
-    });
+    //   if (kit.aDrapAv < molding.aDraperAv || !molding.aDraperAv) {
+    //     molding.aDraperAv = kit.aDrapAv;
+    //     molding.matDrap = kit;
+    //   }
+    // });
   }
 
 
@@ -102,11 +106,9 @@ export class MoldingService {
    * @return objet moulage converti depuis la donnée reçue du serveur
    * @memberof MoldingService
    */
-  moldingServerToMoldingObject(moldingToTransform: any): Molding {
-    const newListKit: Kit[] = [];
-    moldingToTransform.kits.forEach(kitApi => {
-      let newKit: Kit = null;
-      newKit = {
+  moldingServerToMoldingObject(moldingToTransform: any): Kit[] {
+    return moldingToTransform.kits.map((kitApi: any) => {
+      const kit: Kit = {
         aCuirAv: kitApi.ACuirAv,
         aDrapAv: kitApi.ADrapAv,
         createdAt: kitApi.createdAt,
@@ -121,10 +123,8 @@ export class MoldingService {
         tackLife: kitApi.TackLife,
         timeOut: kitApi.TimeOut
       };
-      newListKit.push(newKit);
+      return kit;
     });
-    moldingToTransform.kits = newListKit;
-    return moldingToTransform;
   }
 
   /**
@@ -138,8 +138,8 @@ export class MoldingService {
     return this.requestService.createGetRequest(`${environment.moldingApi}moldings/${id}`)
       .pipe(
         map((returnsData: any) => {
-          const loadingMolding: Molding = this.moldingServerToMoldingObject(returnsData);
-          return loadingMolding;
+          returnsData.kits = this.moldingServerToMoldingObject(returnsData);
+          return returnsData;
         })
       );
   }

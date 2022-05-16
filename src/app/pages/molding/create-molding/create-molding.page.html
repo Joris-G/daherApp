@@ -6,68 +6,69 @@
   <ion-button size=small slot=end (click)="(expanded = !expanded) ? accordion.openAll() : accordion.closeAll()">
     {{(!expanded) ? 'Développer tout' : 'Replier tout'}}</ion-button>
 </ion-toolbar>
+<ion-content>
+  <mat-accordion multi>
+    <mat-expansion-panel #kitPanel *ngIf="molding.kits?.length >0" [expanded]="(molding.kits.length >0)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <ion-title color=primary> Liste des Kits</ion-title>
+        </mat-panel-title>
 
-<mat-accordion class="example-headers-align" multi>
-  <mat-expansion-panel #kitPanel *ngIf="molding.kits?.length >0" [expanded]="(molding.kits.length >0)">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <ion-title color=primary> Liste des Kits</ion-title>
-      </mat-panel-title>
+        <mat-panel-description>
 
-      <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+      <ion-list *ngIf="molding?.kits" class="ion-no-padding">
+        <ion-list-header lines="inset" color=light>
+          <ion-label class="ion-hide-md-down">Référence Sap</ion-label>
+          <ion-label class="ion-hide-md-down">ID-MM</ion-label>
+          <ion-label>Désignation</ion-label>
+          <ion-label>Péremption à -18°C</ion-label>
+          <ion-label>A draper avant le</ion-label>
+          <ion-label>A cuire avant le</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let kit of molding.kits; let indexKit = index">
+          <ion-label class="ion-hide-md-down">{{kit.referenceSAP}}
+            <ion-text class="strong" *ngIf="kit === molding.matDrap">(Drap)</ion-text>
+            <ion-text class="strong" *ngIf="kit === molding.matPolym">(Pol)</ion-text>
+          </ion-label>
+          <ion-label class="ion-hide-md-down">{{kit.idMM}}</ion-label>
+          <ion-label>{{kit.designationSAP}}</ion-label>
+          <ion-label [color]="kitService.isPerim(kit.peremptionMoins18, molding.moldingDay) ? 'danger' : 'dark'">
+            {{kit.peremptionMoins18 | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
+          <ion-label [color]="kitService.isPerim(kit.aDrapAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aDrapAv |
+            date: "dd/MM/yyyy à HH:mm"}}</ion-label>
+          <ion-label [color]="kitService.isPerim(kit.aCuirAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aCuirAv |
+            date: "dd/MM/yyyy à HH:mm"}}</ion-label>
+          <ion-button class="ion-hide-md-down" (click)="removeKitClick(indexKit)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </mat-expansion-panel>
 
-    <ion-list *ngIf="molding?.kits" class="ion-no-padding">
-      <ion-list-header lines="inset" color=light>
-        <ion-label class="ion-hide-md-down">Référence Sap</ion-label>
-        <ion-label class="ion-hide-md-down">ID-MM</ion-label>
-        <ion-label>Désignation</ion-label>
-        <ion-label>Péremption à -18°C</ion-label>
-        <ion-label>A draper avant le</ion-label>
-        <ion-label>A cuire avant le</ion-label>
-      </ion-list-header>
-      <ion-item *ngFor="let kit of molding.kits; let indexKit = index">
-        <ion-label class="ion-hide-md-down">{{kit.referenceSAP}}
-          <ion-text class="strong" *ngIf="kit === molding.matDrap">(Drap)</ion-text>
-          <ion-text class="strong" *ngIf="kit === molding.matPolym">(Pol)</ion-text>
-        </ion-label>
-        <ion-label class="ion-hide-md-down">{{kit.idMM}}</ion-label>
-        <ion-label>{{kit.designationSAP}}</ion-label>
-        <ion-label [color]="kitService.isPerim(kit.peremptionMoins18, molding.moldingDay) ? 'danger' : 'dark'">
-          {{kit.peremptionMoins18 | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-        <ion-label [color]="kitService.isPerim(kit.aDrapAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aDrapAv |
-          date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-        <ion-label [color]="kitService.isPerim(kit.aCuirAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aCuirAv |
-          date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-        <ion-button class="ion-hide-md-down" (click)="removeKitClick(indexKit)">
-          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel *ngIf="molding.cores?.length >0">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Liste des nidas
-      </mat-panel-title>
-      <mat-panel-description>
-        Liste des nidas
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <ion-list>
-      <ion-item>
-        <ion-label *ngFor="let core of molding.cores">
-          {{core.batchNumber.batch2}}
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </mat-expansion-panel>
-</mat-accordion>
+    <mat-expansion-panel *ngIf="molding.cores?.length >0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Liste des nidas
+        </mat-panel-title>
+        <mat-panel-description>
+          Liste des nidas
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ion-list>
+        <ion-item>
+          <ion-label *ngFor="let core of molding.cores">
+            {{core.batchNumber.batch2}}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </mat-expansion-panel>
+  </mat-accordion>
 
 
+</ion-content>
 <!-- footer -->
 <!-- <ion-tab-bar slot="bottom" class="ion-hide-md-up">
     <ion-tab-button tab="schedule">
