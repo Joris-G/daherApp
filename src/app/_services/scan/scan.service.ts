@@ -68,7 +68,7 @@ export class ScanService {
   }
 
 
-  private sendKit(kitInput: string): Observable<Kit> {
+  private sendKit(kitInput: string): Observable<Kit | undefined> {
     return this.kitService.getKitById(kitInput);
   }
 

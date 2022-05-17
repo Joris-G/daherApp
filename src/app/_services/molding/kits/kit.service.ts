@@ -29,24 +29,27 @@ export class KitService {
           }),
         map((returnsData) => {
           console.log(returnsData);
-          const kit: Kit = {
-            id: returnsData[0].id,
-            aCuirAv: returnsData[0].ACuirAv,
-            aDrapAv: returnsData[0].ADrapAv,
-            createdAt: returnsData[0].createdAt,
-            decongel: returnsData[0].Decongel,
-            designationSAP: returnsData[0].DesignationSAP,
-            idMM: returnsData[0].idMM,
-            lotSAP: returnsData[0].LotSAP,
-            peremptionMoins18: returnsData[0].PeremptionMoins18,
-            referenceSAP: returnsData[0].ReferenceSAP,
-            status: returnsData[0].status,
-            tackLife: returnsData[0].TackLife,
-            timeOut: returnsData[0].TimeOut,
-            updateAt: returnsData[0].updateAt
-          };
-          console.log(kit);
-          return kit;
+          if (returnsData.length > 0) {
+            const kit: Kit = {
+              id: returnsData[0].id,
+              aCuirAv: returnsData[0].ACuirAv,
+              aDrapAv: returnsData[0].ADrapAv,
+              createdAt: returnsData[0].createdAt,
+              decongel: returnsData[0].Decongel,
+              designationSAP: returnsData[0].DesignationSAP,
+              idMM: returnsData[0].idMM,
+              lotSAP: returnsData[0].LotSAP,
+              peremptionMoins18: returnsData[0].PeremptionMoins18,
+              referenceSAP: returnsData[0].ReferenceSAP,
+              status: returnsData[0].status,
+              tackLife: returnsData[0].TackLife,
+              timeOut: returnsData[0].TimeOut,
+              updateAt: returnsData[0].updateAt
+            };
+            console.log(kit);
+            return kit;
+          }
+          return of(undefined);
         }),
         catchError((error) => this.handleError(error, []))
       );
