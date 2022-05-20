@@ -47,6 +47,6 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges, AfterViewCh
   }
 
   navigate(path: string) {
-    this.navCtrl.navigateForward(path);
+    this.navCtrl.navigateRoot(path);
   }
 }

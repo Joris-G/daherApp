@@ -27,6 +27,7 @@ export class MoldingPage {
     if (this.inputIdMolding.value !== '') {
       this.menu.close();
       this.router.navigate([`molding/create-molding`, this.inputIdMolding.value]);
+      this.inputIdMolding.value = '';
     }
   }
   navigate(url: string) {

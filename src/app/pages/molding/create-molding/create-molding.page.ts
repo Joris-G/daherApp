@@ -67,15 +67,10 @@ export class CreateMoldingPage implements OnInit {
 
 
   ionViewWillEnter() {
-    this.molding =
-    {
-      id: null,
-      cores: [],
-      kits: [],
-      moldingDay: new Date(),
-      outillage: null,
-      createdBy: null
-    };
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    if (id) {
+      this.loadMoldingData(id);
+    }
   }
 
   ionViewWillLeave() {
@@ -100,11 +95,6 @@ export class CreateMoldingPage implements OnInit {
       outillage: null,
       createdBy: null
     };
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if (id) {
-      this.loadMoldingData(id);
-    }
-
     this.isAdmin = this.roleGuard.isRole(['ROLE_ADMIN']);
   }
 
