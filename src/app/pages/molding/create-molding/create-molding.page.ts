@@ -111,16 +111,20 @@ export class CreateMoldingPage implements OnInit {
   }
 
 
-  saveMoldingClick() {
+  saveMoldingClick(print?: boolean) {
     this.checkMoldingDatas()
       .then(() => {
         this.saveMolding()
           .then(() => {
-            // On demande si on veut imprimer ou non
-            this.alertService.presentAlertConfirm(
-              'Enregistrement effectué',
-              'Voulez-vous imprimer la fiche ?')
-              .then((response) => { if (response) { this.printMolding(); } });
+            if (print) {
+              this.printMolding();
+            } else {
+              // On demande si on veut imprimer ou non
+              this.alertService.presentAlertConfirm(
+                'Enregistrement effectué',
+                'Voulez-vous imprimer la fiche ?')
+                .then((response) => { if (response) { this.printMolding(); } });
+            }
           },
             () => {
               this.alertService.simpleAlert(
@@ -140,40 +144,55 @@ export class CreateMoldingPage implements OnInit {
 
   saveMolding() {
     return new Promise<void>((resolve, reject) => {
+      // check du moulage
+      this.checkMoldingDatas()
+        .then(() => {
+          this.molding.createdBy = this.authService.authUser;
+          if (this.molding.id === null) {
+            this.moldingService.saveMolding(this.moldingService.toIri(this.molding))
+              .subscribe((responseMolding: Molding) => {
+                this.molding = responseMolding;
+                resolve();
+              },
+                () => {
+                  console.log('tout n\'est pas Ok la sauvegarde a échouée');
+                  reject();
+                });
+          } else {
+            this.moldingService.updateMolding(this.moldingService.toIri(this.molding))
+              .subscribe((responseMolding: Molding) => {
+                this.molding = responseMolding;
+                console.log('tout est OK le moulage est mis à jour');
+                resolve();
+              },
+                () => {
+                  this.alertService.simpleAlert(
+                    'Message d\'erreur',
+                    'Sauvegarde échouée !',
+                    'La sauvegarde ne s\'est pas correctement effectuée. Veuillez recommencer');
+                  console.error('tout n\'est pas Ok la mise à jour du moulage a échouée');
+                  reject();
+                });
+          }
+        });
       // sauvegarder le moulage en base de donnée
-      this.molding.createdBy = this.authService.authUser;
-      if (this.molding.id === null) {
-        this.moldingService.saveMolding(this.moldingService.toIri(this.molding))
-          .subscribe((responseMolding: Molding) => {
-            this.molding = responseMolding;
-            resolve();
-          },
-            () => {
-              console.log('tout n\'est pas Ok la sauvegarde a échouée');
-              reject();
-            });
-      } else {
-        this.moldingService.updateMolding(this.moldingService.toIri(this.molding))
-          .subscribe((responseMolding: Molding) => {
-            this.molding = responseMolding;
-            console.log('tout est OK le moulage est mis à jour');
-            resolve();
-          },
-            () => {
-              this.alertService.simpleAlert(
-                'Message d\'erreur',
-                'Sauvegarde échouée !',
-                'La sauvegarde ne s\'est pas correctement effectuée. Veuillez recommencer');
-              console.error('tout n\'est pas Ok la mise à jour du moulage a échouée');
-              reject();
-            });
-      }
+
     });
   }
 
+
+
+  /**
+   * Vérifie les données du moulage :
+   * # vérifie la présence de l'outillage
+   * # vérifie s'il y a au moins un kit
+   *
+   * @return
+   * @memberof CreateMoldingPage
+   */
   checkMoldingDatas() {
     console.log('start check data');
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       if (this.molding.outillage === null) {
         const missingTollMsg = 'L\'outillage de moulage n\'est pas associé. Voulez-vous continuer sans outillage ?';
         this.alertService.presentAlertConfirm('Alerte', missingTollMsg)
@@ -181,10 +200,10 @@ export class CreateMoldingPage implements OnInit {
             if (response) {
               console.log('onResolve : Je veux continuer sans outillage', response);
               // console.error('erreur', response);
-              resolve(true);
+              resolve();
             } else {
               console.log('onResolve : Je ne veux pas continuer sans outillage', response);
-              resolve(false);
+              resolve();
             }
           },
             (response) => {
@@ -194,24 +213,15 @@ export class CreateMoldingPage implements OnInit {
             });
       } else if (this.molding.kits.length === 0) {
         console.log('onResolve : Il n\'y a pas de kit');
-        resolve(false);
+        resolve();
       } else {
-        resolve(true);
+        resolve();
       }
     });
 
   }
 
-  printMoldingClick() {
-    this.saveMolding()
-      .then(() => {
-        this.printMolding();
-      },
-        () => {
-          console.error('test error molding save');
 
-        });
-  }
 
 
   /**

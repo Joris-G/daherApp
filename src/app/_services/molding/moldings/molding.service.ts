@@ -74,6 +74,7 @@ export class MoldingService {
   /**
    * Recalcul le kit le plus défavorable
    *
+   * @todo supprimer les lignes commentées
    * @param molding
    * @memberof MoldingService
    */
