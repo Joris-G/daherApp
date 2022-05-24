@@ -3,7 +3,8 @@ import { User } from 'src/app/_interfaces/user';
 
 export interface SpecCtrl {
   id?: number;
-  outillage: Tool;
+  outillage: string;
+  OT: Tool;
   // equipement?: Equipement;
   createdAt?: Date;
   modifiedAt?: Date;

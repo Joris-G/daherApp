@@ -116,6 +116,7 @@ export class MaintenanceReparationPage implements OnInit, OnDestroy {
         dateBesoin: null,
         userCreat: this.authService.authUser,
         outillage: null,
+        OT: null,
         equipement: null,
         image: '',
         fichier: '',

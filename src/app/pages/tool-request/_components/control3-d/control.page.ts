@@ -120,6 +120,7 @@ export class Control3DPage implements OnInit {
         // reportDate: new Date(),
         demandeur: this.authService.authUser,
         outillage: null,
+        OT: null,
         ligneBudgetaire: '',
         visaControleur: ''
       }
@@ -152,7 +153,7 @@ export class Control3DPage implements OnInit {
               interventionDate: this.toolRequest.controle.interventionDate,
               moyenMesure: this.toolRequest.controle.moyenMesure,
               infoComplementaires: this.toolRequest.controle.infosComplementaire,
-              outillage: this.toolRequest.controle.outillage.sapToolNumber,
+              outillage: this.toolRequest.controle.OT.sapToolNumber,
               ligneBudgetaire: this.toolRequest.controle.ligneBudgetaire,
               statut: this.toolRequest.statut,
             });

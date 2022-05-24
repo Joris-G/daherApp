@@ -22,9 +22,9 @@ export class AuthService {
       .pipe(
         map((returnsData: any) => {
           if (returnsData) {
-            console.log(returnsData.user.apiToken);
-            localStorage.setItem('token', returnsData.user.apiToken);
-            this.requestService.apiToken = returnsData.user.apiToken;
+            console.log(returnsData.apiToken);
+            localStorage.setItem('token', returnsData.apiToken);
+            this.requestService.apiToken = returnsData.apiToken;
             this.isAuth = true;
             this.authUser = returnsData.user;
           } else {

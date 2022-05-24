@@ -4,7 +4,8 @@ import { User } from 'src/app/_interfaces/user';
 
 export interface SpecMaintRep {
   id?: number;
-  outillage?: Tool;
+  outillage?: string;
+  OT: Tool;
   equipement?: string;
   dateBesoin: Date;
   respo?: string[];

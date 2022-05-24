@@ -27,7 +27,7 @@ export class LoginPage implements OnInit {
       route: 'tooling'
     },
     {
-      roles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_METHODE'],
+      roles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_METHODES'],
       route: 'molding/create-molding'
     },
   ];
@@ -102,14 +102,17 @@ export class LoginPage implements OnInit {
    * @memberof LoginPage
    */
   private reRouteUser() {
-    this.reRouteOpts.forEach((routeOpt) => {
-      if (this.authService.authUser.roles.find(role => routeOpt.roles.find(roleOpt => roleOpt === role))) {
-        this.navControler.navigateForward(routeOpt.route);
-      } else {
-        this.navControler.navigateForward('home');
-      }
-    });
+    const prefRoute = this.reRouteOpts.find(
+      (curRouteOpt) => this.authService.authUser.roles.some(
+        (role) => curRouteOpt.roles.find(roleOpt => roleOpt === role)));
+    if (prefRoute !== undefined) {
+      this.navControler.navigateForward(prefRoute.route);
+      return;
+    }
+    this.navControler.navigateForward('home');
   }
+
+
   private logginError(error: any) {
     console.error(error);
     this.alertService.simpleAlert(
@@ -119,5 +122,4 @@ export class LoginPage implements OnInit {
     );
     this.loadingService.stopLoading();
   }
-
 }

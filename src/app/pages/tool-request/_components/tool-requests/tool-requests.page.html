@@ -1,86 +1,91 @@
 <ion-header>
-    <ion-toolbar color=dark>
-        <ion-title>Liste des demandes</ion-title>
-    </ion-toolbar>
-    <ion-toolbar>
-        <mat-accordion class="example-headers-align" multi>
-            <mat-expansion-panel togglePosition="before">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <ion-icon slot="start" name="filter-outline"></ion-icon>
-                        Filtres
-                    </mat-panel-title>
-                    <mat-panel-description>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
+  <ion-toolbar color=dark>
+    <ion-title>Liste des demandes</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel togglePosition="before">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <ion-icon slot="start" name="filter-outline"></ion-icon>
+            Filtres
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
 
-                <ion-toolbar class="filter-toolbar">
-                    <div class="filters" aria-expanded="true">
-                        <ion-item *ngFor="let filterItem of filterSelectObjects" class="filter-item ion-margin">
-                            <ion-label>{{filterItem.name}}</ion-label>
-                            <ion-select class="filter" multiple="false" [placeholder]="'Filtre ' + filterItem.name" (ionChange)="filterChange(filterItem,$event)">
-                                <ion-select-option *ngFor="let filter of filterItem.options" [value]="filter">{{filter}}</ion-select-option>
-                            </ion-select>
-                        </ion-item>
-                    </div>
-                    <ion-button slot=end (click)="resetFilters()">
-                        Supprimer les filtres
-                    </ion-button>
-                </ion-toolbar>
+        <ion-toolbar class="filter-toolbar">
+          <div class="filters" aria-expanded="true">
+            <ion-item *ngFor="let filterItem of filterSelectObjects" class="filter-item ion-margin">
+              <ion-label>{{filterItem.name}}</ion-label>
+              <ion-select class="filter" multiple="false" [placeholder]="'Filtre ' + filterItem.name"
+                (ionChange)="filterChange(filterItem,$event)">
+                <ion-select-option *ngFor="let filter of filterItem.options" [value]="filter">{{filter}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <ion-button slot=end (click)="resetFilters()">
+            Supprimer les filtres
+          </ion-button>
+        </ion-toolbar>
 
-            </mat-expansion-panel>
-        </mat-accordion>
-    </ion-toolbar>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ion-toolbar>
 
 </ion-header>
 <ion-content>
-    <div class="table ion-justify-content-center ion-align-items-center">
-        <table mat-table #table [dataSource]="tableRequestsDataSource" class="mat-elevation-z8" fixedLayout=true matSort matSortActive="needDate">
-            <ng-container matColumnDef="statut">
-                <th mat-header-cell *matHeaderCellDef>
-                    Statut
-                </th>
-                <td [style.border-left]="getBorder(request)" mat-cell *matCellDef="let request">
-                    {{ request.statut }}</td>
-            </ng-container>
-            <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef>
-                    Numéro
-                </th>
-                <td mat-cell *matCellDef="let request">
-                    {{request.id}}
-                </td>
-            </ng-container>
+  <div class="table ion-justify-content-center ion-align-items-center">
+    <table mat-table #table [dataSource]="tableRequestsDataSource" class="mat-elevation-z8" fixedLayout=true matSort
+      matSortActive="needDate">
+      <ng-container matColumnDef="statut">
+        <th mat-header-cell *matHeaderCellDef>
+          Statut
+        </th>
+        <td [style.border-left]="getBorder(request)" mat-cell *matCellDef="let request">
+          {{ request.statut }}</td>
+      </ng-container>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>
+          Numéro
+        </th>
+        <td mat-cell *matCellDef="let request">
+          {{request.id}}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="tool">
-                <th mat-header-cell *matHeaderCellDef>
-                    Outillage
-                </th>
-                <td mat-cell *matCellDef="let request">
-                    <ion-label *ngIf="request.controle">OT{{request.controle.outillage.sapToolNumber}} - {{request.controle.outillage.designation}}</ion-label>
-                    <ion-label *ngIf="request.maintenance">OT{{request.maintenance.outillage.sapToolNumber}} - {{request.maintenance.outillage.designation}}</ion-label>
-                </td>
-            </ng-container>
+      <ng-container matColumnDef="tool">
+        <th mat-header-cell *matHeaderCellDef>
+          Outillage
+        </th>
+        <td mat-cell *matCellDef="let request">
+          <ion-label *ngIf="request.controle">OT{{request.controle.OT.sapToolNumber}} -
+            {{request.controle.OT.designation}}</ion-label>
+          <ion-label *ngIf="request.maintenance">OT{{request.maintenance.OT.sapToolNumber}} -
+            {{request.maintenance.OT.designation}}</ion-label>
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="createdAt">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                    Date demande
-                </th>
-                <td mat-cell *matCellDef="let element">
-                    {{element.createdAt | date :"EE dd MMM yyyy":"local" }}
-                </td>
-            </ng-container>
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Date demande
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.createdAt | date :"EE dd MMM yyyy":"local" }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="userCreat">
-                <th mat-header-cell *matHeaderCellDef>
-                    Demandeur
-                </th>
-                <td mat-cell *matCellDef="let request" (click)="userClick()">
-                    <ion-label *ngIf="request.controle">{{request.controle.demandeur.username}}</ion-label>
-                    <ion-label *ngIf="request.maintenance">{{request.maintenance.demandeur.username}}</ion-label>
-                </td>
-            </ng-container>
-            <!-- <ng-container matColumnDef="groupAffectation">
+      <ng-container matColumnDef="userCreat">
+        <th mat-header-cell *matHeaderCellDef>
+          Demandeur
+        </th>
+        <td mat-cell *matCellDef="let request" (click)="userClick()">
+          <ion-label *ngIf="request.controle">{{request.controle.demandeur.username}}</ion-label>
+          <ion-label *ngIf="request.maintenance">{{request.maintenance.demandeur.username}}</ion-label>
+        </td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="groupAffectation">
                 <th mat-header-cell *matHeaderCellDef>
                     Affectation
                 </th>
@@ -89,34 +94,36 @@
                 </td>
             </ng-container> -->
 
-            <ng-container matColumnDef="needDate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                    Date Besoin
-                </th>
-                <td mat-cell *matCellDef="let request">
-                    <ion-label *ngIf="request.controle"> {{request.controle.dateBesoin| date :"dd MMMM yyyy":"local"}}</ion-label>
-                    <ion-label *ngIf="request.maintenance"> {{request.maintenance.dateBesoin| date :"dd MMMM yyyy":"local"}}</ion-label>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="buttons">
-                <th mat-header-cell *matHeaderCellDef>
+      <ng-container matColumnDef="needDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Date Besoin
+        </th>
+        <td mat-cell *matCellDef="let request">
+          <ion-label *ngIf="request.controle"> {{request.controle.dateBesoin| date :"dd MMMM yyyy":"local"}}</ion-label>
+          <ion-label *ngIf="request.maintenance"> {{request.maintenance.dateBesoin| date :"dd MMMM yyyy":"local"}}
+          </ion-label>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="buttons">
+        <th mat-header-cell *matHeaderCellDef>
 
-                </th>
-                <td mat-cell *matCellDef="let element">
-                    <ion-button size=small *ngIf="element.controle" (click)="openControlClick(element)">
-                        Ouvrir
-                    </ion-button>
-                    <ion-button size=small *ngIf="element.maintenance" (click)="openMaintenanceClick(element)">
-                        Ouvrir
-                    </ion-button>
-                    <ion-button size=small *ngIf="isAdmin" (click)="removeRequestClick(element)">
-                        <ion-icon slot="end" name="trash-outline"></ion-icon>
-                        Delete
-                    </ion-button>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedRequestColumns ;sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedRequestColumns" [@openClose]=" (row.statut==='EN COURS DE REALISATION') ? 'open' : ''"></tr>
-        </table>
-    </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <ion-button size=small *ngIf="element.controle" (click)="openControlClick(element)">
+            Ouvrir
+          </ion-button>
+          <ion-button size=small *ngIf="element.maintenance" (click)="openMaintenanceClick(element)">
+            Ouvrir
+          </ion-button>
+          <ion-button size=small *ngIf="isAdmin" (click)="removeRequestClick(element)">
+            <ion-icon slot="end" name="trash-outline"></ion-icon>
+            Delete
+          </ion-button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedRequestColumns ;sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedRequestColumns"
+        [@openClose]=" (row.statut==='EN COURS DE REALISATION') ? 'open' : ''"></tr>
+    </table>
+  </div>
 </ion-content>

@@ -36,7 +36,7 @@ export class ToolRequestService {
   createControlRequest(toolRequestToCreate: SpecCtrl) {
     const toolRequestToCreateIri: SpecCtrlIri = {
       id: toolRequestToCreate.id ?? null,
-      outillage: toolRequestToCreate.outillage ? this.toolService.getIri(toolRequestToCreate.outillage) : '',
+      outillage: toolRequestToCreate.OT ? this.toolService.getIri(toolRequestToCreate.OT) : '',
       dateBesoin: toolRequestToCreate.dateBesoin,
       userCreat: this.userService.getIri(this.authService.authUser),
       refPlan: toolRequestToCreate.refPlan,
@@ -76,7 +76,7 @@ export class ToolRequestService {
           console.log(maintenanceItemIri);
           const toolRequestToCreateIri: SpecMaintRepIri = {
             id: toolRequestToCreate.id ?? null,
-            outillage: toolRequestToCreate.outillage ? this.toolService.getIri(toolRequestToCreate.outillage) : '',
+            outillage: toolRequestToCreate.OT ? this.toolService.getIri(toolRequestToCreate.OT) : '',
             dateBesoin: toolRequestToCreate.dateBesoin,
             userCreat: this.userService.getIri(this.authService.authUser),
             rep: toolRequestToCreate.rep,
@@ -107,7 +107,7 @@ export class ToolRequestService {
   updateControlRequest(toolRequestToUpdate: ToolRequest) {
     const toolRequestToCreateIri: SpecCtrlIri = {
       id: toolRequestToUpdate.controle.id ?? null,
-      outillage: toolRequestToUpdate.controle.outillage ? this.toolService.getIri(toolRequestToUpdate.controle.outillage) : '',
+      outillage: toolRequestToUpdate.controle.OT ? this.toolService.getIri(toolRequestToUpdate.controle.OT) : '',
       dateBesoin: toolRequestToUpdate.dateBesoin,
       userCreat: this.userService.getIri(toolRequestToUpdate.controle.demandeur),
       refPlan: toolRequestToUpdate.controle.refPlan,
@@ -154,7 +154,7 @@ export class ToolRequestService {
             .map((item => '/api/maintenance_items/' + item.id));
           const toolRequestToCreateIri: SpecMaintRepIri = {
             id: toolRequestToUpdate.maintenance.id ?? null,
-            outillage: toolRequestToUpdate.maintenance.outillage ? this.toolService.getIri(toolRequestToUpdate.maintenance.outillage) : '',
+            outillage: toolRequestToUpdate.maintenance.OT ? this.toolService.getIri(toolRequestToUpdate.maintenance.OT) : '',
             dateBesoin: toolRequestToUpdate.dateBesoin,
             userCreat: this.userService.getIri(toolRequestToUpdate.maintenance.userCreat),
             itemActionCorrective: maintenanceItemIri

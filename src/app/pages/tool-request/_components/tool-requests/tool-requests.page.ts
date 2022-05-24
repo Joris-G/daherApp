@@ -160,6 +160,7 @@ export class ToolRequestsPage implements OnInit {
       },
         (error) => {
           console.error(error);
+          this.loaderService.stopLoading();
           this.alertControleService.simpleAlert(
             'Erreur',
             'Mise à jour de la liste',
