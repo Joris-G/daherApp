@@ -9,43 +9,43 @@
     <ion-row>
       <ion-col size="8">
         <ion-card>
-          <ion-card-content>
+          <ion-card-content class="table-card-content">
             <!-- <table mat-table [dataSource]="users | NotActive"> -->
-            <table mat-table [dataSource]="users">
+            <table mat-table [dataSource]="userDataSource">
               <!-- Id Column -->
               <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef> UserName </th>
+                <th mat-header-cell *matHeaderCellDef> Id </th>
                 <td mat-cell *matCellDef="let user"> {{user.id}} </td>
               </ng-container>
               <!-- Username Column -->
               <ng-container matColumnDef="username">
                 <th mat-header-cell *matHeaderCellDef> UserName </th>
-                <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+                <td mat-cell *matCellDef="let user"> {{user.username}} </td>
               </ng-container>
               <!-- nom Column -->
               <ng-container matColumnDef="nom">
                 <th mat-header-cell *matHeaderCellDef> Nom </th>
-                <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+                <td mat-cell *matCellDef="let user"> {{user.nom}} </td>
               </ng-container>
               <!-- prenom Column -->
               <ng-container matColumnDef="prenom">
                 <th mat-header-cell *matHeaderCellDef> Prénom </th>
-                <td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
+                <td mat-cell *matCellDef="let user"> {{user.prenom}} </td>
               </ng-container>
               <!-- matricule Column -->
               <ng-container matColumnDef="matricule">
                 <th mat-header-cell *matHeaderCellDef> Matricule </th>
-                <td mat-cell *matCellDef="let element"> {{element.matricule}} </td>
+                <td mat-cell *matCellDef="let user"> {{user.matricule}} </td>
               </ng-container>
               <!-- matricule Column -->
               <ng-container matColumnDef="mail">
                 <th mat-header-cell *matHeaderCellDef> Mail </th>
-                <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
+                <td mat-cell *matCellDef="let user"> {{user.mail}} </td>
               </ng-container>
               <!-- roles Column -->
               <ng-container matColumnDef="roles">
                 <th mat-header-cell *matHeaderCellDef> Roles </th>
-                <td mat-cell *matCellDef="let element"> {{element.roles}} </td>
+                <td mat-cell *matCellDef="let user"> {{user.roles}} </td>
               </ng-container>
               <!-- commands Column -->
               <ng-container matColumnDef="commands">
@@ -61,8 +61,9 @@
                   </ion-segment>
                 </td>
               </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedUserInactiveColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedUserInactiveColumns;" (click)="onSelectUser(row)"></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedUserColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let user; columns: displayedUserColumns;" (click)="onSelectUser(user)">
+              </tr>
             </table>
           </ion-card-content>
         </ion-card>

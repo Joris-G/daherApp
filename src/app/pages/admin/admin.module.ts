@@ -13,6 +13,7 @@ import { KitService } from 'src/app/_services/molding/kits/kit.service';
 import { MoldingService } from 'src/app/_services/molding/moldings/molding.service';
 import { UsersService } from 'src/app/_services/users/users.service';
 import { ComponentModule } from 'src/app/composants/component/component.module';
+import { SericesService } from 'src/app/_services/users/serices.service';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { ComponentModule } from 'src/app/composants/component/component.module';
     KitService,
     MoldingService,
     UsersService,
+    SericesService
 
   ]
 })

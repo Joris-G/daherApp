@@ -22,11 +22,11 @@ import { ToolInputComponent } from './_components/tool-input/tool-input.componen
 import { ToolListPage } from './_components/tool-list/tool-list.page';
 import { ToolRequestFooterComponent } from './_components/tool-request-footer/tool-request-footer.component';
 import { MatTableModule } from '@angular/material/table';
-import { EditorModule } from '@tinymce/tinymce-angular';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToolRequestsPage } from './_components/tool-requests/tool-requests.page';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { NgxEditorModule } from 'ngx-editor';
+// import { NgxEditorModule } from 'ngx-editor';
 @NgModule({
   imports: [
     CommonModule,
@@ -41,7 +41,7 @@ import { NgxEditorModule } from 'ngx-editor';
     SharedUserHeaderModule,
     MenuModule,
     ToolRequestPageRoutingModule,
-    NgxEditorModule,
+    // NgxEditorModule,
   ],
   declarations: [
     ToolRequestPage,
@@ -60,6 +60,7 @@ import { NgxEditorModule } from 'ngx-editor';
     ToolRequestsPage],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
 })
 export class ToolRequestPageModule {

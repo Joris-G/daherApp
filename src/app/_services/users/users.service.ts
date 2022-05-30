@@ -142,4 +142,8 @@ export class UsersService {
     return this.requestService.createDeleteRequest(`${environment.usineApi}users/${userId}`);
   }
 
+  confirmUser(userId: number, status: boolean): Observable<User> {
+    return this.requestService.createPatchRequest(`${environment.usineApi}users/${userId}`, { isActive: status });
+  }
+
 }

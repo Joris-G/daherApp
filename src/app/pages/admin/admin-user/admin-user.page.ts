@@ -2,10 +2,13 @@ import { DatePipe } from '@angular/common';
 import {
   Component, ElementRef, OnInit, ViewChild
 } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import Chart from 'chart.js/auto';
+import { Service } from 'src/app/_interfaces/service';
 import { User } from 'src/app/_interfaces/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
+import { SericesService } from 'src/app/_services/users/serices.service';
 import { UsersService } from 'src/app/_services/users/users.service';
 
 @Component({
@@ -17,9 +20,10 @@ export class AdminUserPage implements OnInit {
   @ViewChild('newUsers') private newUsersCanvas: ElementRef;
 
   public users: User[];
+  public userDataSource: MatTableDataSource<User> = new MatTableDataSource();
   public selectedUser: User;
   public isUserSelected = false;
-  displayedUserInactiveColumns: string[] = ['id', 'nom', 'prenom', 'matricule', 'roles', 'commands'];
+  displayedUserColumns: string[] = ['id', 'username', 'nom', 'prenom', 'matricule', 'roles', 'commands'];
   private lineChart: any;
   private weeklyLabels: string[] = [];
   private weeklyUsers: number[] = [];
@@ -29,6 +33,7 @@ export class AdminUserPage implements OnInit {
     private datePipe: DatePipe,
     private loadingService: LoadingService,
     private alertService: AlertService,
+    private serviceService: SericesService,
   ) {
 
   }
@@ -40,13 +45,18 @@ export class AdminUserPage implements OnInit {
   }
 
   ngOnInit() {
+    this.users = [];
     this.loadingService.startLoading();
-    this.userService.getUsers()
-      .subscribe((users: User[]) => {
-        this.users = users;
+    this.serviceService.getServices()
+      .subscribe((services: Service[]) => {
+        services.forEach((service: Service) => {
+          service.users.forEach((user: User) => this.users.push(user));
+        });
+        this.userDataSource.data = this.users;
+        console.log(services, this.users);
         this.weeklyLabels = this.createWeeklyLabel();
         this.weeklyUsers = this.createWeeklyUserData();
-        console.log(this.weeklyLabels, this.weeklyUsers);
+        // console.log(this.weeklyLabels, this.weeklyUsers);
         // this.lineChart.destroy();
         this.lineChart = new Chart(this.newUsersCanvas.nativeElement, {
           type: 'line',
@@ -121,7 +131,20 @@ export class AdminUserPage implements OnInit {
     this.confirmUser(user, event.detail.value);
   }
 
-  private confirmUser(element: User, state: boolean) {
-    console.log(element, state);
+  private confirmUser(user: User, state: boolean) {
+    this.loadingService.startLoading(`Mise à jour de l'utilisateur`);
+    this.userService.confirmUser(user.id, state)
+      .subscribe(
+        (responseUser) => {
+          this.loadingService.stopLoading();
+        },
+        (error) => {
+          this.loadingService.stopLoading();
+          this.alertService.simpleAlert(
+            `Erreur`,
+            `Le serveur à renvoyé une erreur`,
+            `${error}`
+          );
+        });
   }
 }
