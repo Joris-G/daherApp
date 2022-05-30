@@ -1,95 +1,97 @@
 <!-- <app-shared-user-header [page]="page"></app-shared-user-header> -->
 
 <ion-content color=light>
-    <mat-accordion class="example-headers-align" multi>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Définition
-                </mat-panel-title>
-                <mat-panel-description>
-                    Créer ou sélectionner l'outillage
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <form [formGroup]="newToolForm">
-                <ion-item-group>
-                    <ion-item>
-                        <ion-label position="floating">Numéro d'OT SAP
-                            <ion-text color="danger">*</ion-text>
-                        </ion-label>
-                        <ion-input required formControlName="sapToolNumber" type="text" placeholder="ex. OT095999"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label position="floating">Numéro d'identification
-                            <ion-text color="danger">*</ion-text>
-                        </ion-label>
-                        <ion-input required formControlName="identification" type="text" placeholder="ex. 19900Z01-T700P5522000123"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label position="floating">Désignation
-                            <ion-text color="danger">*</ion-text>
-                        </ion-label>
-                        <ion-input required formControlName="designation" type="text"></ion-input>
-                    </ion-item>
-                </ion-item-group>
-                <ion-toolbar>
-                    <ion-button slot=end (click)="createToolClick()" expand="block" color=primary>
-                        Créer l'OT
-                    </ion-button>
-                </ion-toolbar>
-            </form>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Descritpion
-                </mat-panel-title>
-                <mat-panel-description>
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Définition
+        </mat-panel-title>
+        <mat-panel-description>
+          Créer ou sélectionner l'outillage
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="newToolForm">
+        <ion-item-group>
+          <ion-item>
+            <ion-label position="floating">Numéro d'OT SAP
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input required formControlName="sapToolNumber" type="text" placeholder="ex. OT095999"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Numéro d'identification
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input required formControlName="identification" type="text" placeholder="ex. 19900Z01-T700P5522000123">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Désignation
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input required formControlName="designation" type="text"></ion-input>
+          </ion-item>
+        </ion-item-group>
+        <ion-toolbar>
+          <ion-button slot=end (click)="createToolClick()" expand="block" color=primary>
+            Créer l'OT
+          </ion-button>
+        </ion-toolbar>
+      </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Descritpion
+        </mat-panel-title>
+        <mat-panel-description>
 
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <form [formGroup]="newToolRequestForm">
-                <ion-item-group>
-                    <ion-item>
-                        <ion-label>Programme avion</ion-label>
-                        <ion-select formControlName="aircraftProgram" multiple="true" placeholder="Sélectionner le programme avion">
-                            <ion-select-option *ngFor="let program of programs" [value]="program.id">
-                                {{program.Designation}}
-                            </ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Titre
-                            <ion-text color="danger">*</ion-text>
-                        </ion-label>
-                        <ion-input required formControlName="title"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Description
-                            <ion-text color="danger">*</ion-text>
-                        </ion-label>
-                        <div class="NgxEditor__Wrapper">
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="newToolRequestForm">
+        <ion-item-group>
+          <ion-item>
+            <ion-label>Programme avion</ion-label>
+            <ion-select formControlName="aircraftProgram" multiple="true" placeholder="Sélectionner le programme avion">
+              <ion-select-option *ngFor="let program of programs" [value]="program.id">
+                {{program.Designation}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Titre
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input required formControlName="title"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Description
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <!-- <div class="NgxEditor__Wrapper">
                             <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
                             <ngx-editor [editor]="editor" [ngModel]="html" formControlName="description" [disabled]="false" [placeholder]="'Taper la description ici'"></ngx-editor>
-                        </div>
-                    </ion-item>
+                        </div> -->
+          </ion-item>
 
-                    <ion-item>
-                        <ion-label>Date
-                            <ion-text color="danger">*</ion-text>
-                        </ion-label>
-                        <ion-datetime display-format="DD.MM.YYYY HH:mm" formControlName="needDate"></ion-datetime>
-                    </ion-item>
-                </ion-item-group>
-            </form>
-        </mat-expansion-panel>
-    </mat-accordion>
-    <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo>
+          <ion-item>
+            <ion-label>Date
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-datetime display-format="DD.MM.YYYY HH:mm" formControlName="needDate"></ion-datetime>
+          </ion-item>
+        </ion-item-group>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo>
 </ion-content>
 <ion-footer>
-    <ion-toolbar color="light">
-        <ion-button [disabled]="newToolRequestForm.invalid" (click)="createToolRequestClick()" slot=end expand="block" color=primary>
-            Créer la demande
-        </ion-button>
-    </ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-button [disabled]="newToolRequestForm.invalid" (click)="createToolRequestClick()" slot=end expand="block"
+      color=primary>
+      Créer la demande
+    </ion-button>
+  </ion-toolbar>
 </ion-footer>
