@@ -1,0 +1,61 @@
+{
+  "_from": "tinymce@^6.0.2",
+  "_id": "tinymce@6.0.2",
+  "_inBundle": false,
+  "_integrity": "sha512-i4OEzcTF6mGxZ+scumOoWiaI9HYn6uya980hJ+9jwnhgLbhBb+73ar2t9Ewfkns3DTl2Ez3r1pQs2tpT+ka29Q==",
+  "_location": "/tinymce",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "tinymce@^6.0.2",
+    "name": "tinymce",
+    "escapedName": "tinymce",
+    "rawSpec": "^6.0.2",
+    "saveSpec": null,
+    "fetchSpec": "^6.0.2"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/",
+    "/@tinymce/tinymce-angular"
+  ],
+  "_resolved": "https://registry.npmjs.org/tinymce/-/tinymce-6.0.2.tgz",
+  "_shasum": "7813ce952a9b5b42901ed5a91e915d0d8eb8eb29",
+  "_spec": "tinymce@^6.0.2",
+  "_where": "C:\\Users\\j.grangier\\Desktop\\TRAVAIL\\Appli-MOULAGE\\moldingApp",
+  "author": {
+    "name": "Ephox Corporation DBA Tiny Technologies, Inc"
+  },
+  "bugs": {
+    "url": "https://github.com/tinymce/tinymce/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Web based JavaScript HTML WYSIWYG editor control.",
+  "homepage": "https://www.tiny.cloud/",
+  "keywords": [
+    "wysiwyg",
+    "tinymce",
+    "richtext",
+    "javascript",
+    "html",
+    "text",
+    "rich editor",
+    "rich text editor",
+    "rte",
+    "rich text",
+    "contenteditable",
+    "editing"
+  ],
+  "license": "MIT",
+  "main": "tinymce.js",
+  "name": "tinymce",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinymce/tinymce.git",
+    "directory": "modules/tinymce"
+  },
+  "types": "tinymce.d.ts",
+  "version": "6.0.2"
+}
