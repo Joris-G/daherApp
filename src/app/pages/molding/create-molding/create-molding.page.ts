@@ -193,9 +193,9 @@ export class CreateMoldingPage implements OnInit {
   checkMoldingDatas() {
     console.log('start check data');
     return new Promise<void>((resolve, reject) => {
-      if (this.molding.outillage === null) {
-        const missingTollMsg = 'L\'outillage de moulage n\'est pas associé. Voulez-vous continuer sans outillage ?';
-        this.alertService.presentAlertConfirm('Alerte', missingTollMsg)
+      if (this.molding.OT === null) {
+        const missingToolMsg = 'L\'outillage de moulage n\'est pas associé. Voulez-vous continuer sans outillage ?';
+        this.alertService.presentAlertConfirm('Alerte', missingToolMsg)
           .then((response) => {
             if (response) {
               console.log('onResolve : Je veux continuer sans outillage', response);
