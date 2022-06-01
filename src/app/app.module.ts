@@ -12,6 +12,11 @@ import { MenuModule } from './composants/menu/menu.module';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { PDFGenerator } from '@ionic-native/pdf-generator/ngx';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: { transports: ['websocket', 'polling', 'flashsocket'] } };
 
 @NgModule({
   declarations: [
@@ -21,6 +26,7 @@ import { PDFGenerator } from '@ionic-native/pdf-generator/ngx';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    SocketIoModule.forRoot(config),
     AppRoutingModule,
     SharedUserHeaderModule,
     MenuModule,

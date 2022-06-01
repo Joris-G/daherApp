@@ -41,6 +41,9 @@
         </ion-content>
       </ng-template>
     </ion-popover>
+    <ion-button slot=end (click)="notifyClick()">
+      Notify
+    </ion-button>
     <ion-button class="ion-hide-sm-down margin" slot=end color="danger" (click)="logoutClick()">
       <ion-icon slot="end" name="log-out-outline"></ion-icon>
       <ion-label class="ion-hide-md-down">Déconnexion</ion-label>

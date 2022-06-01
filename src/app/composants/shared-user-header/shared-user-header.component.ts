@@ -4,6 +4,9 @@ import { User } from 'src/app/_interfaces/user';
 import { AuthService } from 'src/app/_services/users/auth.service';
 import packageJson from 'package.json';
 import { isDevMode } from '@angular/core';
+import { NotificationsService } from 'src/app/_services/notifications/notifications.service';
+import { Observable, Subscription } from 'rxjs';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-shared-user-header',
@@ -18,10 +21,14 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges {
   public isUserOpen = false;
   public version: string = packageJson.version;
   public envMode: string;
-
+  public data: any;
+  public documents: Observable<string>;
+  private docSub: Subscription;
   constructor(
     public authService: AuthService,
-    private navCtrl: NavController) { }
+    private navCtrl: NavController,
+    private notificationsService: NotificationsService,
+    private socket: Socket) { }
 
 
 
@@ -38,6 +45,9 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges {
     if (isDevMode()) {
       this.envMode = 'DEV';
     }
+    this.socket.on('notification', data => {
+      this.data = data;
+    });
     // console.log(this.page);
   }
 
@@ -50,5 +60,10 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges {
 
   navigate(path: string) {
     this.navCtrl.navigateRoot(path);
+  }
+
+  notifyClick() {
+    console.log('notify click');
+    this.notificationsService.newNotif();
   }
 }
