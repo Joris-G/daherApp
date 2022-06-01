@@ -1,18 +1,21 @@
 <ion-header [translucent]="false">
-    <ion-toolbar color=primary>
-        <ion-buttons slot="start">
-            <ion-menu-button color="light"></ion-menu-button>
-            <ion-img class="ion-hide-sm-down logo" src="assets/images/logoDaherFondBleu.png" (click)="navigateHome()">
-            </ion-img>
-        </ion-buttons>
-        <ion-title class="ion-text-uppercase ion-text-center">Administration</ion-title>
-        <ion-chip id="button-profil" color=light slot=end class=ion-margin-end outline>
-            <ion-icon name="person-circle-outline"></ion-icon>
-            <ion-label color=light>{{user?.username}}</ion-label>
-        </ion-chip>
-        <ion-button class="ion-hide-sm-down" slot=end color="danger" (click)="logoutClick()">
-            <ion-icon slot="end" name="log-out-outline"></ion-icon>
-            <ion-label class="ion-hide-md-down">Déconnexion</ion-label>
-        </ion-button>
-    </ion-toolbar>
+  <ion-toolbar color=primary>
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+      <ion-img class="ion-hide-sm-down logo" src="assets/images/logoDaherFondBleu.png" (click)="navigateHome()">
+      </ion-img>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase ion-text-center">Administration</ion-title>
+    <ion-chip id="button-profil" color=light slot=end class=ion-margin-end outline>
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label color=light>{{user?.username}}</ion-label>
+    </ion-chip>
+    <ion-button class="ion-hide-sm-down" slot=end color="danger" (click)="logoutClick()">
+      <ion-icon slot="end" name="log-out-outline"></ion-icon>
+      <ion-label class="ion-hide-md-down">Déconnexion</ion-label>
+    </ion-button>
+    <ion-button slot=end (click)="notifyClick()">
+      Notify
+    </ion-button>
+  </ion-toolbar>
 </ion-header>
