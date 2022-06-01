@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
-  apiServer: 'http://152.60.136.236',
-  moldingApi: ':85/api/',
-  toolApi: ':86/api/',
-  usineApi: ':88/api/',
+  apiServer: 'http://152.60.136.236:81/',
+  moldingApi: 'Tracakit-api-dev/public/index.php/api/',
+  toolApi: 'outillage-api-dev/public/index.php/api/',
+  usineApi: 'usine-api-dev/public/index.php/api/',
   username: '204292',
   password: 'test'
 };
