@@ -15,7 +15,7 @@ export class AuthService {
     public requestService: RequestService,
   ) { }
 
-  authenticate(userName: number, password: string) {
+  authenticate(userName: string, password: string) {
     this.requestService.apiToken = '';
     return this.requestService.createPostRequest(`${environment.usineApi}login`,
       { matricule: userName, password })
@@ -37,8 +37,8 @@ export class AuthService {
   logout() {
     return this.requestService.createGetRequest(`${environment.usineApi}logout`)
       .pipe(
-        map((response) => {
-          console.log(response);
+        map(() => {
+          // console.log(response);
           this.isAuth = false;
           this.authUser = null;
         })

@@ -72,9 +72,10 @@ export class LoginPage implements OnInit {
 
   onSubmit() {
     this.loadingService.startLoading('Patienter pendant la connexion');
-    this.authService.authenticate(
-      this.loginForm.get('userName').value,
-      this.loginForm.get('password').value || this.loginForm.get('userName').value)
+    const userName = this.loginForm.get('userName').value.replace(/^0+/, '');
+    const password = this.loginForm.get('password').value || userName;
+
+    this.authService.authenticate(userName, password)
       .subscribe(() => {
         this.afterLoginActions();
       },

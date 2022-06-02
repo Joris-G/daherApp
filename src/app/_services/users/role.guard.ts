@@ -20,7 +20,7 @@ export class RoleGuard implements CanActivate {
     const expectedRole = route.data.expectedRole;
     const isRole = this.isRole(expectedRole);
     if (!isRole) {
-      console.error('Impossible d\'accéder à la page');
+      // console.error('Impossible d\'accéder à la page');
       this.alerteService.simpleAlert(
         'Alerte de l\'application',
         'Autorisation',

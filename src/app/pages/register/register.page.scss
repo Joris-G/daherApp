@@ -1,13 +1,19 @@
-.full-height {
-    height: 100% !important;
-    // display: flex !important
+ion-content {
+  overflow-y: hidden;
 }
-
-ion-slides {
-    height: 100%;
-    width: 100%;
+ion-card {
+  margin: 0;
+  max-height: 100%;
+  // height: -webkit-fill-available;
 }
-
-form {
-    width: 100%;
+ion-radio-group {
+  overflow-y: auto;
+}
+.perso-list {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  height: 500px;
+  // height: -webkit-fill-available;
 }

@@ -68,22 +68,21 @@ export class RegisterPage implements OnInit {
   createForms() {
     this.registerForm = this.formBuilder.group({
       roleForm: this.formBuilder.group({
-        poste: [''],
-        service: [''],
-        site: [''],
-        unite: [''],
+        poste: ['', Validators.required],
+        service: ['', Validators.required],
+        site: ['', Validators.required],
+        unite: ['', Validators.required],
       }),
       identityForm: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        matricule: [''],
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        matricule: ['', Validators.required],
         telephone: [''],
         password: [
           ''],
         confirmPassword: ['']
       })
     });
-    console.log(this.registerForm);
   }
 
   matchingPasswords(passwordKey: string, confirmPasswordKey: string, formGroup: FormGroup): ValidatorFn {
