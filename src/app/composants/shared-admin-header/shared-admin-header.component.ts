@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/_interfaces/user';
 import { AuthService } from 'src/app/_services/users/auth.service';
 import { NotificationsService } from 'src/app/_services/notifications/notifications.service';
 import { Observable, Subscription } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
+
 @Component({
   selector: 'app-shared-admin-header',
   templateUrl: './shared-admin-header.component.html',
   styleUrls: ['./shared-admin-header.component.scss'],
 })
-export class SharedAdminHeaderComponent implements OnInit {
+export class SharedAdminHeaderComponent implements OnInit, OnDestroy {
   public user: User;
   public documents: Observable<string>;
   public data: any;
@@ -23,12 +24,16 @@ export class SharedAdminHeaderComponent implements OnInit {
   ) {
 
   }
+  ngOnDestroy(): void {
+    this.socket.disconnect();
+  }
+  ionViewDidLeave() {
+    console.log('view did leave');
+    this.socket.disconnect();
+  }
 
   ngOnInit() {
     this.user = this.authService.authUser;
-    this.socket.on('notification', data => {
-      this.data = data;
-    });
   }
   logoutClick() {
     this.authService.logout()
@@ -43,4 +48,5 @@ export class SharedAdminHeaderComponent implements OnInit {
     console.log('notify click');
     this.notificationsService.newNotif();
   }
+
 }
