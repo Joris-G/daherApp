@@ -9,7 +9,7 @@ import { UsersService } from 'src/app/_services/users/users.service';
   templateUrl: './user-sheet.component.html',
   styleUrls: ['./user-sheet.component.scss'],
 })
-export class UserSheetComponent implements OnInit {
+export class UserSheetComponent {
   @Input() user: User;
   @Input() userState = false;
   @Output() stateChangeEv: EventEmitter<boolean> = new EventEmitter();
@@ -19,11 +19,24 @@ export class UserSheetComponent implements OnInit {
     private userService: UsersService,
   ) { }
 
-  log(text) {
-    console.log(text);
+  updateUserClick() {
+    this.loadingService.startLoading('Mise à jour de l\'utilisateur');
+    this.userService.updateUser(this.user)
+      .subscribe(
+        (resp) => {
+          console.log(resp);
+          this.loadingService.stopLoading();
+        },
+        (err) => {
+          console.error(err);
+          this.loadingService.stopLoading();
+          this.alertService.simpleAlert(
+            `Erreur serveur`,
+            `Problème lors de la mise à jour`,
+            `L'utilisateur n'a pas été modifié. Veuillez recommencer.`
+          );
+        });
   }
-
-  ngOnInit() { }
 
   deleteUserClick() {
     this.loadingService.startLoading('Suppression de l\'utilisateur');

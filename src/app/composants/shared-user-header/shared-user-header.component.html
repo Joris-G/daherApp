@@ -1,11 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar color=primary>
+
+    <!-- left side -->
+
     <ion-buttons slot="start">
       <ion-menu-button autoHide=false color="light"></ion-menu-button>
       <ion-img class="ion-hide-sm-down logo" src="assets/images/logoDaherFondBleu.png" (click)="navigate('home')">
       </ion-img>
     </ion-buttons>
+
+
+    <!-- middle side -->
+
     <ion-title class="ion-text-uppercase ion-text-center">{{pageTitle}}</ion-title>
+
+
+    <!-- right side -->
+
     <ion-label slot=end class="dev">{{envMode}}</ion-label>
     <ion-chip id="button-profil" color=light slot=end class=ion-margin-end outline
       (click)="isPopoverOpen=!isPopoverOpen">
@@ -47,6 +58,8 @@
     </ion-button>
   </ion-toolbar>
 </ion-header>
-<!-- <ion-content>
+<ion-content>
   <app-user-sheet [user]="user" [userState]="isUserOpen" (stateChangeEv)="isUserOpen = $event"></app-user-sheet>
-</ion-content> -->
+</ion-content>
+<!-- <app-user-sheet [user]="selectedUser" [userState]="isUserSelected" (stateChangeEv)="isUserSelected=$event">
+</app-user-sheet> -->

@@ -110,7 +110,7 @@ export class UsersService {
       site: this.usineService.getIri(user.site),
       tel: user.tel
     };
-    return this.requestService.createPutRequest(`${environment.usineApi}users/${user.id}`, userToUpdate);
+    return this.requestService.createPatchRequest(`${environment.usineApi}users/${user.id}`, userToUpdate);
   }
 
   addUserToGroup(user: User) {

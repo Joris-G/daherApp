@@ -19,11 +19,13 @@
       </ion-item>
       <ion-item>
         <ion-label>Matricule</ion-label>
-        <ion-input type="text" [value]="user.matricule"></ion-input>
+        <ion-input disabled="true" type="text" [value]="user.matricule"></ion-input>
+        <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
       </ion-item>
       <ion-item>
         <ion-label>E-Mail</ion-label>
-        <ion-input type="text" [value]="user.mail"></ion-input>
+        <ion-input disabled="true" type="text" [value]="user.mail"></ion-input>
+        <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
       </ion-item>
       <ion-item>
         <ion-label>Téléphone</ion-label>
@@ -33,14 +35,12 @@
 
     <ion-footer>
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <!-- <ion-button size=small (click)="confirmUser(user, true)">
-                                              <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
-                                            </ion-button>
-                                            <ion-button size=small color=danger (click)="confirmUser(user, false)">
-                                              <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-                                            </ion-button> -->
-          <ion-button size=small (click)="deleteUserClick()">
+        <ion-buttons>
+          <ion-button slot=end size=small (click)="updateUserClick()">
+            <label>Enregistrer</label>
+            <ion-icon slot="start" name="sync-outline"></ion-icon>
+          </ion-button>
+          <ion-button slot=end size=small (click)="deleteUserClick()">
             <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
           </ion-button>
         </ion-buttons>

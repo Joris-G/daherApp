@@ -57,8 +57,8 @@ export class RequestService {
     });
   }
 
-  createPatchRequest(url: string, body: any): Observable<any> {
-    return this.http.patch<HttpResponse<any>>(`${environment.apiServer}${url}`, body, {
+  createPatchRequest(url: string, body: any) {
+    return this.http.patch<any>(`${environment.apiServer}${url}`, body, {
       headers: (this.apiToken !== '') ? new HttpHeaders()
         .append('Accept', 'application/json')
         .append('Content-Type', 'application/merge-patch+json')
