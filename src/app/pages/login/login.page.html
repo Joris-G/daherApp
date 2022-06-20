@@ -5,30 +5,43 @@
 </ion-header> -->
 
 <ion-content [fullscreen]="true">
-    <ion-grid fixed class="full-height ion-align-items-center ion-justify-content-center">
-        <ion-row class="ion-align-items-center">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
+  <ion-grid fixed class="full-height ion-align-items-center ion-justify-content-center">
+    <ion-row class="ion-align-items-center">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
 
-                <ion-item>
-                    <ion-label position="floating">Nom d'utilisateur
-                        <ion-text color="danger">*</ion-text>
-                    </ion-label>
-                    <ion-input autocapitalize="on" #userName required formControlName="userName" type="text" autocomplete=off autofocus="true" inputmode=numeric value="204292"></ion-input>
-                    <ion-note>
-                        Le nom d'utilisateur est le numéro de matricule présent sur le badge
-                    </ion-note>
-                </ion-item>
-                <ion-item>
-                    <ion-label position="floating">Password
-                    </ion-label>
-                    <ion-input #password formControlName="password" type="password" value=""></ion-input>
-                </ion-item>
-                <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
-                    Se connecter
-                </ion-button>
-                <ion-button fill="clear" [routerLink]="['/register']"> Créer un compte
-                </ion-button>
-            </form>
-        </ion-row>
-    </ion-grid>
+        <ion-item>
+          <ion-label position="floating">Nom d'utilisateur
+            <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input autocapitalize="on" #userName required formControlName="userName" type="text" autocomplete=off
+            autofocus="true" inputmode=numeric value="204292"></ion-input>
+          <ion-note>
+            Le nom d'utilisateur est le numéro de matricule présent sur le badge
+          </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password
+          </ion-label>
+          <ion-input #password formControlName="password" type="password" value=""></ion-input>
+        </ion-item>
+        <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
+          Se connecter
+        </ion-button>
+        <ion-button fill="clear" [routerLink]="['/register']"> Créer un compte
+        </ion-button>
+      </form>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="title" slot=end class="ion-padding">
+      Version : {{version}}
+    </div>
+
+
+
+
+  </ion-toolbar>
+</ion-footer>

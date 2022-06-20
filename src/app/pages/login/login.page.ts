@@ -7,15 +7,17 @@ import { environment } from 'src/environments/environment';
 import { isDevMode } from '@angular/core';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { AlertService } from 'src/app/_services/divers/alert.service';
-
+import packageJson from 'package.json';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+
   @ViewChild('userName') userName: IonInput;
   @ViewChild('password') password: IonInput;
+  public version: string = packageJson.version;
   public loginForm: FormGroup;
   private reRouteOpts = [
     {
