@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { IonInput } from '@ionic/angular';
-import { Core } from 'src/app/_interfaces/molding/core';
-import { Kit } from 'src/app/_interfaces/molding/kit';
+import { AlertController, IonInput } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { Core, Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
@@ -32,12 +32,12 @@ export class ScanMoldingInputComponent implements AfterViewInit {
   @ViewChild('scanButton') scanButton: IonInput;
 
   /**
-   *
+   * Emet un évènement au moulage
    *
    * @type {(EventEmitter<Kit | Core | Tool>)}
    * @memberof ScanMoldingInputComponent
    */
-  @Output() evOnInput: EventEmitter<Kit | Core | Tool> = new EventEmitter<Kit | Core | Tool>();
+  @Output() evOnInput: EventEmitter<Kit | Core | Tool> = new EventEmitter<Kit | Core | Tool | any>();
 
 
   /**
@@ -47,6 +47,23 @@ export class ScanMoldingInputComponent implements AfterViewInit {
    * @memberof ScanMoldingInputComponent
    */
   public scanButtonText: string;
+
+  /**
+   *
+   *
+   * @type {boolean}
+   * @memberof ScanMoldingInputComponent
+   */
+  public isOpenNonExpiredMaterial: boolean;
+
+
+  /**
+   *
+   *
+   * @type {Observable<any>}
+   * @memberof ScanMoldingInputComponent
+   */
+  public getScanInput$: Observable<Core | Kit | Tool>;
 
 
   /**
@@ -60,6 +77,7 @@ export class ScanMoldingInputComponent implements AfterViewInit {
     private scanService: ScanService,
     private loadingService: LoadingService,
     private alertService: AlertService,
+    private alertCtrl: AlertController,
   ) { }
 
 
@@ -122,37 +140,34 @@ export class ScanMoldingInputComponent implements AfterViewInit {
    * @param inputValue entrée texte de l'input
    * @memberof ScanMoldingInputComponent
    */
-  onInputChange(inputValue: string): void {
-    this.loadingService.startLoading('Patienter pendant le chargement');
-    const getScanInput$ = this.scanService.getScanInput(inputValue);
-    if (getScanInput$) {
-      getScanInput$.subscribe(
-        (input) => {
-          this.evOnInput.emit(input);
-          this.scanInput.value = '';
-          this.loadingService.stopLoading();
-          setTimeout(() => {
-            this.scanInput.setFocus();
-          }, 300);
-        },
-        (error) => {
-          console.error(error);
-          this.scanInput.value = '';
-          this.loadingService.stopLoading();
-          this.alertService.simpleAlert(
-            'Erreur lors du scan',
-            'L\'élement scanné ne correspond à rien de connu',
-            'Ré-essayer ou contacter j.grangier 06.87.89.24.25'
-          );
-        }
-      );
-    } else {
-      this.loadingService.stopLoading();
-      this.alertService.simpleAlert(
-        'Erreur lors du scan',
-        'L\'élement scanné ne correspond à rien de connu',
-        'Ré-essayer ou contacter j.grangier 06.87.89.24.25');
-    }
+  onInputChange(inputValue: string) {
+    // this.loadingService.startLoading('Patienter pendant le chargement');
+    this.scanService.getScanInput(inputValue).subscribe(
+      (input) => {
+        console.log(input);
+        this.evOnInput.emit(input);
+        this.scanInput.value = '';
+        // this.loadingService.stopLoading();
+        setTimeout(() => {
+          this.scanInput.setFocus();
+        }, 300);
+      },
+      (error) => {
+        console.error(error);
+        this.scanInput.value = '';
+        // this.loadingService.stopLoading();
+        this.alertService.simpleAlert(
+          'Erreur lors du scan',
+          'L\'élement scanné ne correspond à rien de connu',
+          'Ré-essayer ou contacter j.grangier 06.87.89.24.25'
+        );
+      }
+    );
 
+    // this.alertService.simpleAlert(
+    //   'Erreur lors du scan',
+    //   'L\'élement scanné ne correspond à rien de connu',
+    //   'Ré-essayer ou contacter j.grangier 06.87.89.24.25');
   }
+
 }

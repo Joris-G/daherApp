@@ -1,0 +1,24 @@
+<div class="title">
+  <h2>Référence</h2>
+  <p>Sélectionner la référence qui correspond</p>
+</div>
+<!-- (change)="material.reference = radioGroup.value" -->
+<ion-radio-group #radioGroup [(ngModel)]="material.reference">
+  <ion-item>
+    <ion-label>Autre :</ion-label>
+    <!-- <ion-radio slot="start"></ion-radio> -->
+    <ion-input #manualInput type="text" placeholder="entrée la référence du nida" [(ngModel)]="material.reference">
+    </ion-input>
+  </ion-item>
+  <ion-item *ngFor="let reference of references$ | async">
+    <ion-label>{{reference}}</ion-label>
+    <ion-radio slot="start" [value]="reference"></ion-radio>
+  </ion-item>
+</ion-radio-group>
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button (click)="validate()" color=success fill=solid>
+      Valider
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { from, Observable, of } from 'rxjs';
-import { Core } from 'src/app/_interfaces/molding/core';
-import { Kit } from 'src/app/_interfaces/molding/kit';
+import { Observable } from 'rxjs';
+import { Core, Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { CoreService } from 'src/app/_services/molding/core/core.service';
 import { KitService } from 'src/app/_services/molding/kits/kit.service';
 import { ToolService } from 'src/app/_services/tooling/tools/tool.service';
+import { ModalMaterialService } from '../molding/modal/modal-material.service';
 
 const REGEXKIT = new RegExp('^([0-9]){8}-[0-9]$');
 const REGEXSAPTOOLNUMBER = new RegExp('^OT([0-9]){6}$');
@@ -17,7 +17,8 @@ export class ScanService {
   constructor(
     private kitService: KitService,
     private toolService: ToolService,
-    private coreService: CoreService) {
+    private coreService: CoreService,
+    private materialModalService: ModalMaterialService) {
   }
 
 
@@ -29,29 +30,26 @@ export class ScanService {
    * @return retourne un objet Kit ou Tool
    * @memberof ScanService
    */
-  getScanInput(scanInputValue: string): Observable<Kit | Tool | Core | undefined> {
+  getScanInput(scanInputValue: string): Observable<Kit | Tool | Core | any> {
     const typeInput = this.getTypeInput(scanInputValue);
     console.log(typeInput);
-    if (typeInput) {
-      let obs: Observable<Kit | Tool | Core | undefined>;
-      switch (typeInput) {
-        case 'kit':
-          obs = this.sendKit(scanInputValue);
-          break;
-        case 'core':
-          obs = this.sendCore(scanInputValue);
-          break;
-        case 'tool':
-          obs = this.sendTool(scanInputValue);
-          break;
-        case '':
-          console.log('default');
-          obs = of(undefined);
-          break;
-      }
-      console.log(obs);
-      return obs;
+    let obs: Observable<Kit | Tool | Core | undefined>;
+    switch (typeInput) {
+      case 'kit':
+        obs = this.sendKit(scanInputValue);
+        break;
+      case 'tool':
+        obs = this.sendTool(scanInputValue);
+        break;
+      case 'core':
+      case '':
+        this.materialModalService.createModal(scanInputValue);
+        obs = this.materialModalService.materialObject;
+        // obs = this.sendCore(scanInputValue);
+        break;
     }
+    console.log(obs);
+    return obs;
   }
 
 

@@ -9,7 +9,6 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
-
 /* Core CSS required for Ionic components to work properly */
 
 @import "~@ionic/angular/css/core.css";
@@ -19,7 +18,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 
@@ -29,10 +28,20 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 .simple-alert {
-    .alert-head {
-        .alert-title {}
-        .alert-sub-title {}
+  .alert-head {
+    .alert-title {
     }
-    .alert-message {}
-    .alert-button-group {}
+    .alert-sub-title {
+    }
+  }
+  .alert-message {
+  }
+  .alert-button-group {
+  }
+}
+
+ion-modal.fullscreen {
+  --width: 100%;
+  --height: 100%;
+  --border-radius: 0;
 }

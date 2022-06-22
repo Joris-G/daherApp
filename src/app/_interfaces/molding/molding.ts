@@ -1,7 +1,6 @@
-import { Core } from 'src/app/_interfaces/molding/core';
-import { Kit } from 'src/app/_interfaces/molding/kit';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { User } from 'src/app/_interfaces/user';
+import { AdditionalMaterial, Core, Kit } from './composite-material-types';
 
 /**
  * En base de donnée :
@@ -15,7 +14,6 @@ import { User } from 'src/app/_interfaces/user';
  */
 export interface Molding {
   id: number;
-  cores: Core[];
   kits: Kit[];
   moldingDay: Date;
   createdBy: User;
@@ -29,6 +27,7 @@ export interface Molding {
   status?: boolean;
   userCreat?: User;
   OT?: Tool;
+  materialSupplementary?: AdditionalMaterial[];
 }
 
 export interface MoldingIri {
@@ -43,4 +42,5 @@ export interface MoldingIri {
   matDrap: string;
   woList?: any[];
   updatedAt?: Date;
+  materialSupplementary?: string[];
 }

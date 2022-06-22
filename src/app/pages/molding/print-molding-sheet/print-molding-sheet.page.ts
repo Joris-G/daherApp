@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as JsBarcode from 'jsbarcode';
-import { Kit } from 'src/app/_interfaces/molding/kit';
+import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { KitService } from 'src/app/_services/molding/kits/kit.service';

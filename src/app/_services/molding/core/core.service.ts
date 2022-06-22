@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Core } from 'src/app/_interfaces/molding/core';
+import { Core } from 'src/app/_interfaces/molding/composite-material-types';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,9 @@ export class CoreService {
     returnBatchNumber = {
       partNumber: returnBatchNumber[0],
       batch1: returnBatchNumber[1],
+      //TODO retirer les deux premiers caractères
       batch2: returnBatchNumber[2],
+      // TODO batch3: trois derniers caractères de batch2
     };
     const core: Core = {
       idCore: 1,

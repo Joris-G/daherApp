@@ -17,6 +17,10 @@ import { MoldingService } from 'src/app/_services/molding/moldings/molding.servi
 import { ToolService } from 'src/app/_services/tooling/tools/tool.service';
 import { ScanMoldingInputComponent } from './_components/scan-molding-input/scan-molding-input.component';
 import { PrintMoldingSheetPage } from './print-molding-sheet/print-molding-sheet.page';
+import { NonExpiredMaterialInputComponent } from './_components/non-expired-material-input/non-expired-material-input.component';
+import { ModalMaterialService } from 'src/app/_services/molding/modal/modal-material.service';
+import { NidaComponent } from './_components/non-expired-material-input/nida/nida.component';
+import { OtherMaterialsService } from 'src/app/_services/molding/otherMaterials/other-materials.service';
 
 @NgModule({
   imports: [
@@ -35,13 +39,17 @@ import { PrintMoldingSheetPage } from './print-molding-sheet/print-molding-sheet
     MoldingPage,
     CreateMoldingPage,
     ScanMoldingInputComponent,
-    PrintMoldingSheetPage
+    PrintMoldingSheetPage,
+    NonExpiredMaterialInputComponent,
+    NidaComponent,
   ],
   providers: [
     ScanService,
     KitService,
     MoldingService,
     ToolService,
+    ModalMaterialService,
+    OtherMaterialsService,
   ]
 })
 export class MoldingPageModule { }

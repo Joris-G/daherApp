@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Matériau non reconnu automatiquement</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" fullscreen="true">
+  <div class="orinal-input">
+    <h1>Entrée : <span color="primary">{{batchNumber}}</span></h1>
+  </div>
+  <ion-item-divider>
+  </ion-item-divider>
+
+  <div class="type">
+    <div class="label">
+      <h1>Type de l'entrée</h1>
+      <p>Sélectionner le type de matériau</p>
+    </div>
+    <!-- // TODO ionic router -->
+    <ion-segment #materialSegment [(ngModel)]="selectedType">
+      <ion-segment-button value="nida">
+        <ion-label>Nida</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="densif">
+        <ion-label>Densification</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="clinquant">
+        <ion-label>Clinquant</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="insert">
+        <ion-label>Insert</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <ng-container *ngIf="selectedType==='nida'">
+    <app-nida [batchNumberInput]="batchNumber" (nidaEmitter)="materialObject.next($event)"></app-nida>
+  </ng-container>
+
+  <ng-container *ngIf="selectedType!=='nida'">
+    Ce module est en cours de création
+
+  </ng-container>
+
+</ion-content>

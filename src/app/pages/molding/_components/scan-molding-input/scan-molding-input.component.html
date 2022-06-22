@@ -6,3 +6,9 @@
     (change)="onInputChange(scanInput.value.toString())" (focusout)="inputOnBlur()" (focusin)="inputOnFocus()">
   </ion-input>
 </div>
+
+<!-- <ion-modal [isOpen]="isOpenNonExpiredMaterial" (ionModalDidDismiss)="isOpenNonExpiredMaterial=false" class="fullscreen">
+  <ng-template>
+    <app-non-expired-material-input [originalInput]="scanInput.value.toString()"></app-non-expired-material-input>
+  </ng-template>
+</ion-modal> -->

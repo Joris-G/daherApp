@@ -2,8 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
-import { Core } from 'src/app/_interfaces/molding/core';
-import { Kit } from 'src/app/_interfaces/molding/kit';
+import { AdditionalMaterial, Core, Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { AlertService } from 'src/app/_services/divers/alert.service';
@@ -49,7 +48,7 @@ export class CreateMoldingPage implements OnInit {
    * @return
    * @memberof CreateMoldingPage
    */
-  onInput(inputValue: Tool | Kit | Core | undefined) {
+  onInput(inputValue: Tool | Kit | AdditionalMaterial | undefined) {
     if (Kit.isKit(inputValue)) {
       this.onKitInput(inputValue as Kit);
       return;
@@ -59,7 +58,8 @@ export class CreateMoldingPage implements OnInit {
       return;
     }
     if (Core.isCore(inputValue)) {
-      this.onCoreInput(inputValue as Core);
+      console.log('is Core');
+      this.onMatInput(inputValue as AdditionalMaterial);
       return;
     }
 
@@ -77,7 +77,7 @@ export class CreateMoldingPage implements OnInit {
     this.molding =
     {
       id: null,
-      cores: [],
+      materialSupplementary: [],
       kits: [],
       moldingDay: new Date(),
       outillage: null,
@@ -89,7 +89,7 @@ export class CreateMoldingPage implements OnInit {
     this.molding =
     {
       id: null,
-      cores: [],
+      materialSupplementary: [],
       kits: [],
       moldingDay: new Date(),
       outillage: null,
@@ -303,8 +303,9 @@ export class CreateMoldingPage implements OnInit {
    * @param coreObj
    * @memberof CreateMoldingPage
    */
-  private onCoreInput(coreObj: Core) {
+  private onMatInput(matObj: AdditionalMaterial) {
     this.alertService.presentToast('Nida Ajouté !');
+    this.molding.materialSupplementary.unshift(matObj);
     //     this.molding.cores.unshift(coreObj);
   }
 

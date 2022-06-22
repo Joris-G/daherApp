@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Kit } from 'src/app/_interfaces/molding/kit';
 import { Molding, MoldingIri } from 'src/app/_interfaces/molding/molding';
-import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { KitService } from '../kits/kit.service';
 import { ToolService } from 'src/app/_services/tooling/tools/tool.service';
@@ -9,6 +7,7 @@ import { UsersService } from 'src/app/_services/users/users.service';
 import { RequestService } from 'src/app/_services/request.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 
 /**
  * Service de gestion des kits
@@ -160,6 +159,7 @@ export class MoldingService {
     return {
       id: molding.id,
       kits: molding.kits.map((kit: Kit) => this.kitService.getIri(kit)),
+      materialSupplementary: molding.materialSupplementary.map((mat: any) => this.kitService.getIri(mat)),
       moldingDay: molding.moldingDay,
       createdBy: this.userService.getIri(molding.createdBy),
       outillage: (molding.OT) ? this.toolService.getIri(molding.OT) : null,
