@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { MaintenanceItem } from 'src/app/_interfaces/tooling/spec-maint-rep';
+import { MaintenanceItem } from 'src/app/_interfaces/tooling/tool-request';
 
 @Component({
   selector: 'app-maintenance-item',

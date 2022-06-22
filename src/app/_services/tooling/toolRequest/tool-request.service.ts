@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SpecCtrl, SpecCtrlIri } from 'src/app/_interfaces/tooling/spec-ctrl';
-import { MaintenanceItem, SpecMaintRep, SpecMaintRepIri } from 'src/app/_interfaces/tooling/spec-maint-rep';
-import { ToolRequest, ToolRequestIri } from 'src/app/_interfaces/tooling/tool-request';
+import { ToolRequest, ToolRequestIri, MaintenanceItem, SpecMaintRep, SpecMaintRepIri, SpecCtrl, SpecCtrlIri }
+  from 'src/app/_interfaces/tooling/tool-request';
 import { environment } from 'src/environments/environment';
 import { RequestService } from 'src/app/_services/request.service';
 import { ToolService } from 'src/app/_services/tooling/tools/tool.service';
@@ -36,18 +35,20 @@ export class ToolRequestService {
   createControlRequest(toolRequestToCreate: SpecCtrl) {
     const toolRequestToCreateIri: SpecCtrlIri = {
       id: toolRequestToCreate.id ?? null,
-      outillage: toolRequestToCreate.OT ? this.toolService.getIri(toolRequestToCreate.OT) : '',
+      outillage: toolRequestToCreate.outillage ? this.toolService.getIri(toolRequestToCreate.outillage) : '',
       dateBesoin: toolRequestToCreate.dateBesoin,
-      userCreat: this.userService.getIri(this.authService.authUser),
+      description: toolRequestToCreate.description,
+      image: '',
+      fichier: '',
       refPlan: toolRequestToCreate.refPlan,
       indPlan: toolRequestToCreate.indPlan,
       cheminCAO: toolRequestToCreate.cheminCAO,
-      description: toolRequestToCreate.description,
       detailsControle: toolRequestToCreate.detailsControle,
       tolerances: toolRequestToCreate.tolerances,
       dispoOut: toolRequestToCreate.dispoOut,
-      ligneBudgetaire: toolRequestToCreate.ligneBudgetaire,
       typeRapport: toolRequestToCreate.typeRapport,
+      ligneBudgetaire: toolRequestToCreate.ligneBudgetaire,
+      // userCreat: this.userService.getIri(this.authService.authUser),
     };
     return this.requestService.createPostRequest(`${environment.toolApi}controles`, toolRequestToCreateIri);
   }
@@ -109,7 +110,7 @@ export class ToolRequestService {
       id: toolRequestToUpdate.controle.id ?? null,
       outillage: toolRequestToUpdate.controle.OT ? this.toolService.getIri(toolRequestToUpdate.controle.OT) : '',
       dateBesoin: toolRequestToUpdate.dateBesoin,
-      userCreat: this.userService.getIri(toolRequestToUpdate.controle.demandeur),
+      userCreat: this.userService.getIri(toolRequestToUpdate.controle.demandeur[0]),
       refPlan: toolRequestToUpdate.controle.refPlan,
       indPlan: toolRequestToUpdate.controle.indPlan,
       cheminCAO: toolRequestToUpdate.controle.cheminCAO,

@@ -83,11 +83,11 @@
       <tr mat-row *matRowDef="let kit; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <div class="coreList" *ngIf="molding.cores">
+  <div class="coreList" *ngIf="molding.materialSupplementary">
     <div class="title">Âmes</div>
     <div class="list">
-      <ion-item *ngFor="let core of molding.cores">
-        <ion-label>{{core.batchNumber | json}}</ion-label>
+      <ion-item *ngFor="let core of molding.materialSupplementary">
+        <ion-label>{{core.numLot | json}}</ion-label>
       </ion-item>
     </div>
 

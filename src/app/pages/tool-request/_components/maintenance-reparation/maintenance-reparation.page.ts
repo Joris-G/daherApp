@@ -3,8 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonSelect, NavController } from '@ionic/angular';
 import { RequestType } from 'src/app/_enums/request-type';
-import { MaintenanceItem, SpecMaintRep } from 'src/app/_interfaces/tooling/spec-maint-rep';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
+import { ToolRequest, MaintenanceItem, SpecMaintRep } from 'src/app/_interfaces/tooling/tool-request';
 import { User } from 'src/app/_interfaces/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
@@ -108,7 +107,7 @@ export class MaintenanceReparationPage implements OnInit, OnDestroy {
       createdAt: new Date(),
       dateBesoin: new Date(),
       demandeur: this.authService.authUser,
-      toolSAP: null,
+      outillage: null,
       type: RequestType.maintenance,
 
       maintenance:

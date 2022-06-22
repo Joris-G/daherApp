@@ -102,7 +102,7 @@ export class NewToolPage implements OnInit {
       dateBesoin: this.newToolRequestForm.value.needDate,
       createdAt: new Date(),
       demandeur: this.authService.authUser,
-      toolSAP: this.toolService.getIri(this.newTool)
+      outillage: this.toolService.getIri(this.newTool)
     };
     // on soummet la toolrequest
     this.toolRequestService.createToolRequest(toolRequest)

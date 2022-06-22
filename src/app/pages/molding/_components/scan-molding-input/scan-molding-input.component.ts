@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AlertController, IonInput } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { Core, Kit } from 'src/app/_interfaces/molding/composite-material-types';
+import { AdditionalMaterial, Core, Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
@@ -37,7 +37,7 @@ export class ScanMoldingInputComponent implements AfterViewInit {
    * @type {(EventEmitter<Kit | Core | Tool>)}
    * @memberof ScanMoldingInputComponent
    */
-  @Output() evOnInput: EventEmitter<Kit | Core | Tool> = new EventEmitter<Kit | Core | Tool | any>();
+  @Output() evOnInput: EventEmitter<Kit | AdditionalMaterial | Tool> = new EventEmitter<Kit | AdditionalMaterial | Tool | any>();
 
 
   /**
