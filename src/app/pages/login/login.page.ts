@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
     },
     {
       roles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_METHODES'],
-      route: 'molding/create-molding'
+      route: 'home'
     },
   ];
 
