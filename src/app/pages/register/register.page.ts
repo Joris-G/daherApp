@@ -78,8 +78,7 @@ export class RegisterPage implements OnInit {
         lastName: ['', Validators.required],
         matricule: ['', Validators.required],
         telephone: [''],
-        password: [
-          ''],
+        password: [''],
         confirmPassword: ['']
       })
     });
@@ -105,7 +104,7 @@ export class RegisterPage implements OnInit {
     this.unites$ = this.uniteService.getUnites();
     this.sites$ = this.siteService.getSites();
   }
-
+  //TODO ajouter message d'alerte pour aider à trouver un mot de passe valide
   submitRole() {
     if (this.registerForm.controls.roleForm.value.poste !== 1) {
       this.registerForm.controls.identityForm.get('password').setValidators([

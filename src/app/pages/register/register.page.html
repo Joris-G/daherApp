@@ -100,6 +100,9 @@
                 </ion-col>
               </ion-row>
               <ion-row>
+                <!-- **************************** -->
+                <!-- *********    NOM    ******** -->
+                <!-- **************************** -->
                 <ion-col size="6">
                   <ion-item>
                     <ion-label color=primary position="floating">Nom
@@ -107,8 +110,10 @@
                     </ion-label>
                     <ion-input required formControlName="lastName" type="text"></ion-input>
                   </ion-item>
-
                 </ion-col>
+                <!-- **************************** -->
+                <!-- *******    PRENOM   ******** -->
+                <!-- **************************** -->
                 <ion-col size="6">
                   <ion-item>
                     <ion-label color=primary position="floating">Prénom
@@ -119,13 +124,21 @@
                 </ion-col>
               </ion-row>
               <ion-row>
+                <!-- **************************** -->
+                <!-- *****   MOT DE PASSE   ***** -->
+                <!-- **************************** -->
                 <ion-col size="12">
                   <ion-item *ngIf="registerForm.controls.roleForm.value.poste !==4">
                     <ion-label color=primary position="floating">Mot de passe
                       <ion-text color="danger">*</ion-text>
                     </ion-label>
                     <ion-input type="password" name="password" formControlName="password"></ion-input>
+                    <ion-note>Le mot de passe doit faire entre 6 et 12 caractères. Il doit au moins contenir une
+                      majuscule et un chiffre</ion-note>
                   </ion-item>
+                  <!-- **************************** -->
+                  <!-- ****  CTRL MOT DE PASSE  *** -->
+                  <!-- **************************** -->
                   <ion-item *ngIf="registerForm.controls.roleForm.value.poste !==4">
                     <ion-label color=primary position="floating">Répéter mot de passe
                       <ion-text color="danger">*</ion-text>
@@ -135,6 +148,9 @@
                 </ion-col>
               </ion-row>
               <ion-row>
+                <!-- **************************** -->
+                <!-- ******   MATRICULE   ******* -->
+                <!-- **************************** -->
                 <ion-col size="6">
                   <ion-item>
                     <ion-label color=primary position="floating">Matricule
@@ -143,6 +159,9 @@
                     <ion-input required formControlName="matricule" type="text"></ion-input>
                   </ion-item>
                 </ion-col>
+                <!-- **************************** -->
+                <!-- ******   TELEPHONE   ******* -->
+                <!-- **************************** -->
                 <ion-col size="6">
                   <ion-item>
                     <ion-label color=primary position="floating">Téléphone
