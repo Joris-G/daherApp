@@ -174,7 +174,7 @@ export class ToolRequestService {
   }
 
   getToolRequests() {
-    return this.requestService.createGetRequest(environment.toolApi + 'demandes');
+    return this.requestService.createGetRequest(`${environment.toolApi}demandes`);
   }
 
 

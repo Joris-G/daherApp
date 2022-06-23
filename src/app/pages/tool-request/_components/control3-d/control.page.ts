@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonSelect, LoadingController, NavController } from '@ionic/angular';
-import { ToolRequest, SpecCtrlFormGroup, MoyenMesure, SpecCtrl, TypeRapport } from 'src/app/_interfaces/tooling/tool-request';
+import { LoadingController, NavController } from '@ionic/angular';
+import { ToolRequest, SpecCtrlFormGroup, MoyenMesure, TypeRapport, SpecCtrl } from 'src/app/_interfaces/tooling/tool-request';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { ToolRequestService } from 'src/app/_services/tooling/toolRequest/tool-request.service';
@@ -40,20 +40,21 @@ export class Control3DPage implements OnInit {
     private loaderService: LoadingService
   ) { }
 
+
   ngOnInit() {
     console.log('init');
     this.controlForm = this.formBuilder.group(
       {
         refPlan: new FormControl(),
         indPlan: new FormControl(),
-        caoPath: new FormControl(),
-        ctrlReasons: new FormControl(),
-        ctrlDetails: new FormControl(),
-        precisionTolerances: new FormControl(),
-        dispoTool: new FormControl(),
+        cheminCAO: new FormControl(),
+        description: new FormControl(),
+        detailsControle: new FormControl(),
+        tolerances: new FormControl(),
+        dispoOut: new FormControl(),
         dateBesoin: new FormControl(),
         typeRapport: new FormControl(),
-        interventionDate: new FormControl(),
+        // interventionDate: new FormControl(),
         moyenMesure: new FormControl(),
         infosComplementaire: new FormControl(),
         outillage: new FormControl(),
@@ -102,7 +103,6 @@ export class Control3DPage implements OnInit {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     console.log(id);
     if (id) {
-      this.loaderService.startLoading('Patienter pendant le chargement');
       this.loadControlData(id);
     } else {
       this.canUpDate = false;
@@ -144,49 +144,54 @@ export class Control3DPage implements OnInit {
   }
 
   loadControlData(idDemande: string) {
+    this.loaderService.startLoading('Patienter pendant le chargement');
     console.log('load ctrl data');
-    // this.toolRequestService.getToolRequest(idDemande)
-    //   .subscribe((responseRequest: ToolRequest) => {
-    //     this.toolRequestService.getControl(responseRequest.controle.id)
-    //       .subscribe((responseControle: SpecCtrl) => {
-    //         console.log(responseRequest);
-    //         this.toolRequest = responseRequest;
-    //         this.toolRequest.controle = responseControle;
-    //         // this.ctrlStatut.value = this.toolRequest.statut;
-    //         this.controlForm.patchValue({
-    //           refPlan: this.toolRequest.controle.refPlan,
-    //           indPlan: this.toolRequest.controle.indPlan,
-    //           caoPath: this.toolRequest.controle.cheminCAO,
-    //           ctrlReasons: this.toolRequest.controle.description,
-    //           ctrlDetails: this.toolRequest.controle.detailsControle,
-    //           precisionTolerances: this.toolRequest.controle.tolerances,
-    //           dispoTool: this.toolRequest.controle.dispoOut,
-    //           needDate: this.toolRequest.controle.dateBesoin,
-    //           typeRapport: this.toolRequest.controle.typeRapport,
-    //           interventionDate: this.toolRequest.controle.interventionDate,
-    //           moyenMesure: this.toolRequest.controle.moyenMesure,
-    //           infoComplementaires: this.toolRequest.controle.infosComplementaire,
-    //           outillage: this.toolRequest.controle.OT.sapToolNumber,
-    //           ligneBudgetaire: this.toolRequest.controle.ligneBudgetaire,
-    //           statut: this.toolRequest.statut,
-    //         });
-    //         this.page.title = 'Modification demande de contrôle 3D : ID ' + this.toolRequest.id;
-    //         this.loaderService.stopLoading();
-    //       });
 
-    //     if (this.toolRequest.statut === 'NOUVELLE') {
-    //       this.canUpDate = true;
-    //       console.log(this.canUpDate);
-    //       this.canManage = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
-    //     } else {
-    //       this.canUpDate = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
-    //       this.canManage = this.canUpDate;
-    //       console.log(this.canUpDate);
-    //     }
-    //   },
-    //     () => {
-    //       this.navCtrl.back();
-    //     });
+    this.toolRequestService.getToolRequest(idDemande)
+      .subscribe((responseRequest: ToolRequest) => {
+        console.log(responseRequest);
+        this.toolRequestService.getControl(responseRequest.controle.id)
+          .subscribe((responseControle: SpecCtrl) => {
+            this.controlForm.patchValue(responseControle);
+            this.loaderService.stopLoading();
+            //         console.log(responseRequest);
+            //         this.toolRequest = responseRequest;
+            //         this.toolRequest.controle = responseControle;
+            //         // this.ctrlStatut.value = this.toolRequest.statut;
+            //         this.controlForm.patchValue({
+            //           refPlan: this.toolRequest.controle.refPlan,
+            //           indPlan: this.toolRequest.controle.indPlan,
+            //           caoPath: this.toolRequest.controle.cheminCAO,
+            //           ctrlReasons: this.toolRequest.controle.description,
+            //           ctrlDetails: this.toolRequest.controle.detailsControle,
+            //           precisionTolerances: this.toolRequest.controle.tolerances,
+            //           dispoTool: this.toolRequest.controle.dispoOut,
+            //           needDate: this.toolRequest.controle.dateBesoin,
+            //           typeRapport: this.toolRequest.controle.typeRapport,
+            //           interventionDate: this.toolRequest.controle.interventionDate,
+            //           moyenMesure: this.toolRequest.controle.moyenMesure,
+            //           infoComplementaires: this.toolRequest.controle.infosComplementaire,
+            //           outillage: this.toolRequest.controle.OT.sapToolNumber,
+            //           ligneBudgetaire: this.toolRequest.controle.ligneBudgetaire,
+            //           statut: this.toolRequest.statut,
+            //         });
+            //         this.page.title = 'Modification demande de contrôle 3D : ID ' + this.toolRequest.id;
+            //         this.loaderService.stopLoading();
+          });
+
+        //     if (this.toolRequest.statut === 'NOUVELLE') {
+        //       this.canUpDate = true;
+        //       console.log(this.canUpDate);
+        //       this.canManage = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
+        //     } else {
+        //       this.canUpDate = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
+        //       this.canManage = this.canUpDate;
+        //       console.log(this.canUpDate);
+        //     }
+        //   },
+        //     () => {
+        //       this.navCtrl.back();
+      });
   }
 
   submitControlForm() {

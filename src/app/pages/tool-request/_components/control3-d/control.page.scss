@@ -1,23 +1,27 @@
 .main-form {
-    width: fit-content;
+  width: fit-content;
 }
 
 .flex-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .content-container {
-    display: flex;
-    height: 100%;
-    overflow: hidden;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
 }
 
 .control-form {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 .print-preview {
-    overflow-y: auto;
+  overflow-y: auto;
+}
+.vertical {
+  display: flex;
+  flex-direction: column;
 }

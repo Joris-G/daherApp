@@ -51,7 +51,7 @@
             <ion-modal trigger="open-modal">
               <ng-template>
                 <ion-content>
-                  <ion-datetime #dispoTool presentation="date" formControlName="dispoTool"
+                  <ion-datetime #dispoTool presentation="date" formControlName="dispoOut"
                     display-format="EEEE DD.MMMM.YYYY"
                     (ionChange)="controlForm.value.dispoOut= dateValue(dispoTool.value)">
                     <div slot="title">Date de mise à disposition au service outillage</div>
@@ -104,7 +104,8 @@
             <ion-label>Format du modèle 3D fourni si nécessaire
               <!-- <ion-text color="danger">*</ion-text> -->
             </ion-label>
-            <ion-input #caoPath formControlName="caoPath" type="text" placeholder="Fournir CAO et / ou chemin d’accès">
+            <ion-input #caoPath formControlName="cheminCAO" type="text"
+              placeholder="Fournir CAO et / ou chemin d’accès">
             </ion-input>
 
           </ion-item>
@@ -126,13 +127,15 @@
           <!-- ******************************* -->
 
 
-          <ion-item fill="outline" lines=none>
-            <ion-label>But du contrôle, de l'essai ou de l 'expertise
-              <ion-text color="danger">*</ion-text>
-            </ion-label>
+          <div fill="outline" lines=none class="vertical">
+            <ion-item>
+              <ion-label>But du contrôle, de l'essai ou de l 'expertise
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+            </ion-item>
             <!-- base_url: '/tinymce',
                       suffix: '.min', -->
-            <editor #ctrlReasons slot="" formControlName="ctrlReasons" [init]="{
+            <editor #ctrlReasons slot="" formControlName="description" [init]="{
                       plugins: 'lists link image table wordcount',
                       menubar: false,
 
@@ -142,7 +145,7 @@
                     }"></editor>
             <!-- <ion-textarea autoGrow required #ctrlReasons formControlName=" ctrlReasons " type="text " (ionChange)="test() "></ion-textarea> -->
             <!-- <ion-note></ion-note> -->
-          </ion-item>
+          </div>
 
 
           <!-- ******************************* -->
@@ -150,11 +153,13 @@
           <!-- ******************************* -->
 
 
-          <ion-item>
-            <ion-label>Détails de la mesure
-              <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <editor #ctrlReasons slot="" formControlName="ctrlDetails" [init]="{
+          <div class="vertical">
+            <ion-item>
+              <ion-label>Détails de la mesure
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+            </ion-item>
+            <editor #ctrlReasons slot="" formControlName="detailsControle" [init]="{
               plugins: 'lists link image table wordcount',
               menubar: false,
               statusbar:false,
@@ -162,18 +167,20 @@
             }"></editor>
             <!-- <ion-textarea autoGrow required #ctrlDetails formControlName="ctrlDetails" type="text"
               placeholder="lieux, référentiel..."></ion-textarea> -->
-          </ion-item>
+          </div>
 
           <!-- ******************************* -->
           <!-- **  PRECISION / TOLERANCES   ** -->
           <!-- ******************************* -->
 
 
-          <ion-item>
-            <ion-label>Précision demandée et attendue
-              <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <editor #ctrlReasons slot="" formControlName="precisionTolerances" [init]="{
+          <div class="vertical">
+            <ion-item>
+              <ion-label>Précision demandée et attendue
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+            </ion-item>
+            <editor #ctrlReasons slot="" formControlName="tolerances" [init]="{
               plugins: 'lists link image table wordcount',
               menubar: false,
               statusbar:false,
@@ -181,7 +188,7 @@
             }"></editor>
             <!-- <ion-textarea autoGrow required #tolerance formControlName="precisionTolerances" type="text"
               placeholder="IT plans et spécifications de définition"></ion-textarea> -->
-          </ion-item>
+          </div>
 
 
           <!-- ******************************* -->
@@ -258,14 +265,17 @@
             <ion-modal trigger="open-date-interv ">
               <ng-template>
                 <ion-content>
-                  <ion-datetime #interventionDate presentation="date" formControlName="interventionDate"
-                    display-format="EEEE DD.MMMM.YYYY">
+                  <!-- <ion-datetime #interventionDate presentation="date" formControlName="interventionDate"
+                    display-format="EEEE DD.MMMM.YYYY"> -->
+                  <ion-datetime #interventionDate presentation="date" display-format="EEEE DD.MMMM.YYYY">
                     <div slot="title">Date d'intervention</div>
                   </ion-datetime>
                 </ion-content>
               </ng-template>
             </ion-modal>
           </ion-item>
+
+
           <ion-item>
             <ion-label>Informations complémentaires
             </ion-label>
