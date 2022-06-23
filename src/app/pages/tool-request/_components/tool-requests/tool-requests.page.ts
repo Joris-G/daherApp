@@ -29,10 +29,13 @@ import {
   ]
 })
 export class ToolRequestsPage implements OnInit {
+  //TODO commenter les propriétés
+
   public displayedRequestColumns: string[] = ['statut', 'id', 'tool', 'createdAt', 'userCreat', 'needDate', 'buttons'];
-  public requestList: ToolRequest[];
+  //TODO à supprimer **  public requestList: ToolRequest[];
   public tableRequestsDataSource: MatTableDataSource<ToolRequest> = new MatTableDataSource();
   public isAdmin = false;
+  //TODO améliorer les filtres
   public filterSelectObjects = [];
   private filterValues = {};
   private activeFilters = [];
