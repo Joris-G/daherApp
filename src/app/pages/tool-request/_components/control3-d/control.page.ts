@@ -29,12 +29,10 @@ export class Control3DPage implements OnInit {
 
   constructor(
     private toolRequestService: ToolRequestService,
-    private authService: AuthService,
     private alertService: AlertService,
     private activatedRoute: ActivatedRoute,
     private roleGuard: RoleGuard,
     private navCtrl: NavController,
-    private loadingControler: LoadingController,
     public formBuilder: FormBuilder,
     private loaderService: LoadingService
   ) { }
