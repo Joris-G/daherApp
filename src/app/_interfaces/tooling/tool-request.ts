@@ -8,9 +8,9 @@ import { User } from 'src/app/_interfaces/user';
 
 export interface ToolRequest {
   id?: number;
-  demandeur: User | string;
-  createdAt: Date;
-  dateBesoin: Date;
+  demandeur?: User | string;
+  createdAt?: Date;
+  dateBesoin?: Date;
   outillage: Tool | string;
   groupeAffectation?: GroupeAffectation;
   dateAffectation?: Date;
@@ -25,79 +25,6 @@ export interface ToolRequest {
   userReal?: User;
   affectation?: string[];
 }
-// {
-//   "id": 0,
-//   "createdAt": "2022-06-20T13:33:16.171Z",
-//   "dateAffectation": "2022-06-20T13:33:16.171Z",
-//   "groupeAffectation": "string",
-//   "datePlanif": "2022-06-20T13:33:16.171Z",
-//   "dateReal": "2022-06-20T13:33:16.171Z",
-//   "statut": "string",
-//   "sbo": {
-//     "id": 0,
-//     "outillage": {
-//       "id": 0,
-//       "sapToolNumber": 0,
-//       "designation": "string",
-//       "secteur": "string"
-//     },
-//     "description": "string",
-//     "dateBesoin": "2022-06-20T13:33:16.171Z",
-//     "userCreat": "string",
-//     "fichier": "string"
-//   },
-//   "controle":
-//     "equipement": {
-//       "id": 0,
-//       "numEquipement": 0,
-//       "identification": "string",
-//       "statut": true
-//     },
-//     "dateBesoin": "2022-06-20T13:33:16.171Z",
-//     "description": "string",
-//     "userCreat": "string",
-//     "demandeur": [
-//       "string"
-//     ]
-//   },
-//   "maintenance": {
-//     "id": 0,
-//     "outillage": {
-//       "id": 0,
-//       "sapToolNumber": 0,
-//       "designation": "string",
-//       "secteur": "string"
-//     },
-//     "equipement": {
-//       "id": 0,
-//       "numEquipement": 0,
-//       "identification": "string",
-//       "statut": true
-//     },
-//     "dateBesoin": "2022-06-20T13:33:16.172Z",
-//     "userCreat": "string",
-//     "demandeur": [
-//       "string"
-//     ],
-//     "valideur": [
-//       "string"
-//     ]
-//   },
-//   "type": "string",
-//   "affectation": [
-//     "string"
-//   ]
-// }
-
-
-
-// title?: string;
-// Description: string;
-// imgUrl?: string;
-// fileUrl?: string;
-
-
-
 
 export interface ToolRequestIri {
   id: number;
@@ -117,6 +44,15 @@ export interface ToolRequestIri {
   realizationDate?: Date;
   toolingNote?: string;
   statut: string;
+}
+
+
+export interface ToolRequestFormGroup extends FormGroup {
+  value: ToolRequest;
+  controls: {
+    statut: AbstractControl;
+    groupeAffectation: AbstractControl;
+  };
 }
 
 export interface SpecCtrl {

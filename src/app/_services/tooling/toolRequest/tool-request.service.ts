@@ -102,31 +102,30 @@ export class ToolRequestService {
       createdAt: toolRequestToUpdate.createdAt,
       id: toolRequestToUpdate.id
     };
-    return this.requestService.createPutRequest(`${environment.toolApi}demandes/${toolRequestToUpdateIri.id}`, toolRequestToUpdateIri);
+    return this.requestService.createPatchRequest(`${environment.toolApi}demandes/${toolRequestToUpdateIri.id}`, toolRequestToUpdateIri);
   }
 
-  updateControlRequest(toolRequestToUpdate: ToolRequest) {
+  updateControlRequest(toolRequestToUpdate: SpecCtrl) {
     const toolRequestToCreateIri: SpecCtrlIri = {
-      id: toolRequestToUpdate.controle.id ?? null,
-      outillage: toolRequestToUpdate.controle.OT ? this.toolService.getIri(toolRequestToUpdate.controle.OT) : '',
+      id: toolRequestToUpdate.id,
+      outillage: toolRequestToUpdate.outillage ? this.toolService.getIri(toolRequestToUpdate.outillage) : '',
       dateBesoin: toolRequestToUpdate.dateBesoin,
-      userCreat: this.userService.getIri(toolRequestToUpdate.controle.demandeur[0]),
-      refPlan: toolRequestToUpdate.controle.refPlan,
-      indPlan: toolRequestToUpdate.controle.indPlan,
-      cheminCAO: toolRequestToUpdate.controle.cheminCAO,
-      description: toolRequestToUpdate.controle.description,
-      detailsControle: toolRequestToUpdate.controle.detailsControle,
-      tolerances: toolRequestToUpdate.controle.tolerances,
-      dispoOut: toolRequestToUpdate.controle.dispoOut,
-      ligneBudgetaire: toolRequestToUpdate.controle.ligneBudgetaire,
-      interventionDate: toolRequestToUpdate.controle.interventionDate,
-      moyenMesure: toolRequestToUpdate.controle.moyenMesure,
-      infosComplementaire: toolRequestToUpdate.controle.infosComplementaire,
-      visaControleur: toolRequestToUpdate.controle.visaControleur,
-      typeRapport: toolRequestToUpdate.controle.typeRapport,
+      refPlan: toolRequestToUpdate.refPlan,
+      indPlan: toolRequestToUpdate.indPlan,
+      cheminCAO: toolRequestToUpdate.cheminCAO,
+      description: toolRequestToUpdate.description,
+      detailsControle: toolRequestToUpdate.detailsControle,
+      tolerances: toolRequestToUpdate.tolerances,
+      dispoOut: toolRequestToUpdate.dispoOut,
+      ligneBudgetaire: toolRequestToUpdate.ligneBudgetaire,
+      interventionDate: toolRequestToUpdate.interventionDate,
+      moyenMesure: toolRequestToUpdate.moyenMesure,
+      infosComplementaire: toolRequestToUpdate.infosComplementaire,
+      visaControleur: toolRequestToUpdate.visaControleur,
+      typeRapport: toolRequestToUpdate.typeRapport,
     };
     console.log(toolRequestToCreateIri);
-    return this.requestService.createPutRequest(`${environment.toolApi}controles/${toolRequestToCreateIri.id}`, toolRequestToCreateIri);
+    return this.requestService.createPatchRequest(`${environment.toolApi}controles/${toolRequestToCreateIri.id}`, toolRequestToCreateIri);
   }
 
   async updateMaintenanceItems(maintenanceItemsToUpdate: MaintenanceItem[]) {
