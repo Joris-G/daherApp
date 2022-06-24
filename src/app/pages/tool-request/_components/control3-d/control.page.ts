@@ -16,8 +16,6 @@ import { RoleGuard } from 'src/app/_services/users/role.guard';
   styleUrls: ['./control.page.scss'],
 })
 export class Control3DPage implements OnInit {
-  // @ViewChild('ctrlReasons') ctrlReasons: IonTextarea;
-  // @ViewChild('statut') ctrlStatut: IonSelect;
   public toolRequestForm: FormGroup;
   public controlForm: FormGroup;
   public typeRapport = TypeRapport;
@@ -72,35 +70,6 @@ export class Control3DPage implements OnInit {
         statut: new FormControl(),
       }
     ) as SpecCtrlFormGroup;
-
-
-    // this.toolRequest = {
-    //   createdAt: new Date(),
-    //   demandeur: this.authService.authUser,
-    //   toolSAP: '',
-    //   dateBesoin: new Date(),
-    //   type: '',
-    //   controle: {
-    //     refPlan: '',
-    //     indPlan: '',
-    //     cheminCAO: '',
-    //     description: '',
-    //     detailsControle: '',
-    //     tolerances: '',
-    //     dispoOut: new Date(),
-    //     dateBesoin: new Date(),
-    //     typeRapport: TypeRapport.dqrc,
-    //     interventionDate: null,
-    //     moyenMesure: MoyenMesure.bras,
-    //     infosComplementaire: '',
-    //     // reportDate: new Date(),
-    //     demandeur: [this.authService.authUser],
-    //     outillage: null,
-    //     OT: null,
-    //     ligneBudgetaire: '',
-    //     visaControleur: ''
-    //   }
-    // };
   }
 
   toolReceived(event) {
@@ -125,25 +94,25 @@ export class Control3DPage implements OnInit {
 
   submitControlForm() {
     console.log(this.controlForm);
-    this.loaderService.startLoading('Envoie de la demande en cours');
-    // this.upDateSpec();
-    // console.log(this.toolRequest.controle);
+    this.loaderService.startLoading('Envoi de la demande en cours');
     this.toolRequestService.createControlRequest(this.controlForm.value)
       .subscribe(
-        () => {
+        async () => {
+          await this.loaderService.stopLoading();
           //       this.controlForm.reset();
           this.alertService.simpleAlert(
             'Message de l\'application',
             'Création d\'une demande',
-            'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes');
-          //         .then(() => {
-          //           this.navCtrl.navigateForward('tooling/tool-request-list');
-          this.loaderService.stopLoading();
-          //         });
+            'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes')
+            .then(() => {
+              this.navCtrl.navigateForward('tooling/tool-request-list');
 
-        }, (error) => {
+            });
+
+        },
+        async (error) => {
           console.error(error);
-          this.loaderService.stopLoading();
+          await this.loaderService.stopLoading();
         });
   }
 
@@ -156,19 +125,20 @@ export class Control3DPage implements OnInit {
           console.log(responseUpdatedRequest);
           this.toolRequestService.updateControlRequest(this.controlForm.value)
             .subscribe(
-              () => {
-                this.loaderService.stopLoading();
+              async () => {
+                await this.loaderService.stopLoading();
                 this.controlForm.reset();
-                this.alertService.simpleAlert(
+                await this.alertService.simpleAlert(
                   'Message de l\'application',
                   'Mise à jour d\'une demande',
                   'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes')
                   .then(() => {
-                    this.navCtrl.navigateForward('tooling/tool-request-list');
+                    this.navCtrl.back();
+                    // navigateForward('tooling/tool-request-list');
                   });
               },
-              (error) => {
-                this.loaderService.stopLoading();
+              async (error) => {
+                await this.loaderService.stopLoading();
                 this.alertService.simpleAlert(
                   'Erreur',
                   'Mise à jour d\'une demande',
@@ -222,17 +192,12 @@ export class Control3DPage implements OnInit {
             this.controlForm.get('id').setValue(responseControle.id);
             console.log(this.controlForm.value);
             this.loaderService.stopLoading();
-            //         console.log(responseRequest);
-            //         this.toolRequest = responseRequest;
-            //         this.toolRequest.controle = responseControle;
-            //         // this.ctrlStatut.value = this.toolRequest.statut;
-            this.page.title = 'Modification demande de contrôle 3D : ID ' + this.toolRequestForm.get('id').value;
-            //         this.loaderService.stopLoading();
+            this.page.title = 'Modification demande de contrôle 3D : ID ' + this.toolRequestForm.value.id;
           });
-        //   },
-        //     () => {
-        //       this.navCtrl.back();
-      });
+      },
+        () => {
+          this.navCtrl.back();
+        });
   }
 
 
