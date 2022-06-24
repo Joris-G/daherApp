@@ -60,7 +60,7 @@ export class Control3DPage implements OnInit {
         dispoOut: new FormControl(),
         dateBesoin: new FormControl(),
         typeRapport: new FormControl(),
-        // interventionDate: new FormControl(),
+        //TODO interventionDate: new FormControl(),
         moyenMesure: new FormControl(),
         infosComplementaire: new FormControl(),
         outillage: new FormControl(),
@@ -96,17 +96,15 @@ export class Control3DPage implements OnInit {
     this.toolRequestService.createControlRequest(this.controlForm.value)
       .subscribe(
         async () => {
+          this.controlForm.reset();
           await this.loaderService.stopLoading();
-          //       this.controlForm.reset();
           this.alertService.simpleAlert(
             'Message de l\'application',
             'Création d\'une demande',
             'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes')
             .then(() => {
               this.navCtrl.navigateForward('tooling/tool-request-list');
-
             });
-
         },
         async (error) => {
           console.error(error);
@@ -143,8 +141,7 @@ export class Control3DPage implements OnInit {
                   'La demande n\'a pas pu être modifiée. Vérifiez les données');
                 console.error(error);
               });
-        }
-        ,
+        },
         (err) => {
           this.loaderService.stopLoading();
           this.alertService.simpleAlert(
