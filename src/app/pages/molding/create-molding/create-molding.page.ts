@@ -63,6 +63,8 @@ export class CreateMoldingPage implements OnInit {
       return;
     }
 
+    this.alertService.presentToast('Erreur kit non trouvé');
+
   }
 
 

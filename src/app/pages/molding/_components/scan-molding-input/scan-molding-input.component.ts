@@ -141,21 +141,21 @@ export class ScanMoldingInputComponent implements AfterViewInit {
    * @memberof ScanMoldingInputComponent
    */
   onInputChange(inputValue: string) {
-    // this.loadingService.startLoading('Patienter pendant le chargement');
+    this.loadingService.startLoading('chargement du kit ...');
     this.scanService.getScanInput(inputValue).subscribe(
       (input) => {
+        this.loadingService.stopLoading();
         console.log(input);
         this.evOnInput.emit(input);
         this.scanInput.value = '';
-        // this.loadingService.stopLoading();
         setTimeout(() => {
           this.scanInput.setFocus();
         }, 300);
       },
       (error) => {
+        this.loadingService.stopLoading();
         console.error(error);
         this.scanInput.value = '';
-        // this.loadingService.stopLoading();
         this.alertService.simpleAlert(
           'Erreur lors du scan',
           'L\'élement scanné ne correspond à rien de connu',
@@ -163,11 +163,6 @@ export class ScanMoldingInputComponent implements AfterViewInit {
         );
       }
     );
-
-    // this.alertService.simpleAlert(
-    //   'Erreur lors du scan',
-    //   'L\'élement scanné ne correspond à rien de connu',
-    //   'Ré-essayer ou contacter j.grangier 06.87.89.24.25');
   }
 
 }
