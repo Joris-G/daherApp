@@ -135,27 +135,7 @@ export interface SpecCtrlFormGroup extends FormGroup {
     visaControleur: AbstractControl;
   };
 }
-// {
-// "id": 0,
-// "outillage": {
-//   "id": 0,
-//   "sapToolNumber": 0,
-//   "designation": "string",
-//   "secteur": "string"
-// },
-// "equipement": {
-//   "id": 0,
-//   "numEquipement": 0,
-//   "identification": "string",
-//   "statut": true
-// },
-// "dateBesoin": "2022-06-20T13:33:16.171Z",
-// "description": "string",
-// "userCreat": "string",
-// "demandeur": [
-//   "string"
-// ]
-//}
+
 
 
 export enum TypeRapport {
@@ -217,6 +197,29 @@ export interface SpecMaintRepIri {
   sigle?: string;
   causeDem?: string;
   dateValid?: Date;
+}
+
+export interface MaintFormGroup extends FormGroup {
+  value: SpecMaintRep;
+  controls: {
+    id?: AbstractControl;
+    outillage?: AbstractControl;
+    equipement?: AbstractControl;
+    dateBesoin: AbstractControl;
+    respo: AbstractControl;
+    userReal: AbstractControl;
+    dateReal: AbstractControl;
+    rep: AbstractControl;
+    createdAt: AbstractControl;
+    dispoOut: AbstractControl;
+    typeRapport: AbstractControl;
+    interventionDate: AbstractControl;
+    moyenMesure: AbstractControl;
+    infosComplementaire: AbstractControl;
+    ligneBudgetaire: AbstractControl;
+    statut: AbstractControl;
+    visaControleur: AbstractControl;
+  };
 }
 
 export interface MaintenanceItem {
