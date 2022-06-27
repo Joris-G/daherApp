@@ -6,7 +6,6 @@
   "projects": {
     "app": {
       "root": "",
-      "baseHref": "",
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
@@ -15,6 +14,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref": "./",
             "outputPath": "moldingApp",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -76,8 +76,7 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ],
-              "baseHref": ""
+              ]
             },
             "qual": {
               "outputPath": "moldingAppQual",
@@ -102,7 +101,6 @@
                   "maximumError": "5mb"
                 }
               ],
-              "baseHref": ""
             },
             "ci": {
               "progress": false
