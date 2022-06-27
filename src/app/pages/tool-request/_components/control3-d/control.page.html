@@ -45,15 +45,15 @@
             <ion-item button id="open-modal">
               <ion-label>Date de mise à disposition au service outillage</ion-label>
               <ion-text slot="end">
-                {{controlForm.value.dispoTool | date:"dd/MM/yyyy"}}</ion-text>
+                {{controlForm.value.dispoOut | date:"dd/MM/yyyy"}}</ion-text>
 
               <ion-icon slot=end icon="calendar-outline"></ion-icon>
               <ion-modal trigger="open-modal">
                 <ng-template>
                   <ion-content>
-                    <ion-datetime #dispoTool presentation="date" formControlName="dispoOut"
+                    <ion-datetime #dispoOut presentation="date" formControlName="dispoOut"
                       display-format="EEEE DD.MMMM.YYYY"
-                      (ionChange)="controlForm.value.dispoOut= dateValue(dispoTool.value)">
+                      (ionChange)="controlForm.value.dispoOut= dateValue(dispoOut.value)">
                       <div slot="title">Date de mise à disposition au service outillage</div>
                     </ion-datetime>
                   </ion-content>
@@ -261,16 +261,17 @@
           <ion-item button id="open-date-interv">
             <ion-label>Date d'intervention</ion-label>
             <ion-icon slot=end icon="calendar-outline"></ion-icon>
+            <ion-text slot="end">
+              {{controlForm.value.interventionDate | date:"dd/MM/yyyy"}}</ion-text>
             <!-- TODO intervention -->
             <!-- <ion-text slot="end " *ngIf="toolRequest?.controle?.interventionDate">
               {{toolRequest?.controle?.interventionDate | date:"dd/MM/yyyy"}}</ion-text> -->
-            <ion-button id="open-modal ">Open Datetime Modal</ion-button>
-            <ion-modal trigger="open-date-interv ">
+            <!-- <ion-button id="open-modal ">Open Datetime Modal</ion-button> -->
+            <ion-modal trigger="open-date-interv">
               <ng-template>
                 <ion-content>
                   <ion-datetime #interventionDate presentation="date" formControlName="interventionDate"
                     display-format="EEEE DD.MMMM.YYYY">
-
                     <div slot="title">Date d'intervention</div>
                   </ion-datetime>
                 </ion-content>

@@ -21,7 +21,7 @@ export class Control3DPage implements OnInit {
   public typeRapport = TypeRapport;
   public canManage: boolean;
   public canUpDate = false;
-  public moyenMesure: MoyenMesure;
+  public moyenMesure = MoyenMesure;
   public page = {
     title: 'Nouvelle demande de contrôle 3D'
   };
@@ -44,7 +44,7 @@ export class Control3DPage implements OnInit {
       {
         statut: new FormControl(),
         groupeAffectation: new FormControl(),
-        id: new FormControl(),
+        id: new FormControl()
       }
     ) as ToolRequestFormGroup;
 
@@ -60,12 +60,14 @@ export class Control3DPage implements OnInit {
         dispoOut: new FormControl(),
         dateBesoin: new FormControl(),
         typeRapport: new FormControl(),
-        //TODO interventionDate: new FormControl(),
+        //TODO  intervention
+        interventionDate: new FormControl(),
         moyenMesure: new FormControl(),
         infosComplementaire: new FormControl(),
         outillage: new FormControl(),
         ligneBudgetaire: new FormControl(),
         statut: new FormControl(),
+        visaControleur: new FormControl(),
       }
     ) as SpecCtrlFormGroup;
   }
@@ -154,7 +156,7 @@ export class Control3DPage implements OnInit {
 
   onChangeStatut(event: any) {
     console.log('status change', this.toolRequestForm);
-    // this.toolRequest.statut = event;
+    this.toolRequestForm.controls.statut.patchValue(event);
   }
 
   ionViewWillEnter() {
@@ -184,7 +186,7 @@ export class Control3DPage implements OnInit {
           .subscribe((responseControle: SpecCtrl) => {
             console.log(responseControle.id);
             this.controlForm.patchValue(responseControle);
-            this.controlForm.get('id').setValue(responseControle.id);
+            this.controlForm.controls.id.setValue(responseControle.id);
             console.log(this.controlForm.value);
             this.loaderService.stopLoading();
             this.page.title = 'Modification demande de contrôle 3D : ID ' + this.toolRequestForm.value.id;

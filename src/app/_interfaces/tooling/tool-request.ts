@@ -11,12 +11,12 @@ export interface ToolRequest {
   demandeur?: User | string;
   createdAt?: Date;
   dateBesoin?: Date;
-  outillage: Tool | string;
+  outillage?: Tool | string;
   groupeAffectation?: GroupeAffectation;
   dateAffectation?: Date;
   statut?: string;
   toolingNote?: string;
-  type: RequestType | string;
+  type?: RequestType | string;
   controle?: SpecCtrl;
   maintenance?: SpecMaintRep;
   // sbo?: SpecSBO;
@@ -126,7 +126,7 @@ export interface SpecCtrlFormGroup extends FormGroup {
     dispoOut: AbstractControl;
     dateBesoin: AbstractControl;
     typeRapport: AbstractControl;
-    interventionDate: AbstractControl;
+    // interventionDate: AbstractControl;
     moyenMesure: AbstractControl;
     infosComplementaire: AbstractControl;
     outillage: AbstractControl;
@@ -153,9 +153,9 @@ export enum MoyenMesure {
 
 export interface SpecMaintRep {
   id?: number;
-  outillage?: string;
-  OT: Tool;
-  equipement?: string;
+  outillage?: Tool;
+  // OT?: Tool;
+  // equipement?: string;
   dateBesoin: Date;
   respo?: string[];
   userReal?: string[];
@@ -163,7 +163,7 @@ export interface SpecMaintRep {
   rep?: string[];
   createdAt?: Date;
   modifiedAt?: Date;
-  userCreat: User;
+  userCreat?: User;
   userModif?: User;
   userValideur?: User;
   image?: string;
@@ -205,20 +205,12 @@ export interface MaintFormGroup extends FormGroup {
     id?: AbstractControl;
     outillage?: AbstractControl;
     equipement?: AbstractControl;
-    dateBesoin: AbstractControl;
-    respo: AbstractControl;
-    userReal: AbstractControl;
-    dateReal: AbstractControl;
-    rep: AbstractControl;
-    createdAt: AbstractControl;
-    dispoOut: AbstractControl;
-    typeRapport: AbstractControl;
-    interventionDate: AbstractControl;
-    moyenMesure: AbstractControl;
-    infosComplementaire: AbstractControl;
-    ligneBudgetaire: AbstractControl;
-    statut: AbstractControl;
-    visaControleur: AbstractControl;
+    dateBesoin?: AbstractControl;
+    image?: AbstractControl;
+    fichier?: AbstractControl;
+    sigle?: AbstractControl;
+    userValideur?: AbstractControl;
+    dateValid?: AbstractControl;
   };
 }
 

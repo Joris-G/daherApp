@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ProgramsService } from 'src/app/_services/programs/programs.service';
-import { Editor } from 'ngx-editor';
+// import { Editor } from 'ngx-editor';
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
 import { AuthService } from 'src/app/_services/users/auth.service';
 import { ToolService } from 'src/app/_services/tooling/tools/tool.service';
@@ -32,8 +32,8 @@ export class NewToolPage implements OnInit {
   public newToolForm: FormGroup;
   public newToolRequestForm: FormGroup;
   public programs: any[];
-  public editor: Editor;
-  public html: '';
+  // public editor: Editor;
+  // public html: '';
   requestTypeEnum: typeof RequestType = RequestType;
   private newTool: Tool;
 
@@ -62,8 +62,8 @@ export class NewToolPage implements OnInit {
         this.programs = programList;
       });
 
-    this.editor = new Editor();
-    this.editor.setContent('html');
+    // this.editor = new Editor();
+    // this.editor.setContent('html');
     this.newToolForm = this.formBuilder.group({
       sapToolNumber: new FormControl(),
       identification: new FormControl(),

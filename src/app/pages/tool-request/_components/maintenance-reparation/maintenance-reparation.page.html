@@ -17,7 +17,7 @@
       </ion-card>
       <ion-card color="light">
         <ion-card-header class="flex-row" color=light>
-          <ion-title class="ion-text-uppercase">La maintenance</ion-title>
+          <ion-card-title class="ion-text-uppercase">La maintenance</ion-card-title>
           <ion-button (click)="addMaintenanceItem()" size=small>
             <ion-icon slot="start" name="add"></ion-icon>
             Ajouter maintenance
@@ -25,7 +25,7 @@
         </ion-card-header>
         <ion-card-content>
           <!-- <ion-item color=light> -->
-          <app-maintenance-item *ngFor="let maintenanceItem of toolRequest?.maintenance?.itemActionCorrective.reverse()"
+          <app-maintenance-item *ngFor="let maintenanceItem of maintRepForm.value.itemActionCorrective?.reverse()"
             [maintenanceItem]="maintenanceItem" (evValidateItem)="onValidateItem($event,maintenanceItem)"
             (evRemoveItem)="onRemoveItem($event,maintenanceItem)" [canUpdate]="canUpDate"></app-maintenance-item>
           <!-- </ion-item> -->
@@ -37,14 +37,15 @@
           <ion-label>Date butoir demandée</ion-label>
           <ion-icon slot=end icon="calendar-outline"></ion-icon>
           <ion-text slot="end">
-            {{toolRequest?.maintenance?.dateBesoin | date:"dd/MM/yyyy"}}</ion-text>
+            {{maintRepForm.value.dateBesoin | date:"dd/MM/yyyy"}}
+          </ion-text>
           <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
           <ion-modal trigger="open-date-besoin">
             <ng-template>
               <ion-content>
-                <ion-datetime #popoverDatetime2 presentation="date" formControlName="needDate"
+                <ion-datetime #popoverDatetime2 presentation="date" formControlName="dateBesoin"
                   display-format="DD.MM.YYYY"
-                  (ngModelChange)="toolRequest.maintenance.dateBesoin = dateValue(popoverDatetime2.value)">
+                  (ionChange)="maintRepForm.value.dateBesoin = dateValue(popoverDatetime2.value)">
                   <div slot="title">Date butoir demandée</div>
                 </ion-datetime>
               </ion-content>

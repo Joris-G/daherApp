@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonSelect, NavController } from '@ionic/angular';
 import { RequestType } from 'src/app/_enums/request-type';
-import { ToolRequest, MaintenanceItem, SpecMaintRep } from 'src/app/_interfaces/tooling/tool-request';
+import { ToolRequest, MaintenanceItem, SpecMaintRep, MaintFormGroup } from 'src/app/_interfaces/tooling/tool-request';
 import { User } from 'src/app/_interfaces/user';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
@@ -25,15 +25,15 @@ export class MaintenanceReparationPage implements OnInit, OnDestroy {
   public maintRepForm = new FormGroup(
     {
       outillage: new FormControl(),
-      needDate: new FormControl(),
-      equipment: new FormControl(),
+      dateBesoin: new FormControl(),
+      // equipment: new FormControl(),
       image: new FormControl(),
       fichier: new FormControl(),
       sigle: new FormControl(),
       userValideur: new FormControl(),
       dateValid: new FormControl(),
     }
-  );
+  ) as MaintFormGroup;
   // public needDate = new FormControl();
   // public outillage = new FormControl();
   // public equipment = new FormControl();
@@ -103,29 +103,29 @@ export class MaintenanceReparationPage implements OnInit, OnDestroy {
     //   }
     // );
 
-    this.toolRequest = {
-      createdAt: new Date(),
-      dateBesoin: new Date(),
-      demandeur: this.authService.authUser,
-      outillage: null,
-      type: RequestType.maintenance,
+    // this.toolRequest = {
+    //   createdAt: new Date(),
+    //   dateBesoin: new Date(),
+    //   demandeur: this.authService.authUser,
+    //   outillage: null,
+    //   type: RequestType.maintenance,
 
-      maintenance:
-      {
-        dateBesoin: null,
-        userCreat: this.authService.authUser,
-        outillage: null,
-        OT: null,
-        equipement: null,
-        image: '',
-        fichier: '',
-        sigle: '',
-        userValideur: null,
-        dateValid: new Date(),
-        itemActionCorrective: [],
-        rep: [],
-      }
-    };
+    //   maintenance:
+    //   {
+    //     dateBesoin: null,
+    //     userCreat: this.authService.authUser,
+    //     outillage: null,
+    //     OT: null,
+    //     equipement: null,
+    //     image: '',
+    //     fichier: '',
+    //     sigle: '',
+    //     userValideur: null,
+    //     dateValid: new Date(),
+    //     itemActionCorrective: [],
+    //     rep: [],
+    //   }
+    // };
   }
 
   loadMaintenanceData(idDemande: string) {
@@ -134,19 +134,10 @@ export class MaintenanceReparationPage implements OnInit, OnDestroy {
       .subscribe((responseRequest: ToolRequest) => {
         this.toolRequestService.getMaintenance(responseRequest.maintenance.id)
           .subscribe((responseMaint: SpecMaintRep) => {
-            this.toolRequest = responseRequest;
-            this.toolRequest.maintenance = responseMaint;
-            this.toolRequest.maintenance.itemActionCorrective.map((item: MaintenanceItem, index: number) => item.rep = index + 1);
-            this.maintRepForm.patchValue({
-              outillage: this.toolRequest.maintenance.outillage,
-              needDate: this.toolRequest.maintenance.dateBesoin,
-              equipment: this.toolRequest.maintenance.equipement,
-              image: this.toolRequest.maintenance.image,
-              fichier: this.toolRequest.maintenance.fichier,
-              sigle: this.toolRequest.maintenance.sigle,
-              userValideur: this.toolRequest.maintenance.userReal,
-              dateValid: this.toolRequest.maintenance.dateValid,
-            });
+            // this.toolRequest = responseRequest;
+            // this.toolRequest.maintenance = responseMaint;
+            this.maintRepForm.value.itemActionCorrective.map((item: MaintenanceItem, index: number) => item.rep = index + 1);
+            this.maintRepForm.patchValue(responseMaint);
             this.page.title = 'Modification demande de maintenance : ID ' + this.toolRequest.id;
             if (this.toolRequest.statut === 'NOUVELLE') {
               this.canUpDate = true;
@@ -171,30 +162,36 @@ export class MaintenanceReparationPage implements OnInit, OnDestroy {
 
   onValidateItem(ev: MaintenanceItem, item: MaintenanceItem) {
     item = ev;
-    console.log(this.toolRequest.maintenance.itemActionCorrective);
+    console.log(this.maintRepForm.value.itemActionCorrective);
   }
 
   onRemoveItem(ev: MaintenanceItem, item: MaintenanceItem) {
-    this.toolRequest.maintenance.itemActionCorrective.splice(item.rep - 1, 1);
-    console.log(this.toolRequest.maintenance.itemActionCorrective);
+    this.maintRepForm.value.itemActionCorrective.splice(item.rep - 1, 1);
+    console.log(this.maintRepForm.value.itemActionCorrective);
   }
 
-  upDateSpec() {
-    this.toolRequest.maintenance.dateBesoin = this.maintRepForm.controls.dateBesoin.value;
-    this.toolRequest.maintenance.image = this.maintRepForm.controls.image.value;
-    this.toolRequest.maintenance.fichier = this.maintRepForm.controls.fichier.value;
-  }
+  // upDateSpec() {
+  //   this.maintRepForm.dateBesoin = this.maintRepForm.controls.dateBesoin.value;
+  //   this.toolRequest.maintenance.image = this.maintRepForm.controls.image.value;
+  //   this.toolRequest.maintenance.fichier = this.maintRepForm.controls.fichier.value;
+  // }
 
   addMaintenanceItem() {
+    let rep: number;
+    if (!this.maintRepForm.value.itemActionCorrective) {
+      rep = 1;
+      this.maintRepForm.value.itemActionCorrective = [];
+    } else {
+      rep = this.maintRepForm.value.itemActionCorrective.length + 1;
+    }
     const maintenanceItem: MaintenanceItem = {
-      rep: this.toolRequest.maintenance.itemActionCorrective.length + 1
+      rep
     };
-    this.toolRequest.maintenance.itemActionCorrective.push(maintenanceItem);
-    console.log(this.toolRequest.maintenance.itemActionCorrective);
+    this.maintRepForm.value.itemActionCorrective.push(maintenanceItem);
   }
 
   submitMaintenanceForm() {
-    this.toolRequestService.createMaintenanceRequest(this.toolRequest.maintenance)
+    this.toolRequestService.createMaintenanceRequest(this.maintRepForm.value)
       .then(() => {
         this.maintRepForm.reset();
         this.alertService.simpleAlert(

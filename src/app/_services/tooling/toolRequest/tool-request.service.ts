@@ -64,7 +64,10 @@ export class ToolRequestService {
             if (maintenanceItemIri.length === toolRequestToCreate.itemActionCorrective.length) {
               resolve(maintenanceItemIri);
             }
-          });
+          },
+            (err) => {
+              reject();
+            });
       });
 
     });
@@ -77,7 +80,7 @@ export class ToolRequestService {
           console.log(maintenanceItemIri);
           const toolRequestToCreateIri: SpecMaintRepIri = {
             id: toolRequestToCreate.id ?? null,
-            outillage: toolRequestToCreate.OT ? this.toolService.getIri(toolRequestToCreate.OT) : '',
+            outillage: toolRequestToCreate.outillage ? this.toolService.getIri(toolRequestToCreate.outillage) : '',
             dateBesoin: toolRequestToCreate.dateBesoin,
             userCreat: this.userService.getIri(this.authService.authUser),
             rep: toolRequestToCreate.rep,
@@ -154,7 +157,7 @@ export class ToolRequestService {
             .map((item => '/api/maintenance_items/' + item.id));
           const toolRequestToCreateIri: SpecMaintRepIri = {
             id: toolRequestToUpdate.maintenance.id ?? null,
-            outillage: toolRequestToUpdate.maintenance.OT ? this.toolService.getIri(toolRequestToUpdate.maintenance.OT) : '',
+            outillage: toolRequestToUpdate.maintenance.outillage ? this.toolService.getIri(toolRequestToUpdate.maintenance.outillage) : '',
             dateBesoin: toolRequestToUpdate.dateBesoin,
             userCreat: this.userService.getIri(toolRequestToUpdate.maintenance.userCreat),
             itemActionCorrective: maintenanceItemIri
