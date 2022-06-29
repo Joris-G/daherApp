@@ -142,24 +142,24 @@ export class ToolRequestService {
     return Promise.all(arrProm);
   }
 
-  updateMainteanceRequest(toolRequestToUpdate: ToolRequest) {
+  updateMainteanceRequest(toolRequestToUpdate: SpecMaintRep) {
     return new Promise((resolve, reject) => {
-      this.updateMaintenanceItems(toolRequestToUpdate.maintenance.itemActionCorrective)
+      this.updateMaintenanceItems(toolRequestToUpdate.itemActionCorrective)
         .then((responseMaintenanceItems) => {
           responseMaintenanceItems.map((maintenanceItem$) => {
             maintenanceItem$.subscribe((maintenanceItem) => {
-              toolRequestToUpdate.maintenance.itemActionCorrective = maintenanceItem;
-              console.log(toolRequestToUpdate.maintenance.itemActionCorrective);
+              toolRequestToUpdate.itemActionCorrective = maintenanceItem;
+              console.log(toolRequestToUpdate.itemActionCorrective);
             });
           });
-          console.log(toolRequestToUpdate.maintenance.itemActionCorrective);
-          const maintenanceItemIri = toolRequestToUpdate.maintenance.itemActionCorrective
+          console.log(toolRequestToUpdate.itemActionCorrective);
+          const maintenanceItemIri = toolRequestToUpdate.itemActionCorrective
             .map((item => '/api/maintenance_items/' + item.id));
           const toolRequestToCreateIri: SpecMaintRepIri = {
-            id: toolRequestToUpdate.maintenance.id ?? null,
-            outillage: toolRequestToUpdate.maintenance.outillage ? this.toolService.getIri(toolRequestToUpdate.maintenance.outillage) : '',
+            id: toolRequestToUpdate.id ?? null,
+            outillage: toolRequestToUpdate.outillage ? this.toolService.getIri(toolRequestToUpdate.outillage) : '',
             dateBesoin: toolRequestToUpdate.dateBesoin,
-            userCreat: this.userService.getIri(toolRequestToUpdate.maintenance.userCreat),
+            userCreat: this.userService.getIri(toolRequestToUpdate.userCreat),
             itemActionCorrective: maintenanceItemIri
           };
           console.log(toolRequestToCreateIri);

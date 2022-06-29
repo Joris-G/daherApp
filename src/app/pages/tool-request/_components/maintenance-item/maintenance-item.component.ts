@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { MaintenanceItem } from 'src/app/_interfaces/tooling/tool-request';
+import { MaintenanceItem, MaintenanceItemFormGroup } from 'src/app/_interfaces/tooling/tool-request';
 
 @Component({
   selector: 'app-maintenance-item',
@@ -13,7 +13,15 @@ export class MaintenanceItemComponent implements OnInit, OnChanges {
   @Input() canUpdate: boolean;
   @Output() evValidateItem: EventEmitter<MaintenanceItem> = new EventEmitter<MaintenanceItem>();
   @Output() evRemoveItem: EventEmitter<MaintenanceItem> = new EventEmitter<MaintenanceItem>();
-  public maintenanceItemForm: FormGroup;
+  public maintenanceItemForm = new FormGroup(
+    {
+      nonConformite: new FormControl(),
+      rep: new FormControl(),
+      actionsCorrectives: new FormControl(),
+      delaiAction: new FormControl(),
+      dateReal: new FormControl(),
+    }
+  ) as MaintenanceItemFormGroup;
   public validate = false;
   public maintenanceRealisee = false;
 
@@ -24,6 +32,9 @@ export class MaintenanceItemComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.maintenanceItem) {
       console.log('onchange');
+      this.maintenanceItemForm.patchValue(this.maintenanceItem);
+      this.validate = (this.maintenanceItem.id) ? true : false;
+      this.maintenanceRealisee = (this.maintenanceItem.dateReal) ? true : false;
     }
   }
   ionViewWillEnter() {
@@ -38,16 +49,6 @@ export class MaintenanceItemComponent implements OnInit, OnChanges {
   }
   ngOnInit() {
     console.log('onInit');
-    this.validate = (this.maintenanceItem.id) ? true : false;
-    this.maintenanceRealisee = (this.maintenanceItem.dateReal) ? true : false;
-    this.maintenanceItemForm = new FormGroup(
-      {
-        nonConformite: new FormControl(this.maintenanceItem.nonConformite),
-        actionsCorrectives: new FormControl(this.maintenanceItem.actionsCorrectives),
-        delaiAction: new FormControl(this.maintenanceItem.delaiAction),
-        dateReal: new FormControl(this.maintenanceItem.dateReal),
-      }
-    );
   }
 
   dateValue(dateValue: string): Date {

@@ -50,8 +50,9 @@ export interface ToolRequestIri {
 export interface ToolRequestFormGroup extends FormGroup {
   value: ToolRequest;
   controls: {
+    id: AbstractControl;
     statut: AbstractControl;
-    groupeAffectation: AbstractControl;
+    groupeAffectation?: AbstractControl;
   };
 }
 
@@ -215,14 +216,28 @@ export interface MaintFormGroup extends FormGroup {
 }
 
 export interface MaintenanceItem {
-  nonConformite?: string;
-  actionsCorrectives?: string;
+  nonConformite: string;
+  actionsCorrectives: string;
   respo?: string;
-  delaiAction?: Date;
+  delaiAction: Date;
   userReal?: string;
   dateReal?: Date;
   rep: number;
   id?: number;
+}
+
+export interface MaintenanceItemFormGroup extends FormGroup {
+  value: MaintenanceItem;
+  controls: {
+    nonConformite: AbstractControl;
+    actionsCorrectives: AbstractControl;
+    respo?: AbstractControl;
+    delaiAction: AbstractControl;
+    userReal?: AbstractControl;
+    dateReal?: AbstractControl;
+    rep: AbstractControl;
+    id?: AbstractControl;
+  };
 }
 
 // export interface MaintenanceItemIri {
