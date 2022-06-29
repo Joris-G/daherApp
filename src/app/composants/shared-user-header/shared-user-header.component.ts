@@ -4,6 +4,7 @@ import { User } from 'src/app/_interfaces/user';
 import { AuthService } from 'src/app/_services/users/auth.service';
 import packageJson from 'package.json';
 import { isDevMode } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-shared-user-header',
@@ -36,11 +37,7 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if (isDevMode()) {
-      this.envMode = 'DEV';
-    }
-
-    // console.log(this.page);
+    this.envMode = environment.name;
   }
 
   logoutClick() {

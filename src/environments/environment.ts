@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  name: 'DEV',
   apiServer: 'http://152.60.136.236:81/',
   moldingApi: 'Tracakit-api-dev/public/index.php/api/',
   toolApi: 'outillage-api-dev/public/index.php/api/',
