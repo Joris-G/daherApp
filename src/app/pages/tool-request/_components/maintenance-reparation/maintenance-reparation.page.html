@@ -97,6 +97,6 @@
 </ion-content>
 <ion-footer>
   <app-tool-request-footer (evStatusChange)="onChangeStatut($event)" (evSubmit)="submitMaintenanceForm()"
-    (evUpdate)="updateForm()" (evAffectationChange)="toolRequest.groupeAffectation= $event" [canManage]="canManage"
+    (evUpdate)="updateForm()" (evAffectationChange)="affectationChange($event)" [canManage]="canManage"
     [canUpdate]="canUpDate" [form]="maintRepForm"></app-tool-request-footer>
 </ion-footer>

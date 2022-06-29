@@ -25,6 +25,7 @@ export class MaintenanceReparationPage implements OnInit, OnDestroy {
     {
       id: new FormControl(),
       statut: new FormControl(),
+      groupeAffectation: new FormControl(),
     }) as ToolRequestFormGroup;
   // public maintRepForm: FormGroup;
   public maintRepForm = new FormGroup(
@@ -185,7 +186,9 @@ export class MaintenanceReparationPage implements OnInit, OnDestroy {
   //   this.toolRequest.maintenance.image = this.maintRepForm.controls.image.value;
   //   this.toolRequest.maintenance.fichier = this.maintRepForm.controls.fichier.value;
   // }
-
+  affectationChange(event: any) {
+    this.toolRequestForm.controls.groupeAffectation.patchValue(event);
+  }
   addMaintenanceItem() {
     let rep: number;
     if (!this.maintRepForm.value.itemActionCorrective) {
