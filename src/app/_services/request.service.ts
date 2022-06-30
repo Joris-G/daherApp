@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 /**
@@ -46,7 +47,19 @@ export class RequestService {
           .append('Content-Type', 'application/json')
           .append('Accept', 'application/json')
           .append('x-auth-token', localStorage.getItem('token')) : this.httpHeaders
-      });
+      })
+      .pipe(
+        map((val) => {
+          if (val.status === 500) { throw (val); }
+          console.log(val);
+          return val;
+        }),
+        retry(3),
+        // retryWhen(err=> {
+        //   console.error(err);
+        //   return of(null);
+        // })
+      );
   }
 
   createPutRequest(url: string, body: any): Observable<any> {
@@ -55,7 +68,19 @@ export class RequestService {
         .append('Content-Type', 'application/json')
         .append('Accept', 'application/json')
         .append('x-auth-token', localStorage.getItem('token')) : this.httpHeaders
-    });
+    })
+      .pipe(
+        map((val) => {
+          if (val.status === 500) { throw (val); }
+          console.log(val);
+          return val;
+        }),
+        retry(3),
+        // retryWhen(err=> {
+        //   console.error(err);
+        //   return of(null);
+        // })
+      );
   }
 
   createPatchRequest(url: string, body: any) {
@@ -64,11 +89,35 @@ export class RequestService {
         .append('Accept', 'application/json')
         .append('Content-Type', 'application/merge-patch+json')
         .append('x-auth-token', localStorage.getItem('token')) : this.patchHttpHeaders
-    });
+    })
+      .pipe(
+        map((val) => {
+          if (val.status === 500) { throw (val); }
+          console.log(val);
+          return val;
+        }),
+        retry(3),
+        // retryWhen(err=> {
+        //   console.error(err);
+        //   return of(null);
+        // })
+      );
   }
 
   createGetRequest(url: string): Observable<any> {
-    return this.http.get(`${environment.apiServer}${url}`, { headers: this.httpHeaders });
+    return this.http.get<any>(`${environment.apiServer}${url}`, { headers: this.httpHeaders })
+      .pipe(
+        map((val) => {
+          if (val.status === 500) { throw (val); }
+          console.log(val);
+          return val;
+        }),
+        retry(3),
+        // retryWhen(err=> {
+        //   console.error(err);
+        //   return of(null);
+        // })
+      );
   }
 
   createDeleteRequest(url: string): Observable<any> {
