@@ -51,7 +51,7 @@ export class RequestService {
       .pipe(
         map((val) => {
           if (val.status === 500) { throw (val); }
-          console.log(val);
+          console.table(val);
           return val;
         }),
         retry(3),
@@ -72,7 +72,7 @@ export class RequestService {
       .pipe(
         map((val) => {
           if (val.status === 500) { throw (val); }
-          console.log(val);
+          console.table(val);
           return val;
         }),
         retry(3),
@@ -93,7 +93,7 @@ export class RequestService {
       .pipe(
         map((val) => {
           if (val.status === 500) { throw (val); }
-          console.log(val);
+          console.table(val);
           return val;
         }),
         retry(3),
@@ -109,7 +109,7 @@ export class RequestService {
       .pipe(
         map((val) => {
           if (val.status === 500) { throw (val); }
-          console.log(val);
+          console.table(val);
           return val;
         }),
         retry(3),
