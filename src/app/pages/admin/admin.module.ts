@@ -14,6 +14,7 @@ import { MoldingService } from 'src/app/_services/molding/moldings/molding.servi
 import { UsersService } from 'src/app/_services/users/users.service';
 import { ComponentModule } from 'src/app/composants/component/component.module';
 import { SericesService } from 'src/app/_services/users/serices.service';
+import { DirectiveModule } from 'src/app/_directives/directive.module';
 
 @NgModule({
   imports: [
@@ -24,15 +25,20 @@ import { SericesService } from 'src/app/_services/users/serices.service';
     AdminPageRoutingModule,
     SharedAdminHeaderModule,
     ComponentModule,
+    DirectiveModule,
   ],
-  declarations: [AdminPage, NotActivePipe, AdminUserPage, AdminMoldingPage],
+  declarations: [
+    AdminPage,
+    NotActivePipe,
+    AdminUserPage,
+    AdminMoldingPage,
+  ],
   providers: [
     DatePipe,
     KitService,
     MoldingService,
     UsersService,
-    SericesService
-
+    SericesService,
   ]
 })
 export class AdminPageModule { }
