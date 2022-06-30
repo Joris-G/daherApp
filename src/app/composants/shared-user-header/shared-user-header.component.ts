@@ -15,7 +15,6 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges {
   @Input() pageTitle: string;
   @ViewChild('menu') menu: any;
   public user: User;
-  public isPopoverOpen = false;
   public isUserOpen = false;
   public version: string = packageJson.version;
   public envMode: string;
@@ -24,12 +23,6 @@ export class SharedUserHeaderComponent implements OnInit, OnChanges {
     public authService: AuthService,
     private navCtrl: NavController,
   ) { }
-
-
-
-  log(text) {
-    console.log(text);
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(this.page);
