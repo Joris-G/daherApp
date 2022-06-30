@@ -31,6 +31,11 @@
         <ion-label>Téléphone</ion-label>
         <ion-input type="text" [value]="user.tel"></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label>Date de création</ion-label>
+        <ion-input disabled="true" type="text" [value]="user.createdAt | date"></ion-input>
+        <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
+      </ion-item>
     </ion-content>
 
     <ion-footer>
