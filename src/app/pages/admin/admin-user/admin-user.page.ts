@@ -20,10 +20,8 @@ export class AdminUserPage implements OnInit {
   @ViewChild('newUsers') private newUsersCanvas: ElementRef;
 
   public users: User[];
-  public userDataSource: MatTableDataSource<User> = new MatTableDataSource();
-  public selectedUser: User;
-  public isUserSelected = false;
-  displayedUserColumns: string[] = ['id', 'username', 'nom', 'prenom', 'matricule', 'roles', 'commands'];
+  // public userDataSource: MatTableDataSource<User> = new MatTableDataSource();
+
   private lineChart: any;
   private weeklyLabels: string[] = [];
   private weeklyUsers: number[] = [];
@@ -38,11 +36,7 @@ export class AdminUserPage implements OnInit {
 
   }
 
-  onSelectUser(test: any) {
-    console.log(test);
-    this.isUserSelected = true;
-    this.selectedUser = test;
-  }
+
 
   ngOnInit() {
     this.users = [];
@@ -52,8 +46,7 @@ export class AdminUserPage implements OnInit {
         services.forEach((service: Service) => {
           service.users.forEach((user: User) => this.users.push(user));
         });
-        this.userDataSource.data = this.users;
-        console.log(services, this.users);
+        // this.userDataSource.data = this.users;
         this.weeklyLabels = this.createWeeklyLabel();
         this.weeklyUsers = this.createWeeklyUserData();
         // console.log(this.weeklyLabels, this.weeklyUsers);
@@ -124,27 +117,5 @@ export class AdminUserPage implements OnInit {
       startDate = intermediateEndDate;
     }
     return totaluserPerWeekData;
-  }
-
-
-  statusChanged(event: any, user: User) {
-    this.confirmUser(user, event.detail.value);
-  }
-
-  private confirmUser(user: User, state: boolean) {
-    this.loadingService.startLoading(`Mise à jour de l'utilisateur`);
-    this.userService.confirmUser(user.id, state)
-      .subscribe(
-        (responseUser) => {
-          this.loadingService.stopLoading();
-        },
-        (error) => {
-          this.loadingService.stopLoading();
-          this.alertService.simpleAlert(
-            `Erreur`,
-            `Le serveur à renvoyé une erreur`,
-            `${error}`
-          );
-        });
   }
 }

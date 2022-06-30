@@ -15,6 +15,7 @@ import { UsersService } from 'src/app/_services/users/users.service';
 import { ComponentModule } from 'src/app/composants/component/component.module';
 import { SericesService } from 'src/app/_services/users/serices.service';
 import { DirectiveModule } from 'src/app/_directives/directive.module';
+import { AdminUserTableComponent } from './admin-user/admin-user-table/admin-user-table.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { DirectiveModule } from 'src/app/_directives/directive.module';
     NotActivePipe,
     AdminUserPage,
     AdminMoldingPage,
+    AdminUserTableComponent,
   ],
   providers: [
     DatePipe,

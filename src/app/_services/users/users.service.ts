@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { User, UserIri } from 'src/app/_interfaces/user';
@@ -35,7 +35,10 @@ export class UsersService {
     private programService: ProgramsService,
     private uniteService: UniteService,
     private usineService: UsineService
-  ) { }
+  ) {
+    console.log('construct userService');
+  }
+
 
 
   /**
@@ -57,7 +60,7 @@ export class UsersService {
    * @return retourne une Promise<User[]>
    * @memberof UsersService
    */
-  getUsers(filters?: string) {
+  getUsers(filters?: string): Observable<User[]> {
     return this.requestService.createGetRequest(environment.usineApi + `users`);
   }
 
