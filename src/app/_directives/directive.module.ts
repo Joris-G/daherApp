@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PerempDirective } from './peremp.directive';
 
 @NgModule({
   imports: [
@@ -9,6 +10,10 @@ import { CommonModule } from '@angular/common';
 
   ],
   exports: [
+
+  ],
+  providers: [
+
   ]
 })
 
