@@ -22,6 +22,7 @@ import { RoleGuard } from 'src/app/_services/users/role.guard';
 export class CreateMoldingPage implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('kitPanel') kitPanel: MatExpansionPanel;
+
   public expanded = false;
   public isAdmin = false;
   public molding: Molding;
@@ -57,13 +58,8 @@ export class CreateMoldingPage implements OnInit {
       this.onToolInput(inputValue as Tool);
       return;
     }
-    if (Core.isCore(inputValue)) {
-      console.log('is Core');
-      this.onMatInput(inputValue as AdditionalMaterial);
-      return;
-    }
-
-    this.alertService.presentToast('Erreur kit non trouvé');
+    this.onMatInput(inputValue as AdditionalMaterial);
+    // this.alertService.presentToast('Erreur kit non trouvé');
 
   }
 
@@ -101,16 +97,7 @@ export class CreateMoldingPage implements OnInit {
   }
 
 
-  /**
-   * Supprime un kit de la liste de kit. Cette fonction n'a pas d'incidence tant que le moualge n'est pas sauvegardé
-   *
-   * @param index Index du kit dans la liste des kits
-   * @memberof CreateMoldingPage
-   */
-  removeKitClick(index: number) {
-    this.molding.kits.splice(index, 1);
-    this.moldingService.updateDates(this.molding);
-  }
+
 
 
   saveMoldingClick(print?: boolean) {
@@ -275,6 +262,9 @@ export class CreateMoldingPage implements OnInit {
     if (!this.kitService.kitIsInKits(kitObj, this.molding.kits)) {
       console.log('kit not in kits');
       this.molding.kits.unshift(kitObj);
+      // this.molding.kits = this.kits;
+      console.log(this.molding.kits);
+      this.moldingService.updateMoldings(this.molding);
       this.moldingService.updateDates(this.molding);
       // this.presentToast('Kit ajouté !');
     } else {
@@ -306,8 +296,13 @@ export class CreateMoldingPage implements OnInit {
    * @memberof CreateMoldingPage
    */
   private onMatInput(matObj: AdditionalMaterial) {
-    this.alertService.presentToast('Nida Ajouté !');
-    this.molding.materialSupplementary.unshift(matObj);
+    this.alertService.presentToast('Matière Ajoutée !');
+    if (this.molding.materialSupplementary) {
+      this.molding.materialSupplementary.unshift(matObj);
+    } else {
+      this.molding.materialSupplementary = [matObj];
+    }
+
     //     this.molding.cores.unshift(coreObj);
   }
 

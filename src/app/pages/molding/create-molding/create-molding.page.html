@@ -21,33 +21,8 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <ion-list *ngIf="molding?.kits" class="ion-no-padding">
-        <ion-list-header lines="inset" color=light>
-          <ion-label class="ion-hide-md-down">Référence Sap</ion-label>
-          <ion-label class="ion-hide-md-down">ID-MM</ion-label>
-          <ion-label>Désignation</ion-label>
-          <ion-label>Péremption à -18°C</ion-label>
-          <ion-label>A draper avant le</ion-label>
-          <ion-label>A cuire avant le</ion-label>
-        </ion-list-header>
-        <ion-item *ngFor="let kit of molding.kits; let indexKit = index">
-          <ion-label class="ion-hide-md-down">{{kit.referenceSAP}}
-            <ion-text class="strong" *ngIf="kit === molding.matDrap">(Drap)</ion-text>
-            <ion-text class="strong" *ngIf="kit === molding.matPolym">(Pol)</ion-text>
-          </ion-label>
-          <ion-label class="ion-hide-md-down">{{kit.idMM}}</ion-label>
-          <ion-label>{{kit.designationSAP}}</ion-label>
-          <ion-label [color]="kitService.isPerim(kit.peremptionMoins18, molding.moldingDay) ? 'danger' : 'dark'">
-            {{kit.peremptionMoins18 | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-          <ion-label [color]="kitService.isPerim(kit.aDrapAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aDrapAv |
-            date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-          <ion-label [color]="kitService.isPerim(kit.aCuirAv, molding.moldingDay) ? 'danger' : 'dark'">{{kit.aCuirAv |
-            date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-          <ion-button class="ion-hide-md-down" (click)="removeKitClick(indexKit)">
-            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-list>
+      <app-molding-kit-table [molding]="molding"></app-molding-kit-table>
+
     </mat-expansion-panel>
 
     <mat-expansion-panel *ngIf="molding.materialSupplementary?.length >0"
@@ -73,15 +48,15 @@
             </ion-label>
           </ion-col>
         </ion-row>
-        <ion-row *ngFor="let core of molding.materialSupplementary">
+        <ion-row *ngFor="let mat of molding.materialSupplementary">
           <ion-col size="6">
             <ion-label>
-              {{core.numLot}}
+              {{mat.numLot}}
             </ion-label>
           </ion-col>
           <ion-col size="6">
             <ion-label>
-              {{core.ref}}
+              {{mat.ref}}
             </ion-label>
           </ion-col>
         </ion-row>
@@ -113,15 +88,19 @@
   </ion-tab-button>
 </ion-tab-bar> -->
 <ion-footer class="ion-hide-md-down">
-  <ion-toolbar class="ion-space-between">
-    <ion-item lines="none">
-      <ion-label>Outillage :
-        <ion-label *ngIf="molding.OT"> OT0{{molding.OT.sapToolNumber}} {{molding.OT.designation}}</ion-label>
-        <ion-label color=warning *ngIf="!molding.OT">Pas d'outillage associé</ion-label>
-      </ion-label>
-      <ion-label class="strong">A draper avant le : {{molding?.aDraperAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-      <ion-label class="strong">A cuire avant le : {{molding?.aCuireAv | date: "dd/MM/yyyy à HH:mm"}}</ion-label>
-    </ion-item>
+  <ion-toolbar>
+    <ion-text slot="start">Outillage :
+      <ion-text *ngIf="molding.OT"> OT0{{molding.OT.sapToolNumber}} {{molding.OT.designation}}</ion-text>
+      <ion-text color=warning *ngIf="!molding.OT">Pas d'outillage associé</ion-text>
+    </ion-text>
+    <div class="col">
+      <ion-text class="strong">Début moulage : {{molding?.moldingDay | date: "dd/MM/yyyy"}}</ion-text>
+      <ion-text class="strong" *ngIf="molding.userCreat">Mouleur : {{molding.userCreat.nom}}
+        {{molding.userCreat.prenom}}</ion-text>
+    </div>
+    <ion-text slot=end class="strong">A draper avant le : {{molding?.aDraperAv | date: "dd/MM/yyyy à HH:mm"}}
+    </ion-text>
+    <ion-text slot=end class="strong">A cuire avant le : {{molding?.aCuireAv | date: "dd/MM/yyyy à HH:mm"}}</ion-text>
   </ion-toolbar>
   <ion-toolbar color=light>
     <ion-buttons slot="end" collapse="true">
