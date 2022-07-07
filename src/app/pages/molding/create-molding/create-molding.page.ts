@@ -104,7 +104,7 @@ export class CreateMoldingPage implements OnInit {
     this.checkMoldingDatas()
       .then(() => {
         this.saveMolding()
-          .then(() => {
+          .subscribe(() => {
             if (print) {
               this.printMolding();
             } else {
@@ -115,58 +115,28 @@ export class CreateMoldingPage implements OnInit {
                 .then((response) => { if (response) { this.printMolding(); } });
             }
           },
-            () => {
+            (err) => {
               this.alertService.simpleAlert(
                 'Erreur de sauvegarde',
                 'Le moulage n\'a pas été sauvegardé',
-                'Veuillez ré-essayer'
+                err
               );
             });
       },
-        () => {
-          console.error('test');
-
+        (err) => {
+          this.alertService.simpleAlert('La vérification du moulage a échoué', err.title, err.message);
         }
       );
   }
 
 
   saveMolding() {
-    return new Promise<void>((resolve, reject) => {
-      // check du moulage
-      this.checkMoldingDatas()
-        .then(() => {
-          this.molding.createdBy = this.authService.authUser;
-          if (this.molding.id === null) {
-            this.moldingService.saveMolding(this.moldingService.toIri(this.molding))
-              .subscribe((responseMolding: Molding) => {
-                this.molding = responseMolding;
-                resolve();
-              },
-                () => {
-                  console.log('tout n\'est pas Ok la sauvegarde a échouée');
-                  reject();
-                });
-          } else {
-            this.moldingService.updateMolding(this.moldingService.toIri(this.molding))
-              .subscribe((responseMolding: Molding) => {
-                this.molding = responseMolding;
-                console.log('tout est OK le moulage est mis à jour');
-                resolve();
-              },
-                () => {
-                  this.alertService.simpleAlert(
-                    'Message d\'erreur',
-                    'Sauvegarde échouée !',
-                    'La sauvegarde ne s\'est pas correctement effectuée. Veuillez recommencer');
-                  console.error('tout n\'est pas Ok la mise à jour du moulage a échouée');
-                  reject();
-                });
-          }
-        });
-      // sauvegarder le moulage en base de donnée
-
-    });
+    const moldingToSave = this.moldingService.toIri(this.molding);
+    if (this.molding.id === null) {
+      return this.moldingService.saveMolding(moldingToSave);
+    } else {
+      return this.moldingService.updateMolding(moldingToSave);
+    }
   }
 
 
@@ -180,29 +150,30 @@ export class CreateMoldingPage implements OnInit {
    * @memberof CreateMoldingPage
    */
   checkMoldingDatas() {
-    console.log('start check data');
     return new Promise<void>((resolve, reject) => {
-      if (this.molding.OT === null) {
+      if (this.molding.OT === undefined) {
         const missingToolMsg = 'L\'outillage de moulage n\'est pas associé. Voulez-vous continuer sans outillage ?';
-        this.alertService.presentAlertConfirm('Alerte', missingToolMsg)
+        this.alertService.presentAlertConfirm('OUTILLAGE MANQUANT', missingToolMsg)
           .then((response) => {
             if (response) {
-              console.log('onResolve : Je veux continuer sans outillage', response);
-              // console.error('erreur', response);
               resolve();
             } else {
-              console.log('onResolve : Je ne veux pas continuer sans outillage', response);
-              resolve();
+              const title = 'OUTILLAGE MANQUANT';
+              const message = 'Veuillez renseigner l\'outillage de moulage';
+              reject({ title, message });
             }
           },
             (response) => {
-              const message = 'Les données n\ont pas pu être contrôlées. OU Il n\'y a pas eu de réponse de l\'utilisateur';
+              const title = `Outillage de moulage manquant`;
+              const message = 'Il n\'y a pas eu de réponse de l\'utilisateur';
               console.log(message, response);
-              reject(message);
+              reject({ title, message });
             });
       } else if (this.molding.kits.length === 0) {
-        console.log('onResolve : Il n\'y a pas de kit');
-        resolve();
+        const title = 'Il n\'y a pas de kit';
+        const message = `Pour insérer un kit matière munissez vous d'une fiche de vie et scannez le code barre.
+          Si besoin d'aide complémentaire appelez le 06.87.89.24.25`;
+        reject({ title, message });
       } else {
         resolve();
       }
@@ -260,13 +231,9 @@ export class CreateMoldingPage implements OnInit {
    */
   private onKitInput(kitObj: Kit) {
     if (!this.kitService.kitIsInKits(kitObj, this.molding.kits)) {
-      console.log('kit not in kits');
       this.molding.kits.unshift(kitObj);
-      // this.molding.kits = this.kits;
-      console.log(this.molding.kits);
       this.moldingService.updateMoldings(this.molding);
       this.moldingService.updateDates(this.molding);
-      // this.presentToast('Kit ajouté !');
     } else {
       this.alertService.presentToast('Le kit a déjà été scanné');
       console.error('kit en doublon');

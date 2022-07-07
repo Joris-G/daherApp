@@ -13,7 +13,7 @@ import { ScanService } from 'src/app/_services/scan/scan.service';
   templateUrl: './scan-molding-input.component.html',
   styleUrls: ['./scan-molding-input.component.scss'],
 })
-export class ScanMoldingInputComponent implements AfterViewInit {
+export class ScanMoldingInputComponent implements AfterViewInit, OnInit {
 
   /**
    *
@@ -63,7 +63,7 @@ export class ScanMoldingInputComponent implements AfterViewInit {
    * @type {Observable<any>}
    * @memberof ScanMoldingInputComponent
    */
-  public getScanInput$: Observable<Core | Kit | Tool>;
+  public getScanInput$: Observable<AdditionalMaterial | Kit | Tool>;
 
 
   /**
@@ -79,6 +79,30 @@ export class ScanMoldingInputComponent implements AfterViewInit {
     private alertService: AlertService,
     private alertCtrl: AlertController,
   ) { }
+  ngOnInit(): void {
+
+    this.scanService.scanInput$.subscribe(
+      (input) => {
+        // this.loadingService.stopLoading();
+        console.log(input);
+        this.evOnInput.emit(input);
+        this.scanInput.value = '';
+        setTimeout(() => {
+          this.scanInput.setFocus();
+        }, 300);
+      },
+      (error) => {
+        // this.loadingService.stopLoading();
+        console.error(error);
+        this.scanInput.value = '';
+        this.alertService.simpleAlert(
+          'Erreur lors du scan',
+          'L\'élement scanné ne correspond à rien de connu',
+          'Ré-essayer ou contacter j.grangier 06.87.89.24.25'
+        );
+      }
+    );
+  }
 
 
   /**
@@ -141,28 +165,7 @@ export class ScanMoldingInputComponent implements AfterViewInit {
    * @memberof ScanMoldingInputComponent
    */
   onInputChange(inputValue: string) {
-    this.loadingService.startLoading('chargement du kit ...');
-    this.scanService.getScanInput(inputValue).subscribe(
-      (input) => {
-        this.loadingService.stopLoading();
-        console.log(input);
-        this.evOnInput.emit(input);
-        this.scanInput.value = '';
-        setTimeout(() => {
-          this.scanInput.setFocus();
-        }, 300);
-      },
-      (error) => {
-        this.loadingService.stopLoading();
-        console.error(error);
-        this.scanInput.value = '';
-        this.alertService.simpleAlert(
-          'Erreur lors du scan',
-          'L\'élement scanné ne correspond à rien de connu',
-          'Ré-essayer ou contacter j.grangier 06.87.89.24.25'
-        );
-      }
-    );
+    this.scanService.getScanInput(inputValue);
   }
 
 }

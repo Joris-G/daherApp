@@ -1,3 +1,4 @@
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Tool } from '../tooling/tool';
 
 export class Core {
@@ -47,13 +48,26 @@ export class Densif {
   partnumber: string;
 }
 
-
 export class AdditionalMaterial {
-
   id?: number;
-  designation: string;
+  designation?: string;
   ref?: string;
   numLot: string;
-  typeMaterial?: { designation: string };
+  typeMaterial?: TypeMaterial;
   outillageMoulage?: Tool;
+}
+export class AdditionalMaterialForm extends FormGroup {
+  value: AdditionalMaterial;
+  controls: {
+    id?: AbstractControl;
+    designation?: AbstractControl;
+    ref: AbstractControl;
+    numLot: AbstractControl;
+    typeMaterial: AbstractControl<TypeMaterial>;
+    outillageMoulage?: AbstractControl;
+  };
+}
+
+export class TypeMaterial {
+  designation: string;
 }

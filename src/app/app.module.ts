@@ -16,6 +16,8 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { DirectiveModule } from './_directives/directive.module';
+import { PerempDirective } from './_directives/peremp.directive';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -24,6 +26,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: { transp
 @NgModule({
   declarations: [
     AppComponent,
+    // PerempDirective,
   ],
   entryComponents: [],
   imports: [
@@ -41,7 +44,6 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: { transp
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    DirectiveModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -50,6 +52,11 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: { transp
     PDFGenerator,
   ],
   bootstrap: [AppComponent],
-  exports: []
+  exports: [
+    // PerempDirective,
+    SharedUserHeaderModule,
+    CommonModule,
+    MenuModule,
+  ]
 })
 export class AppModule { }

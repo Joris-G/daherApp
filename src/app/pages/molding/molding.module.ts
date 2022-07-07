@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { MoldingPageRoutingModule } from './molding-routing.module';
 import { MoldingPage } from './molding.page';
@@ -21,11 +21,18 @@ import { NonExpiredMaterialInputComponent } from './_components/non-expired-mate
 import { ModalMaterialService } from 'src/app/_services/molding/modal/modal-material.service';
 import { NidaComponent } from './_components/non-expired-material-input/nida/nida.component';
 import { OtherMaterialsService } from 'src/app/_services/molding/otherMaterials/other-materials.service';
+import { MoldingKitTableComponent } from './create-molding/molding-kit-table/molding-kit-table.component';
+import { DirectiveModule } from 'src/app/_directives/directive.module';
+import { PerempDirective } from 'src/app/_directives/peremp.directive';
+import { AppModule } from 'src/app/app.module';
+import { MoldingMaterialsTableComponent } from './create-molding/molding-materials-table/molding-materials-table.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    // AppModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     SharedUserHeaderModule,
     MenuModule,
@@ -42,6 +49,9 @@ import { OtherMaterialsService } from 'src/app/_services/molding/otherMaterials/
     PrintMoldingSheetPage,
     NonExpiredMaterialInputComponent,
     NidaComponent,
+    MoldingKitTableComponent,
+    PerempDirective,
+    MoldingMaterialsTableComponent
   ],
   providers: [
     ScanService,
@@ -50,6 +60,8 @@ import { OtherMaterialsService } from 'src/app/_services/molding/otherMaterials/
     ToolService,
     ModalMaterialService,
     OtherMaterialsService,
+  ],
+  exports: [
   ]
 })
 export class MoldingPageModule { }

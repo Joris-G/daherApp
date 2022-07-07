@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { IonSegment } from '@ionic/angular';
 import { Subject } from 'rxjs';
-import { Core, Densif } from 'src/app/_interfaces/molding/composite-material-types';
+import { AdditionalMaterial, Core, Densif } from 'src/app/_interfaces/molding/composite-material-types';
 
 @Component({
   selector: 'app-non-expired-material-input',
@@ -9,13 +9,13 @@ import { Core, Densif } from 'src/app/_interfaces/molding/composite-material-typ
   styleUrls: ['./non-expired-material-input.component.scss'],
 })
 export class NonExpiredMaterialInputComponent implements OnInit, OnDestroy {
-  @Input() materialObject: Subject<any>;
+  @Input() materialObject: Subject<AdditionalMaterial>;
   @Input() batchNumber: string;
   @Output() typeInputEv: EventEmitter<Core | Densif> = new EventEmitter();
   @ViewChild('materialSegment') materialSegment: IonSegment;
   public nidaIsSelected: boolean;
   public otherIsSelected: boolean;
-  public material: Core | any;
+  public material: AdditionalMaterial | any;
 
   selectedType: any;
   constructor() { }
@@ -23,9 +23,9 @@ export class NonExpiredMaterialInputComponent implements OnInit, OnDestroy {
     this.materialObject.unsubscribe();
   }
   ngOnInit(): void {
-    if (Core.isCore(this.batchNumber)) {
-      this.materialSegment.value = 'nida';
-    }
+    // if (Core.isCore(this.batchNumber)) {
+    //   this.materialSegment.value = 'nida';
+    // }
     console.log('init');
 
   }

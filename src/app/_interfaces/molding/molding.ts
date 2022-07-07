@@ -34,7 +34,7 @@ export interface MoldingIri {
   id: number;
   kits: string[];
   moldingDay: Date;
-  createdBy: string;
+  createdBy?: string;
   outillage: string;
   aCuireAv: Date;
   aDraperAv: Date;

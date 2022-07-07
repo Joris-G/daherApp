@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { Core } from 'src/app/_interfaces/molding/composite-material-types';
+import { AdditionalMaterial, AdditionalMaterialForm, Core } from 'src/app/_interfaces/molding/composite-material-types';
+import { RequestService } from 'src/app/_services/request.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -9,23 +12,35 @@ import { Core } from 'src/app/_interfaces/molding/composite-material-types';
   styleUrls: ['./nida.component.scss']
 })
 export class NidaComponent implements OnInit {
-  @Output() nidaEmitter: EventEmitter<Core> = new EventEmitter();
+  @Output() nidaEmitter: EventEmitter<AdditionalMaterial> = new EventEmitter();
   @Input() batchNumberInput: string;
-  public material: Core = {
-    idCore: null,
-    reference: '',
-    batchNumber: ''
-  };
+  public nidaForm: FormGroup;
   public references$: Observable<string[]>;
-  constructor() { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private requestService: RequestService,
+  ) { }
 
   ngOnInit(): void {
-    this.material.batchNumber = this.batchNumberInput;
-    this.references$ = of(['73P5522130C00301', '73P5522148C00401', '73P5522358C00301']);
+    this.nidaForm = this.formBuilder.group({
+      numLot: new FormControl(this.batchNumberInput),
+      id: new FormControl(),
+      designation: new FormControl(),
+      ref: new FormControl(''),
+      typeMaterial: new FormControl(),
+      outillageMoulage: new FormControl()
+    }) as AdditionalMaterialForm;
+
+    this.references$ = this.requestService.createGetRequest(
+      `${environment.moldingApi}additional_materials`,
+      { outillageMoulage: '95898' }
+    );
   }
 
   validate() {
-    this.nidaEmitter.emit(this.material);
+    this.nidaEmitter.emit(this.nidaForm.value);
   }
-
+  changeInput() {
+    console.log('input change');
+  }
 }

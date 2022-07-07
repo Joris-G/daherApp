@@ -28,7 +28,6 @@ export class KitService {
               'Il semble y avoir un problème avec le kit scanné. Vérifier le kit et essayer de nouveau.');
           }),
         map((returnsData) => {
-          console.log(returnsData);
           if (returnsData.length > 0) {
             const kit: Kit = {
               id: returnsData[0].id,
@@ -46,7 +45,6 @@ export class KitService {
               timeOut: returnsData[0].TimeOut,
               updateAt: returnsData[0].updateAt
             };
-            console.log(kit);
             return kit;
           }
           return of(undefined);
@@ -72,7 +70,10 @@ export class KitService {
     if (kits.length <= 0) {
       return false;
     }
-    return kits.every(kit => kit.idMM === kitToTest.idMM);
+    return kits.some(kit => {
+      console.log(kit.idMM === kitToTest.idMM);
+      return kit.idMM === kitToTest.idMM;
+    });
   }
 
   getIri(kit: Kit): string {

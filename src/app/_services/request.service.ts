@@ -104,8 +104,8 @@ export class RequestService {
       );
   }
 
-  createGetRequest(url: string): Observable<any> {
-    return this.http.get<any>(`${environment.apiServer}${url}`, { headers: this.httpHeaders })
+  createGetRequest(url: string, params?: any): Observable<any> {
+    return this.http.get<any>(`${environment.apiServer}${url}`, { headers: this.httpHeaders, params })
       .pipe(
         map((val) => {
           if (val.status === 500) { throw (val); }

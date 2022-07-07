@@ -17,7 +17,7 @@
       <p>Sélectionner le type de matériau</p>
     </div>
     <!-- // TODO ionic router -->
-    <ion-segment #materialSegment [(ngModel)]="selectedType">
+    <ion-segment #materialSegment [(ngModel)]="selectedType" scrollable="true" swipeGesture="true">
       <ion-segment-button value="nida">
         <ion-label>Nida</ion-label>
       </ion-segment-button>

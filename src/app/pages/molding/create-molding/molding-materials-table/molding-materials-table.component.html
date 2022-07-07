@@ -1,0 +1,26 @@
+<ion-grid fixed style="width:100%;" class="table">
+  <ion-row class="table-header-row ion-padding">
+    <ion-col size="6">
+      <ion-label>
+        N° de lot
+      </ion-label>
+    </ion-col>
+    <ion-col size="6">
+      <ion-label>
+        Référence
+      </ion-label>
+    </ion-col>
+  </ion-row>
+  <ion-row class="table-data-row" *ngFor="let mat of molding.materialSupplementary">
+    <ion-col size="6">
+      <ion-label>
+        {{mat.numLot}}
+      </ion-label>
+    </ion-col>
+    <ion-col size="6">
+      <ion-label>
+        {{mat.ref}}
+      </ion-label>
+    </ion-col>
+  </ion-row>
+</ion-grid>

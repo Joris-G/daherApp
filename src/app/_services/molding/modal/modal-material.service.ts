@@ -3,12 +3,13 @@ import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { NonExpiredMaterialInputComponent } from
   'src/app/pages/molding/_components/non-expired-material-input/non-expired-material-input.component';
+import { AdditionalMaterial } from 'src/app/_interfaces/molding/composite-material-types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalMaterialService {
-  public materialObject: Subject<any>;
+  public materialObject: Subject<AdditionalMaterial>;
   constructor(private modalCtrl: ModalController) { }
 
 
