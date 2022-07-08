@@ -52,7 +52,7 @@ export class ScanService {
         break;
     }
     console.log(obs);
-    obs.subscribe((response) => this.scanInput$.error(response));
+    obs.subscribe((response) => this.scanInput$.next(response), (err) => this.scanInput$.error(err));
   }
 
 
