@@ -8,6 +8,7 @@ import { isDevMode } from '@angular/core';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import packageJson from 'package.json';
+import { NoticeService } from 'src/app/_services/notice/notice.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -43,8 +44,11 @@ export class LoginPage implements OnInit {
     private updateService: UpdateAppService,
     private navControler: NavController,
     private alertService: AlertService,
+    private noticeService: NoticeService,
   ) { }
-
+  test() {
+    this.noticeService.presentModal();
+  }
   ionViewWillEnter(): void {
     if (isDevMode()) {
       this.loginForm.setValue({
