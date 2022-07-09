@@ -1,0 +1,16 @@
+<ion-toolbar>
+  <ion-text slot="start">Outillage :
+    <ion-text *ngIf="molding.OT"> OT0{{molding.OT.sapToolNumber}} {{molding.OT.designation}}</ion-text>
+    <ion-text color=warning *ngIf="!molding.OT">Pas d'outillage associé</ion-text>
+  </ion-text>
+  <div class="col">
+    <ion-text class="strong">Début moulage : {{molding?.moldingDay | date: "dd/MM/yyyy"}}</ion-text>
+    <ion-text class="strong" *ngIf="molding.userCreat">Mouleur : {{molding.userCreat.nom}}
+      {{molding.userCreat.prenom}}</ion-text>
+  </div>
+  <ion-text *ngIf=molding.aDraperAv slot=end class="strong">A draper avant le : {{molding.aDraperAv | date: "dd/MM/yyyy
+    à HH:mm"}}
+  </ion-text>
+  <ion-text *ngIf=molding.aCuireAv slot=end class="strong">A cuire avant le : {{molding.aCuireAv | date: "dd/MM/yyyy à
+    HH:mm"}}</ion-text>
+</ion-toolbar>

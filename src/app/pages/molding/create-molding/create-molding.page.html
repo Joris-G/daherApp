@@ -1,16 +1,14 @@
-<!-- <app-shared-user-header [page]="pageTitle"></app-shared-user-header> -->
 <ion-toolbar color=light class="ion-hide-md-down padding">
-
   <app-scan-molding-input slot=start (evOnInput)="onInput($event)"></app-scan-molding-input>
-  <!-- <ng-container> -->
-  <!-- <app-non-expired-material-input></app-non-expired-material-input> -->
-  <!-- </ng-container> -->
   <ion-button size=small slot=end (click)="(expanded = !expanded) ? accordion.openAll() : accordion.closeAll()">
     {{(!expanded) ? 'Développer tout' : 'Replier tout'}}</ion-button>
 </ion-toolbar>
 <ion-content>
   <mat-accordion multi>
     <mat-expansion-panel #kitPanel *ngIf="molding.kits?.length >0" [expanded]="(molding.kits.length >0)">
+      <!--  -->
+      <!-- LISTE DES KITS -->
+      <!--  -->
       <mat-expansion-panel-header>
         <mat-panel-title>
           <ion-title color=primary> Liste des Kits</ion-title>
@@ -18,11 +16,12 @@
         <mat-panel-description>
         </mat-panel-description>
       </mat-expansion-panel-header>
-
       <app-molding-kit-table [molding]="molding"></app-molding-kit-table>
-
     </mat-expansion-panel>
 
+    <!--  -->
+    <!-- LISTE DES MATERIAUX AUTRES -->
+    <!--  -->
     <mat-expansion-panel *ngIf="molding.materialSupplementary?.length >0"
       [expanded]="(molding.materialSupplementary.length >0)">
       <mat-expansion-panel-header>
@@ -32,40 +31,15 @@
         <mat-panel-description>
         </mat-panel-description>
       </mat-expansion-panel-header>
-
       <app-molding-materials-table [molding]="molding"></app-molding-materials-table>
-
     </mat-expansion-panel>
   </mat-accordion>
 </ion-content>
 
+
 <ion-footer class="ion-hide-md-down">
-  <ion-toolbar>
-    <ion-text slot="start">Outillage :
-      <ion-text *ngIf="molding.OT"> OT0{{molding.OT.sapToolNumber}} {{molding.OT.designation}}</ion-text>
-      <ion-text color=warning *ngIf="!molding.OT">Pas d'outillage associé</ion-text>
-    </ion-text>
-    <div class="col">
-      <ion-text class="strong">Début moulage : {{molding?.moldingDay | date: "dd/MM/yyyy"}}</ion-text>
-      <ion-text class="strong" *ngIf="molding.userCreat">Mouleur : {{molding.userCreat.nom}}
-        {{molding.userCreat.prenom}}</ion-text>
-    </div>
-    <ion-text slot=end class="strong">A draper avant le : {{molding?.aDraperAv | date: "dd/MM/yyyy à HH:mm"}}
-    </ion-text>
-    <ion-text slot=end class="strong">A cuire avant le : {{molding?.aCuireAv | date: "dd/MM/yyyy à HH:mm"}}</ion-text>
-  </ion-toolbar>
-  <ion-toolbar color=light>
-    <ion-buttons slot="end" collapse="true">
-      <ion-button slot=end (click)="saveMoldingClick()" fill="clear">
-        <ion-icon slot="start" name="save-outline"></ion-icon>
-        SAUVEGARDER
-      </ion-button>
-      <ion-button slot=end (click)="saveMoldingClick(true)" fill="solid" color=primary>
-        <ion-icon slot="start" name="print-outline"></ion-icon>
-        IMPRIMER
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+  <app-molding-info-toolbar [molding]=molding></app-molding-info-toolbar>
+  <app-create-molding-toolbar [molding]=molding></app-create-molding-toolbar>
 </ion-footer>
 
 

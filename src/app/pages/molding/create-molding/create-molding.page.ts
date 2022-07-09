@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
-import { AdditionalMaterial, Core, Kit } from 'src/app/_interfaces/molding/composite-material-types';
+import { AdditionalMaterial, Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { AlertService } from 'src/app/_services/divers/alert.service';
@@ -32,7 +32,6 @@ export class CreateMoldingPage implements OnInit {
     public moldingService: MoldingService,
     public alertController: AlertController,
     public kitService: KitService,
-    public router: Router,
     public navCtrl: NavController,
     private loadingService: LoadingService,
     private activatedRoute: ActivatedRoute,
@@ -62,7 +61,6 @@ export class CreateMoldingPage implements OnInit {
     // this.alertService.presentToast('Erreur kit non trouvé');
 
   }
-
 
   ionViewWillEnter() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -94,104 +92,6 @@ export class CreateMoldingPage implements OnInit {
       createdBy: null
     };
     this.isAdmin = this.roleGuard.isRole(['ROLE_ADMIN']);
-  }
-
-
-
-
-
-  saveMoldingClick(print?: boolean) {
-    this.checkMoldingDatas()
-      .then(() => {
-        this.saveMolding()
-          .subscribe(() => {
-            if (print) {
-              this.printMolding();
-            } else {
-              // On demande si on veut imprimer ou non
-              this.alertService.presentAlertConfirm(
-                'Enregistrement effectué',
-                'Voulez-vous imprimer la fiche ?')
-                .then((response) => { if (response) { this.printMolding(); } });
-            }
-          },
-            (err) => {
-              this.alertService.simpleAlert(
-                'Erreur de sauvegarde',
-                'Le moulage n\'a pas été sauvegardé',
-                err
-              );
-            });
-      },
-        (err) => {
-          this.alertService.simpleAlert('La vérification du moulage a échoué', err.title, err.message);
-        }
-      );
-  }
-
-
-  saveMolding() {
-    const moldingToSave = this.moldingService.toIri(this.molding);
-    if (this.molding.id === null) {
-      return this.moldingService.saveMolding(moldingToSave);
-    } else {
-      return this.moldingService.updateMolding(moldingToSave);
-    }
-  }
-
-
-
-  /**
-   * Vérifie les données du moulage :
-   * # vérifie la présence de l'outillage
-   * # vérifie s'il y a au moins un kit
-   *
-   * @return
-   * @memberof CreateMoldingPage
-   */
-  checkMoldingDatas() {
-    return new Promise<void>((resolve, reject) => {
-      if (this.molding.OT === undefined) {
-        const missingToolMsg = 'L\'outillage de moulage n\'est pas associé. Voulez-vous continuer sans outillage ?';
-        this.alertService.presentAlertConfirm('OUTILLAGE MANQUANT', missingToolMsg)
-          .then((response) => {
-            if (response) {
-              resolve();
-            } else {
-              const title = 'OUTILLAGE MANQUANT';
-              const message = 'Veuillez renseigner l\'outillage de moulage';
-              reject({ title, message });
-            }
-          },
-            (response) => {
-              const title = `Outillage de moulage manquant`;
-              const message = 'Il n\'y a pas eu de réponse de l\'utilisateur';
-              console.log(message, response);
-              reject({ title, message });
-            });
-      } else if (this.molding.kits.length === 0) {
-        const title = 'Il n\'y a pas de kit';
-        const message = `Pour insérer un kit matière munissez vous d'une fiche de vie et scannez le code barre.
-          Si besoin d'aide complémentaire appelez le 06.87.89.24.25`;
-        reject({ title, message });
-      } else {
-        resolve();
-      }
-    });
-
-  }
-
-
-
-
-  /**
-   * Navigue vers l'impression des moulages
-   *
-   * @private
-   * @memberof CreateMoldingPage
-   */
-  private printMolding() {
-    this.router.navigate(['molding/print-molding-sheet', this.molding.id]);
   }
 
   /**
@@ -240,8 +140,6 @@ export class CreateMoldingPage implements OnInit {
     }
   }
 
-
-
   /**
    * On  traite une entrée d'un Tool
    *
@@ -254,12 +152,11 @@ export class CreateMoldingPage implements OnInit {
     this.alertService.presentToast('Outillage associé !');
   }
 
-
   /**
-   * On  traite une entrée d'un core
+   * On  traite une entrée d'un autre matéiraux
    *
    * @private
-   * @param coreObj
+   * @param matObj
    * @memberof CreateMoldingPage
    */
   private onMatInput(matObj: AdditionalMaterial) {
@@ -269,8 +166,6 @@ export class CreateMoldingPage implements OnInit {
     } else {
       this.molding.materialSupplementary = [matObj];
     }
-
-    //     this.molding.cores.unshift(coreObj);
   }
 
 
