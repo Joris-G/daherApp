@@ -1,31 +1,5 @@
 <app-shared-user-header [pageTitle]="page.pageTitle"></app-shared-user-header>
 <ion-content [fullscreen]="false" color=medium>
-  <ion-menu open=true #menu side="start" type="push" contentId="molding-content">
-    <ion-header>
-      <ion-toolbar color="succes">
-        <ion-title>
-          {{page.menuTitle}}
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-menu-toggle auto-hide="true">
-          <ion-item [button]="true" (click)="navigate('molding/create-molding')">
-            <ion-label>
-              Nouveau moulage
-            </ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-        <ion-item [button]="false">
-          <ion-label>
-            Modifier moulage
-          </ion-label>
-          <ion-input #inputIdMolding type="text" placeholder="" (change)="idMoldingInputChange()"></ion-input>
-          <ion-note slot=helper>Entrer un numéro d'ID ou scanner le code barre de la feuille de moulage</ion-note>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
+  <app-molding-menu></app-molding-menu>
   <ion-router-outlet id="molding-content"></ion-router-outlet>
 </ion-content>

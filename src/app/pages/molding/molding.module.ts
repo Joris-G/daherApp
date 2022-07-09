@@ -26,6 +26,7 @@ import { DirectiveModule } from 'src/app/_directives/directive.module';
 import { PerempDirective } from 'src/app/_directives/peremp.directive';
 import { AppModule } from 'src/app/app.module';
 import { MoldingMaterialsTableComponent } from './create-molding/molding-materials-table/molding-materials-table.component';
+import { MoldingMenuComponent } from './_components/molding-menu/molding-menu.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { MoldingMaterialsTableComponent } from './create-molding/molding-materia
     NidaComponent,
     MoldingKitTableComponent,
     PerempDirective,
-    MoldingMaterialsTableComponent
+    MoldingMaterialsTableComponent,
+    MoldingMenuComponent,
   ],
   providers: [
     ScanService,
