@@ -18,6 +18,7 @@ import { environment } from '../environments/environment';
 import { DirectiveModule } from './_directives/directive.module';
 import { PerempDirective } from './_directives/peremp.directive';
 import { CommonModule } from '@angular/common';
+import { LoginNoticeComponent } from './composants/notices/login-notice/login-notice.component';
 
 
 
@@ -26,6 +27,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: { transp
 @NgModule({
   declarations: [
     AppComponent,
+    LoginNoticeComponent,
     // PerempDirective,
   ],
   entryComponents: [],
