@@ -1,9 +1,13 @@
-import { AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/_services/users/auth.service';
-
-const MENU_ITEMS = [
+import { Component, OnInit } from '@angular/core';
+import { HeaderService } from 'src/app/composants/shared-user-header/header.service';
+import { PageParams } from 'src/app/composants/shared-user-header/page-params';
+import { NoticeService } from 'src/app/_services/notice/notice.service';
+export interface IMenuItem {
+  title: string;
+  path: string;
+  type: string;
+}
+const MENU_ITEMS: IMenuItem[] = [
   {
     title: 'Moulage',
     path: '/molding',
@@ -23,26 +27,26 @@ const MENU_ITEMS = [
 })
 export class HomePage implements OnInit {
   public page: any;
-  public menuItems: any;
+  public menuItems: IMenuItem[];
   constructor(
-    public router: Router,
-    public navCtrl: NavController,
-    public authService: AuthService) { }
-
-
-  ionViewWillEnter() {
-    this.page = {
-      pageTitle: 'ACCUEIL',
-      menuItems: MENU_ITEMS,
-      contentId: 'home-content'
-    };
+    private headerService: HeaderService,
+    private noticeService: NoticeService,
+  ) {
   }
 
   ngOnInit(): void {
-    this.page = {
-      pageTitle: 'ACCUEIL',
-      menuItems: MENU_ITEMS,
-      contentId: 'home-content'
-    };
+    console.log('home init');
+    this.menuItems = MENU_ITEMS;
+    const pageParams: PageParams = { title: 'ACCUEIL', visible: true };
+    this.headerService.changePageParams(pageParams, 'home');
+  }
+
+  ionViewDidEnter() {
+    console.log('did enter');
+
+  }
+
+  showNotice() {
+    this.noticeService.presentModal();
   }
 }

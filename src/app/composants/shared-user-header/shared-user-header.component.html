@@ -1,28 +1,27 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" *ngIf="pageParams.visible">
   <ion-toolbar color=primary>
-
+    <!--  -->
     <!-- left side -->
-
+    <!--  -->
     <ion-buttons slot="start">
       <ion-menu-button autoHide=false color="light"></ion-menu-button>
       <ion-img class="ion-hide-sm-down logo" src="assets/images/logoDaherFondBleu.png" (click)="navigate('home')">
       </ion-img>
     </ion-buttons>
-
-
+    <!--  -->
     <!-- middle side -->
-
-    <ion-title class="ion-text-uppercase ion-text-center">{{pageTitle}}</ion-title>
-
-
+    <!--  -->
+    <ion-title class="ion-text-uppercase ion-text-center">{{pageParams.title}}</ion-title>
+    <!--  -->
     <!-- right side -->
-
+    <!--  -->
     <ion-label slot=end class="dev">{{envMode}}</ion-label>
     <ion-chip id="button-profil" color=light slot=end class=ion-margin-end outline>
       <ion-icon name="person-circle-outline"></ion-icon>
-      <ion-label color=light>{{user?.username}}</ion-label>
+      <ion-label color=light>{{pageParams.user?.username}}</ion-label>
     </ion-chip>
-    <ion-popover slot=end trigger="button-profil" alignment="end" side="bottom" dismissOnSelect="true">
+    <ion-popover slot=end trigger="button-profil" triggerAction="context-menu" alignment="end" side="bottom"
+      dismissOnSelect="true">
       <ng-template>
         <ion-content>
           <ion-list>
@@ -56,8 +55,8 @@
     </ion-button>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <app-user-sheet [user]="user" [userState]="isUserOpen" (stateChangeEv)="isUserOpen = $event"></app-user-sheet>
-</ion-content>
+<!-- <ion-content> -->
+<app-user-sheet [user]="user" [userState]="isUserOpen" (stateChangeEv)="isUserOpen = $event"></app-user-sheet>
+<!-- </ion-content> -->
 <!-- <app-user-sheet [user]="selectedUser" [userState]="isUserSelected" (stateChangeEv)="isUserSelected=$event">
 </app-user-sheet> -->

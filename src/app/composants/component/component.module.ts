@@ -5,12 +5,12 @@ import { IndicatorGraphComponentModule } from '../indicators/indicator-graph/ind
 import { IndicatorNumberComponentModule } from '../indicators/indicator-number/indicator-number.module';
 import { IonicModule } from '@ionic/angular';
 import { DirectiveModule } from 'src/app/_directives/directive.module';
-
-
+import { SharedUserHeaderComponent } from '../shared-user-header/shared-user-header.component';
 
 @NgModule({
   declarations: [
-    UserSheetComponent
+    UserSheetComponent,
+    SharedUserHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -18,14 +18,14 @@ import { DirectiveModule } from 'src/app/_directives/directive.module';
     IndicatorGraphComponentModule,
     IndicatorNumberComponentModule,
     DirectiveModule,
+
   ],
   exports: [
     IndicatorGraphComponentModule,
     IndicatorNumberComponentModule,
     UserSheetComponent,
+    SharedUserHeaderComponent,
   ],
-  providers: [
-
-  ]
+  providers: []
 })
 export class ComponentModule { }

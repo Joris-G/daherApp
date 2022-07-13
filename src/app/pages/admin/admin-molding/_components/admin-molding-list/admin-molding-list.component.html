@@ -1,0 +1,64 @@
+<ion-card>
+  <ion-card-header>
+    <ion-toolbar class=ion-no-margin>
+      <ion-card-title>Liste des moulages</ion-card-title>
+      <ion-spinner slot=end *ngIf="moldingListLoading" name="circles"></ion-spinner>
+      <!-- <ion-button size=small slot=end (click)="getMoldings()">
+        <ion-icon size=small slot="icon-only" name="refresh"></ion-icon>
+      </ion-button> -->
+
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content>
+    <!-- <div class="error" *ngIf="moldingsError && !moldingListLoading">
+      <ion-label>Pas de moulage à afficher</ion-label>
+    </div> -->
+    <div class="moldings-table" *ngIf="dataSource.data.length > 0">
+      <ion-input type="text" placeholder="Numéro d'OT" (ionInput)="applyFilter($event)"></ion-input>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" fixedLayout=true>
+        <!-- Id Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <ion-icon name="ellipse" [color]="(element.status) ? 'danger' : 'success'"></ion-icon>
+          </td>
+        </ng-container>
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        <!-- Moulé le Column -->
+        <ng-container matColumnDef="moldingDay">
+          <th mat-header-cell *matHeaderCellDef> Date du moulage </th>
+          <td mat-cell *matCellDef="let element"> {{element.moldingDay | date: "dd/MM/yyyy"}} </td>
+        </ng-container>
+        <!-- Créé par Column -->
+        <ng-container matColumnDef="createdBy">
+          <th mat-header-cell *matHeaderCellDef> Créé par </th>
+          <td mat-cell *matCellDef="let element"> {{element.userCreat.username}} </td>
+        </ng-container>
+        <!-- Outillage Column -->
+        <ng-container matColumnDef="outillage">
+          <th mat-header-cell *matHeaderCellDef> Outillage </th>
+          <td mat-cell *matCellDef="let element"> {{element.OT.sapToolNumber}} -
+            {{element.OT.designation}}</td>
+        </ng-container>
+
+        <!-- commands Column -->
+        <ng-container matColumnDef="commands">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+            <ion-button size=small expand="block" fill="solid" shape="round"
+              [routerLink]="'/molding/create-molding/'+element.id">
+              Editer
+            </ion-button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedMoldingColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedMoldingColumns;"></tr>
+      </table>
+    </div>
+
+  </ion-card-content>
+</ion-card>

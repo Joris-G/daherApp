@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Division } from 'src/app/_interfaces/division';
+import { IDivision } from 'src/app/_interfaces/division';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
 
@@ -13,11 +13,11 @@ export class UniteService {
     private requestService: RequestService
   ) { }
 
-  getUnites(): Observable<Division[]> {
+  getUnites(): Observable<IDivision[]> {
     return this.requestService.createGetRequest(`${environment.usineApi}divisions`);
   }
 
-  getIri(unite: Division | string): string {
+  getIri(unite: IDivision | string): string {
     if (typeof (unite) == 'string') {
       return unite;
     } else {

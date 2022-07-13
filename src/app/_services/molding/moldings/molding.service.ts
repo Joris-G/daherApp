@@ -34,7 +34,6 @@ export class MoldingService {
   constructor(
     private kitService: KitService,
     private toolService: ToolService,
-    private userService: UsersService,
     private requestService: RequestService,
   ) {
   }
@@ -82,23 +81,45 @@ export class MoldingService {
    * @memberof MoldingService
    */
   updateDates(molding: Molding): void {
+    // REINITIALISATION
     molding.aCuireAv = null;
     molding.aDraperAv = null;
-    molding.matPolym = molding.kits.reduce((defPolym, kit) => (defPolym.aCuirAv > kit.aCuirAv) ? kit : defPolym);
-    molding.aCuireAv = molding.matPolym.aCuirAv;
+    // IDENTIFIER MATIERES DEFAVORABLES
+    molding.matPolym = molding.kits.reduce((defPolym, kit) => {
+      if (defPolym.aCuirAv > kit.aCuirAv) {
+        return kit;
+      } else {
+        return defPolym;
+      }
+    });
     molding.matDrap = molding.kits.reduce((defDrap, kit) => (defDrap.aDrapAv > kit.aDrapAv) ? kit : defDrap);
-    molding.aDraperAv = molding.matDrap.aDrapAv;
-    // molding.kits.forEach((kit: Kit) => {
-    //   if (kit.aCuirAv < molding.aCuireAv || !molding.aCuireAv) {
-    //     molding.aCuireAv = kit.aCuirAv;
-    //     molding.matPolym = kit;
-    //   }
 
-    //   if (kit.aDrapAv < molding.aDraperAv || !molding.aDraperAv) {
-    //     molding.aDraperAv = kit.aDrapAv;
-    //     molding.matDrap = kit;
-    //   }
-    // });
+
+    // RESULTATS DATE LIMITES EN PRENANT EN COMPTE LA POSSIBILITE DE DEPASSEMENT DE LA DATE A -18°C
+    console.log(molding.kits);
+    const smallest18Kit = molding.kits.reduce((previousKit, kit) => {
+      console.log(previousKit.peremptionMoins18);
+      console.log(kit.peremptionMoins18);
+      console.log((previousKit.peremptionMoins18 > kit.peremptionMoins18));
+      if (previousKit.peremptionMoins18 > kit.peremptionMoins18) {
+        return kit;
+      }
+      return previousKit;
+    });
+
+    // A POLYMERIER AVANT LE :
+    if (molding.matPolym.aCuirAv < smallest18Kit.peremptionMoins18) {
+      molding.aCuireAv = molding.matPolym.aCuirAv;
+    } else {
+      molding.aCuireAv = smallest18Kit.peremptionMoins18;
+    }
+
+    // A DRAPER AVANT LE :
+    if (molding.matDrap.aDrapAv < smallest18Kit.peremptionMoins18) {
+      molding.aDraperAv = molding.matDrap.aDrapAv;
+    } else {
+      molding.aDraperAv = smallest18Kit.peremptionMoins18;
+    }
   }
 
 

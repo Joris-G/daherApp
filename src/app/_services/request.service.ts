@@ -112,7 +112,7 @@ export class RequestService {
           console.table(val);
           return val;
         }),
-        retry(3),
+        retry(2),
         // retryWhen(err=> {
         //   console.error(err);
         //   return of(null);

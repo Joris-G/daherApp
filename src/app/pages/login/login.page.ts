@@ -9,13 +9,13 @@ import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import packageJson from 'package.json';
 import { NoticeService } from 'src/app/_services/notice/notice.service';
+import { HeaderService } from 'src/app/composants/shared-user-header/header.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
   @ViewChild('userName') userName: IonInput;
   @ViewChild('password') password: IonInput;
   public version: string = packageJson.version;
@@ -35,8 +35,6 @@ export class LoginPage implements OnInit {
     },
   ];
 
-
-
   constructor(
     public authService: AuthService,
     private formBuilder: FormBuilder,
@@ -45,21 +43,25 @@ export class LoginPage implements OnInit {
     private navControler: NavController,
     private alertService: AlertService,
     private noticeService: NoticeService,
+    private headerService: HeaderService
   ) { }
-  test() {
+
+  showNotice() {
     this.noticeService.presentModal();
   }
+
   ionViewWillEnter(): void {
     if (isDevMode()) {
       this.loginForm.setValue({
         userName: environment.username,
         password: environment.password
       });
-      // this.onSubmit();
     }
   }
 
   ngOnInit() {
+    console.log('login init');
+    this.headerService.changePageParams({ title: '', visible: false }, 'login');
     this.loginForm = this.formBuilder.group({
       userName: ['', Validators.required],
       password: ['']
@@ -113,10 +115,10 @@ export class LoginPage implements OnInit {
       (curRouteOpt) => this.authService.authUser.roles.some(
         (role) => curRouteOpt.roles.find(roleOpt => roleOpt === role)));
     if (prefRoute !== undefined) {
-      this.navControler.navigateForward(prefRoute.route);
+      this.navControler.navigateRoot(prefRoute.route);
       return;
     }
-    this.navControler.navigateForward('home');
+    this.navControler.navigateRoot('home');
   }
 
 

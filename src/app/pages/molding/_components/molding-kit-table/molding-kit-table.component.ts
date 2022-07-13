@@ -11,7 +11,7 @@ import { MoldingService } from 'src/app/_services/molding/moldings/molding.servi
   templateUrl: './molding-kit-table.component.html',
   styleUrls: ['./molding-kit-table.component.scss'],
 })
-export class MoldingKitTableComponent implements OnInit, OnChanges {
+export class MoldingKitTableComponent implements OnInit {
   @Input() molding: Molding;
   // public kitList: Kit[] = [];
   public dataSource = new MatTableDataSource<Kit>();
@@ -24,24 +24,15 @@ export class MoldingKitTableComponent implements OnInit, OnChanges {
     'aCuirAv',
     'commands'
   ];
-  private molding$: Subject<Molding>;
+  // private molding$: Subject<Molding>;
 
   constructor(
     public kitService: KitService,
     public moldingService: MoldingService
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-
-  }
-
   ngOnInit() {
-    this.molding$ = this.moldingService.molding$;
-    this.molding$.subscribe((molding) => {
-      console.log(molding.kits);
-      // this.kitList = molding.kits;
-    });
+    // this.molding$ = this.moldingService.molding$;
   }
 
 

@@ -1,8 +1,8 @@
-import { Division } from './division';
+import { IDivision } from './division';
 
-export interface Usine {
+export interface IUsine {
   id?: number;
   nom: string;
-  divisions: Division[];
+  divisions: IDivision[];
 }
 

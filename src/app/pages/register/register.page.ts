@@ -3,7 +3,12 @@ import { FormGroup, ValidatorFn, Validators, FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { HeaderService } from 'src/app/composants/shared-user-header/header.service';
+import { IDivision } from 'src/app/_interfaces/division';
+import { Poste } from 'src/app/_interfaces/poste';
+import { Service } from 'src/app/_interfaces/service';
 import { User, UserIri } from 'src/app/_interfaces/user';
+import { IUsine } from 'src/app/_interfaces/usine';
 import { AlertService } from 'src/app/_services/divers/alert.service';
 import { LoadingService } from 'src/app/_services/divers/loading.service';
 import { RoleService } from 'src/app/_services/users/role.service';
@@ -31,10 +36,10 @@ export class RegisterPage implements OnInit {
     speed: 400,
     allowTouchMove: false,
   };
-  public services$: any = new Observable<any[]>();
-  public roles$: any = new Observable<any[]>();
-  public unites$: any = new Observable<any[]>();
-  public sites$: any = new Observable<any[]>();
+  public services$ = new Observable<Service[]>();
+  public roles$ = new Observable<Poste[]>();
+  public unites$ = new Observable<IDivision[]>();
+  public sites$ = new Observable<IUsine[]>();
 
   constructor(
     private router: Router,
@@ -45,7 +50,8 @@ export class RegisterPage implements OnInit {
     private loadingService: LoadingService,
     private userService: UsersService,
     private alertService: AlertService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private headerService: HeaderService
   ) {
 
   }
@@ -53,7 +59,7 @@ export class RegisterPage implements OnInit {
   ngOnInit(): void {
     this.createForms();
     this.getDatas();
-
+    this.headerService.changePageParams({ title: 'visible', visible: true }, 'register');
   }
 
   ionViewDidEnter() {

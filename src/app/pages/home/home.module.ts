@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
-import { SharedUserHeaderModule } from '../../composants/shared-user-header/shared-user-header.module';
 import { MenuModule } from 'src/app/composants/menu/menu.module';
+import { ComponentModule } from 'src/app/composants/component/component.module';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { MenuModule } from 'src/app/composants/menu/menu.module';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    SharedUserHeaderModule,
-    MenuModule
+    MenuModule,
+    ComponentModule,
   ],
   declarations: [HomePage]
 })

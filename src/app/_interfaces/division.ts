@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export interface Division {
+export interface IDivision {
   id?: number;
   nom: string;
   entreprise?: string;

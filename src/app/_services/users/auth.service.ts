@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { HeaderService } from 'src/app/composants/shared-user-header/header.service';
 import { User } from 'src/app/_interfaces/user';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
@@ -13,6 +14,7 @@ export class AuthService {
   public authUser: User;
   constructor(
     public requestService: RequestService,
+    private headerService: HeaderService,
   ) { }
 
   authenticate(userName: string, password: string) {
@@ -27,6 +29,7 @@ export class AuthService {
             this.requestService.apiToken = returnsData.apiToken;
             this.isAuth = true;
             this.authUser = returnsData.user;
+            this.headerService.updateUser(this.authUser);
           } else {
             this.authUser = null;
             this.isAuth = false;

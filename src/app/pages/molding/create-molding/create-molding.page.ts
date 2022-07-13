@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
+import { HeaderService } from 'src/app/composants/shared-user-header/header.service';
+import { PageParams } from 'src/app/composants/shared-user-header/page-params';
 import { AdditionalMaterial, Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
@@ -28,16 +30,14 @@ export class CreateMoldingPage implements OnInit {
   public molding: Molding;
 
   constructor(
-    public scanService: ScanService,
     public moldingService: MoldingService,
-    public alertController: AlertController,
     public kitService: KitService,
     public navCtrl: NavController,
     private loadingService: LoadingService,
     private activatedRoute: ActivatedRoute,
-    public authService: AuthService,
     private alertService: AlertService,
     private roleGuard: RoleGuard,
+    private headerService: HeaderService,
   ) { }
 
 
@@ -63,10 +63,13 @@ export class CreateMoldingPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    const pageParam: PageParams = { title: 'MOULAGE', visible: true };
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
+      pageParam.title = `MODIFICATION MOULAGE n°${id}`;
       this.loadMoldingData(id);
     }
+    this.headerService.changePageParams(pageParam, 'molding');
   }
 
   ionViewWillLeave() {

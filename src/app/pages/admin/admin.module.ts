@@ -16,6 +16,7 @@ import { ComponentModule } from 'src/app/composants/component/component.module';
 import { SericesService } from 'src/app/_services/users/serices.service';
 import { DirectiveModule } from 'src/app/_directives/directive.module';
 import { AdminUserTableComponent } from './admin-user/admin-user-table/admin-user-table.component';
+import { AdminMoldingListComponent } from './admin-molding/_components/admin-molding-list/admin-molding-list.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { AdminUserTableComponent } from './admin-user/admin-user-table/admin-use
     AdminUserPage,
     AdminMoldingPage,
     AdminUserTableComponent,
+    AdminMoldingListComponent,
   ],
   providers: [
     DatePipe,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Usine } from 'src/app/_interfaces/usine';
+import { IUsine } from 'src/app/_interfaces/usine';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ export class UsineService {
 
   constructor() { }
 
-  getIri(usine: Usine | string): string {
+  getIri(usine: IUsine | string): string {
     if (typeof (usine) == 'string') {
       return usine;
     } else {

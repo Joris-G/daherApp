@@ -1,10 +1,3 @@
-<!-- <ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-        </ion-buttons>
-    </ion-toolbar>
-</ion-header> -->
 <ion-header>
   <ion-toolbar>
     <ion-menu-button color="light"></ion-menu-button>
@@ -16,8 +9,9 @@
 </ion-header>
 
 <ion-content *ngIf="molding" [fullscreen]="true">
-  <div class="content-top">
-    <div class="ion-margin">
+
+  <div class="content-top ion-margin">
+    <div>
       <ion-title color=primary>Informations</ion-title>
       <div class="flex-vertical">
         <ion-text>ID Moulage : {{molding.id}}</ion-text>
@@ -32,13 +26,15 @@
         </ion-text>
       </div>
     </div>
-    <div class="ion-margin">
+    <div>
       <ion-title color=danger>Récapitulatif</ion-title>
       <div class="important">A draper avant le : {{molding.aDraperAv | date:'dd/MM/yyyy à HH:mm'}}</div>
       <div class="important">A polymériser avant le : {{molding.aCuireAv | date:'dd/MM/yyyy à HH:mm'}}</div>
     </div>
   </div>
+
   <mat-divider></mat-divider>
+
   <div class="kit-list ion-margin">
     <ion-title color=primary>Liste des kits ({{molding.kits.length}})</ion-title>
 
@@ -83,13 +79,15 @@
       <tr mat-row *matRowDef="let kit; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <div class="coreList" *ngIf="molding.materialSupplementary">
-    <div class="title">Âmes</div>
+
+  <mat-divider></mat-divider>
+
+  <div class="coreList ion-margin" *ngIf="molding.materialSupplementary.length > 0">
+    <div class="title">Autres matériaux ({{molding.materialSupplementary.length}})</div>
     <div class="list">
-      <ion-item *ngFor="let core of molding.materialSupplementary">
-        <ion-label>{{core.numLot | json}}</ion-label>
+      <ion-item *ngFor="let mat of molding.materialSupplementary">
+        <ion-label>{{mat.numLot | json}}</ion-label>
       </ion-item>
     </div>
-
   </div>
 </ion-content>

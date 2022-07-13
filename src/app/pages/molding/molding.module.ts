@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { MoldingPageRoutingModule } from './molding-routing.module';
 import { MoldingPage } from './molding.page';
-import { SharedUserHeaderModule } from 'src/app/composants/shared-user-header/shared-user-header.module';
 import { RouterModule } from '@angular/router';
 import { MenuModule } from 'src/app/composants/menu/menu.module';
 import { CreateMoldingPage } from './create-molding/create-molding.page';
@@ -21,11 +20,9 @@ import { NonExpiredMaterialInputComponent } from './_components/non-expired-mate
 import { ModalMaterialService } from 'src/app/_services/molding/modal/modal-material.service';
 import { NidaComponent } from './_components/non-expired-material-input/nida/nida.component';
 import { OtherMaterialsService } from 'src/app/_services/molding/otherMaterials/other-materials.service';
-import { MoldingKitTableComponent } from './create-molding/molding-kit-table/molding-kit-table.component';
-import { DirectiveModule } from 'src/app/_directives/directive.module';
+import { MoldingKitTableComponent } from './_components/molding-kit-table/molding-kit-table.component';
 import { PerempDirective } from 'src/app/_directives/peremp.directive';
-import { AppModule } from 'src/app/app.module';
-import { MoldingMaterialsTableComponent } from './create-molding/molding-materials-table/molding-materials-table.component';
+import { MoldingMaterialsTableComponent } from './_components/molding-materials-table/molding-materials-table.component';
 import { MoldingMenuComponent } from './_components/molding-menu/molding-menu.component';
 import { MoldingInfoToolbarComponent } from './_components/molding-info-toolbar/molding-info-toolbar.component';
 import { CreateMoldingToolbarComponent } from './_components/create-molding-toolbar/create-molding-toolbar.component';
@@ -37,7 +34,6 @@ import { CreateMoldingToolbarComponent } from './_components/create-molding-tool
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    SharedUserHeaderModule,
     MenuModule,
     RouterModule,
     MatExpansionModule,
