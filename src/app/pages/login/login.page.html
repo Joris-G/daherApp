@@ -24,11 +24,19 @@
           </ion-label>
           <ion-input #password formControlName="password" type="password" value=""></ion-input>
         </ion-item>
-        <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
-          Se connecter
-        </ion-button>
-        <ion-button fill="clear" [routerLink]="['/register']"> Créer un compte
-        </ion-button>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button block color="primary" type="submit" fill=solid [disabled]="loginForm.invalid">
+              Se connecter
+            </ion-button>
+            <ion-button color="primary" [routerLink]="['/register']"> Créer un compte
+            </ion-button>
+            <ion-button color="secondary" fill=solid type="submit">
+              <ion-icon slot="start" name="accessibility-outline"></ion-icon>
+              Visiteur
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
       </form>
     </ion-row>
   </ion-grid>
