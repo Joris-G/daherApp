@@ -1,0 +1,85 @@
+<ion-grid fixed style="width:100%;" class="table">
+  <ion-row color=light class="table-header-row ion-padding">
+    <ion-col size="1" size-lg="1" size-md="2">ID-MM</ion-col>
+    <ion-col size="3" size-lg="3" size-md="6">Désignation</ion-col>
+    <ion-col size="1" size-lg="1" size-md="2">Référence</ion-col>
+    <ion-col size="2" size-lg="2" size-md="4">Péremption à -18°C</ion-col>
+    <ion-col size="2" size-lg="2" size-md="4">à draper avant le</ion-col>
+    <ion-col size="2" size-lg="2" size-md="4">à cuire avant le</ion-col>
+    <ion-col size="1" size-lg="1" size-md="2">Btns</ion-col>
+  </ion-row>
+  <ion-row *ngFor="let kit of kits; let index = index;" class="table-data-row">
+    <ion-col size="1" size-lg="1" size-md="2">{{kit.idMM}}</ion-col>
+    <ion-col size="3" size-lg="3" size-md="6">{{kit.designationSAP}}</ion-col>
+    <ion-col size="1" size-lg="1" size-md="2">{{kit.referenceSAP}}</ion-col>
+    <ion-col size="2" size-lg="2" size-md="4">
+      <span [appPeremp]="{dateToCompare: kit.peremptionMoins18}">
+        {{kit.peremptionMoins18| date: "dd/MM/yyyy à HH:mm"}}
+      </span>
+    </ion-col>
+    <ion-col size="2" size-lg="2" size-md="4">
+      <span [appPeremp]="{dateToCompare: kit.aDrapAv}">
+        {{kit.aDrapAv | date: "dd/MM/yyyy à HH:mm"}}
+      </span>
+    </ion-col>
+    <ion-col size="2" size-lg="2" size-md="4">
+      <span [appPeremp]="{dateToCompare: kit.aCuirAv}">
+        {{kit.aCuirAv | date: "dd/MM/yyyy à HH:mm"}}
+      </span>
+    </ion-col>
+
+    <ion-col size="1" size-lg="1" size-md="2">
+      <ion-button class="ion-hide-md-down" (click)="removeKitClick(index)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<!-- <mat-table #table [dataSource]="kitList">
+  <ng-container matColumnDef="referenceSAP">
+    <mat-header-cell *matHeaderCellDef>Référence Sap</mat-header-cell>
+    <mat-cell *matCellDef="let kit">
+      {{kit.referenceSAP}}
+      <ion-text class="strong" *ngIf="kit === molding.matDrap">(Drap)</ion-text>
+      <ion-text class="strong" *ngIf="kit === molding.matPolym">(Pol)</ion-text>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="idMM" class="ion-hide--md-down">
+    <mat-header-cell *matHeaderCellDef>ID-MM</mat-header-cell>
+    <mat-cell *matCellDef="let kit"> {{kit.idMM}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="designationSAP" class="ion-hide--md-down">
+    <mat-header-cell *matHeaderCellDef>Désignation</mat-header-cell>
+    <mat-cell *matCellDef="let kit"> {{kit.designationSAP}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="peremptionMoins18">
+    <mat-header-cell *matHeaderCellDef>Péremption à -18°C</mat-header-cell>
+    <mat-cell *matCellDef="let kit"
+      [style.color]="kitService.isPerim(kit.peremptionMoins18, molding.moldingDay) ? 'danger' : 'dark'">
+      {{kit.peremptionMoins18 | date: "dd/MM/yyyy à HH:mm"}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="aDrapAv">
+    <mat-header-cell *matHeaderCellDef>à draper avant le</mat-header-cell>
+    <mat-cell *matCellDef="let kit"
+      [style.color]="kitService.isPerim(kit.aDrapAv, molding.moldingDay) ? 'danger' : 'dark'">
+      {{kit.aDrapAv | date: "dd/MM/yyyy à HH:mm"}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="aCuirAv">
+    <mat-header-cell *matHeaderCellDef>à cuire avant le</mat-header-cell>
+    <mat-cell *matCellDef="let kit"
+      [style.color]="kitService.isPerim(kit.aCuirAv, molding.moldingDay) ? 'danger' : 'dark'">
+      {{kit.aCuirAv |
+      date: "dd/MM/yyyy à HH:mm"}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="commands">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let kit; let index">
+      <ion-button class="ion-hide--md-down" (click)="removeKitClick(index)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let kit; columns: displayedColumns;"></mat-row>
+</mat-table> -->

@@ -10,4 +10,7 @@ export class Tool {
   static isTool(inputValue: any) {
     return Object.getOwnPropertyNames(inputValue).includes('sapToolNumber');
   }
+  // getIri(): string{
+  //   return `api/tools/${this.id}`;
+  // }
 }

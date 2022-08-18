@@ -1,0 +1,32 @@
+.flex-row {
+    display: flex;
+    flex-direction: column;
+    ion-button {
+        align-items: center;
+    }
+}
+
+.content-container {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+
+.main-form {
+    overflow-y: auto;
+}
+
+.left-side{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+justify-content: flex-start;
+align-content: stretch;
+> *{
+  height: 100%;
+}
+.tool{
+  height: 150px;
+}
+}
+

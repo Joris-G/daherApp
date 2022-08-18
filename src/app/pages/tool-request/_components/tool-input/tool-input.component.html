@@ -1,6 +1,0 @@
-<ion-item>
-    <ion-label>Outillage SAP :</ion-label>
-    <ion-input  #toolNumber type="text" placeholder="n°OT SAP ou n° Equipement SAP" (change)="toolOnChange(toolNumber.value.toString())" [value]="tool?.sapToolNumber"></ion-input>
-    <ion-spinner *ngIf="toolIsLoading" name="bubbles"></ion-spinner>
-    <ion-icon *ngIf="tool" slot="end" name="checkmark" color=success></ion-icon>
-</ion-item>

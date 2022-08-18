@@ -1,3 +1,5 @@
+import { browser } from 'protractor';
+import { protractor } from 'protractor/built/ptor';
 import { AppPage } from './app.po';
 
 describe('new App', () => {
@@ -7,8 +9,11 @@ describe('new App', () => {
     page = new AppPage();
   });
 
-  it('should be blank', () => {
+  it('should redirect to home page', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toContain('Start with Ionic UI Components');
+    expect(browser.wait(
+      protractor.ExpectedConditions.urlContains('home')
+    ));
+    // expect(page.getParagraphText()).toContain('Start with Ionic UI Components');
   });
 });

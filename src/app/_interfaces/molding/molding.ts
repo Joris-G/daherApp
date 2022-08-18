@@ -12,10 +12,10 @@ import { AdditionalMaterial, Core, Kit } from './composite-material-types';
  * @export
  * @interface Molding
  */
-export interface Molding {
+export class Molding {
   id: number;
-  kits: Kit[];
-  moldingDay: Date;
+  kits: Kit[] = [];
+  moldingDay: Date = new Date();
   createdBy: User;
   outillage: string;
   aCuireAv?: Date;
@@ -27,7 +27,11 @@ export interface Molding {
   status?: boolean;
   userCreat?: User;
   OT?: Tool;
-  materialSupplementary?: AdditionalMaterial[];
+  materialSupplementary?: AdditionalMaterial[]= [];
+
+  getIri(){
+    return `api/moldings/${this.id}`;
+  }
 }
 
 export interface MoldingIri {

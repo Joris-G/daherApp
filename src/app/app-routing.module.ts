@@ -1,55 +1,46 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './_services/users/auth.guard';
-import { RoleGuard } from './_services/users/role.guard';
+import { HomePage } from './core/pages/home/home.page';
+import { AuthGuard } from './core/services/users/auth.guard';
+import { RoleGuard } from './core/services/users/role.guard';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/home/home.module')
-      .then(m => m.HomePageModule)
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module')
-      .then(m => m.LoginPageModule)
-  },
-  {
-    path: 'register',
-    loadChildren: () => import('./pages/register/register.module')
-      .then(m => m.RegisterPageModule)
+    loadChildren: () => import('./core/core.module')
+      .then(m => m.CoreModule)
   },
   {
     path: 'molding',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/molding/molding.module')
-      .then(m => m.MoldingPageModule)
+    loadChildren: () => import('./molding/molding.module')
+      .then(m => m.AppMoldingModule)
   },
   {
     path: 'tooling',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/tool-request/tool-request.module')
-      .then(m => m.ToolRequestPageModule)
+    loadChildren: () => import('./tooling/tooling.module')
+      .then(m => m.AppToolingModule)
   },
-  {
-    path: 'admin',
-    canActivate: [RoleGuard],
-    data:
-    {
-      expectedRole: ['ROLE_ADMIN'],
-    },
-    loadChildren: () => import('./pages/admin/admin.module')
-      .then(m => m.AdminPageModule)
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: 'admin',
+  //   canActivate: [RoleGuard],
+  //   data:
+  //   {
+  //     expectedRole: ['ROLE_ADMIN'],
+  //   },
+  //   loadChildren: () => import('./pages/admin/admin.module')
+  //     .then(m => m.AdminPageModule)
+  // },
+  // {
+  //   path: '',
+  //   redirectTo: 'home',
+  //   pathMatch: 'full'
+  // },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: '',
   },
 ];
 

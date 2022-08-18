@@ -215,7 +215,7 @@ export interface MaintFormGroup extends FormGroup {
   };
 }
 
-export interface MaintenanceItem {
+export class MaintenanceItem {
   nonConformite: string;
   actionsCorrectives: string;
   respo?: string;
@@ -224,6 +224,10 @@ export interface MaintenanceItem {
   dateReal?: Date;
   rep: number;
   id?: number;
+  constructor(rep: number) {
+    this.rep = rep;
+    // this.delaiAction = new Date();
+  }
 }
 
 export interface MaintenanceItemFormGroup extends FormGroup {
