@@ -7,7 +7,6 @@ import { RoleGuard } from './core/services/users/role.guard';
 const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard],
     loadChildren: () => import('./core/core.module')
       .then(m => m.CoreModule)
   },

@@ -9,6 +9,11 @@ import { RoleGuard } from './services/users/role.guard';
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home'
+  },
+  {
     path: 'home',
     canActivate: [AuthGuard],
     component: HomePage,
@@ -16,11 +21,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginPage
-  },
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'home'
   },
   {
     path: 'register',
@@ -34,7 +34,7 @@ const routes: Routes = [
     },
     loadChildren: () => import('./admin/admin.module')
       .then(m => m.AdminModule),
-  }
+  },
 ];
 
 @NgModule({

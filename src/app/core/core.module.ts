@@ -17,9 +17,8 @@ import { SwiperModule } from 'swiper/angular';
   ],
   imports: [
     AppSharedModule,
-    AdminModule,
-    CoreRoutingModule,
     SwiperModule,
+    CoreRoutingModule,
   ]
 })
 export class CoreModule { }
