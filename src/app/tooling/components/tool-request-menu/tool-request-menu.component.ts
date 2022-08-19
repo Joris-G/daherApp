@@ -5,6 +5,7 @@ import { ToolRequestService } from 'src/app/tooling/services/tool-request.servic
 import { AuthService } from 'src/app/core/services/users/auth.service';
 import { RoleGuard } from 'src/app/core/services/users/role.guard';
 import { UsersService } from 'src/app/core/services/users/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tool-request-menu',
@@ -18,15 +19,18 @@ export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
   public isManager = false;
   constructor(
     private navCtrl: NavController,
+    private router: Router,
     private userService: UsersService,
     private toolRequestService: ToolRequestService,
     private authService: AuthService,
     public roleGuard: RoleGuard,
-    ) { }
+  ) { }
 
-    ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
+    if (this.router.url.endsWith('tooling')) {
       this.menu.open();
     }
+  }
 
   ngOnInit(): void {
     this.buildManagerPage();

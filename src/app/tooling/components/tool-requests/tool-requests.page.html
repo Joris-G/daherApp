@@ -2,37 +2,36 @@
   <ion-toolbar color=dark>
     <ion-title>Liste des demandes</ion-title>
   </ion-toolbar>
-  <ion-toolbar>
-    <mat-accordion class="example-headers-align" multi>
-      <mat-expansion-panel togglePosition="before">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <ion-icon slot="start" name="filter-outline"></ion-icon>
-            Filtres
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
 
-        <ion-toolbar class="filter-toolbar">
-          <div class="filters" aria-expanded="true">
-            <ion-item *ngFor="let filterItem of filterSelectObjects" class="filter-item ion-margin">
-              <ion-label>{{filterItem.name}}</ion-label>
-              <ion-select class="filter" multiple="false" [placeholder]="'Filtre ' + filterItem.name"
-                (ionChange)="filterChange(filterItem,$event)">
-                <ion-select-option *ngFor="let filter of filterItem.options" [value]="filter">{{filter}}
-                </ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <ion-button slot=end (click)="resetFilters()">
-            Supprimer les filtres
-          </ion-button>
-        </ion-toolbar>
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel togglePosition="after" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <ion-icon slot="start" name="filter-outline"></ion-icon>
+          Filtres
+        </mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 
-      </mat-expansion-panel>
-    </mat-accordion>
-  </ion-toolbar>
+      <ion-toolbar class="filter-toolbar">
+        <div class="filters">
+          <ion-item *ngFor="let filterItem of filterSelectObjects" class="filter-item ion-margin">
+            <ion-label>{{filterItem.name}}</ion-label>
+            <ion-select class="filter" multiple="false" [placeholder]="'Filtre ' + filterItem.name"
+              (ionChange)="filterChange(filterItem,$event)">
+              <ion-select-option *ngFor="let filter of filterItem.options" [value]="filter">{{filter}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <ion-button slot=end (click)="resetFilters()">
+          Supprimer les filtres
+        </ion-button>
+      </ion-toolbar>
+
+    </mat-expansion-panel>
+  </mat-accordion>
 
 </ion-header>
 <ion-content>
