@@ -58,26 +58,6 @@ export class ToolRequestService {
     return this.requestService.createPostRequest(`${environment.toolApi}controles`, toolRequestToCreateIri);
   }
 
-  createAllMaintenaceItems(toolRequestToCreate: SpecMaintRep) {
-    const maintenanceItemIri: string[] = [];
-    return new Promise<string[]>((resolve, reject) => {
-      toolRequestToCreate.itemActionCorrective.forEach((itemAction: MaintenanceItem) => {
-        console.log(itemAction);
-        this.requestService.createPostRequest(`${environment.toolApi}maintenance_items`, itemAction)
-          .subscribe((response: MaintenanceItem) => {
-            maintenanceItemIri.push(`/api/maintenance_items/${response.id}`);
-            console.log(maintenanceItemIri.length, toolRequestToCreate.itemActionCorrective.length);
-            if (maintenanceItemIri.length === toolRequestToCreate.itemActionCorrective.length) {
-              resolve(maintenanceItemIri);
-            }
-          },
-            (err) => {
-              reject();
-            });
-      });
-
-    });
-  }
 
   createMaintenanceRequest(toolRequestToCreate: SpecMaintRep) {
     return new Promise<any>((resolve, reject) => {
@@ -88,7 +68,7 @@ export class ToolRequestService {
             id: toolRequestToCreate.id ?? null,
             outillage: toolRequestToCreate.outillage ? this.toolService.getIri(toolRequestToCreate.outillage) : '',
             dateBesoin: toolRequestToCreate.dateBesoin,
-            userCreat: this.userService.getIri(this.authService.authUser),
+            // userCreat: this.userService.getIri(this.authService.authUser),
             rep: toolRequestToCreate.rep,
             itemActionCorrective: maintenanceItemIri,
             // ligneBudgetaire: toolRequestToCreate.ligneBudgetaire,
@@ -203,6 +183,26 @@ export class ToolRequestService {
       // } else if (request.maintenance) {
       //   this.requestService.createDeleteRequest('maintenances/' + request.maintenance.id);
       // }
+    });
+  }
+  private createAllMaintenaceItems(toolRequestToCreate: SpecMaintRep) {
+    const maintenanceItemIri: string[] = [];
+    return new Promise<string[]>((resolve, reject) => {
+      toolRequestToCreate.itemActionCorrective.forEach((itemAction: MaintenanceItem) => {
+        console.log(itemAction);
+        this.requestService.createPostRequest(`${environment.toolApi}maintenance_items`, itemAction)
+          .subscribe((response: MaintenanceItem) => {
+            maintenanceItemIri.push(`/api/maintenance_items/${response.id}`);
+            console.log(maintenanceItemIri.length, toolRequestToCreate.itemActionCorrective.length);
+            if (maintenanceItemIri.length === toolRequestToCreate.itemActionCorrective.length) {
+              resolve(maintenanceItemIri);
+            }
+          },
+            (err) => {
+              reject();
+            });
+      });
+
     });
   }
 }

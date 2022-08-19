@@ -32,13 +32,14 @@ export class ToolRequestsPage implements OnInit {
   //TODO commenter les propriétés
 
   public displayedRequestColumns: string[] = ['statut', 'id', 'tool', 'createdAt', 'userCreat', 'needDate', 'buttons'];
-  //TODO à supprimer **  public requestList: ToolRequest[];
+
   public tableRequestsDataSource: MatTableDataSource<ToolRequest> = new MatTableDataSource();
   public isAdmin = false;
   //TODO améliorer les filtres
   public filterSelectObjects = [];
   private filterValues = {};
   private activeFilters = [];
+  private filterDictionary = new Map<string, string>();
   constructor(
     private toolRequestService: ToolRequestService,
     private alertControleService: AlertService,
@@ -58,8 +59,7 @@ export class ToolRequestsPage implements OnInit {
       {
         name: 'Statut',
         columnProp: 'statut',
-        options: [
-        ]
+        options: []
       },
       {
         name: 'Type de demande',
@@ -83,6 +83,7 @@ export class ToolRequestsPage implements OnInit {
   createFilter() {
     const filterFunction = (request: ToolRequest, filter: string): boolean => {
       const searchTerms = JSON.parse(filter);
+      console.log(searchTerms);
       let isFilterSet = false;
       for (const col in searchTerms) {
         if (col) {
@@ -94,14 +95,23 @@ export class ToolRequestsPage implements OnInit {
         }
       }
       let found = false;
+      console.log('début du filtre, pour chaque filtre actif');
       if (isFilterSet) {
         for (const col in searchTerms) {
           if (col) {
-            searchTerms[col].trim().toLowerCase().split(' ').forEach(word => {
+            console.log('filtre Pour chaque mot de la propriété : ', col, 'je cherche le terme :', searchTerms[col]);
+            searchTerms[col].trim().toLowerCase().split(' ').every(word => {
+              console.log(word);
               if (request[col].toString().toLowerCase().indexOf(word) !== -1 && isFilterSet) {
+                console.log('terme trouvé je passe au mot suivant');
                 found = true;
+              } else {
+                found = false;
+                console.log('found false end boucle');
+                return false;
               }
             });
+            if (found === false) { return found; }
           }
         }
         return found;
@@ -133,7 +143,7 @@ export class ToolRequestsPage implements OnInit {
    * @memberof ToolRequestsPage
    */
   getFilterObject(fullObj, key) {
-    console.log(fullObj, key);
+    // console.log(fullObj, key);
     const uniqChk = [];
     fullObj.filter((obj) => {
       if (!uniqChk.includes(obj[key])) {
@@ -156,7 +166,7 @@ export class ToolRequestsPage implements OnInit {
       .subscribe((responseToolList: ToolRequest[]) => {
         this.tableRequestsDataSource.data = responseToolList;
         this.filterSelectObjects.filter((o) => {
-          console.log(o);
+          // console.log(o);
           o.options = this.getFilterObject(this.tableRequestsDataSource.data, o.columnProp);
         });
         this.loaderService.stopLoading();
@@ -206,25 +216,25 @@ export class ToolRequestsPage implements OnInit {
    * @memberof ToolRequestsPage
    */
   filterChange(filter: any, event: any) {
-    console.log(filter, event);
+    // console.log(filter, event);
     this.activeFilters.push(event.target);
     this.filterValues[filter.columnProp] = event.target.value.trim();
-    console.log(this.filterValues[filter.columnProp]);
-    console.log(JSON.stringify(this.filterValues));
+    // console.log(this.filterValues[filter.columnProp]);
+    // console.log(JSON.stringify(this.filterValues));
     this.tableRequestsDataSource.filter = JSON.stringify(this.filterValues);
   }
 
-  filterRequestTypeChanged(typeEvent: any) {
-    const filterValue = (typeEvent.target as HTMLInputElement).value;
-    this.tableRequestsDataSource.filter = filterValue.trim().toLowerCase();
-    console.log(typeEvent);
-  }
+  // filterRequestTypeChanged(typeEvent: any) {
+  //   const filterValue = (typeEvent.target as HTMLInputElement).value;
+  //   this.tableRequestsDataSource.filter = filterValue.trim().toLowerCase();
+  //   console.log(typeEvent);
+  // }
 
-  filterRequestStatusChanged(typeEvent: any) {
-    const filterValue = (typeEvent.target as HTMLInputElement).value;
-    this.tableRequestsDataSource.filter = filterValue.trim().toLowerCase();
-    console.log(typeEvent);
-  }
+  // filterRequestStatusChanged(typeEvent: any) {
+  //   const filterValue = (typeEvent.target as HTMLInputElement).value;
+  //   this.tableRequestsDataSource.filter = filterValue.trim().toLowerCase();
+  //   console.log(typeEvent);
+  // }
 
   removeRequestClick(request: ToolRequest) {
     this.toolRequestService.removeRequest(request)

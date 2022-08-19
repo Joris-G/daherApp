@@ -189,7 +189,7 @@ export interface SpecMaintRepIri {
   rep?: string[];
   createdAt?: Date;
   modifiedAt?: Date;
-  userCreat: string;
+  userCreat?: string;
   userModif?: string;
   userValideur?: string;
   image?: string;
