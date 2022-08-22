@@ -99,13 +99,13 @@ export class Control3DPage implements OnInit {
         async () => {
           this.controlForm.reset();
           await this.loaderService.stopLoading();
-          this.alertService.simpleAlert(
-            'Message de l\'application',
-            'Création d\'une demande',
-            'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes')
-            .then(() => {
-              this.navCtrl.navigateForward('tooling/tool-request-list');
-            });
+          // this.alertService.simpleAlert(
+          //   'Message de l\'application',
+          //   'Création d\'une demande',
+          //   'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes')
+          //   .then(() => {
+          this.navCtrl.navigateRoot('tooling/tool-request-list');
+          // });
         },
         async (error) => {
           console.error(error);
@@ -130,8 +130,7 @@ export class Control3DPage implements OnInit {
                   'Mise à jour d\'une demande',
                   'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes')
                   .then(() => {
-                    this.navCtrl.back();
-                    // navigateForward('tooling/tool-request-list');
+                    this.navCtrl.navigateRoot('tooling/tool-request-list');
                   });
               },
               async (error) => {
@@ -141,6 +140,7 @@ export class Control3DPage implements OnInit {
                   'Mise à jour d\'une demande',
                   'La demande n\'a pas pu être modifiée. Vérifiez les données');
                 console.error(error);
+                this.navCtrl.navigateRoot('tooling/tool-request-list');
               });
         },
         (err) => {
@@ -150,6 +150,7 @@ export class Control3DPage implements OnInit {
             'Mise à jour d\'une demande',
             'La demande n\'a pas pu être modifiée. Vérifiez les données');
           console.error(err);
+          this.navCtrl.navigateRoot('tooling/tool-request-list');
         });
   }
 

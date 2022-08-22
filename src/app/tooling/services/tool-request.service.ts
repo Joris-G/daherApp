@@ -7,7 +7,7 @@ import { ToolService } from 'src/app/tooling/services/tool.service';
 import { AuthService } from 'src/app/core/services/users/auth.service';
 import { UsersService } from 'src/app/core/services/users/users.service';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, share, takeUntil } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -162,7 +162,10 @@ export class ToolRequestService {
   }
 
   getToolRequests() {
-    return this.requestService.createGetRequest(`${environment.toolApi}demandes`);
+    return this.requestService.createGetRequest(`${environment.toolApi}demandes`)
+      .pipe(
+        share()
+      );
   }
 
 
