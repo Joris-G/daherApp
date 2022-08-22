@@ -111,7 +111,7 @@ export class RequestService {
         // timeout(15000),
         map((val) => {
           if (val.status === 500) { throw (val); }
-          console.table(val);
+          console.log(val);
           return val;
         }),
         retry(2),

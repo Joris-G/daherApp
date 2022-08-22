@@ -7,7 +7,7 @@ import { ToolService } from 'src/app/tooling/services/tool.service';
 import { AuthService } from 'src/app/core/services/users/auth.service';
 import { UsersService } from 'src/app/core/services/users/users.service';
 import { Observable, of } from 'rxjs';
-import { map, share, takeUntil } from 'rxjs/operators';
+import { concat, concatMap, map, mergeMap, share, takeUntil } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,14 @@ export class ToolRequestService {
 
   loadMaintenanceData(id: string) {
     return this.getToolRequest(id)
-      .pipe(map(request => [of(request), this.getMaintenance(request.maintenance.id)]));
+      .pipe(
+        concatMap(
+          request => this.getMaintenance(request.maintenance.id)
+            .pipe(
+              map(specMaint => ({ request, specMaint }))
+            )
+        )
+      );
   }
   getType(request: ToolRequest | string): string {
     if (typeof (request) === 'string') { return request; }

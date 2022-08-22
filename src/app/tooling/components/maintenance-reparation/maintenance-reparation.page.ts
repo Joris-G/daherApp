@@ -67,7 +67,7 @@ export class MaintenanceReparationPage {
     if (id) {
       this.loadMaintenanceData(id);
       // this.loadMaintenanceData(id);
-      // this.canUpDate = true;
+      this.canUpDate = true;
     } else {
       this.canUpDate = false;
     }
@@ -76,7 +76,13 @@ export class MaintenanceReparationPage {
   loadMaintenanceData(idDemande: string) {
     this.loadingService.startLoading('Patienter pendant le chargement');
     this.toolRequestService.loadMaintenanceData(idDemande)
-      .subscribe(response => console.log(response));
+      .subscribe((response) => {
+        this.toolRequestForm.patchValue(response.request);
+        this.maintRepForm.patchValue(response.specMaint);
+        response.specMaint.itemActionCorrective.map((item, indexItem) => item.rep = indexItem + 1);
+        this.maintRepForm.value.itemActionCorrective = response.specMaint.itemActionCorrective;
+        this.loadingService.stopLoading();
+      });
     // this.toolRequest = null;
     // this.toolRequestService.getToolRequest(idDemande)
     //   .subscribe((responseRequest: ToolRequest) => {
@@ -197,12 +203,20 @@ export class MaintenanceReparationPage {
 
           })
           .catch((error) => {
+            this.loadingService.stopLoading();
             this.alertService.simpleAlert(
               'Erreur',
               'Mise à jour d\'une demande',
               'La demande n\'a pas pu être modifiée. Vérifiez les données');
             console.error(error);
           });
-      });
+      },
+        (err) => {
+          this.loadingService.stopLoading();
+          this.alertService.simpleAlert(
+            'Erreur',
+            'Mise à jour d\'une demande',
+            'La demande n\'a pas pu être modifiée. Vérifiez les données et recommencer');
+        });
   }
 }
