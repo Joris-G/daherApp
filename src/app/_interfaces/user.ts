@@ -12,14 +12,14 @@ export interface User {
   mail?: string;
   roles?: string[];
   poste?: string;
-  service?: string;
+  service?: any;
   password?: string;
   programmeAvion?: ProgrammeAvion[];
   createdAt?: Date;
   tel?: string[];
   unite?: string;
   site?: string;
-  groupeAffectations?: GroupeAffectation[];
+  groupeAffected?: GroupeAffectation[];
   isUpdated?: boolean;
   apiToken?: string;
 }

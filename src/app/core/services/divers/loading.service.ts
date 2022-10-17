@@ -31,7 +31,7 @@ export class LoadingService {
   startLoading(message: string = 'Chargement ...') {
     this.loadingController.create({
       spinner: 'lines',
-      cssClass: 'my-custom-class',
+      cssClass: 'app-loader',
       message,
     })
       .then((response) => {

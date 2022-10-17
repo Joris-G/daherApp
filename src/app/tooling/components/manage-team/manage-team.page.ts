@@ -31,17 +31,9 @@ export class ManageTeamPage implements OnInit {
   }
 
   getToolUsers() {
-    this.userService.getUsers()
-      .subscribe((responseUsers: User[]) => {
-        responseUsers.map((user: User) => {
-          if (user.programmeAvion) {
-            // user.programmeAvion = this.programs;
-            // .find(program => program.id === user.programmeAvion[0].charAt(user.programmeAvion[0].length - 1));
-          }
-
-        });
-        this.toolsUserDataSource.data = responseUsers;
-      });
+    return this.userService.getUsers({ service: 'OUTILLAGE' })
+      .subscribe((responseUsers: User[]) =>
+        this.toolsUserDataSource.data = responseUsers.filter(user => (user.service.nom === 'OUTILLAGE')));
   }
 
   getPrograms() {
@@ -76,7 +68,7 @@ export class ManageTeamPage implements OnInit {
 
 
   addGroupToUser(selectOpt: GroupeAffectation[], user: User) {
-    user.groupeAffectations = selectOpt;
+    user.groupeAffected = selectOpt;
     user.isUpdated = true;
   }
 

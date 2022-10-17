@@ -77,6 +77,8 @@ const routes: Routes = [
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
+  declarations: [
+  ],
 })
 export class AppToolingModule {
   constructor() {

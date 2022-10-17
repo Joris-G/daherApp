@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { forkJoin, from, Observable, of, Subject, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { Molding, MoldingIri } from 'src/app/_interfaces/molding/molding';
 import { environment } from 'src/environments/environment';
 import { KitService } from './kit.service';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { RequestService } from 'src/app/core/services/request.service';
-import { Observable, of, Subject } from 'rxjs';
-import { concatAll, map } from 'rxjs/operators';
-import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
+import { AdditionalMaterial, Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { CoreService } from './core.service';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
-import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/core/services/divers/alert.service';
 import { LoadingService } from 'src/app/core/services/divers/loading.service';
+import { OtherMaterialsService } from './other-materials.service';
 
 /**
- * Service de gestion des kits
+ * Service de gestion des moulages
  *
  * @export
  * @class MoldingService
@@ -26,20 +28,14 @@ import { LoadingService } from 'src/app/core/services/divers/loading.service';
 )
 
 export class MoldingService {
+  public molding: Molding;
+  public molding$: Subject<Molding> = new Subject();
+  public moldingStatus: Subject<boolean> = new Subject();
+  private moldingIri: MoldingIri;
 
-  molding: Molding;
-  molding$: Subject<Molding> = new Subject();
-  /**
-   * Creates an instance of MoldingService.
-   *
-   * @param kitService
-   * @param toolService
-   * @param userService
-   * @param requestService
-   * @memberof MoldingService
-   */
   constructor(
     private kitService: KitService,
+    private matService: OtherMaterialsService,
     private toolService: ToolService,
     private requestService: RequestService,
     private coreService: CoreService,
@@ -51,6 +47,11 @@ export class MoldingService {
     this.updateMoldings();
   }
 
+
+  getMoldingStatus(): Observable<boolean> {
+    return from(this.moldingStatus);
+  }
+
   /**
    *: Observable<Molding>
    *
@@ -59,13 +60,35 @@ export class MoldingService {
    * @memberof MoldingService
    */
   saveMolding(print: boolean) {
-    const checkMolding = this.checkMoldingDatas();
-    const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
-    of(checkMolding, saveMethod)
-      .pipe(concatAll())
-      .subscribe((val) => {
-        if (print) { this.printMolding(); }
+    // const check$: Observable<void> = this.checkMoldingDatas();
+    // const savingOtherMat$: Observable<void>;
+    // const saveMolding: Observable<void>;
+
+    this.moldingStatus.subscribe(
+      (response) => {
+        console.log(response);
+        //TODO check les additionnal materials
+        this.saveOtherMaterials()
+          .subscribe(
+            (resp: AdditionalMaterial[]) => {
+              console.log(resp);
+              this.molding.materialSupplementary = resp;
+              this.moldingIri = this.toIri();
+              // resp.subscribe(() => {
+              const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
+              saveMethod
+                .subscribe((val) => {
+                  if (print) { this.printMolding(); }
+                });
+              // });
+
+            });
+      },
+      (err) => {
+        //TODO mettre en place un service d'erreur qui se chargera de créer les alertes ou non en fonction d'un param
+        this.alertService.simpleAlert('La vérification du moulage a échoué', err.title, err.message);
       });
+
 
     // .subscribe(
     //   () => {
@@ -87,10 +110,7 @@ export class MoldingService {
     //     );
     //   });
     //   },
-    //   (err) => {
-    //     //TODO mettre en place un service d'erreur qui se chargera de créer les alertes ou non en fonction d'un param
-    //     this.alertService.simpleAlert('La vérification du moulage a échoué', err.title, err.message);
-    //   }
+
     // );
   }
 
@@ -126,39 +146,32 @@ export class MoldingService {
      * @memberof CreateMoldingPage
      */
   checkMoldingDatas() {
-    const resultCheck = new Subject();
     if (this.molding.OT === undefined) {
       const missingToolMsg = 'Voulez-vous continuer sans outillage ?';
       this.alertService.presentAlertConfirm('OUTILLAGE MANQUANT', missingToolMsg)
         .then(
           (response) => {
             if (response) {
-              resultCheck.next(true);
+              this.moldingStatus.next(true);
             } else {
               const title = 'OUTILLAGE MANQUANT';
               const message = 'Veuillez renseigner l\'outillage de moulage';
-              resultCheck.error(message);
+              this.moldingStatus.next(false);
             }
-            resultCheck.complete();
           },
           (err) => {
             const title = `Outillage de moulage manquant`;
             const message = 'Il n\'y a pas eu de réponse de l\'utilisateur';
-            console.error(message, err);
-            resultCheck.error(false);
-            resultCheck.complete();
+            this.moldingStatus.error(new Error(message));
           });
     } else if (this.molding.kits.length === 0) {
       const title = 'Il n\'y a pas de kit';
       const message = `Pour insérer un kit matière munissez vous d'une fiche de vie et scannez le code barre.
             Si besoin d'aide complémentaire appelez le 06.87.89.24.25`;
-      resultCheck.error(false);
-      resultCheck.complete();
+      this.moldingStatus.error(new Error(message));
     } else {
-      resultCheck.next(true);
-      resultCheck.complete();
+      this.moldingStatus.next(true);
     }
-    return resultCheck;
   }
 
 
@@ -270,10 +283,13 @@ export class MoldingService {
     this.alertService.presentToast('Outillage associé !');
     this.updateMoldings();
   }
+  private saveOtherMaterials(): Observable<any> {
+    return forkJoin(this.molding.materialSupplementary.map(mat => this.matService.addOne(mat)));
+  }
 
   private postMolding() {
     const moldingIri = this.toIri();
-    return this.requestService.createPostRequest(`${environment.moldingApi}moldings`, moldingIri);
+    return this.requestService.createPostRequest(`${environment.moldingApi}moldings`, moldingIri, true);
     // .pipe(
     //   map((response: any) => {
     //       response.kits = this.moldingServerToMoldingObject(response);

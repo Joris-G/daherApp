@@ -3,7 +3,7 @@
     <ion-text *ngIf="molding?.OT"> OT0{{molding?.OT.sapToolNumber}} {{molding?.OT.designation}}</ion-text>
     <ion-text color=warning *ngIf="!molding?.OT">Pas d'outillage associé</ion-text>
   </ion-text>
-  <div class="col">
+  <div class="col" slot=end>
     <ion-text class="strong">Début moulage : {{molding?.moldingDay | date: "dd/MM/yyyy"}}</ion-text>
     <ion-text class="strong" *ngIf="molding?.userCreat">Mouleur : {{molding?.userCreat.nom}}
       {{molding?.userCreat.prenom}}</ion-text>

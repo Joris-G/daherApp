@@ -35,7 +35,7 @@ export class UsersService {
     private programService: ProgramsService,
     private uniteService: UniteService,
     private usineService: UsineService
-  ) {  }
+  ) { }
 
 
 
@@ -58,8 +58,8 @@ export class UsersService {
    * @return retourne une Promise<User[]>
    * @memberof UsersService
    */
-  getUsers(filters?: string): Observable<User[]> {
-    return this.requestService.createGetRequest(environment.usineApi + `users`);
+  getUsers(filters?: any): Observable<User[]> {
+    return this.requestService.createGetRequest(`${environment.usineApi}users`, filters);
   }
 
 
@@ -116,18 +116,18 @@ export class UsersService {
 
   addUserToGroup(user: User) {
     return new Promise<User>(async (resolve, reject) => {
-      for (const group of user.groupeAffectations) {
+      for (const group of user.groupeAffected) {
         const groupAffectationIri: GroupeAffectationIri = {
           libelle: group.libelle,
           population: group.population.map(userGroup => this.getIri(userGroup))
         };
         groupAffectationIri.population.push(this.getIri(user));
         await this.requestService.createPatchRequest(
-          `${environment.usineApi}groupe_affectations/$${group.id}/addUsers`,
+          `${environment.usineApi}groupe_affectations/${group.id}/addUsers`,
           { population: groupAffectationIri.population }
         )
           .subscribe((responseGroup) => {
-            user.groupeAffectations = responseGroup;
+            user.groupeAffected = responseGroup;
           });
       }
       resolve(user);

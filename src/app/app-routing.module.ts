@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { HomePage } from './core/pages/home/home.page';
 import { AuthGuard } from './core/services/users/auth.guard';
-import { RoleGuard } from './core/services/users/role.guard';
 
 const routes: Routes = [
   {
@@ -22,6 +20,13 @@ const routes: Routes = [
     loadChildren: () => import('./tooling/tooling.module')
       .then(m => m.AppToolingModule)
   },
+  {
+    path: 'login',
+    // canActivate: [AuthGuard],
+    loadChildren: () => import('./core/pages/login/login.page')
+      .then(m => m.LoginPage)
+  },
+
   // {
   //   path: 'admin',
   //   canActivate: [RoleGuard],

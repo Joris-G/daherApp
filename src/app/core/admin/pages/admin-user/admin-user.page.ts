@@ -15,6 +15,9 @@ import { UsersService } from 'src/app/core/services/users/users.service';
   selector: 'app-admin-user',
   templateUrl: './admin-user.page.html',
   styleUrls: ['./admin-user.page.scss'],
+  providers: [
+    UsersService, SericesService
+  ]
 })
 export class AdminUserPage implements OnInit {
   @ViewChild('newUsers') private newUsersCanvas: ElementRef;

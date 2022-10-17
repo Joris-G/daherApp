@@ -15,8 +15,15 @@ export class AuthService {
     public requestService: RequestService,
   ) { }
 
+  getToken(): string {
+    if (this.authUser) {
+      return this.authUser.apiToken;
+    }
+    return '';
+  }
+
+
   authenticate(userName: string, password: string) {
-    this.requestService.apiToken = '';
     return this.requestService.createPostRequest(`${environment.usineApi}login`,
       { matricule: userName, password })
       .pipe(
@@ -24,7 +31,7 @@ export class AuthService {
           if (returnsData) {
             console.log(returnsData.apiToken);
             localStorage.setItem('token', returnsData.apiToken);
-            this.requestService.apiToken = returnsData.apiToken;
+            // this.requestService.apiToken = returnsData.apiToken;
             this.isAuth = true;
             this.authUser = returnsData.user;
           } else {

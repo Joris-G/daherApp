@@ -12,6 +12,7 @@ import { UserSheetComponent } from './components/user-sheet/user-sheet.component
 import { UserPopoverComponent } from './components/user-popover/user-popover.component';
 import { LoginNoticeComponent } from './notices/login-notice/login-notice.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     IonicModule,
     RouterModule,
     MaterialModule,
+    MatSortModule,
     IndicatorsModule,
     FormsModule,
     ReactiveFormsModule,

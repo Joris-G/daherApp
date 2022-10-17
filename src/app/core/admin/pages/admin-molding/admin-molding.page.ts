@@ -7,6 +7,7 @@ import { MoldingService } from 'src/app/molding/services/molding.service';
   selector: 'app-admin-molding',
   templateUrl: './admin-molding.page.html',
   styleUrls: ['./admin-molding.page.scss'],
+  providers: [MoldingService]
 })
 export class AdminMoldingPage implements OnInit {
   public moldingsError = false;

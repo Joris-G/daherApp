@@ -9,11 +9,6 @@ import { RoleGuard } from './services/users/role.guard';
 
 const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'home'
-  },
-  {
     path: 'home',
     canActivate: [AuthGuard],
     component: HomePage,
@@ -28,12 +23,17 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    canActivate: [RoleGuard],
+    canActivate: [AuthGuard],
     data: {
       expectedRole: ['ROLE_ADMIN']
     },
     loadChildren: () => import('./admin/admin.module')
       .then(m => m.AdminModule),
+  },
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
   },
 ];
 

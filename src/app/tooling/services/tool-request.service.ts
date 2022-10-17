@@ -6,19 +6,23 @@ import { RequestService } from 'src/app/core/services/request.service';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { AuthService } from 'src/app/core/services/users/auth.service';
 import { UsersService } from 'src/app/core/services/users/users.service';
-import { Observable, of } from 'rxjs';
-import { concat, concatMap, map, mergeMap, share, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, concat, concatMap, debounceTime, finalize, map, mergeMap, share, takeUntil } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToolRequestService {
+  public loading$: Observable<boolean>;
+  private loadingSubject = new BehaviorSubject<boolean>(false);
   constructor(
     private requestService: RequestService,
     private toolService: ToolService,
     private userService: UsersService,
     private authService: AuthService,
-  ) { }
+  ) {
+    this.loading$ = this.loadingSubject.asObservable();
+  }
 
   loadMaintenanceData(id: string) {
     return this.getToolRequest(id)
@@ -168,11 +172,15 @@ export class ToolRequestService {
     return this.requestService.createGetRequest(`${environment.toolApi}demandes/${id}`);
   }
 
-  getToolRequests() {
+  getToolRequests(): Observable<any> {
+    this.loadingSubject.next(true);
     return this.requestService.createGetRequest(`${environment.toolApi}demandes`)
       .pipe(
-        share()
+        share(),
+        catchError(() => of([])),
+        finalize(() => this.loadingSubject.next(false))
       );
+    // .subscribe(requests => this.requestsSubject.next(requests));
   }
 
 

@@ -13,6 +13,8 @@ import { ToolInputComponent } from '../components/tool-input/tool-input.componen
 import { ToolListPage } from '../components/tool-list/tool-list.page';
 import { ToolRequestFooterComponent } from '../components/tool-request-footer/tool-request-footer.component';
 import { ToolRequestMenuComponent } from '../components/tool-request-menu/tool-request-menu.component';
+import { ToolRequestFiltersComponent } from '../components/tool-requests/tool-request-filters/tool-request-filters.component';
+import { ToolRequestTableComponent } from '../components/tool-requests/tool-request-table/tool-request-table.component';
 import { ToolRequestsPage } from '../components/tool-requests/tool-requests.page';
 import { ToolRequestPage } from '../pages/tool-request.page';
 
@@ -32,7 +34,9 @@ import { ToolRequestPage } from '../pages/tool-request.page';
     ToolListPage,
     ToolRequestFooterComponent,
     ToolRequestsPage,
-    ToolRequestMenuComponent
+    ToolRequestMenuComponent,
+    ToolRequestTableComponent,
+    ToolRequestFiltersComponent
   ],
   exports: [
     ToolRequestPage,
@@ -49,7 +53,9 @@ import { ToolRequestPage } from '../pages/tool-request.page';
     ToolListPage,
     ToolRequestFooterComponent,
     ToolRequestsPage,
-    ToolRequestMenuComponent
+    ToolRequestMenuComponent,
+    ToolRequestTableComponent,
+    ToolRequestFiltersComponent,
   ],
   imports: [
     AppSharedModule

@@ -1,0 +1,14 @@
+
+.filters {
+  display: flex;
+  // flex-grow: 1;
+  max-width: 100%;
+  flex-wrap: wrap;
+  width: max-content;
+  .filter-item {
+    width: auto;
+}
+ion-item{
+  margin :0;
+}
+}

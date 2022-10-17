@@ -15,15 +15,13 @@ import { environment } from 'src/environments/environment';
 })
 
 export class RequestService {
-  public apiToken = '';
   private httpHeaders = new HttpHeaders()
     .append('Content-Type', 'application/json')
     // .append('Access-Control-Allow-Origin', 'http://localhost:8100')
     .append('Accept', 'application/json');
   private postHttpHeaders = new HttpHeaders()
     .append('Content-Type', 'application/json')
-    .append('Accept', 'application/json')
-    .append('Authorization', this.apiToken);
+    .append('Accept', 'application/json');
   private patchHttpHeaders = new HttpHeaders()
     .append('Content-Type', 'application/merge-patch+json')
     .append('Accept', 'application/json');
@@ -38,15 +36,12 @@ export class RequestService {
    */
   constructor(private http: HttpClient) { }
 
-  createPostRequest(url: string, body: any): Observable<any> {
+  createPostRequest(url: string, body: any, full = false): Observable<any> {
     return this.http.post<HttpResponse<any>>(
       environment.apiServer + url,
       body,
       {
-        headers: (this.apiToken !== '') ? new HttpHeaders()
-          .append('Content-Type', 'application/json')
-          .append('Accept', 'application/json')
-          .append('x-auth-token', localStorage.getItem('token')) : this.httpHeaders
+        headers: this.httpHeaders
       })
       .pipe(
         map((val) => {
@@ -64,10 +59,7 @@ export class RequestService {
 
   createPutRequest(url: string, body: any): Observable<any> {
     return this.http.put<HttpResponse<any>>(`${environment.apiServer}${url}`, body, {
-      headers: (this.apiToken !== '') ? new HttpHeaders()
-        .append('Content-Type', 'application/json')
-        .append('Accept', 'application/json')
-        .append('x-auth-token', localStorage.getItem('token')) : this.httpHeaders
+      headers: this.httpHeaders
     })
       .pipe(
         timeout(1000),
@@ -76,7 +68,7 @@ export class RequestService {
           console.table(val);
           return val;
         }),
-        retry(3),
+        retry(2),
         // retryWhen(err=> {
         //   console.error(err);
         //   return of(null);
@@ -86,10 +78,7 @@ export class RequestService {
 
   createPatchRequest(url: string, body: any) {
     return this.http.patch<any>(`${environment.apiServer}${url}`, body, {
-      headers: (this.apiToken !== '') ? new HttpHeaders()
-        .append('Accept', 'application/json')
-        .append('Content-Type', 'application/merge-patch+json')
-        .append('x-auth-token', localStorage.getItem('token')) : this.patchHttpHeaders
+      headers: this.patchHttpHeaders
     })
       .pipe(
         map((val) => {
@@ -97,7 +86,7 @@ export class RequestService {
           console.table(val);
           return val;
         }),
-        retry(3),
+        retry(2),
         // retryWhen(err=> {
         //   console.error(err);
         //   return of(null);
