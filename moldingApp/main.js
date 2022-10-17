@@ -89,18 +89,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppComponent": () => (/* binding */ AppComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _app_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app.component.html?ngResource */ 33383);
 /* harmony import */ var _app_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component.scss?ngResource */ 79259);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/platform-browser */ 50318);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 92340);
+
+
 
 
 
 
 let AppComponent = class AppComponent {
+    constructor(titleService) {
+        this.titleService = titleService;
+    }
+    ngOnInit() {
+        this.initTitle();
+    }
+    initTitle() {
+        if (src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.name === 'QUAL') {
+            const newTitle = `QUAL - ${this.titleService.getTitle()}`;
+            this.titleService.setTitle(newTitle);
+        }
+    }
 };
-AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+AppComponent.ctorParameters = () => [
+    { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__.Title }
+];
+AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-root',
         template: _app_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_app_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -1591,20 +1610,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppSharedModule": () => (/* binding */ AppSharedModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 36362);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/forms */ 90587);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 52816);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 36362);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/forms */ 90587);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 52816);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var _components_shared_user_header_shared_user_header_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/shared-user-header/shared-user-header.component */ 21545);
 /* harmony import */ var _material_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./material.module */ 94872);
 /* harmony import */ var _indicators_indicators_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./indicators/indicators.module */ 9096);
 /* harmony import */ var _components_user_sheet_user_sheet_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/user-sheet/user-sheet.component */ 38300);
 /* harmony import */ var _components_user_popover_user_popover_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/user-popover/user-popover.component */ 54262);
 /* harmony import */ var _notices_login_notice_login_notice_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./notices/login-notice/login-notice.component */ 56439);
-/* harmony import */ var _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @tinymce/tinymce-angular */ 28155);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/material/sort */ 64316);
+/* harmony import */ var _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @tinymce/tinymce-angular */ 28155);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/sort */ 64316);
+/* harmony import */ var _core_services_divers_alert_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../core/services/divers/alert.service */ 512);
+/* harmony import */ var _core_services_divers_loading_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../core/services/divers/loading.service */ 74501);
+
+
 
 
 
@@ -1621,8 +1644,8 @@ __webpack_require__.r(__webpack_exports__);
 
 let AppSharedModule = class AppSharedModule {
 };
-AppSharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.NgModule)({
+AppSharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.NgModule)({
         declarations: [
             _components_shared_user_header_shared_user_header_component__WEBPACK_IMPORTED_MODULE_0__.SharedUserHeaderComponent,
             _components_user_sheet_user_sheet_component__WEBPACK_IMPORTED_MODULE_3__.UserSheetComponent,
@@ -1630,25 +1653,29 @@ AppSharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
             _notices_login_notice_login_notice_component__WEBPACK_IMPORTED_MODULE_5__.LoginNoticeComponent,
         ],
         imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_8__.CommonModule,
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicModule,
+            _angular_common__WEBPACK_IMPORTED_MODULE_10__.CommonModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_11__.IonicModule,
             _indicators_indicators_module__WEBPACK_IMPORTED_MODULE_2__.IndicatorsModule,
-            _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_10__.EditorModule,
+            _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_12__.EditorModule,
         ],
         exports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_8__.CommonModule,
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicModule,
-            _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouterModule,
+            _angular_common__WEBPACK_IMPORTED_MODULE_10__.CommonModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_11__.IonicModule,
+            _angular_router__WEBPACK_IMPORTED_MODULE_13__.RouterModule,
             _material_module__WEBPACK_IMPORTED_MODULE_1__.MaterialModule,
-            _angular_material_sort__WEBPACK_IMPORTED_MODULE_12__.MatSortModule,
+            _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__.MatSortModule,
             _indicators_indicators_module__WEBPACK_IMPORTED_MODULE_2__.IndicatorsModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_13__.FormsModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_13__.ReactiveFormsModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_15__.FormsModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_15__.ReactiveFormsModule,
             _components_shared_user_header_shared_user_header_component__WEBPACK_IMPORTED_MODULE_0__.SharedUserHeaderComponent,
             _components_user_sheet_user_sheet_component__WEBPACK_IMPORTED_MODULE_3__.UserSheetComponent,
             _components_user_popover_user_popover_component__WEBPACK_IMPORTED_MODULE_4__.UserPopoverComponent,
             _notices_login_notice_login_notice_component__WEBPACK_IMPORTED_MODULE_5__.LoginNoticeComponent,
-            _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_10__.EditorModule,
+            _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_12__.EditorModule,
+        ],
+        providers: [
+            _core_services_divers_loading_service__WEBPACK_IMPORTED_MODULE_7__.LoadingService,
+            _core_services_divers_alert_service__WEBPACK_IMPORTED_MODULE_6__.AlertService
         ]
     })
 ], AppSharedModule);
