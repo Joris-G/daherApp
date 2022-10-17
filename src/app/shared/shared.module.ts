@@ -13,6 +13,8 @@ import { UserPopoverComponent } from './components/user-popover/user-popover.com
 import { LoginNoticeComponent } from './notices/login-notice/login-notice.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { MatSortModule } from '@angular/material/sort';
+import { AlertService } from '../core/services/divers/alert.service';
+import { LoadingService } from '../core/services/divers/loading.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,10 @@ import { MatSortModule } from '@angular/material/sort';
     UserPopoverComponent,
     LoginNoticeComponent,
     EditorModule,
+  ],
+  providers: [
+    LoadingService,
+    AlertService
   ]
 })
 export class AppSharedModule { }
