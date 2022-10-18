@@ -6,11 +6,10 @@
 </ion-toolbar>
 <ion-content *ngIf="molding$ | async as molding">
   <mat-accordion multi>
-    <!-- <mat-expansion-panel #kitPanel> -->
+    <!--  -->
+    <!-- LISTE DES KITS -->
+    <!--  -->
     <mat-expansion-panel #kitPanel *ngIf="molding.kits.length >0" [expanded]="(molding.kits.length >0)">
-      <!--  -->
-      <!-- LISTE DES KITS -->
-      <!--  -->
       <mat-expansion-panel-header>
         <mat-panel-title>
           <ion-title color=primary> Liste des Kits</ion-title>

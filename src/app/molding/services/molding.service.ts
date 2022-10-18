@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { forkJoin, from, Observable, of, Subject, throwError } from 'rxjs';
+import { EmptyError, forkJoin, from, Observable, of, Subject, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Molding, MoldingIri } from 'src/app/_interfaces/molding/molding';
+import { IMoldingStatus, Molding, MoldingIri, MoldingStatus } from 'src/app/_interfaces/molding/molding';
 import { environment } from 'src/environments/environment';
 import { KitService } from './kit.service';
 import { ToolService } from 'src/app/tooling/services/tool.service';
@@ -30,8 +30,13 @@ import { OtherMaterialsService } from './other-materials.service';
 export class MoldingService {
   public molding: Molding;
   public molding$: Subject<Molding> = new Subject();
-  public moldingStatus: Subject<boolean> = new Subject();
+  public toolStatus: Subject<boolean> = new Subject();
+  public moldingStatus$: Observable<IMoldingStatus>;
+  private moldingStatus: MoldingStatus = new MoldingStatus();
+
+  // private moldingStatus$: Observable<boolean> = this.moldingStatus.asObservable();
   private moldingIri: MoldingIri;
+
 
   constructor(
     private kitService: KitService,
@@ -43,14 +48,25 @@ export class MoldingService {
     private navCtrl: NavController,
     private loadingService: LoadingService,
   ) {
-    this.molding = new Molding();
+    this.moldingStatus$ = this.moldingStatus.moldingStatus.asObservable();
+  }
+
+  setToolStatus(status: boolean): void {
+    this.moldingStatus.setToolStatus(status);
+  }
+  setKitStatus(status: boolean): void {
+    this.moldingStatus.setKitStatus(status);
+  }
+
+
+  removeKit(index: number) {
+    this.molding.kits.splice(index, 1);
+    // this.saveMolding()
+    this.updateDates();
     this.updateMoldings();
+    this.updateKitStatus();
   }
 
-
-  getMoldingStatus(): Observable<boolean> {
-    return from(this.moldingStatus);
-  }
 
   /**
    *: Observable<Molding>
@@ -61,57 +77,29 @@ export class MoldingService {
    */
   saveMolding(print: boolean) {
     // const check$: Observable<void> = this.checkMoldingDatas();
-    // const savingOtherMat$: Observable<void>;
-    // const saveMolding: Observable<void>;
-
-    this.moldingStatus.subscribe(
-      (response) => {
-        console.log(response);
-        //TODO check les additionnal materials
-        this.saveOtherMaterials()
-          .subscribe(
-            (resp: AdditionalMaterial[]) => {
-              console.log(resp);
-              this.molding.materialSupplementary = resp;
-              this.moldingIri = this.toIri();
-              // resp.subscribe(() => {
-              const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
-              saveMethod
-                .subscribe((val) => {
-                  if (print) { this.printMolding(); }
-                });
-              // });
-
-            });
-      },
-      (err) => {
-        //TODO mettre en place un service d'erreur qui se chargera de créer les alertes ou non en fonction d'un param
-        this.alertService.simpleAlert('La vérification du moulage a échoué', err.title, err.message);
+    // const savingOtherMat$: Observable<any[]> = this.saveOtherMaterials();
+    // // const saveMolding: Observable<void>;
+    // //TODO check les additionnal materials
+    // savingOtherMat$
+    //   .subscribe(
+    //     (resp: AdditionalMaterial[]) => {
+    //       console.log(resp);
+    //       this.molding.materialSupplementary = resp;
+    this.moldingIri = this.toIri();
+    // resp.subscribe(() => {
+    const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
+    saveMethod
+      .subscribe((val) => {
+        if (print) { this.printMolding(); }
       });
+    // });
 
-
-    // .subscribe(
-    //   () => {
-    //     if (print) {
-    //       this.printMolding();
-    //     } else {
-    //       // On demande si on veut imprimer ou non
-    //       this.alertService.presentAlertConfirm(
-    //         'Enregistrement effectué',
-    //         'Voulez-vous imprimer la fiche ?')
-    //         .then((response) => { if (response) { this.printMolding(); } });
-    //     }
-    //   },
-    //   (err) => {
-    //     this.alertService.simpleAlert(
-    //       'Erreur de sauvegarde',
-    //       'Le moulage n\'a pas été sauvegardé',
-    //       err
-    //     );
-    //   });
-    //   },
-
-    // );
+    // });
+    // },
+    // (err) => {
+    //   //TODO mettre en place un service d'erreur qui se chargera de créer les alertes ou non en fonction d'un param
+    //   this.alertService.simpleAlert('La vérification du moulage a échoué', err.title, err.message);
+    // });
   }
 
 
@@ -123,6 +111,8 @@ export class MoldingService {
         (molding) => {
           this.molding = molding;
           this.updateMoldings();
+          this.setKitStatus(true);
+          this.setToolStatus(true);
           this.loadingService.stopLoading();
         },
         (error) => {
@@ -145,34 +135,35 @@ export class MoldingService {
      * @return
      * @memberof CreateMoldingPage
      */
-  checkMoldingDatas() {
-    if (this.molding.OT === undefined) {
-      const missingToolMsg = 'Voulez-vous continuer sans outillage ?';
-      this.alertService.presentAlertConfirm('OUTILLAGE MANQUANT', missingToolMsg)
-        .then(
-          (response) => {
-            if (response) {
-              this.moldingStatus.next(true);
-            } else {
-              const title = 'OUTILLAGE MANQUANT';
-              const message = 'Veuillez renseigner l\'outillage de moulage';
-              this.moldingStatus.next(false);
-            }
-          },
-          (err) => {
-            const title = `Outillage de moulage manquant`;
-            const message = 'Il n\'y a pas eu de réponse de l\'utilisateur';
-            this.moldingStatus.error(new Error(message));
-          });
-    } else if (this.molding.kits.length === 0) {
-      const title = 'Il n\'y a pas de kit';
-      const message = `Pour insérer un kit matière munissez vous d'une fiche de vie et scannez le code barre.
-            Si besoin d'aide complémentaire appelez le 06.87.89.24.25`;
-      this.moldingStatus.error(new Error(message));
-    } else {
-      this.moldingStatus.next(true);
-    }
-  }
+  // checkMoldingDatas(): void {
+  //   // if (this.molding.OT === undefined) {
+  //     // const missingToolMsg = 'Voulez-vous continuer sans outillage ?';
+  //     this.alertService.presentAlertConfirm('OUTILLAGE MANQUANT', missingToolMsg)
+  //       .then(
+  //         (response) => {
+  //           if (response) {
+  //             this.moldingStatus.next(true);
+  //           } else {
+  //             const title = 'OUTILLAGE MANQUANT';
+  //             const message = 'Veuillez renseigner l\'outillage de moulage';
+  //             this.moldingStatus.next(false);
+  //           }
+  //         },
+  //         (err) => {
+  //           const title = `Outillage de moulage manquant`;
+  //           const message = 'Il n\'y a pas eu de réponse de l\'utilisateur';
+  //           this.moldingStatus.error(new Error(message));
+  //         });
+  //   // } else
+  //    if (this.molding.kits.length === 0) {
+  //     const title = 'Il n\'y a pas de kit';
+  //     const message = `Pour insérer un kit matière munissez vous d'une fiche de vie et scannez le code barre.
+  //           Si besoin d'aide complémentaire appelez le 06.87.89.24.25`;
+  //     this.moldingStatus.error(new Error(message));
+  //   } else {
+  //     this.moldingStatus.next(true);
+  //   }
+  // }
 
 
 
@@ -187,6 +178,7 @@ export class MoldingService {
     // REINITIALISATION
     this.molding.aCuireAv = null;
     this.molding.aDraperAv = null;
+    if (this.molding.kits.length <= 0) { return; }
     // IDENTIFIER MATIERES DEFAVORABLES
     this.molding.matPolym = this.molding.kits.reduce((defPolym, kit) => {
       if (defPolym.aCuirAv > kit.aCuirAv) {
@@ -264,6 +256,8 @@ export class MoldingService {
       this.alertService.presentToast('Le kit a déjà été scanné');
       console.error('kit en doublon');
     }
+    this.updateKitStatus();
+
   }
 
   addNida(material) {
@@ -281,9 +275,19 @@ export class MoldingService {
   addTool(responseTool: Tool) {
     this.molding.OT = responseTool;
     this.alertService.presentToast('Outillage associé !');
+    this.setToolStatus(true);
     this.updateMoldings();
   }
-  private saveOtherMaterials(): Observable<any> {
+
+
+  private updateKitStatus() {
+    if (this.molding.kits.length > 0) {
+      this.setKitStatus(true);
+    } else {
+      this.setKitStatus(false);
+    }
+  }
+  private saveOtherMaterials(): Observable<any[]> {
     return forkJoin(this.molding.materialSupplementary.map(mat => this.matService.addOne(mat)));
   }
 

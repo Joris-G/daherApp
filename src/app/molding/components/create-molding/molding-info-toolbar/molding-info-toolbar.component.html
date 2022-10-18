@@ -1,8 +1,10 @@
 <ion-toolbar>
-  <ion-text slot="start">Outillage :
-    <ion-text *ngIf="molding?.OT"> OT0{{molding?.OT.sapToolNumber}} {{molding?.OT.designation}}</ion-text>
-    <ion-text color=warning *ngIf="!molding?.OT">Pas d'outillage associé</ion-text>
-  </ion-text>
+  <ion-text slot="start">Outillage :</ion-text>
+  <ion-text *ngIf="molding?.OT"> OT0{{molding?.OT.sapToolNumber}} {{molding?.OT.designation}}</ion-text>
+  <ion-button colorStatus="" [color]="toolStatusColor" *ngIf="!molding?.OT" (click)="noToolClick()">Pas d'outillage
+    associé
+  </ion-button>
+
   <div class="col" slot=end>
     <ion-text class="strong">Début moulage : {{molding?.moldingDay | date: "dd/MM/yyyy"}}</ion-text>
     <ion-text class="strong" *ngIf="molding?.userCreat">Mouleur : {{molding?.userCreat.nom}}

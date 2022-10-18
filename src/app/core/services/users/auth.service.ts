@@ -10,6 +10,7 @@ import { RequestService } from '../request.service';
 export class AuthService {
 
   public isAuth: boolean;
+  public authToken: string;
   public authUser: User;
   constructor(
     public requestService: RequestService,
@@ -30,8 +31,7 @@ export class AuthService {
         map((returnsData: any) => {
           if (returnsData) {
             console.log(returnsData.apiToken);
-            localStorage.setItem('token', returnsData.apiToken);
-            // this.requestService.apiToken = returnsData.apiToken;
+            this.authToken = returnsData.apiToken;
             this.isAuth = true;
             this.authUser = returnsData.user;
           } else {

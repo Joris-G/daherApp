@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MoldingService } from 'src/app/molding/services/molding.service';
 import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 
 @Component({
@@ -9,7 +10,6 @@ import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 })
 export class MoldingKitTableComponent {
   @Input() kits: Kit[];
-  // public kitList: Kit[] = [];
   public dataSource = new MatTableDataSource<Kit>();
   public displayedColumns = [
     'referenceSAP',
@@ -20,7 +20,9 @@ export class MoldingKitTableComponent {
     'aCuirAv',
     'commands'
   ];
-
+  constructor(
+    private moldingService: MoldingService,
+  ) { }
   /**
    * Supprime un kit de la liste de kit. Cette fonction n'a pas d'incidence tant que le moualge n'est pas sauvegardé
    *
@@ -29,8 +31,8 @@ export class MoldingKitTableComponent {
    */
   removeKitClick(index: number) {
     //TODO réparer le click
-    // this.molding.kits.splice(index, 1);
-    // this.moldingService.updateDates(this.molding);
+    this.moldingService.removeKit(index);
+
     // this.molding.kits.splice(index, 1);
     // this.moldingService.updateDates(this.molding);
   }

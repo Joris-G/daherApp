@@ -1,3 +1,4 @@
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { User } from 'src/app/_interfaces/user';
 import { AdditionalMaterial, Core, Kit } from './composite-material-types';
@@ -27,9 +28,9 @@ export class Molding {
   status?: boolean;
   userCreat?: User;
   OT?: Tool;
-  materialSupplementary?: AdditionalMaterial[]= [];
+  materialSupplementary?: AdditionalMaterial[] = [];
 
-  getIri(){
+  getIri() {
     return `api/moldings/${this.id}`;
   }
 }
@@ -47,4 +48,51 @@ export interface MoldingIri {
   woList?: any[];
   updatedAt?: Date;
   materialSupplementary?: string[];
+}
+
+export class MoldingStatus {
+  public moldingStatus: Subject<IMoldingStatus> = new BehaviorSubject({
+    moldingStatus: false,
+    kitStatus: false,
+    toolStatus: false
+  });
+  private toolStatus: boolean;
+  private kitStatus: boolean;
+  constructor(toolStatus: boolean = false, kitStatus: boolean = false) {
+    console.log('new molding status');
+    this.kitStatus = kitStatus;
+    this.toolStatus = toolStatus;
+    this.upDateMoldingStatus();
+  }
+
+  setToolStatus(status: boolean) {
+    this.toolStatus = status;
+    this.upDateMoldingStatus();
+  }
+  setKitStatus(status: boolean) {
+    this.kitStatus = status;
+    this.upDateMoldingStatus();
+  }
+
+  getToolStatus(): boolean {
+    return this.toolStatus;
+  }
+  getKitStatus(): boolean {
+    return this.kitStatus;
+  }
+
+  upDateMoldingStatus() {
+    const status = (this.kitStatus && this.toolStatus);
+    this.moldingStatus.next({
+      moldingStatus: status,
+      kitStatus: this.kitStatus,
+      toolStatus: this.toolStatus
+    });
+  }
+}
+
+export interface IMoldingStatus {
+  moldingStatus: boolean;
+  toolStatus: boolean;
+  kitStatus: boolean;
 }

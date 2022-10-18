@@ -78,7 +78,7 @@ export class RequestService {
 
   createPatchRequest(url: string, body: any) {
     return this.http.patch<any>(`${environment.apiServer}${url}`, body, {
-      headers: this.patchHttpHeaders
+      headers: this.httpHeaders
     })
       .pipe(
         map((val) => {

@@ -31,7 +31,10 @@ export class CreateMoldingPage implements OnInit {
 
 
   ionViewWillEnter() {
+    console.log('enter create molding');
     // const pageParam: PageParams = { title: 'MOULAGE', visible: true };
+    this.moldingService.molding = new Molding();
+    this.moldingService.molding$.next();
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       // pageParam.title = `MODIFICATION MOULAGE n°${id}`;
