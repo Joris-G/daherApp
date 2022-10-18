@@ -21,7 +21,7 @@ export class MoldingInfoToolbarComponent {
         }
         this.toolStatusColor = 'warning';
       }
-    })
+    });
   }
   noToolClick() {
     this.moldingService.setToolStatus(true);

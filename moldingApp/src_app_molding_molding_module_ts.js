@@ -24,9 +24,16 @@ __webpack_require__.r(__webpack_exports__);
 let CreateMoldingToolbarComponent = class CreateMoldingToolbarComponent {
     constructor(moldingService) {
         this.moldingService = moldingService;
+        this.moldingStatus$ = this.moldingService.moldingStatus$;
+        this.moldingStatus$.subscribe({
+            next: (moldingStatus) => {
+                this.isMoldingComplete = moldingStatus.moldingStatus;
+            }
+        });
     }
     saveMoldingClick(print) {
         this.moldingService.saveMolding(print);
+        // this.moldingService.moldingStatus.next(true);
     }
 };
 CreateMoldingToolbarComponent.ctorParameters = () => [
@@ -54,21 +61,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MoldingInfoToolbarComponent": () => (/* binding */ MoldingInfoToolbarComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _molding_info_toolbar_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./molding-info-toolbar.component.html?ngResource */ 46118);
 /* harmony import */ var _molding_info_toolbar_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./molding-info-toolbar.component.scss?ngResource */ 2084);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var src_app_molding_services_molding_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/molding/services/molding.service */ 4038);
+
 
 
 
 
 let MoldingInfoToolbarComponent = class MoldingInfoToolbarComponent {
+    constructor(moldingService) {
+        this.moldingService = moldingService;
+        this.toolStatusColor = 'warning';
+        this.moldingService.moldingStatus$.subscribe({
+            next: (status) => {
+                if (status.toolStatus) {
+                    this.toolStatusColor = 'success';
+                    return;
+                }
+                this.toolStatusColor = 'warning';
+            }
+        });
+    }
+    noToolClick() {
+        this.moldingService.setToolStatus(true);
+    }
 };
+MoldingInfoToolbarComponent.ctorParameters = () => [
+    { type: src_app_molding_services_molding_service__WEBPACK_IMPORTED_MODULE_2__.MoldingService }
+];
 MoldingInfoToolbarComponent.propDecorators = {
-    molding: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }]
+    molding: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }]
 };
-MoldingInfoToolbarComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Component)({
+MoldingInfoToolbarComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
         selector: 'app-molding-info-toolbar',
         template: _molding_info_toolbar_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_molding_info_toolbar_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -89,20 +117,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MoldingKitTableComponent": () => (/* binding */ MoldingKitTableComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _molding_kit_table_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./molding-kit-table.component.html?ngResource */ 25905);
 /* harmony import */ var _molding_kit_table_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./molding-kit-table.component.scss?ngResource */ 4410);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/table */ 97217);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material/table */ 97217);
+/* harmony import */ var src_app_molding_services_molding_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/molding/services/molding.service */ 4038);
+
 
 
 
 
 
 let MoldingKitTableComponent = class MoldingKitTableComponent {
-    constructor() {
-        // public kitList: Kit[] = [];
-        this.dataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_2__.MatTableDataSource();
+    constructor(moldingService) {
+        this.moldingService = moldingService;
+        this.dataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_3__.MatTableDataSource();
         this.displayedColumns = [
             'referenceSAP',
             'idMM',
@@ -121,17 +151,19 @@ let MoldingKitTableComponent = class MoldingKitTableComponent {
      */
     removeKitClick(index) {
         //TODO réparer le click
-        // this.molding.kits.splice(index, 1);
-        // this.moldingService.updateDates(this.molding);
+        this.moldingService.removeKit(index);
         // this.molding.kits.splice(index, 1);
         // this.moldingService.updateDates(this.molding);
     }
 };
+MoldingKitTableComponent.ctorParameters = () => [
+    { type: src_app_molding_services_molding_service__WEBPACK_IMPORTED_MODULE_2__.MoldingService }
+];
 MoldingKitTableComponent.propDecorators = {
-    kits: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }]
+    kits: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input }]
 };
-MoldingKitTableComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+MoldingKitTableComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
         selector: 'app-molding-kit-table',
         template: _molding_kit_table_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_molding_kit_table_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -855,15 +887,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "CreateMoldingPage": () => (/* binding */ CreateMoldingPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _create_molding_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./create-molding.page.html?ngResource */ 80019);
 /* harmony import */ var _create_molding_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-molding.page.scss?ngResource */ 46801);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_material_expansion__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material/expansion */ 12928);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 52816);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ 92218);
-/* harmony import */ var src_app_molding_services_molding_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/molding/services/molding.service */ 4038);
-/* harmony import */ var src_app_core_services_users_role_guard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/users/role.guard */ 55786);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_material_expansion__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/material/expansion */ 12928);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 52816);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 92218);
+/* harmony import */ var src_app_interfaces_molding_molding__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/_interfaces/molding/molding */ 97729);
+/* harmony import */ var src_app_molding_services_molding_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/molding/services/molding.service */ 4038);
+/* harmony import */ var src_app_core_services_users_role_guard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/users/role.guard */ 55786);
+
 
 
 
@@ -880,11 +914,14 @@ let CreateMoldingPage = class CreateMoldingPage {
         this.roleGuard = roleGuard;
         this.expanded = false;
         this.isAdmin = false;
-        this.molding$ = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+        this.molding$ = new rxjs__WEBPACK_IMPORTED_MODULE_5__.Subject();
         this.molding$ = this.moldingService.molding$;
     }
     ionViewWillEnter() {
+        console.log('enter create molding');
         // const pageParam: PageParams = { title: 'MOULAGE', visible: true };
+        this.moldingService.molding = new src_app_interfaces_molding_molding__WEBPACK_IMPORTED_MODULE_2__.Molding();
+        this.moldingService.molding$.next();
         const id = this.activatedRoute.snapshot.paramMap.get('id');
         if (id) {
             // pageParam.title = `MODIFICATION MOULAGE n°${id}`;
@@ -906,16 +943,16 @@ let CreateMoldingPage = class CreateMoldingPage {
     }
 };
 CreateMoldingPage.ctorParameters = () => [
-    { type: src_app_molding_services_molding_service__WEBPACK_IMPORTED_MODULE_2__.MoldingService },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.ActivatedRoute },
-    { type: src_app_core_services_users_role_guard__WEBPACK_IMPORTED_MODULE_3__.RoleGuard }
+    { type: src_app_molding_services_molding_service__WEBPACK_IMPORTED_MODULE_3__.MoldingService },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute },
+    { type: src_app_core_services_users_role_guard__WEBPACK_IMPORTED_MODULE_4__.RoleGuard }
 ];
 CreateMoldingPage.propDecorators = {
-    accordion: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ViewChild, args: [_angular_material_expansion__WEBPACK_IMPORTED_MODULE_7__.MatAccordion,] }],
-    kitPanel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ViewChild, args: ['kitPanel',] }]
+    accordion: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ViewChild, args: [_angular_material_expansion__WEBPACK_IMPORTED_MODULE_8__.MatAccordion,] }],
+    kitPanel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ViewChild, args: ['kitPanel',] }]
 };
-CreateMoldingPage = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+CreateMoldingPage = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
         selector: 'app-create-molding',
         template: _create_molding_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_create_molding_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -6230,7 +6267,7 @@ module.exports = ".flex-vertical {\n  display: flex !important;\n  flex-directio
   \***************************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-toolbar color=light>\n  <ion-buttons slot=\"end\" collapse=\"true\">\n    <ion-button slot=end (click)=\"saveMoldingClick()\" fill=\"clear\">\n      <ion-icon slot=\"start\" name=\"save-outline\"></ion-icon>\n      SAUVEGARDER\n    </ion-button>\n    <ion-button slot=end (click)=\"saveMoldingClick(true)\" fill=\"solid\" color=primary>\n      <ion-icon slot=\"start\" name=\"print-outline\"></ion-icon>\n      IMPRIMER\n    </ion-button>\n  </ion-buttons>\n</ion-toolbar>\n";
+module.exports = "<ion-toolbar color=light>\n  <ion-buttons slot=\"end\" collapse=\"true\">\n    <ion-button color=primary slot=end (click)=\"saveMoldingClick()\" fill=\"outline\" [disabled]=\"!isMoldingComplete\">\n      <ion-icon slot=\"start\" name=\"save-outline\"></ion-icon>\n      SAUVEGARDER\n    </ion-button>\n    <ion-button color=primary slot=end (click)=\"saveMoldingClick(true)\" fill=\"solid\" [disabled]=\"!isMoldingComplete\">\n      <ion-icon slot=\"start\" name=\"print-outline\"></ion-icon>\n      IMPRIMER\n    </ion-button>\n  </ion-buttons>\n</ion-toolbar>\n";
 
 /***/ }),
 
@@ -6240,7 +6277,7 @@ module.exports = "<ion-toolbar color=light>\n  <ion-buttons slot=\"end\" collaps
   \***********************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-toolbar>\n  <ion-text slot=\"start\">Outillage :\n    <ion-text *ngIf=\"molding?.OT\"> OT0{{molding?.OT.sapToolNumber}} {{molding?.OT.designation}}</ion-text>\n    <ion-text color=warning *ngIf=\"!molding?.OT\">Pas d'outillage associé</ion-text>\n  </ion-text>\n  <div class=\"col\" slot=end>\n    <ion-text class=\"strong\">Début moulage : {{molding?.moldingDay | date: \"dd/MM/yyyy\"}}</ion-text>\n    <ion-text class=\"strong\" *ngIf=\"molding?.userCreat\">Mouleur : {{molding?.userCreat.nom}}\n      {{molding?.userCreat.prenom}}</ion-text>\n  </div>\n  <ion-text *ngIf=molding?.aDraperAv slot=end class=\"strong\">A draper avant le : {{molding?.aDraperAv | date:\n    \"dd/MM/yyyy\n    à HH:mm\"}}\n  </ion-text>\n  <ion-text *ngIf=molding?.aCuireAv slot=end class=\"strong\">A cuire avant le : {{molding?.aCuireAv | date: \"dd/MM/yyyy à\n    HH:mm\"}}</ion-text>\n</ion-toolbar>\n";
+module.exports = "<ion-toolbar>\n  <ion-text slot=\"start\">Outillage :</ion-text>\n  <ion-text *ngIf=\"molding?.OT\"> OT0{{molding?.OT.sapToolNumber}} {{molding?.OT.designation}}</ion-text>\n  <ion-button colorStatus=\"\" [color]=\"toolStatusColor\" *ngIf=\"!molding?.OT\" (click)=\"noToolClick()\">Pas d'outillage\n    associé\n  </ion-button>\n\n  <div class=\"col\" slot=end>\n    <ion-text class=\"strong\">Début moulage : {{molding?.moldingDay | date: \"dd/MM/yyyy\"}}</ion-text>\n    <ion-text class=\"strong\" *ngIf=\"molding?.userCreat\">Mouleur : {{molding?.userCreat.nom}}\n      {{molding?.userCreat.prenom}}</ion-text>\n  </div>\n  <ion-text *ngIf=molding?.aDraperAv slot=end class=\"strong\">A draper avant le : {{molding?.aDraperAv | date:\n    \"dd/MM/yyyy\n    à HH:mm\"}}\n  </ion-text>\n  <ion-text *ngIf=molding?.aCuireAv slot=end class=\"strong\">A cuire avant le : {{molding?.aCuireAv | date: \"dd/MM/yyyy à\n    HH:mm\"}}</ion-text>\n</ion-toolbar>\n";
 
 /***/ }),
 
@@ -6310,7 +6347,7 @@ module.exports = "<ion-menu #menu side=\"start\" type=\"push\" contentId=\"moldi
   \**********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-toolbar color=light class=\"ion-hide-md-down padding\">\n  <app-scan-molding-input slot=start></app-scan-molding-input>\n  <!-- <app-scan-molding-input slot=start (evOnInput)=\"onInput($event)\"></app-scan-molding-input> -->\n  <ion-button size=small slot=end (click)=\"(expanded = !expanded) ? accordion.openAll() : accordion.closeAll()\">\n    {{(!expanded) ? 'Développer tout' : 'Replier tout'}}</ion-button>\n</ion-toolbar>\n<ion-content *ngIf=\"molding$ | async as molding\">\n  <mat-accordion multi>\n    <!-- <mat-expansion-panel #kitPanel> -->\n    <mat-expansion-panel #kitPanel *ngIf=\"molding.kits.length >0\" [expanded]=\"(molding.kits.length >0)\">\n      <!--  -->\n      <!-- LISTE DES KITS -->\n      <!--  -->\n      <mat-expansion-panel-header>\n        <mat-panel-title>\n          <ion-title color=primary> Liste des Kits</ion-title>\n        </mat-panel-title>\n        <mat-panel-description>\n        </mat-panel-description>\n      </mat-expansion-panel-header>\n      <app-molding-kit-table [kits]=molding.kits></app-molding-kit-table>\n    </mat-expansion-panel>\n\n    <!--  -->\n    <!-- LISTE DES MATERIAUX AUTRES -->\n    <!--  -->\n    <mat-expansion-panel *ngIf=\"molding.materialSupplementary?.length >0\"\n      [expanded]=\"(molding.materialSupplementary.length >0)\">\n      <mat-expansion-panel-header>\n        <mat-panel-title>\n          <ion-title color=primary>Liste des nidas</ion-title>\n        </mat-panel-title>\n        <mat-panel-description>\n        </mat-panel-description>\n      </mat-expansion-panel-header>\n      <app-molding-materials-table [molding]=\"molding\"></app-molding-materials-table>\n    </mat-expansion-panel>\n  </mat-accordion>\n</ion-content>\n\n\n<ion-footer class=\"ion-hide-md-down\">\n  <app-molding-info-toolbar [molding]=\"molding$ | async\"></app-molding-info-toolbar>\n  <app-create-molding-toolbar></app-create-molding-toolbar>\n</ion-footer>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<!-- footer -->\n<!-- <ion-tab-bar slot=\"bottom\" class=\"ion-hide-md-up\">\n  <ion-tab-button tab=\"schedule\">\n    <ion-icon name=\"link\"></ion-icon>\n    <ion-label>Outillage</ion-label>\n    <ion-badge>6</ion-badge>\n  </ion-tab-button>\n\n  <ion-tab-button tab=\"speakers\" (click)=\"kitAlertPrompt()\">\n    <ion-icon name=\"scan\"></ion-icon>\n    <ion-label>Scan kit</ion-label>\n  </ion-tab-button>\n\n  <ion-tab-button tab=\"map\">\n    <ion-icon name=\"print\"></ion-icon>\n    <ion-label>Imprimer</ion-label>\n  </ion-tab-button>\n\n  <ion-tab-button tab=\"about\" (click)=\"saveMoldingClick()\">\n    <ion-icon name=\"save\"></ion-icon>\n    <ion-label>Sauvegarder</ion-label>\n  </ion-tab-button>\n</ion-tab-bar> -->\n";
+module.exports = "<ion-toolbar color=light class=\"ion-hide-md-down padding\">\n  <app-scan-molding-input slot=start></app-scan-molding-input>\n  <!-- <app-scan-molding-input slot=start (evOnInput)=\"onInput($event)\"></app-scan-molding-input> -->\n  <ion-button size=small slot=end (click)=\"(expanded = !expanded) ? accordion.openAll() : accordion.closeAll()\">\n    {{(!expanded) ? 'Développer tout' : 'Replier tout'}}</ion-button>\n</ion-toolbar>\n<ion-content *ngIf=\"molding$ | async as molding\">\n  <mat-accordion multi>\n    <!--  -->\n    <!-- LISTE DES KITS -->\n    <!--  -->\n    <mat-expansion-panel #kitPanel *ngIf=\"molding.kits.length >0\" [expanded]=\"(molding.kits.length >0)\">\n      <mat-expansion-panel-header>\n        <mat-panel-title>\n          <ion-title color=primary> Liste des Kits</ion-title>\n        </mat-panel-title>\n        <mat-panel-description>\n        </mat-panel-description>\n      </mat-expansion-panel-header>\n      <app-molding-kit-table [kits]=molding.kits></app-molding-kit-table>\n    </mat-expansion-panel>\n\n    <!--  -->\n    <!-- LISTE DES MATERIAUX AUTRES -->\n    <!--  -->\n    <mat-expansion-panel *ngIf=\"molding.materialSupplementary?.length >0\"\n      [expanded]=\"(molding.materialSupplementary.length >0)\">\n      <mat-expansion-panel-header>\n        <mat-panel-title>\n          <ion-title color=primary>Liste des nidas</ion-title>\n        </mat-panel-title>\n        <mat-panel-description>\n        </mat-panel-description>\n      </mat-expansion-panel-header>\n      <app-molding-materials-table [molding]=\"molding\"></app-molding-materials-table>\n    </mat-expansion-panel>\n  </mat-accordion>\n</ion-content>\n\n\n<ion-footer class=\"ion-hide-md-down\">\n  <app-molding-info-toolbar [molding]=\"molding$ | async\"></app-molding-info-toolbar>\n  <app-create-molding-toolbar></app-create-molding-toolbar>\n</ion-footer>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<!-- footer -->\n<!-- <ion-tab-bar slot=\"bottom\" class=\"ion-hide-md-up\">\n  <ion-tab-button tab=\"schedule\">\n    <ion-icon name=\"link\"></ion-icon>\n    <ion-label>Outillage</ion-label>\n    <ion-badge>6</ion-badge>\n  </ion-tab-button>\n\n  <ion-tab-button tab=\"speakers\" (click)=\"kitAlertPrompt()\">\n    <ion-icon name=\"scan\"></ion-icon>\n    <ion-label>Scan kit</ion-label>\n  </ion-tab-button>\n\n  <ion-tab-button tab=\"map\">\n    <ion-icon name=\"print\"></ion-icon>\n    <ion-label>Imprimer</ion-label>\n  </ion-tab-button>\n\n  <ion-tab-button tab=\"about\" (click)=\"saveMoldingClick()\">\n    <ion-icon name=\"save\"></ion-icon>\n    <ion-label>Sauvegarder</ion-label>\n  </ion-tab-button>\n</ion-tab-bar> -->\n";
 
 /***/ }),
 

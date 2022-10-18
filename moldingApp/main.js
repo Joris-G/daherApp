@@ -237,7 +237,10 @@ let AuthInterceptor = class AuthInterceptor {
     }
     intercept(req, next) {
         // Get the auth token from the service.
-        const authToken = this.authService.getToken();
+        if (req.method === 'GET') {
+            return next.handle(req);
+        }
+        const authToken = this.authService.authToken;
         if (authToken) {
             // Clone the request and replace the original headers with
             // cloned headers, updated with the authorization.
@@ -613,7 +616,7 @@ let RequestService = class RequestService {
     }
     createPatchRequest(url, body) {
         return this.http.patch(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiServer}${url}`, body, {
-            headers: this.patchHttpHeaders
+            headers: this.httpHeaders
         })
             .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.map)((val) => {
             if (val.status === 500) {
@@ -753,8 +756,7 @@ let AuthService = class AuthService {
             .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.map)((returnsData) => {
             if (returnsData) {
                 console.log(returnsData.apiToken);
-                localStorage.setItem('token', returnsData.apiToken);
-                // this.requestService.apiToken = returnsData.apiToken;
+                this.authToken = returnsData.apiToken;
                 this.isAuth = true;
                 this.authUser = returnsData.user;
             }
@@ -1624,8 +1626,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _notices_login_notice_login_notice_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./notices/login-notice/login-notice.component */ 56439);
 /* harmony import */ var _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @tinymce/tinymce-angular */ 28155);
 /* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/sort */ 64316);
-/* harmony import */ var _core_services_divers_alert_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../core/services/divers/alert.service */ 512);
-/* harmony import */ var _core_services_divers_loading_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../core/services/divers/loading.service */ 74501);
+/* harmony import */ var _core_services_divers_loading_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../core/services/divers/loading.service */ 74501);
+/* harmony import */ var _core_services_divers_alert_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../core/services/divers/alert.service */ 512);
 
 
 
@@ -1674,8 +1676,8 @@ AppSharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
             _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_12__.EditorModule,
         ],
         providers: [
-            _core_services_divers_loading_service__WEBPACK_IMPORTED_MODULE_7__.LoadingService,
-            _core_services_divers_alert_service__WEBPACK_IMPORTED_MODULE_6__.AlertService
+            _core_services_divers_loading_service__WEBPACK_IMPORTED_MODULE_6__.LoadingService,
+            _core_services_divers_alert_service__WEBPACK_IMPORTED_MODULE_7__.AlertService
         ]
     })
 ], AppSharedModule);

@@ -9,8 +9,11 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Molding": () => (/* binding */ Molding)
+/* harmony export */   "Molding": () => (/* binding */ Molding),
+/* harmony export */   "MoldingStatus": () => (/* binding */ MoldingStatus)
 /* harmony export */ });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ 84505);
+
 /**
  * En base de donnée :
  *
@@ -29,6 +32,41 @@ class Molding {
     }
     getIri() {
         return `api/moldings/${this.id}`;
+    }
+}
+class MoldingStatus {
+    constructor(toolStatus = false, kitStatus = false) {
+        this.moldingStatus = new rxjs__WEBPACK_IMPORTED_MODULE_0__.BehaviorSubject({
+            moldingStatus: false,
+            kitStatus: false,
+            toolStatus: false
+        });
+        console.log('new molding status');
+        this.kitStatus = kitStatus;
+        this.toolStatus = toolStatus;
+        this.upDateMoldingStatus();
+    }
+    setToolStatus(status) {
+        this.toolStatus = status;
+        this.upDateMoldingStatus();
+    }
+    setKitStatus(status) {
+        this.kitStatus = status;
+        this.upDateMoldingStatus();
+    }
+    getToolStatus() {
+        return this.toolStatus;
+    }
+    getKitStatus() {
+        return this.kitStatus;
+    }
+    upDateMoldingStatus() {
+        const status = (this.kitStatus && this.toolStatus);
+        this.moldingStatus.next({
+            moldingStatus: status,
+            kitStatus: this.kitStatus,
+            toolStatus: this.toolStatus
+        });
     }
 }
 
@@ -259,14 +297,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MoldingService": () => (/* binding */ MoldingService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ 92218);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ 24383);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs */ 54350);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs */ 64139);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 86942);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ 54350);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs */ 64139);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ 86942);
 /* harmony import */ var src_app_interfaces_molding_molding__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/_interfaces/molding/molding */ 97729);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ 92340);
 /* harmony import */ var _kit_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./kit.service */ 6015);
@@ -307,12 +344,22 @@ let MoldingService = class MoldingService {
         this.navCtrl = navCtrl;
         this.loadingService = loadingService;
         this.molding$ = new rxjs__WEBPACK_IMPORTED_MODULE_9__.Subject();
-        this.moldingStatus = new rxjs__WEBPACK_IMPORTED_MODULE_9__.Subject();
-        this.molding = new src_app_interfaces_molding_molding__WEBPACK_IMPORTED_MODULE_0__.Molding();
-        this.updateMoldings();
+        this.toolStatus = new rxjs__WEBPACK_IMPORTED_MODULE_9__.Subject();
+        this.moldingStatus = new src_app_interfaces_molding_molding__WEBPACK_IMPORTED_MODULE_0__.MoldingStatus();
+        this.moldingStatus$ = this.moldingStatus.moldingStatus.asObservable();
     }
-    getMoldingStatus() {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_10__.from)(this.moldingStatus);
+    setToolStatus(status) {
+        this.moldingStatus.setToolStatus(status);
+    }
+    setKitStatus(status) {
+        this.moldingStatus.setKitStatus(status);
+    }
+    removeKit(index) {
+        this.molding.kits.splice(index, 1);
+        // this.saveMolding()
+        this.updateDates();
+        this.updateMoldings();
+        this.updateKitStatus();
     }
     /**
      *: Observable<Molding>
@@ -323,51 +370,30 @@ let MoldingService = class MoldingService {
      */
     saveMolding(print) {
         // const check$: Observable<void> = this.checkMoldingDatas();
-        // const savingOtherMat$: Observable<void>;
-        // const saveMolding: Observable<void>;
-        this.moldingStatus.subscribe((response) => {
-            console.log(response);
-            //TODO check les additionnal materials
-            this.saveOtherMaterials()
-                .subscribe((resp) => {
-                console.log(resp);
-                this.molding.materialSupplementary = resp;
-                this.moldingIri = this.toIri();
-                // resp.subscribe(() => {
-                const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
-                saveMethod
-                    .subscribe((val) => {
-                    if (print) {
-                        this.printMolding();
-                    }
-                });
-                // });
-            });
-        }, (err) => {
-            //TODO mettre en place un service d'erreur qui se chargera de créer les alertes ou non en fonction d'un param
-            this.alertService.simpleAlert('La vérification du moulage a échoué', err.title, err.message);
+        // const savingOtherMat$: Observable<any[]> = this.saveOtherMaterials();
+        // // const saveMolding: Observable<void>;
+        // //TODO check les additionnal materials
+        // savingOtherMat$
+        //   .subscribe(
+        //     (resp: AdditionalMaterial[]) => {
+        //       console.log(resp);
+        //       this.molding.materialSupplementary = resp;
+        this.moldingIri = this.toIri();
+        // resp.subscribe(() => {
+        const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
+        saveMethod
+            .subscribe((val) => {
+            if (print) {
+                this.printMolding();
+            }
         });
-        // .subscribe(
-        //   () => {
-        //     if (print) {
-        //       this.printMolding();
-        //     } else {
-        //       // On demande si on veut imprimer ou non
-        //       this.alertService.presentAlertConfirm(
-        //         'Enregistrement effectué',
-        //         'Voulez-vous imprimer la fiche ?')
-        //         .then((response) => { if (response) { this.printMolding(); } });
-        //     }
-        //   },
-        //   (err) => {
-        //     this.alertService.simpleAlert(
-        //       'Erreur de sauvegarde',
-        //       'Le moulage n\'a pas été sauvegardé',
-        //       err
-        //     );
-        //   });
-        //   },
-        // );
+        // });
+        // });
+        // },
+        // (err) => {
+        //   //TODO mettre en place un service d'erreur qui se chargera de créer les alertes ou non en fonction d'un param
+        //   this.alertService.simpleAlert('La vérification du moulage a échoué', err.title, err.message);
+        // });
     }
     loadMolding(moldingId) {
         this.loadingService.startLoading('Patienter pendant le chargement du moulage');
@@ -376,6 +402,8 @@ let MoldingService = class MoldingService {
             .subscribe((molding) => {
             this.molding = molding;
             this.updateMoldings();
+            this.setKitStatus(true);
+            this.setToolStatus(true);
             this.loadingService.stopLoading();
         }, (error) => {
             console.error(error);
@@ -391,35 +419,35 @@ let MoldingService = class MoldingService {
        * @return
        * @memberof CreateMoldingPage
        */
-    checkMoldingDatas() {
-        if (this.molding.OT === undefined) {
-            const missingToolMsg = 'Voulez-vous continuer sans outillage ?';
-            this.alertService.presentAlertConfirm('OUTILLAGE MANQUANT', missingToolMsg)
-                .then((response) => {
-                if (response) {
-                    this.moldingStatus.next(true);
-                }
-                else {
-                    const title = 'OUTILLAGE MANQUANT';
-                    const message = 'Veuillez renseigner l\'outillage de moulage';
-                    this.moldingStatus.next(false);
-                }
-            }, (err) => {
-                const title = `Outillage de moulage manquant`;
-                const message = 'Il n\'y a pas eu de réponse de l\'utilisateur';
-                this.moldingStatus.error(new Error(message));
-            });
-        }
-        else if (this.molding.kits.length === 0) {
-            const title = 'Il n\'y a pas de kit';
-            const message = `Pour insérer un kit matière munissez vous d'une fiche de vie et scannez le code barre.
-            Si besoin d'aide complémentaire appelez le 06.87.89.24.25`;
-            this.moldingStatus.error(new Error(message));
-        }
-        else {
-            this.moldingStatus.next(true);
-        }
-    }
+    // checkMoldingDatas(): void {
+    //   // if (this.molding.OT === undefined) {
+    //     // const missingToolMsg = 'Voulez-vous continuer sans outillage ?';
+    //     this.alertService.presentAlertConfirm('OUTILLAGE MANQUANT', missingToolMsg)
+    //       .then(
+    //         (response) => {
+    //           if (response) {
+    //             this.moldingStatus.next(true);
+    //           } else {
+    //             const title = 'OUTILLAGE MANQUANT';
+    //             const message = 'Veuillez renseigner l\'outillage de moulage';
+    //             this.moldingStatus.next(false);
+    //           }
+    //         },
+    //         (err) => {
+    //           const title = `Outillage de moulage manquant`;
+    //           const message = 'Il n\'y a pas eu de réponse de l\'utilisateur';
+    //           this.moldingStatus.error(new Error(message));
+    //         });
+    //   // } else
+    //    if (this.molding.kits.length === 0) {
+    //     const title = 'Il n\'y a pas de kit';
+    //     const message = `Pour insérer un kit matière munissez vous d'une fiche de vie et scannez le code barre.
+    //           Si besoin d'aide complémentaire appelez le 06.87.89.24.25`;
+    //     this.moldingStatus.error(new Error(message));
+    //   } else {
+    //     this.moldingStatus.next(true);
+    //   }
+    // }
     /**
      * Recalcul le kit le plus défavorable
      *
@@ -431,6 +459,9 @@ let MoldingService = class MoldingService {
         // REINITIALISATION
         this.molding.aCuireAv = null;
         this.molding.aDraperAv = null;
+        if (this.molding.kits.length <= 0) {
+            return;
+        }
         // IDENTIFIER MATIERES DEFAVORABLES
         this.molding.matPolym = this.molding.kits.reduce((defPolym, kit) => {
             if (defPolym.aCuirAv > kit.aCuirAv) {
@@ -476,7 +507,7 @@ let MoldingService = class MoldingService {
      */
     getMoldingById(id) {
         return this.requestService.createGetRequest(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.moldingApi}moldings/${id}`)
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)((returnsData) => {
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.map)((returnsData) => {
             returnsData.kits = this.moldingServerToMoldingObject(returnsData);
             return returnsData;
         }));
@@ -501,6 +532,7 @@ let MoldingService = class MoldingService {
             this.alertService.presentToast('Le kit a déjà été scanné');
             console.error('kit en doublon');
         }
+        this.updateKitStatus();
     }
     addNida(material) {
         this.molding.materialSupplementary.push(material);
@@ -516,10 +548,19 @@ let MoldingService = class MoldingService {
     addTool(responseTool) {
         this.molding.OT = responseTool;
         this.alertService.presentToast('Outillage associé !');
+        this.setToolStatus(true);
         this.updateMoldings();
     }
+    updateKitStatus() {
+        if (this.molding.kits.length > 0) {
+            this.setKitStatus(true);
+        }
+        else {
+            this.setKitStatus(false);
+        }
+    }
     saveOtherMaterials() {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_12__.forkJoin)(this.molding.materialSupplementary.map(mat => this.matService.addOne(mat)));
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_11__.forkJoin)(this.molding.materialSupplementary.map(mat => this.matService.addOne(mat)));
     }
     postMolding() {
         const moldingIri = this.toIri();
@@ -597,7 +638,7 @@ let MoldingService = class MoldingService {
   * @memberof CreateMoldingPage
   */
     printMolding() {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_13__.of)(this.navCtrl.navigateForward(['molding/print-molding-sheet', this.molding.id]));
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_12__.of)(this.navCtrl.navigateForward(['molding/print-molding-sheet', this.molding.id]));
     }
 };
 MoldingService.ctorParameters = () => [
@@ -607,11 +648,11 @@ MoldingService.ctorParameters = () => [
     { type: src_app_core_services_request_service__WEBPACK_IMPORTED_MODULE_4__.RequestService },
     { type: _core_service__WEBPACK_IMPORTED_MODULE_5__.CoreService },
     { type: src_app_core_services_divers_alert_service__WEBPACK_IMPORTED_MODULE_6__.AlertService },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_14__.NavController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_13__.NavController },
     { type: src_app_core_services_divers_loading_service__WEBPACK_IMPORTED_MODULE_7__.LoadingService }
 ];
-MoldingService = (0,tslib__WEBPACK_IMPORTED_MODULE_15__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_16__.Injectable)({
+MoldingService = (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_15__.Injectable)({
         providedIn: 'root'
     })
 ], MoldingService);
