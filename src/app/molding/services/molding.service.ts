@@ -90,6 +90,7 @@ export class MoldingService {
     const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
     saveMethod
       .subscribe((val) => {
+        this.molding = val;
         if (print) { this.printMolding(); }
       });
     // });
@@ -291,7 +292,7 @@ export class MoldingService {
     return forkJoin(this.molding.materialSupplementary.map(mat => this.matService.addOne(mat)));
   }
 
-  private postMolding() {
+  private postMolding(): Observable<Molding> {
     const moldingIri = this.toIri();
     return this.requestService.createPostRequest(`${environment.moldingApi}moldings`, moldingIri, true);
     // .pipe(
@@ -372,6 +373,6 @@ export class MoldingService {
 * @memberof CreateMoldingPage
 */
   private printMolding() {
-    return of(this.navCtrl.navigateForward(['molding/print-molding-sheet', this.molding.id]));
+    this.navCtrl.navigateForward(['molding/print-molding-sheet', this.molding.id]);
   }
 }

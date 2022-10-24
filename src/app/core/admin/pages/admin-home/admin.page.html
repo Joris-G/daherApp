@@ -10,16 +10,16 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle auto-hide="true">
-          <ion-item (click)="navigate('admin/admin-user')">
+          <ion-item button (click)="navigate('admin/admin-user')">
             <ion-label>Utilisateurs</ion-label>
             <ion-badge slot="end">11</ion-badge>
           </ion-item>
         </ion-menu-toggle>
-        <ion-item>Outillages</ion-item>
+        <ion-item button>Outillages</ion-item>
         <ion-menu-toggle auto-hide="true">
-          <ion-item (click)="navigate('admin/admin-molding')">Moulages</ion-item>
+          <ion-item button (click)="navigate('admin/admin-molding')">Moulages</ion-item>
         </ion-menu-toggle>
-        <ion-item>Kits</ion-item>
+        <ion-item button>Kits</ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
