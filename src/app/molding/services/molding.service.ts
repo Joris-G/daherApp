@@ -129,13 +129,13 @@ export class MoldingService {
   }
 
   /**
-     * Vérifie les données du moulage :
-     * # vérifie la présence de l'outillage
-     * # vérifie s'il y a au moins un kit
-     *
-     * @return
-     * @memberof CreateMoldingPage
-     */
+   * Vérifie les données du moulage :
+   * # vérifie la présence de l'outillage
+   * # vérifie s'il y a au moins un kit
+   *
+   * @return
+   * @memberof CreateMoldingPage
+   */
   // checkMoldingDatas(): void {
   //   // if (this.molding.OT === undefined) {
   //     // const missingToolMsg = 'Voulez-vous continuer sans outillage ?';
@@ -365,13 +365,12 @@ export class MoldingService {
       return kit;
     });
   }
-
   /**
-* Navigue vers l'impression des moulages
-*
-* @private
-* @memberof CreateMoldingPage
-*/
+   * Navigue vers l'impression des moulages
+   *
+   * @private
+   * @memberof CreateMoldingPage
+   */
   private printMolding() {
     this.navCtrl.navigateForward(['molding/print-molding-sheet', this.molding.id]);
   }
