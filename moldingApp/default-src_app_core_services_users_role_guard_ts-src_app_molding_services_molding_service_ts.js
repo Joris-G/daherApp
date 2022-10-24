@@ -297,12 +297,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MoldingService": () => (/* binding */ MoldingService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ 92218);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ 54350);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs */ 64139);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ 86942);
 /* harmony import */ var src_app_interfaces_molding_molding__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/_interfaces/molding/molding */ 97729);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ 92340);
@@ -383,6 +382,7 @@ let MoldingService = class MoldingService {
         const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
         saveMethod
             .subscribe((val) => {
+            this.molding = val;
             if (print) {
                 this.printMolding();
             }
@@ -412,13 +412,13 @@ let MoldingService = class MoldingService {
         });
     }
     /**
-       * Vérifie les données du moulage :
-       * # vérifie la présence de l'outillage
-       * # vérifie s'il y a au moins un kit
-       *
-       * @return
-       * @memberof CreateMoldingPage
-       */
+     * Vérifie les données du moulage :
+     * # vérifie la présence de l'outillage
+     * # vérifie s'il y a au moins un kit
+     *
+     * @return
+     * @memberof CreateMoldingPage
+     */
     // checkMoldingDatas(): void {
     //   // if (this.molding.OT === undefined) {
     //     // const missingToolMsg = 'Voulez-vous continuer sans outillage ?';
@@ -632,13 +632,13 @@ let MoldingService = class MoldingService {
         });
     }
     /**
-  * Navigue vers l'impression des moulages
-  *
-  * @private
-  * @memberof CreateMoldingPage
-  */
+     * Navigue vers l'impression des moulages
+     *
+     * @private
+     * @memberof CreateMoldingPage
+     */
     printMolding() {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_12__.of)(this.navCtrl.navigateForward(['molding/print-molding-sheet', this.molding.id]));
+        this.navCtrl.navigateForward(['molding/print-molding-sheet', this.molding.id]);
     }
 };
 MoldingService.ctorParameters = () => [
@@ -648,11 +648,11 @@ MoldingService.ctorParameters = () => [
     { type: src_app_core_services_request_service__WEBPACK_IMPORTED_MODULE_4__.RequestService },
     { type: _core_service__WEBPACK_IMPORTED_MODULE_5__.CoreService },
     { type: src_app_core_services_divers_alert_service__WEBPACK_IMPORTED_MODULE_6__.AlertService },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_13__.NavController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.NavController },
     { type: src_app_core_services_divers_loading_service__WEBPACK_IMPORTED_MODULE_7__.LoadingService }
 ];
-MoldingService = (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_15__.Injectable)({
+MoldingService = (0,tslib__WEBPACK_IMPORTED_MODULE_13__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_14__.Injectable)({
         providedIn: 'root'
     })
 ], MoldingService);

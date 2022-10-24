@@ -616,7 +616,7 @@ let RequestService = class RequestService {
     }
     createPatchRequest(url, body) {
         return this.http.patch(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiServer}${url}`, body, {
-            headers: this.httpHeaders
+            headers: this.patchHttpHeaders
         })
             .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.map)((val) => {
             if (val.status === 500) {
