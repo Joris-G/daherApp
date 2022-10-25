@@ -365,6 +365,7 @@ export class MoldingService {
       return kit;
     });
   }
+
   /**
    * Navigue vers l'impression des moulages
    *

@@ -12,7 +12,7 @@
       "schematics": {},
       "architect": {
         "build": {
-          "baseHref": "/",
+          "baseHref": "./",
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "moldingApp",
@@ -56,7 +56,7 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/",
+              "baseHref": "./",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
