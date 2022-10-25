@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -15,6 +15,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { MatSortModule } from '@angular/material/sort';
 import { LoadingService } from '../core/services/divers/loading.service';
 import { AlertService } from '../core/services/divers/alert.service';
+import { UsersService } from '../core/services/users/users.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,9 @@ import { AlertService } from '../core/services/divers/alert.service';
   ],
   providers: [
     LoadingService,
-    AlertService
+    AlertService,
+    DatePipe,
+    UsersService
   ]
 })
 export class AppSharedModule { }

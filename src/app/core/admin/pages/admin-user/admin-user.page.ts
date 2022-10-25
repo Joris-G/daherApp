@@ -30,10 +30,8 @@ export class AdminUserPage implements OnInit {
   private weeklyUsers: number[] = [];
 
   constructor(
-    private userService: UsersService,
     private datePipe: DatePipe,
     private loadingService: LoadingService,
-    private alertService: AlertService,
     private serviceService: SericesService,
   ) {
 
