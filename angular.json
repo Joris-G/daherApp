@@ -12,7 +12,6 @@
       "schematics": {},
       "architect": {
         "build": {
-          "baseHref": "./",
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "moldingApp",
