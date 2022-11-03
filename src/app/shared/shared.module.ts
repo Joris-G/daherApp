@@ -29,6 +29,7 @@ import { UsersService } from '../core/services/users/users.service';
     IonicModule,
     IndicatorsModule,
     EditorModule,
+    FormsModule
   ],
   exports: [
     CommonModule,

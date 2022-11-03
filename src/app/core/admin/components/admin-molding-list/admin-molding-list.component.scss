@@ -1,4 +1,10 @@
-mat-table,
-table {
-    width: 100%;
+ion-grid{
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+  .data-row{
+  }
+}
+.molding-list-content{
+  height: 100%;
 }

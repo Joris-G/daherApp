@@ -1,10 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { User } from 'src/app/_interfaces/user';
 import { AlertService } from 'src/app/core/services/divers/alert.service';
 import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { UsersService } from 'src/app/core/services/users/users.service';
+import { map, tap } from 'rxjs/operators';
 
+
+const usersRole = {
+  'ROLE_USER': 'Utilisateur',
+  'ROLE_METHODES': 'Préparateur',
+  'ROLE_CE_OUTIL': 'Chef d\'équipe outillage',
+  'ROLE_MOULEUR': 'Mouleur',
+  'ROLE_ADMIN': 'Administrateur'
+
+};
+
+const getRole = (role: string): string => usersRole[role];
 @Component({
   selector: 'app-admin-user-table',
   templateUrl: './admin-user-table.component.html',
@@ -22,7 +34,19 @@ export class AdminUserTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.users$ = this.userService.getUsers();
+    this.users$ = this.userService.getUsers()
+      .pipe(
+        map(users => users
+          .map(user => {
+            user.roles = user.roles
+              .map(role => {
+                const newRole = getRole(role);
+                if (newRole) { return newRole; }
+                return role;
+              });
+            return user;
+          }))
+      );
   }
 
   statusChanged(event: any, user: User) {

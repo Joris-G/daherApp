@@ -1,4 +1,10 @@
 <ion-toolbar color=light>
+  <ion-buttons slot="start">
+    <ion-button *ngIf="isActive" color=danger fill=outline [disabled]="!isActive!" (click)="setInactiveClick()">
+      <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+      Annuler le moulage
+    </ion-button>
+  </ion-buttons>
   <ion-buttons slot="end" collapse="true">
     <ion-button color=primary slot=end (click)="saveMoldingClick()" fill="outline" [disabled]="!isMoldingComplete">
       <ion-icon slot="start" name="save-outline"></ion-icon>

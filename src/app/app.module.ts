@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +18,8 @@ import { environment } from '../environments/environment';
 import { CoreModule } from './core/core.module';
 import { AppSharedModule } from './shared/shared.module';
 import { AuthInterceptor } from './core/services/auth.interceptor';
+import { GlobalErrorHandler } from './global-error-handler.service';
+import { DateHeurePipe } from './_pipes/dateHeure.pipe';
 
 
 
@@ -42,14 +44,17 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: { transp
     AppSharedModule,
     // Toujours déclarer en dernier pour éviter les erreurs de routes
     AppRoutingModule,
+
   ],
   providers: [
+    // { useClass: GlobalErrorHandler, provide: ErrorHandler },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     File,
     FileOpener,
-    PDFGenerator
+    PDFGenerator,
+
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

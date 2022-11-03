@@ -1,42 +1,17 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-title>Administration des moulages</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content color=light>
-  <ion-grid>
+<ion-content [fullscreen]="false" color=light>
+  <ion-grid fixed class="grid-content">
     <ion-row>
-      <ion-col size="8">
-        <app-admin-molding-list [moldings]="moldings$| async"></app-admin-molding-list>
-
+      <ion-col size="9" class="ion-no-padding">
+        <app-admin-molding-list></app-admin-molding-list>
       </ion-col>
-      <ion-col size="4">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Tableau de bord</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-subtitle>Nouveaux moulages</ion-card-subtitle>
-              </ion-card-header>
-              <ion-card-content>
-                GRAPHIQUE ICI
-                <!-- <canvas #newUsers></canvas> -->
-              </ion-card-content>
-            </ion-card>
-
-            <ion-card>
-              <ion-card-header>
-                <ion-card-subtitle>Nombre de connexions par jour</ion-card-subtitle>
-              </ion-card-header>
-              <ion-card-content>
-                GRAPHIQUE ICI
-              </ion-card-content>
-            </ion-card>
-          </ion-card-content>
-        </ion-card>
+      <ion-col size="3">
+        <app-admin-molding-dashboard></app-admin-molding-dashboard>
       </ion-col>
     </ion-row>
   </ion-grid>

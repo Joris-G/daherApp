@@ -1,5 +1,5 @@
 <!-- <table mat-table [dataSource]="users | NotActive"> -->
-<table mat-table [dataSource]="users$">
+<table mat-table [dataSource]="users$ | async">
   <!-- Id Column -->
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> Id </th>

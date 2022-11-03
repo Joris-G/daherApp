@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { EmptyError, forkJoin, from, Observable, of, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IMoldingStatus, Molding, MoldingIri, MoldingStatus } from 'src/app/_interfaces/molding/molding';
@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 import { KitService } from './kit.service';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { RequestService } from 'src/app/core/services/request.service';
-import { AdditionalMaterial, Kit } from 'src/app/_interfaces/molding/composite-material-types';
+import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { CoreService } from './core.service';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { AlertService } from 'src/app/core/services/divers/alert.service';
@@ -28,12 +28,11 @@ import { OtherMaterialsService } from './other-materials.service';
 )
 
 export class MoldingService {
-  public molding: Molding;
-  public molding$: Subject<Molding> = new Subject();
+  public molding: Molding = new Molding();
+  public molding$: BehaviorSubject<Molding> = new BehaviorSubject(this.molding);
   public toolStatus: Subject<boolean> = new Subject();
   public moldingStatus$: Observable<IMoldingStatus>;
   private moldingStatus: MoldingStatus = new MoldingStatus();
-
   // private moldingStatus$: Observable<boolean> = this.moldingStatus.asObservable();
   private moldingIri: MoldingIri;
 
@@ -48,15 +47,22 @@ export class MoldingService {
     private navCtrl: NavController,
     private loadingService: LoadingService,
   ) {
+    console.log('constructor molding service + new molding');
     this.moldingStatus$ = this.moldingStatus.moldingStatus.asObservable();
   }
 
+  initMolding() {
+    console.log('reset a new molding');
+    this.molding = new Molding();
+    this.updateMoldings();
+  }
   setToolStatus(status: boolean): void {
     this.moldingStatus.setToolStatus(status);
   }
   setKitStatus(status: boolean): void {
     this.moldingStatus.setKitStatus(status);
   }
+
 
 
   removeKit(index: number) {
@@ -129,46 +135,6 @@ export class MoldingService {
   }
 
   /**
-   * Vérifie les données du moulage :
-   * # vérifie la présence de l'outillage
-   * # vérifie s'il y a au moins un kit
-   *
-   * @return
-   * @memberof CreateMoldingPage
-   */
-  // checkMoldingDatas(): void {
-  //   // if (this.molding.OT === undefined) {
-  //     // const missingToolMsg = 'Voulez-vous continuer sans outillage ?';
-  //     this.alertService.presentAlertConfirm('OUTILLAGE MANQUANT', missingToolMsg)
-  //       .then(
-  //         (response) => {
-  //           if (response) {
-  //             this.moldingStatus.next(true);
-  //           } else {
-  //             const title = 'OUTILLAGE MANQUANT';
-  //             const message = 'Veuillez renseigner l\'outillage de moulage';
-  //             this.moldingStatus.next(false);
-  //           }
-  //         },
-  //         (err) => {
-  //           const title = `Outillage de moulage manquant`;
-  //           const message = 'Il n\'y a pas eu de réponse de l\'utilisateur';
-  //           this.moldingStatus.error(new Error(message));
-  //         });
-  //   // } else
-  //    if (this.molding.kits.length === 0) {
-  //     const title = 'Il n\'y a pas de kit';
-  //     const message = `Pour insérer un kit matière munissez vous d'une fiche de vie et scannez le code barre.
-  //           Si besoin d'aide complémentaire appelez le 06.87.89.24.25`;
-  //     this.moldingStatus.error(new Error(message));
-  //   } else {
-  //     this.moldingStatus.next(true);
-  //   }
-  // }
-
-
-
-  /**
    * Recalcul le kit le plus défavorable
    *
    * @todo supprimer les lignes commentées
@@ -237,15 +203,7 @@ export class MoldingService {
   }
 
 
-  /**
-   * Fonction utilisé dans la page d'administration pour lister tout les moulages.
-   *
-   * @return retourne la liste complète des moulages
-   * @memberof MoldingService
-   */
-  getMoldings(): Observable<Molding[]> {
-    return this.requestService.createGetRequest(`${environment.moldingApi}moldings`);
-  }
+
 
   addKit(kit: Kit) {
     const kitIsInKits = this.kitService.kitIsInKits(kit, this.molding.kits);
@@ -280,6 +238,20 @@ export class MoldingService {
     this.updateMoldings();
   }
 
+  updateMoldings() {
+    this.molding$.next(this.molding);
+  }
+
+  async cancelMolding() {
+    const confirm = await this.alertService.presentAlertConfirm(
+      `Vous allez annuler ce moulage`,
+      `Etes vous sur ?`
+    );
+    if (confirm) {
+      this.molding.isActive = false;
+      this.updateMoldings();
+    }
+  }
 
   private updateKitStatus() {
     if (this.molding.kits.length > 0) {
@@ -288,6 +260,7 @@ export class MoldingService {
       this.setKitStatus(false);
     }
   }
+
   private saveOtherMaterials(): Observable<any[]> {
     return forkJoin(this.molding.materialSupplementary.map(mat => this.matService.addOne(mat)));
   }
@@ -316,9 +289,6 @@ export class MoldingService {
     return this.requestService.createPatchRequest(url, moldingIri);
   }
 
-  private updateMoldings() {
-    this.molding$.next(this.molding);
-  }
 
   private toIri(): MoldingIri {
     const molding = this.molding;

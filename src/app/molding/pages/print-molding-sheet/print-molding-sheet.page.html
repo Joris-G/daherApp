@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-menu-button color="light"></ion-menu-button>
-    <ion-img class="logo" src="assets/images/logoDaher.png" (click)="navigateHome()">
+    <ion-menu-button color="light" slot="start"></ion-menu-button>
+    <ion-img slot="start" class="logo" src="assets/images/logoDaher.png" (click)="navigateHome()">
     </ion-img>
-    <ion-title class="ion-align-center">Feuille de traçabilité moulage</ion-title>
+    <ion-title class="ion-align-center uppcase">Feuille de traçabilité moulage</ion-title>
     <svg slot=end id="barcode"></svg>
   </ion-toolbar>
 </ion-header>

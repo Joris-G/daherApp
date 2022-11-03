@@ -1,45 +1,36 @@
 <ion-toolbar color=light class="ion-hide-md-down padding">
   <app-scan-molding-input slot=start></app-scan-molding-input>
   <!-- <app-scan-molding-input slot=start (evOnInput)="onInput($event)"></app-scan-molding-input> -->
-  <ion-button size=small slot=end (click)="(expanded = !expanded) ? accordion.openAll() : accordion.closeAll()">
-    {{(!expanded) ? 'Développer tout' : 'Replier tout'}}</ion-button>
+  <!-- <ion-button size=small slot=end (click)="(expanded = !expanded) ? accordion.openAll() : accordion.closeAll()">
+    {{(!expanded) ? 'Développer tout' : 'Replier tout'}}</ion-button> -->
 </ion-toolbar>
-<ion-content *ngIf="molding$ | async as molding">
-  <mat-accordion multi>
+<ion-content>
+
+
+  <ion-accordion-group #accordionGroup [multiple]="true">
     <!--  -->
     <!-- LISTE DES KITS -->
     <!--  -->
-    <mat-expansion-panel #kitPanel *ngIf="molding.kits.length >0" [expanded]="(molding.kits.length >0)">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <ion-title color=primary> Liste des Kits</ion-title>
-        </mat-panel-title>
-        <mat-panel-description>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <app-molding-kit-table [kits]=molding.kits></app-molding-kit-table>
-    </mat-expansion-panel>
-
+    <ion-accordion value="kits" *ngIf="molding.kits.length > 0" toggleIcon="chevron-down-outline" toggleIconSlot="end">
+      <ion-item color=secondary slot=header>LISTE DES KITS</ion-item>
+      <app-molding-kit-table slot=content [molding]=molding!></app-molding-kit-table>
+    </ion-accordion>
     <!--  -->
     <!-- LISTE DES MATERIAUX AUTRES -->
     <!--  -->
-    <mat-expansion-panel *ngIf="molding.materialSupplementary?.length >0"
-      [expanded]="(molding.materialSupplementary.length >0)">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <ion-title color=primary>Liste des nidas</ion-title>
-        </mat-panel-title>
-        <mat-panel-description>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <app-molding-materials-table [molding]="molding"></app-molding-materials-table>
-    </mat-expansion-panel>
-  </mat-accordion>
+    <ion-accordion value="materialSupplementary" *ngIf="molding?.materialSupplementary.length > 0"
+      toggleIcon="chevron-down-outline" toggleIconSlot="end">
+      <ion-item color=secondary slot=header>
+        <ion-label>LISTE DES NIDAS</ion-label>
+      </ion-item>
+      <app-molding-materials-table slot=content [molding]="molding"></app-molding-materials-table>
+    </ion-accordion>
+  </ion-accordion-group>
 </ion-content>
 
 
 <ion-footer class="ion-hide-md-down">
-  <app-molding-info-toolbar [molding]="molding$ | async"></app-molding-info-toolbar>
+  <app-molding-info-toolbar [molding]="molding"></app-molding-info-toolbar>
   <app-create-molding-toolbar></app-create-molding-toolbar>
 </ion-footer>
 

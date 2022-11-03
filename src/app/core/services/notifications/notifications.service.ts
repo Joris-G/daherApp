@@ -20,6 +20,7 @@ export class NotificationsService {
       .then((returnedPermission) => {
         console.log(returnedPermission);
         if (returnedPermission === 'granted') {
+          this.socket.on('connect_failed', () => { });
           this.socket.on('notification', data => {
             // this.data = data;
             // alert(data.message);
