@@ -75,6 +75,9 @@ export class KitService {
     return `/api/datas_kits/${kit.id}`;
   }
 
+  updateKit(kit: Kit) {
+    return this.requestService.createPatchRequest(`${environment.apiServer}/${environment.moldingApi}/datas_kits/${kit.id}`, kit);
+  }
   // private async wrongKitInputAlert() {
 
   //   const alert = await this.alertController.create({

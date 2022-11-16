@@ -12,7 +12,7 @@ export class UpdateAppService {
   private tableUpdates = [
     {
       id: 1,
-      dateUpdate: new Date(2022, 4, 9),
+      dateUpdate: new Date(2022, 11, 10),
       description:
         'Pour associer un outillage à un moulage il suffit de scanner le numéro d\'OT dans l\'OF.' +
         'Vous devez le scanner comme un kit',
@@ -30,13 +30,14 @@ export class UpdateAppService {
     private authService: AuthService,
     private alertService: AlertService,
   ) {
+    console.log('hello update');
   }
 
 
 
   /**
-   *Si la promise retourn true c'est que toutes les updates sont vues
-   *Si la promise return false l'utilisateur reverra les update à sa prochaine connexion
+   *Si la promise retourne true c'est que toutes les updates sont vues
+   *Si la promise retourne false l'utilisateur reverra les update à sa prochaine connexion
    *
    * @return
    * @memberof UpdateAppService
@@ -50,6 +51,8 @@ export class UpdateAppService {
           });
         }
       });
+
+
   }
 
 

@@ -1,5 +1,8 @@
+import { IDivision } from './division';
 import { GroupeAffectation } from './groupe-affectation';
 import { ProgrammeAvion } from './programme-avion';
+import { IService } from './service';
+import { IUsine } from './usine';
 
 export interface User {
   id?: number;
@@ -12,13 +15,13 @@ export interface User {
   mail?: string;
   roles?: string[];
   poste?: string;
-  service?: any;
+  service?: IService;
   password?: string;
   programmeAvion?: ProgrammeAvion[];
   createdAt?: Date;
   tel?: string[];
-  unite?: string;
-  site?: string;
+  unite?: IDivision;
+  site?: IUsine;
   groupeAffected?: GroupeAffectation[];
   isUpdated?: boolean;
   apiToken?: string;

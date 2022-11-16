@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/core/services/users/auth.service';
 import { environment } from 'src/environments/environment';
 import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { UserPopoverComponent } from '../user-popover/user-popover.component';
-import { ComponentRef } from '@ionic/core';
 
 @Component({
   selector: 'app-shared-user-header',

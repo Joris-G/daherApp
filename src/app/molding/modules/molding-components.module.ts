@@ -15,6 +15,7 @@ import { PrintMoldingSheetPage } from '../pages/print-molding-sheet/print-moldin
 import { AppSharedModule } from 'src/app/shared/shared.module';
 import { DateHeurePipe } from 'src/app/_pipes/dateHeure.pipe';
 import { PipeModule } from 'src/app/_pipes/pipe.module';
+import { KitDetailsComponent } from '../components/create-molding/kit-details/kit-details.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { PipeModule } from 'src/app/_pipes/pipe.module';
     MoldingPage,
     CreateMoldingPage,
     PrintMoldingSheetPage,
+    KitDetailsComponent,
   ],
   exports: [
     MoldingMenuComponent,
@@ -46,7 +48,8 @@ import { PipeModule } from 'src/app/_pipes/pipe.module';
     CreateMoldingToolbarComponent,
     MoldingPage,
     CreateMoldingPage,
-    PrintMoldingSheetPage
+    PrintMoldingSheetPage,
+    KitDetailsComponent
   ],
 })
 export class MoldingComponentsModule { }

@@ -52,6 +52,7 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter(): void {
+    this.loginForm.reset();
     if (isDevMode()) {
       this.loginForm.setValue({
         userName: environment.username,
@@ -83,24 +84,18 @@ export class LoginPage implements OnInit {
     const password = this.loginForm.get('password').value || userName;
 
     this.authService.authenticate(userName, password)
-      .subscribe(() => {
-        this.afterLoginActions();
-      },
-        (error) => {
-          this.logginError(error);
+      .subscribe({
+        next: () => {
+          this.loadingService.stopLoading();
+          this.updateService.showUpdates();
+          this.reRouteUser();
         },
-      );
-  }
-
-  private afterLoginActions() {
-    this.loadingService.stopLoading()
-      .then(() => {
-        this.loginForm.reset();
-        this.reRouteUser();
-        this.updateService.showUpdates();
+        error: (error) => {
+          this.logginError(error);
+        }
       });
-
   }
+
 
 
   /**
@@ -113,7 +108,7 @@ export class LoginPage implements OnInit {
     const prefRoute = this.reRouteOpts.find(
       (curRouteOpt) => this.authService.authUser.roles.some(
         (role) => curRouteOpt.roles.find(roleOpt => roleOpt === role)));
-        console.log(prefRoute);
+    console.log(prefRoute);
     if (prefRoute !== undefined) {
       this.navControler.navigateRoot(prefRoute.route);
       return;
@@ -123,12 +118,11 @@ export class LoginPage implements OnInit {
 
 
   private logginError(error: any) {
-    console.error(error);
+    this.loadingService.stopLoading();
     this.alertService.simpleAlert(
       'Erreur d\'authentification',
       '',
       'Le nom d\'utilisateur ou votre mot de passe n\'est pas correct',
     );
-    this.loadingService.stopLoading();
   }
 }

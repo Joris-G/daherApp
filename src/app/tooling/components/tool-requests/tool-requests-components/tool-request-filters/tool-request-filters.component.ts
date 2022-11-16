@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { IonSelect } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
-import { RequestDataSource } from '../request-data-source';
-import { ToolRequestTableDataSourceService } from '../tool-request-table-data-source.service';
+import { RequestDataSource } from '../../tool-requests-data/request-data-source';
+import { ToolRequestTableDataSourceService } from '../../tool-request-table-data-source.service';
 
 @Component({
   selector: 'app-tool-request-filters',
@@ -29,6 +28,7 @@ export class ToolRequestFiltersComponent implements OnInit {
   ngOnInit() {
     this.toolRequestsDataSource$.subscribe(dataSource => {
       // this.toolRequestsDataSource.data = requests;
+
     });
   }
 

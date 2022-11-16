@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import Chart from 'chart.js/auto';
-import { Service } from 'src/app/_interfaces/service';
+import { IService } from 'src/app/_interfaces/service';
 import { User } from 'src/app/_interfaces/user';
 import { AlertService } from 'src/app/core/services/divers/alert.service';
 import { LoadingService } from 'src/app/core/services/divers/loading.service';
@@ -43,8 +43,8 @@ export class AdminUserPage implements OnInit {
     this.users = [];
     this.loadingService.startLoading();
     this.serviceService.getServices()
-      .subscribe((services: Service[]) => {
-        services.forEach((service: Service) => {
+      .subscribe((services: IService[]) => {
+        services.forEach((service: IService) => {
           service.users.forEach((user: User) => this.users.push(user));
         });
         // this.userDataSource.data = this.users;

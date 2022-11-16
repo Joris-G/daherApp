@@ -34,6 +34,7 @@ export class AuthService {
             this.authToken = returnsData.apiToken;
             this.isAuth = true;
             this.authUser = returnsData.user;
+
           } else {
             this.authUser = null;
             this.isAuth = false;

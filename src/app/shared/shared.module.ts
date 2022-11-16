@@ -16,6 +16,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { LoadingService } from '../core/services/divers/loading.service';
 import { AlertService } from '../core/services/divers/alert.service';
 import { UsersService } from '../core/services/users/users.service';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +24,14 @@ import { UsersService } from '../core/services/users/users.service';
     UserSheetComponent,
     UserPopoverComponent,
     LoginNoticeComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
     IonicModule,
     IndicatorsModule,
     EditorModule,
+    ReactiveFormsModule,
     FormsModule
   ],
   exports: [
@@ -50,7 +53,7 @@ import { UsersService } from '../core/services/users/users.service';
     LoadingService,
     AlertService,
     DatePipe,
-    UsersService
+    UsersService,
   ]
 })
 export class AppSharedModule { }

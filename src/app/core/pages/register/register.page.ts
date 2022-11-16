@@ -5,7 +5,7 @@ import { IonSlides } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { IDivision } from 'src/app/_interfaces/division';
 import { Poste } from 'src/app/_interfaces/poste';
-import { Service } from 'src/app/_interfaces/service';
+import { IService } from 'src/app/_interfaces/service';
 import { User, UserIri } from 'src/app/_interfaces/user';
 import { IUsine } from 'src/app/_interfaces/usine';
 import { AlertService } from 'src/app/core/services/divers/alert.service';
@@ -36,7 +36,7 @@ export class RegisterPage implements OnInit {
     speed: 400,
     allowTouchMove: false,
   };
-  public services$ = new Observable<Service[]>();
+  public services$ = new Observable<IService[]>();
   public roles$ = new Observable<Poste[]>();
   public unites$ = new Observable<IDivision[]>();
   public sites$ = new Observable<IUsine[]>();

@@ -5,7 +5,6 @@ import { AuthGuard } from './services/users/auth.guard';
 import { HomePage } from './pages/home/home.page';
 import { LoginPage } from './pages/login/login.page';
 import { RegisterPage } from './pages/register/register.page';
-import { RoleGuard } from './services/users/role.guard';
 
 const routes: Routes = [
   {

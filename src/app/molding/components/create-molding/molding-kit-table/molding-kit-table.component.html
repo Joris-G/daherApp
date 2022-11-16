@@ -11,7 +11,7 @@
 
   <ion-row class="table-data-row" *ngFor="let kit of molding.kits; let index = index;">
     <ion-item-sliding #slidingItem [disabled]="true">
-      <ion-item button class="ion-text-center" (mouseover)="openOptions(slidingItem)" lines="none">
+      <ion-item button (mouseover)="openOptions(slidingItem)" lines="none">
         <ion-col size="2" size-lg="1" size-md="2">
           <ion-text class="strong" *ngIf="kit.id === molding.matDrap.id">(Drap)</ion-text>
           <ion-text class="strong" *ngIf="kit.id === molding.matPolym.id">(Pol)</ion-text>
@@ -22,19 +22,21 @@
         <ion-col size="3" size-lg="3" size-md="6">{{kit.designationSAP}}</ion-col>
         <ion-col size="1" size-lg="1" size-md="2">{{kit.referenceSAP}}</ion-col>
         <ion-col size="2" size-lg="2" size-md="4">
-          <span [appPeremp]="{dateToCompare: kit.peremptionMoins18}">
+          <ion-text [appPeremp]="{dateToCompare: kit.peremptionMoins18}">
             {{kit.peremptionMoins18| date: "dd/MM/yyyy à HH:mm"}}
-          </span>
+          </ion-text>
         </ion-col>
         <ion-col size="2" size-lg="2" size-md="4">
-          <span [appPeremp]="{dateToCompare: kit.aDrapAv}">
+          <ion-text [appPeremp]="{dateToCompare: kit.aDrapAv, isLayup:(kit.layupDate) ? true : false }">
             {{kit.aDrapAv | date: "dd/MM/yyyy à HH:mm"}}
-          </span>
+          </ion-text>
+          <ion-icon *ngIf="kit.layupDate" name="stop-circle-outline"></ion-icon>
+
         </ion-col>
         <ion-col size="2" size-lg="2" size-md="4">
-          <span [appPeremp]="{dateToCompare: kit.aCuirAv}">
+          <ion-text [appPeremp]="{dateToCompare: kit.aCuirAv}">
             {{kit.aCuirAv | date: "dd/MM/yyyy à HH:mm"}}
-          </span>
+          </ion-text>
         </ion-col>
 
         <!-- <ion-col size="1" size-lg="1" size-md="2">
@@ -44,7 +46,8 @@
         </ion-col> -->
       </ion-item>
       <ion-item-options>
-        <ion-item-option>Détails</ion-item-option>
+        <ion-item-option (click)="openDetails(kit)">Détails</ion-item-option>
+        <ion-item-option (click)="layedKitClick(kit)">Drapé</ion-item-option>
         <ion-item-option color="danger" (click)="removeKitClick(index)">
           <ion-icon slot="top" name="trash-outline"></ion-icon>
           Supprimer

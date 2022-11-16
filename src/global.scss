@@ -45,3 +45,8 @@ ion-modal.fullscreen {
   --height: 100%;
   --border-radius: 0;
 }
+
+ion-modal.modal-adjusted{
+ // height: fit-content;
+  // --height: auto;
+}

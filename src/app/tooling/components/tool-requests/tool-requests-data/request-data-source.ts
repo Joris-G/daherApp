@@ -3,7 +3,7 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
-import { ToolRequestService } from '../../services/tool-request.service';
+import { ToolRequestService } from '../../../services/tool-request.service';
 
 
 export class RequestDataSource extends DataSource<any> {

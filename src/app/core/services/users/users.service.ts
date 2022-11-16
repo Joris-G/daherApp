@@ -101,6 +101,7 @@ export class UsersService {
 
   updateUser(user: User) {
     const userToUpdate: UserIri = {
+      password: user.password,
       matricule: user.matricule,
       nom: user.nom,
       prenom: user.prenom,

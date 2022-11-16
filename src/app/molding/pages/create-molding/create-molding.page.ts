@@ -44,7 +44,7 @@ export class CreateMoldingPage implements OnInit {
     console.log('init create molding page + molding subscription');
     this.molding$.subscribe({
       next: (molding: Molding) => {
-        console.log('a new molding is received');
+        console.log('a new molding is received', molding);
         this.molding = molding;
         if (this.molding.kits.length > 0) { this.accordionGroup.value = 'kits'; }
         if (this.molding.materialSupplementary.length > 0) { this.accordionGroup.value = 'materialSupplementary'; }

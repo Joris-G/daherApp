@@ -3,6 +3,8 @@ import { User } from 'src/app/_interfaces/user';
 import { AlertService } from 'src/app/core/services/divers/alert.service';
 import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { UsersService } from 'src/app/core/services/users/users.service';
+import { ModalController } from '@ionic/angular';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 
 @Component({
   selector: 'app-user-sheet',
@@ -10,13 +12,14 @@ import { UsersService } from 'src/app/core/services/users/users.service';
   styleUrls: ['./user-sheet.component.scss'],
 })
 export class UserSheetComponent {
-  @Input() user: User;
-  @Input() userState = false;
+  @Input('user') user: User;
   @Output() stateChangeEv: EventEmitter<boolean> = new EventEmitter();
   constructor(
     private loadingService: LoadingService,
     private alertService: AlertService,
     private userService: UsersService,
+    private modalCtrl: ModalController,
+
   ) { }
 
   updateUserClick() {
@@ -51,5 +54,17 @@ export class UserSheetComponent {
         );
         this.loadingService.stopLoading();
       });
+  }
+
+  closeUserSheetClick() {
+    this.modalCtrl.dismiss();
+  }
+
+  async updatePasswordClick() {
+    const changePasswordModal = await this.modalCtrl.create({
+      component: ChangePasswordComponent,
+      cssClass: 'modal-adjusted'
+    });
+    changePasswordModal.present();
   }
 }

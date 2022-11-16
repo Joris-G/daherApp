@@ -33,8 +33,6 @@ export class MoldingService {
   public toolStatus: Subject<boolean> = new Subject();
   public moldingStatus$: Observable<IMoldingStatus>;
   private moldingStatus: MoldingStatus = new MoldingStatus();
-  // private moldingStatus$: Observable<boolean> = this.moldingStatus.asObservable();
-  private moldingIri: MoldingIri;
 
 
   constructor(
@@ -47,30 +45,39 @@ export class MoldingService {
     private navCtrl: NavController,
     private loadingService: LoadingService,
   ) {
-    console.log('constructor molding service + new molding');
     this.moldingStatus$ = this.moldingStatus.moldingStatus.asObservable();
   }
 
+  /**
+   *Initilalise un nouveau moulage
+   *
+   * @memberof MoldingService
+   */
   initMolding() {
-    console.log('reset a new molding');
-    this.molding = new Molding();
-    this.updateMoldings();
+    const newMolding = new Molding()
+    this.updateMoldings(newMolding);
   }
-  setToolStatus(status: boolean): void {
-    this.moldingStatus.setToolStatus(status);
+
+  setToolStatus(status?: boolean): void {
+    let toolStatus: boolean;
+    if (status) {
+      toolStatus = status;
+    } else {
+      toolStatus = (!!this.molding.OT);
+    }
+    this.moldingStatus.setToolStatus(toolStatus);
   }
-  setKitStatus(status: boolean): void {
-    this.moldingStatus.setKitStatus(status);
+  setKitStatus(): void {
+    const kitStatus = (this.molding.kits.length > 0)
+    this.moldingStatus.setKitStatus(kitStatus);
   }
 
 
 
   removeKit(index: number) {
     this.molding.kits.splice(index, 1);
-    // this.saveMolding()
     this.updateDates();
     this.updateMoldings();
-    this.updateKitStatus();
   }
 
 
@@ -91,7 +98,6 @@ export class MoldingService {
     //     (resp: AdditionalMaterial[]) => {
     //       console.log(resp);
     //       this.molding.materialSupplementary = resp;
-    this.moldingIri = this.toIri();
     // resp.subscribe(() => {
     const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
     saveMethod
@@ -110,16 +116,19 @@ export class MoldingService {
   }
 
 
+  /**
+   * Charge un id de moulage.
+   *
+   * @param {string} moldingId
+   * @memberof MoldingService
+   */
   loadMolding(moldingId: string) {
     this.loadingService.startLoading('Patienter pendant le chargement du moulage');
     // TODO à rebrancher qqp this.molding.updatedAt = new Date();
     this.getMoldingById(moldingId)
       .subscribe(
         (molding) => {
-          this.molding = molding;
-          this.updateMoldings();
-          this.setKitStatus(true);
-          this.setToolStatus(true);
+          this.updateMoldings(molding);
           this.loadingService.stopLoading();
         },
         (error) => {
@@ -128,7 +137,7 @@ export class MoldingService {
           this.alertService.simpleAlert(
             'Erreur moulage',
             `Erreur de récupération du moulage`,
-            `Le moulage ${moldingId} n'existe pas`,
+            `Le moulage <strong>${moldingId}</strong> n'existe pas`,
           );
         }
       );
@@ -145,24 +154,31 @@ export class MoldingService {
     // REINITIALISATION
     this.molding.aCuireAv = null;
     this.molding.aDraperAv = null;
+    // PAS DE KIT PAS DE CALCUL
     if (this.molding.kits.length <= 0) { return; }
+
     // IDENTIFIER MATIERES DEFAVORABLES
-    this.molding.matPolym = this.molding.kits.reduce((defPolym, kit) => {
-      if (defPolym.aCuirAv > kit.aCuirAv) {
-        return kit;
-      } else {
-        return defPolym;
+    // 1. Matière défavaroble pour la poly
+    this.molding.matPolym = this.molding.kits.reduce(
+      (defPolym, kit) => {
+        if (defPolym.aCuirAv > kit.aCuirAv) {
+          return kit;
+        } else {
+          return defPolym;
+        }
+      });
+    // 2. Matière défavorable pour le drapage
+    this.molding.matDrap = this.molding.kits.reduce(
+      (defDrap, kit) => {
+
+        return (defDrap.aDrapAv > kit.aDrapAv && !kit.layupDate) ? kit : defDrap;
+
       }
-    });
-    this.molding.matDrap = this.molding.kits.reduce((defDrap, kit) => (defDrap.aDrapAv > kit.aDrapAv) ? kit : defDrap);
+    );
 
 
     // RESULTATS DATE LIMITES EN PRENANT EN COMPTE LA POSSIBILITE DE DEPASSEMENT DE LA DATE A -18°C
-    // console.log(molding.kits);
     const smallest18Kit = this.molding.kits.reduce((previousKit, kit) => {
-      // console.log(previousKit.peremptionMoins18);
-      // console.log(kit.peremptionMoins18);
-      // console.log((previousKit.peremptionMoins18 > kit.peremptionMoins18));
       if (previousKit.peremptionMoins18 > kit.peremptionMoins18) {
         return kit;
       }
@@ -215,8 +231,6 @@ export class MoldingService {
       this.alertService.presentToast('Le kit a déjà été scanné');
       console.error('kit en doublon');
     }
-    this.updateKitStatus();
-
   }
 
   addNida(material) {
@@ -238,7 +252,11 @@ export class MoldingService {
     this.updateMoldings();
   }
 
-  updateMoldings() {
+  updateMoldings(updatedMolding?: Molding) {
+    if (updatedMolding) { this.molding = updatedMolding; }
+    this.updateDates();
+    this.setKitStatus();
+    this.setToolStatus();
     this.molding$.next(this.molding);
   }
 
@@ -253,13 +271,6 @@ export class MoldingService {
     }
   }
 
-  private updateKitStatus() {
-    if (this.molding.kits.length > 0) {
-      this.setKitStatus(true);
-    } else {
-      this.setKitStatus(false);
-    }
-  }
 
   private saveOtherMaterials(): Observable<any[]> {
     return forkJoin(this.molding.materialSupplementary.map(mat => this.matService.addOne(mat)));

@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular';
 
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
 import { RoleGuard } from 'src/app/core/services/users/role.guard';
-import { ToolRequestTableDataSourceService } from '../tool-request-table-data-source.service';
+import { ToolRequestTableDataSourceService } from '../../tool-request-table-data-source.service';
 
 @Component({
   selector: 'app-tool-request-table',
