@@ -16,11 +16,11 @@ import { ToolRequestMenuComponent } from '../components/tool-request-menu/tool-r
 import { ToolRequestFiltersComponent } from '../components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.component';
 import { ToolRequestTableComponent } from '../components/tool-requests/tool-requests-components/tool-request-table/tool-request-table.component';
 import { ToolRequestsPage } from '../components/tool-requests/tool-requests.page';
-import { ToolRequestPage } from '../pages/tool-request.page';
+import { ToolingPage } from '../pages/tooling.page';
 
 @NgModule({
   declarations: [
-    ToolRequestPage,
+    ToolingPage,
     Control3DPage,
     ControledddComponent,
     IndicatorsPage,
@@ -39,7 +39,7 @@ import { ToolRequestPage } from '../pages/tool-request.page';
     ToolRequestFiltersComponent
   ],
   exports: [
-    ToolRequestPage,
+    ToolingPage,
     Control3DPage,
     ControledddComponent,
     IndicatorsPage,

@@ -13,12 +13,12 @@ import { ToolListPage } from './components/tool-list/tool-list.page';
 import { ToolRequestsPage } from './components/tool-requests/tool-requests.page';
 import { ToolingComponentsModule } from './modules/components.module';
 import { ToolingServicesModule } from './modules/services.module';
-import { ToolRequestPage } from './pages/tool-request.page';
+import { ToolingPage } from './pages/tooling.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ToolRequestPage,
+    component: ToolingPage,
     children: [
       {
         path: 'new-tool', component: NewToolPage

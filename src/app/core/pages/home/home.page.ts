@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NoticeService } from 'src/app/core/services/notice/notice.service';
+import { TitleService } from '../../services/title.service';
 
 export interface IMenuItem {
   title: string;
@@ -29,6 +30,7 @@ export class HomePage implements OnInit {
   public menuItems: IMenuItem[];
   constructor(
     private noticeService: NoticeService,
+    private titleService: TitleService
   ) {
   }
 
@@ -38,5 +40,8 @@ export class HomePage implements OnInit {
 
   showNotice() {
     this.noticeService.presentModal();
+  }
+  ionViewWillEnter() {
+    this.titleService.setTitle('ACCUEIL');
   }
 }
