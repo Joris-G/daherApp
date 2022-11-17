@@ -99,11 +99,18 @@ export class MoldingService {
     //       console.log(resp);
     //       this.molding.materialSupplementary = resp;
     // resp.subscribe(() => {
+    this.loadingService.startLoading('Sauvegarde du moulage en cours');
     const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
     saveMethod
-      .subscribe((val) => {
-        this.molding = val;
-        if (print) { this.printMolding(); }
+      .subscribe({
+        next: (val) => {
+          this.loadingService.stopLoading();
+          this.molding = val;
+          if (print) { this.printMolding(); }
+        },
+        error: (err) => {
+          this.loadingService.stopLoading();
+        }
       });
     // });
 
