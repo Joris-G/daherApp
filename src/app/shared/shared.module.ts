@@ -17,6 +17,9 @@ import { LoadingService } from '../core/services/divers/loading.service';
 import { AlertService } from '../core/services/divers/alert.service';
 import { UsersService } from '../core/services/users/users.service';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { BorderColorDirective } from './directives/border-color.directive';
+import { HeaderRowDirective } from './directives/header-row.directive';
+import { DataRowDirective } from './directives/data-row.directive';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     UserSheetComponent,
     UserPopoverComponent,
     LoginNoticeComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    BorderColorDirective,
+    HeaderRowDirective,
+    DataRowDirective
   ],
   imports: [
     CommonModule,
@@ -48,6 +54,9 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     UserPopoverComponent,
     LoginNoticeComponent,
     EditorModule,
+    BorderColorDirective,
+    HeaderRowDirective,
+    DataRowDirective
   ],
   providers: [
     LoadingService,
