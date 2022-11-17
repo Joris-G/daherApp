@@ -6,41 +6,45 @@ import { AuthService } from 'src/app/core/services/users/auth.service';
 import { environment } from 'src/environments/environment';
 import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { UserPopoverComponent } from '../user-popover/user-popover.component';
+import { TitleService } from 'src/app/core/services/title.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-shared-user-header',
   templateUrl: './shared-user-header.component.html',
   styleUrls: ['./shared-user-header.component.scss'],
 })
-export class SharedUserHeaderComponent implements OnInit, OnDestroy {
+export class SharedUserHeaderComponent implements OnInit {
   @Input()
   public title: string;
   @Input()
   public hideMenuIcon: boolean;
 
   public user: User;
-
   public envMode: string;
+
+  private title$: Observable<string>
 
   constructor(
     private authService: AuthService,
     private loadingService: LoadingService,
     private navCtrl: NavController,
     private popoverCtrl: PopoverController,
+    private titleService: TitleService
 
   ) {
     this.user = this.authService.authUser;
-  }
-  ngOnDestroy(): void {
-    console.log('destroy header');
+    this.title$ = this.titleService.title.asObservable();
   }
 
   ngOnInit() {
     this.envMode = environment.name;
+    this.title$.subscribe((titleEm) => {
+      this.title = titleEm;
+    });
   }
 
   logoutClick() {
-    this.loadingService.startLoading('Déconnexion');
     this.authService.logout()
       .subscribe(() => {
         this.loadingService.stopLoading();

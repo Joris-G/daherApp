@@ -5,8 +5,8 @@
   "homepage": "",
   "scripts": {
     "ng": "ng",
-    "start": "ionic serve cypress:open",
-    "build": "ionic build --prod & ionic build --configuration=qual",
+    "start": "ionic serve --lab",
+    "build": "ionic build --prod ionic build --configuration=qual",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

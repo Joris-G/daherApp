@@ -69,7 +69,7 @@ export class ToolService {
 
   getToolByToolNumber(toolNumber: string): Observable<Tool | undefined> {
     return this.requestService
-    .createGetRequest(`${environment.toolApi}tools?sapToolNumber=${toolNumber}`)
+      .createGetRequest(`${environment.toolApi}tools?sapToolNumber=${toolNumber}`)
       .pipe(
         map((returnsData: any) => {
           if (returnsData.length === 1) {
@@ -109,8 +109,6 @@ export class ToolService {
     return new Promise((resolve, reject) => {
       const httpHeaders = new HttpHeaders()
         .append('content-type', 'application/json');
-      // .append('Access-Control-Allow-Origins', 'http://localhost:8100/')
-      // .append('Access-Control-Allow-methods', 'GET, OPTIONS, POST, PUT, PATCH, DELETE');
       this.http.get(`${environment.apiServer}molding_tools`, { headers: httpHeaders })
         .subscribe((returnsData: any) => {
           resolve(returnsData);

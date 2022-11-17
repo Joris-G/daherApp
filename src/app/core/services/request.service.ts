@@ -17,7 +17,6 @@ import { environment } from 'src/environments/environment';
 export class RequestService {
   private httpHeaders = new HttpHeaders()
     .append('Content-Type', 'application/json')
-    // .append('Access-Control-Allow-Origin', 'http://localhost:8100')
     .append('Accept', 'application/json');
   private postHttpHeaders = new HttpHeaders()
     .append('Content-Type', 'application/json')
