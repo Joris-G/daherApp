@@ -77,7 +77,7 @@ export interface SpecCtrl {
   visaControleur?: string;
 
   userCreat?: string;
-  demandeur?: User[];
+  demandeur?: User;
   OT?: Tool;
   createdAt?: Date;
   modifiedAt?: Date;
@@ -174,6 +174,7 @@ export interface SpecMaintRep {
   causeDem?: string;
   dateValid?: Date;
   itemActionCorrective?: MaintenanceItem[];
+  demandeur?: User;
 }
 
 export interface SpecMaintRepIri {

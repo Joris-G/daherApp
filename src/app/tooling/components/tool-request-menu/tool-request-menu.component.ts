@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/core/services/users/auth.service';
 import { RoleGuard } from 'src/app/core/services/users/role.guard';
 import { UsersService } from 'src/app/core/services/users/users.service';
 import { Router } from '@angular/router';
+import { ToolRequestsService } from '../tool-requests/tool-requests-data/tool-requests.service';
 
 @Component({
   selector: 'app-tool-request-menu',
@@ -21,7 +22,7 @@ export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
     private navCtrl: NavController,
     private router: Router,
     private userService: UsersService,
-    private toolRequestService: ToolRequestService,
+    private toolRequestsService: ToolRequestsService,
     private authService: AuthService,
     public roleGuard: RoleGuard,
   ) { }
@@ -45,7 +46,9 @@ export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
       .subscribe((responseService: any) => {
         this.newUsers = responseService.users.length;
       });
-    this.toolRequestService.getToolRequests()
+
+
+    this.toolRequestsService.allToolRequests.asObservable()
       .subscribe((toolRequests: ToolRequest[]) => {
         this.newRequests = toolRequests.filter(request => request.statut === 'NOUVELLE').length;
       });

@@ -10,10 +10,12 @@ import { MaintenanceReparationPage } from './components/maintenance-reparation/m
 import { ManageTeamPage } from './components/manage-team/manage-team.page';
 import { NewToolPage } from './components/new-tool/new-tool.page';
 import { ToolListPage } from './components/tool-list/tool-list.page';
+import { ToolRequestsService } from './components/tool-requests/tool-requests-data/tool-requests.service';
 import { ToolRequestsPage } from './components/tool-requests/tool-requests.page';
 import { ToolingComponentsModule } from './modules/components.module';
-import { ToolingServicesModule } from './modules/services.module';
 import { ToolingPage } from './pages/tooling.page';
+import { ToolRequestService } from './services/tool-request.service';
+import { ToolService } from './services/tool.service';
 
 const routes: Routes = [
   {
@@ -66,14 +68,15 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    ToolingServicesModule,
     ToolingComponentsModule,
   ],
   exports: [
     ToolingComponentsModule,
-    ToolingServicesModule
   ],
   providers: [
+    ToolService,
+    ToolRequestService,
+    ToolRequestsService,
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],

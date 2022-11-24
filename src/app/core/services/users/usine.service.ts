@@ -12,7 +12,7 @@ export class UsineService {
     if (typeof (usine) == 'string') {
       return usine;
     } else {
-      return `/api/services/${usine.id}`;
+      return `/api/usines/${usine.id}`;
     }
   }
 }

@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AlertService } from 'src/app/core/services/divers/alert.service';
 import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { RoleGuard } from 'src/app/core/services/users/role.guard';
+import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
 import { ToolRequestTableDataSourceService } from './tool-request-table-data-source.service';
+import { ToolRequestsService } from './tool-requests-data/tool-requests.service';
 
 @Component({
   selector: 'app-tool-requests',
@@ -16,13 +19,16 @@ import { ToolRequestTableDataSourceService } from './tool-request-table-data-sou
 export class ToolRequestsPage {
   //TODO commenter les propriétés
   public isAdmin = false;
-
+  public toolRequests$: Observable<ToolRequest[]>;
   constructor(
     private alertControleService: AlertService,
     private loaderService: LoadingService,
     private authGuard: RoleGuard,
-    private tableDataService: ToolRequestTableDataSourceService
-  ) { }
+    private tableDataService: ToolRequestTableDataSourceService,
+    private toolRequestsService: ToolRequestsService
+  ) {
+    this.toolRequests$ = this.toolRequestsService.filtersList;
+  }
 
   ionViewWillEnter() {
     this.isAdmin = this.authGuard.isRole(['ROLE_ADMIN']);

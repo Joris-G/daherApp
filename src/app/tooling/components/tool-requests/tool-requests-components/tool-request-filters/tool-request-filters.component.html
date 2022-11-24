@@ -1,27 +1,36 @@
-<mat-accordion class="example-headers-align" multi>
-  <mat-expansion-panel togglePosition="after" [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <ion-icon slot="start" name="filter-outline"></ion-icon>
-        Filtres
-      </mat-panel-title>
-      <mat-panel-description>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <ion-toolbar class="filter-toolbar">
-      <div class="filters">
-        <ion-item *ngFor="let filterItem of filterSelectObjects" class="filter-item ion-margin">
-          <ion-label>{{filterItem.name}}</ion-label>
-          <ion-select class="filter" multiple="false" [placeholder]="'Filtre ' + filterItem.name"
-            (ionChange)="filterChange(filterItem,$event)">
-            <ion-select-option *ngFor="let filter of filterItem.options" [value]="filter">{{filter}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-      </div>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <ion-icon slot="start" name="filter-outline"></ion-icon>
+      Filtres
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="filtersForm">
+
+    <ion-button block color="primary" type="submit" [disabled]="filtersForm.invalid">
+      Login
+    </ion-button>
+  </form>
+  <ion-list>
+    <ion-item *ngFor="let filterItem of filterSelectObjects" class="filter-item ion-margin">
+      <ion-label>{{filterItem.name}}</ion-label>
+      <ion-select class="filter" multiple="false" [placeholder]="'Filtre ' + filterItem.name"
+        (ionChange)="filterChange(filterItem,$event)">
+        <ion-select-option *ngFor="let filter of filterItem.options" [value]="filter">{{filter}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
       <ion-button slot=end (click)="resetFiltersClick()">
         Supprimer les filtres
       </ion-button>
-    </ion-toolbar>
-  </mat-expansion-panel>
-</mat-accordion>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

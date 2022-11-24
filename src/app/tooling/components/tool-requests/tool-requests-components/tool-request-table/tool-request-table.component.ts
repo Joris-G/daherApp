@@ -11,6 +11,7 @@ import { NavController } from '@ionic/angular';
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
 import { RoleGuard } from 'src/app/core/services/users/role.guard';
 import { ToolRequestTableDataSourceService } from '../../tool-request-table-data-source.service';
+import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
 
 @Component({
   selector: 'app-tool-request-table',
@@ -28,15 +29,25 @@ import { ToolRequestTableDataSourceService } from '../../tool-request-table-data
 })
 export class ToolRequestTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
+  public newToolRequestsList$: Observable<ToolRequest[]>;
   public displayedRequestColumns: string[] = ['statut', 'id', 'tool', 'createdAt', 'userCreat', 'needDate', 'buttons'];
-  public toolRequestsDataSource$: Observable<MatTableDataSource<ToolRequest>> = this.toolDataService.toolRequestsDataSource$;
+  // public toolRequestsDataSource$: Observable<MatTableDataSource<ToolRequest>> = this.toolDataService.toolRequestsDataSource$;
   public isAdmin = false;
 
   constructor(
-    private toolDataService: ToolRequestTableDataSourceService,
+    // private toolDataService: ToolRequestTableDataSourceService,
     private navCtrl: NavController,
     private authGuard: RoleGuard,
-  ) { }
+    private toolRequestsService: ToolRequestsService
+  ) {
+    this.newToolRequestsList$ = this.toolRequestsService.filtersList.asObservable();
+  }
+
+  nextClick() { this.toolRequestsService.getNextPage() }
+  openRequestClick(requestToOpen: ToolRequest) {
+    if (requestToOpen.controle) { this.navCtrl.navigateForward('tooling/3D-tool/' + requestToOpen.id); }
+    if (requestToOpen.maintenance) { this.navCtrl.navigateForward('tooling/repair-tool/' + requestToOpen.id); }
+  }
 
   ngOnInit() {
     this.isAdmin = this.authGuard.isRole(['ROLE_ADMIN']);

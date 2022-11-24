@@ -20,6 +20,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { BorderColorDirective } from './directives/border-color.directive';
 import { HeaderRowDirective } from './directives/header-row.directive';
 import { DataRowDirective } from './directives/data-row.directive';
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DataRowDirective } from './directives/data-row.directive';
     ChangePasswordComponent,
     BorderColorDirective,
     HeaderRowDirective,
-    DataRowDirective
+    DataRowDirective,
+    TableComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +58,8 @@ import { DataRowDirective } from './directives/data-row.directive';
     EditorModule,
     BorderColorDirective,
     HeaderRowDirective,
-    DataRowDirective
+    DataRowDirective,
+    TableComponent
   ],
   providers: [
     LoadingService,

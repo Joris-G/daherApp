@@ -21,7 +21,7 @@ export class UniteService {
     if (typeof (unite) == 'string') {
       return unite;
     } else {
-      return `/api/services/${unite.id}`;
+      return `/api/divisions/${unite.id}`;
     }
   }
 }
