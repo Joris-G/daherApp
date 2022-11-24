@@ -1,0 +1,9 @@
+ion-toolbar {
+  > * {
+    padding-inline: 10px;
+  }
+  .col {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,27 @@
+<app-shared-admin-header></app-shared-admin-header>
+
+<ion-content [fullscreen]="false" color=medium>
+  <ion-menu side="start" type="push" contentId="admin-content" open="true" #menuAdmin>
+    <ion-header>
+      <ion-toolbar color="danger">
+        <ion-title>Menu de l'admnistration</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="true">
+          <ion-item button (click)="navigate('admin/admin-user')">
+            <ion-label>Utilisateurs</ion-label>
+            <ion-badge slot="end">11</ion-badge>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-item button>Outillages</ion-item>
+        <ion-menu-toggle auto-hide="true">
+          <ion-item button (click)="navigate('admin/admin-molding')">Moulages</ion-item>
+        </ion-menu-toggle>
+        <ion-item button>Kits</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="admin-content"></ion-router-outlet>
+</ion-content>

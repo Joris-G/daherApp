@@ -1,0 +1,19 @@
+ion-content {
+  overflow-y: hidden;
+}
+ion-card {
+  margin: 0;
+  max-height: 100%;
+  // height: -webkit-fill-available;
+}
+ion-select {
+  max-width: 100% !important;
+}
+.perso-list {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  height: 500px;
+  // height: -webkit-fill-available;
+}

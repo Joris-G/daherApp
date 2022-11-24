@@ -1,0 +1,89 @@
+<div class="header">
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col size="2">
+                <ion-img class="ion-hide-sm-down logo" src="assets/images/logoDaher.png"> </ion-img>
+            </ion-col>
+            <ion-col size="7">
+                <h3 class="doc-title">
+                    Processus « Développer modifier une aérostructure »
+                </h3>
+            </ion-col>
+            <ion-col size="3">
+                <div class="doc-codif">
+                    F0381#A <br> Doc de rattachement : P0087
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="3">
+                <div class="aircraft-type">
+                    Type avion : {{spec.controls.aircraftProgram.value}}
+                </div>
+            </ion-col>
+            <ion-col size="9">
+                <div class="sbo-title">
+                    SPECIFICATION DE BESOIN OUTILLAGE / TOOL REQUIREMENT SPECIFICATION
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="4">
+                <div class="interch">
+                    Interchangeabilité : Cocher la case correspondante : Interchangeability: Check off the appropriate box:
+                </div>
+            </ion-col>
+            <ion-col size="8">
+                <ion-row class="table">
+                    <ion-col size="4">OT SAP : {{tool.controls.sapToolNumber.value}}</ion-col>
+                    <ion-col size="4">N° OT Client : </ion-col>
+                    <ion-col size="4">OI : DAE-0022-2-4-1</ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+</div>
+<div class="sbo">
+    <ion-grid fixed class="data-grid">
+        <ion-row class="header-row">
+            <ion-col size="1">Ind</ion-col>
+            <ion-col size="1">Date</ion-col>
+            <ion-col size="2">Nom / Name</ion-col>
+            <ion-col size="4">Texte / Text</ion-col>
+            <ion-col size="3" class="ion-no-padding ion-no-border">
+                <ion-row>
+                    <ion-col size="12">Temps alloué / Time allowed</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="4">Etude Design
+                    </ion-col>
+                    <ion-col size="4">Prep OT WO preparation
+                    </ion-col>
+                    <ion-col size="4">Réal OT WO execution
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+            <ion-col size="1">Délai utilisation Shelf life
+            </ion-col>
+        </ion-row>
+        <ion-row class="data-row">
+            <ion-col size="1"></ion-col>
+            <ion-col size="1"></ion-col>
+            <ion-col size="2"></ion-col>
+            <ion-col size="4">
+                <div class="title"> {{spec.controls.title.value}}</div>
+                <div class="content">{{spec.controls.description.value}}</div>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+            <ion-col size="1"></ion-col>
+            <ion-col size="1"></ion-col>
+            <ion-col size="1">{{spec.controls.needDate.value | date: 'dd/MM/yyyy'}}</ion-col>
+        </ion-row>
+    </ion-grid>
+</div>
+<div class="footer">
+    <div class="norm">Numérotation outillage suivant normes / Tool numbering as per : NFL 09.101 - NO.OO.OO1 et NO.01 001</div>
+    <div class="toolnfl">{{tool.controls.identification.value}}</div>
+</div>

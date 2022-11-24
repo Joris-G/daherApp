@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar color=dark>
+    <ion-title>Liste des demandes</ion-title>
+    <ion-button slot=end (click)="reloadClick()">
+      <ion-icon slot="start" name="refresh-circle-outline"></ion-icon>
+      Recharger
+    </ion-button>
+  </ion-toolbar>
+  <app-tool-request-filters></app-tool-request-filters>
+
+</ion-header>
+<ion-content>
+  <div class="table ion-justify-content-center ion-align-items-center">
+    <app-tool-request-table></app-tool-request-table>
+  </div>
+</ion-content>

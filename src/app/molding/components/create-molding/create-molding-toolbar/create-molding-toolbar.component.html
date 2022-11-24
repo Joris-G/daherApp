@@ -1,0 +1,12 @@
+<ion-toolbar color=light>
+  <ion-buttons slot="end" collapse="true">
+    <ion-button color=primary slot=end (click)="saveMoldingClick()" fill="outline" [disabled]="!isMoldingComplete">
+      <ion-icon slot="start" name="save-outline"></ion-icon>
+      SAUVEGARDER
+    </ion-button>
+    <ion-button color=primary slot=end (click)="saveMoldingClick(true)" fill="solid" [disabled]="!isMoldingComplete">
+      <ion-icon slot="start" name="print-outline"></ion-icon>
+      IMPRIMER
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>

@@ -1,7 +1,9 @@
 {
   "name": "moldingApp",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {
+      "enabled": false
+    }
   },
   "type": "angular"
 }

@@ -1,0 +1,32 @@
+.logo {
+    width: 100px;
+}
+
+.table {
+    >* {
+        border: solid 1px;
+    }
+}
+
+.page {
+    width: 210mm;
+    height: 297mm;
+    background-color: white;
+    font-variant-numeric: normal;
+}
+
+.header {
+    font-size: 12px;
+}
+
+.content {
+    font-size: 14px;
+}
+
+.item-rows>* {
+    padding-bottom: 4px;
+}
+
+.etiquette {
+    text-decoration: underline;
+}

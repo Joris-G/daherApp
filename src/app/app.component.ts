@@ -1,51 +1,25 @@
-import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { AuthService } from './_services/users/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
-  public page: string;
+export class AppComponent implements OnInit {
   constructor(
-    private alertController: AlertController,
-    private authService: AuthService) {
-    // setInterval(() => {
-    //   this.alertLogout();
-    // }, 1000 * 5);
+    private titleService: Title,
+  ) { }
+  ngOnInit(): void {
+    this.initTitle();
   }
 
-  async alertLogout() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Gestion de la connexion',
-      message: 'Voulez-vous rester connecter ?',
-      buttons: [
-        {
-          text: 'Oui',
-          role: 'yes',
-          id: 'cancel-button',
-          handler: (data) => {
-
-          }
-        },
-        {
-          text: 'Non',
-          role: 'no',
-          id: 'button',
-          handler: (data) => {
-            this.authService.logout();
-          }
-        }
-      ]
-    });
-    setTimeout(() => {
-      this.authService.logout();
-      alert.dismiss();
-    }, 5000);
-    await alert.present();
-
+  private initTitle() {
+    if (environment.name === 'QUAL') {
+      const newTitle = `QUAL - ${this.titleService.getTitle()}`;
+      this.titleService.setTitle(newTitle);
+    }
   }
+
 }

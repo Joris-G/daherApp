@@ -1,69 +1,59 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './_services/users/auth.guard';
-import { RoleGuard } from './_services/users/role.guard';
+import { AuthGuard } from './core/services/users/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'home',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/home/home.module')
-      .then(m => m.HomePageModule)
-  },
-  {
     path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
+    loadChildren: () => import('./core/core.module')
+      .then(m => m.CoreModule)
   },
-  // {
-  //   path: '**',
-  //   redirectTo: '',
-  //   pathMatch: 'full'
-  // },
   {
     path: 'molding',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/molding/molding.module')
-      .then(m => m.MoldingPageModule)
+    loadChildren: () => import('./molding/molding.module')
+      .then(m => m.AppMoldingModule)
   },
   {
-    path: 'molding/:id',
-    canActivate: [RoleGuard],
-    data: {
-      expectedRole: 'ROLE_USER'
-    },
-    loadChildren: () => import('./pages/molding/molding.module')
-      .then(m => m.MoldingPageModule)
-  },
-  {
-    path: 'printMolding/:id',
+    path: 'tooling',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/molding/print-molding-sheet/print-molding-sheet.module')
-      .then(m => m.PrintMoldingSheetPageModule)
+    loadChildren: () => import('./tooling/tooling.module')
+      .then(m => m.AppToolingModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module')
-      .then(m => m.LoginPageModule)
+    // canActivate: [AuthGuard],
+    loadChildren: () => import('./core/pages/login/login.page')
+      .then(m => m.LoginPage)
   },
+
+  // {
+  //   path: 'admin',
+  //   canActivate: [RoleGuard],
+  //   data:
+  //   {
+  //     expectedRole: ['ROLE_ADMIN'],
+  //   },
+  //   loadChildren: () => import('./pages/admin/admin.module')
+  //     .then(m => m.AdminPageModule)
+  // },
+  // {
+  //   path: '',
+  //   redirectTo: 'home',
+  //   pathMatch: 'full'
+  // },
   {
-    path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
-  },
-  {
-    path: 'admin',
-    canActivate: [RoleGuard],
-    data: {
-      expectedRole: 'ROLE_ADMIN'
-    },
-    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminPageModule)
+    path: '**',
+    redirectTo: '',
   },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true })
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+
+export class AppRoutingModule {
+}

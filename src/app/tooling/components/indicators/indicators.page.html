@@ -1,0 +1,13 @@
+<!-- <ion-header>
+    <ion-toolbar>
+        <ion-title>Indicateurs</ion-title>
+    </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+    <div class="graph">
+        <app-indicator-graph *ngIf="requestTypeDistribution" [indicator]="{name: 'Répartition', repartitionObj: requestTypeDistribution}"></app-indicator-graph>
+        <app-indicator-number [indicator]="{name : 'En cours', value: onGoingRequestCount}"></app-indicator-number>
+        <app-indicator-number [indicator]="{name : 'Ouvertes', value: openRequestCount}"></app-indicator-number>
+    </div>
+</ion-content>

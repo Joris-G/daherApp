@@ -1,0 +1,31 @@
+<div class="title">
+  <h2>Référence</h2>
+  <p>Sélectionner la référence qui correspond</p>
+</div>
+<form [formGroup]="nidaForm" (ngSubmit)="validate()">
+
+  <ion-radio-group #radioGroup formControlName="ref" required="true" allowEmptySelection="true">
+    <ion-item>
+      <ion-label>Autre :</ion-label>
+      <!-- <ion-radio slot="start"></ion-radio> -->
+      <ion-radio slot="start" [value]="manualInput.value"></ion-radio>
+      <ion-input #manualInput type="text" placeholder="entrée la référence du nida">
+      </ion-input>
+    </ion-item>
+    <!-- TODO transformer le modèle pour éviter l'erreur -->
+    <ion-list *ngIf="(references$ | async) as references">
+      <ion-item *ngFor="let reference of references['NIDA']">
+        <ion-label>{{reference.ref}}</ion-label>
+        <ion-radio slot="start" [value]="reference.ref"></ion-radio>
+      </ion-item>
+    </ion-list>
+
+  </ion-radio-group>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button type="submit" color=success fill=solid [disabled]="nidaForm.invalid">
+        Valider
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</form>

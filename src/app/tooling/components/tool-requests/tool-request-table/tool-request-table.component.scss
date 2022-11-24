@@ -1,0 +1,20 @@
+.mat-row {
+  height: auto;
+}
+
+.mat-cell {
+  padding: 8px 16px 8px 0;
+}
+
+.table {
+  display: flex;
+  padding: 14px;
+}
+
+.mat-table {
+  width: 100%
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
