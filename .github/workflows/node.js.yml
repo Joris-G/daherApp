@@ -27,5 +27,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: node_modules/.bin/ionic-app-scripts build --if-present
+    - run: ionic build --if-present
    # - run: npm test
