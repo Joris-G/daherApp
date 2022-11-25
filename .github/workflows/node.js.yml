@@ -28,5 +28,6 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm i -g ionic
+    - run: npm i --save @capacitor/core @capacitor/cli
     - run: ionic build --if-present
    # - run: npm test
