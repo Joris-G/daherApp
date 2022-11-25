@@ -30,4 +30,10 @@ jobs:
     - run: npm i -g ionic
     - run: npm i --save @capacitor/core @capacitor/cli
     - run: npm run build:ci
+    - name: Archive build
+        if: success()
+        uses: actions/upload-artifact@v1
+        with:
+          name: deploy_dist
+          path: dist
    # - run: npm test
