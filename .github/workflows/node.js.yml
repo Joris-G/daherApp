@@ -35,5 +35,5 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: deploy_dist
-        path: TEST
+        path: moldingAppQual
    # - run: npm test
