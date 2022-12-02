@@ -3,10 +3,10 @@
   <ion-grid fixed>
     <ion-row appHeaderRow>
       <ion-col size="1"></ion-col>
-      <ion-col size="2">Nom d'utilisateur</ion-col>
-      <ion-col size="2">Nom</ion-col>
-      <ion-col size="2">Prénom</ion-col>
-      <ion-col size="2">Matricule</ion-col>
+      <ion-col size="">Nom d'utilisateur</ion-col>
+      <ion-col size="">Nom</ion-col>
+      <ion-col size="">Prénom</ion-col>
+      <ion-col size="">Matricule</ion-col>
     </ion-row>
     <ion-row *ngFor="let user of users" appDataRow (click)="onSelectUser(user)">
       <ion-col size="1">
@@ -14,16 +14,16 @@
           size="large">
         </ion-icon>
       </ion-col>
-      <ion-col size="2">
+      <ion-col size="">
         {{user.username}}
       </ion-col>
-      <ion-col size="2">
+      <ion-col size="">
         {{user.nom.toUpperCase()}}
       </ion-col>
-      <ion-col size="2">
+      <ion-col size="">
         {{user.prenom.charAt(0).toUpperCase() + user.prenom.slice(1).toLowerCase()}}
       </ion-col>
-      <ion-col size="2">
+      <ion-col size="">
         {{user.matricule}}
       </ion-col>
     </ion-row>

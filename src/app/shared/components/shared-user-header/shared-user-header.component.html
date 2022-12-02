@@ -16,8 +16,7 @@
     <!-- right side -->
     <!--  -->
     <ion-label slot=end class="dev ion-hide-sm-down">{{envMode}}</ion-label>
-    <ion-chip #buttonProfil color=light slot=end class=ion-margin-end outline
-      (contextmenu)="triggerUserPopover($event)">
+    <ion-chip #buttonProfil color=light slot=end class=ion-margin-end outline (click)="triggerUserPopover($event)">
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-label color=light>{{user?.username}}</ion-label>
     </ion-chip>

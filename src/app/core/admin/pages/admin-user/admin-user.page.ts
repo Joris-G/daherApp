@@ -2,11 +2,9 @@ import { DatePipe } from '@angular/common';
 import {
   Component, ElementRef, OnInit, ViewChild
 } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import Chart from 'chart.js/auto';
 import { IService } from 'src/app/_interfaces/service';
 import { User } from 'src/app/_interfaces/user';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
 import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { SericesService } from 'src/app/core/services/users/serices.service';
 import { UsersService } from 'src/app/core/services/users/users.service';
@@ -79,6 +77,16 @@ export class AdminUserPage implements OnInit {
                 spanGaps: false,
               }
             ]
+          },
+          options: {
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'N° semaine',
+                }
+              }
+            }
           }
         });
         this.lineChart.update();
@@ -90,18 +98,28 @@ export class AdminUserPage implements OnInit {
 
   createWeeklyLabel(): string[] {
     const endDate = new Date();
-    const startDate = new Date(2022, 0, 1);
+    let startDate = new Date(2022, 0, 1);
     const labels: string[] = [];
-    while (startDate < endDate) {
-      labels.push(this.datePipe.transform(startDate, 'dd/MM'));
-      startDate.setDate(startDate.getDate() + 7);
-    }
+
+    do {
+      const intermediateEndDate = new Date(startDate);
+      intermediateEndDate.setDate(intermediateEndDate.getDate() + 7);
+      labels.push(this.datePipe.transform(startDate, 'ww'));
+      startDate = intermediateEndDate
+    } while (startDate < endDate);
+
+
+    // while (startDate < endDate) {
+    //   labels.push(this.datePipe.transform(startDate, 'dd/MM'));
+    //   startDate.setDate(startDate.getDate() + 7);
+    // }
+    console.log(labels);
     return labels;
   }
 
   createWeeklyUserData(): number[] {
     const endDate = new Date();
-    let startDate = new Date(2022, 0, 1);
+    let startDate = new Date(2022, 0, 1, 0, 0, 0);
     const totaluserPerWeekData: number[] = [];
     while (startDate < endDate) {
       const intermediateEndDate = new Date(startDate);
@@ -117,6 +135,7 @@ export class AdminUserPage implements OnInit {
 
       startDate = intermediateEndDate;
     }
+    console.log(totaluserPerWeekData);
     return totaluserPerWeekData;
   }
 }
