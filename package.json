@@ -6,11 +6,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ionic serve --lab",
-    "build": "ionic build --prod ionic build --configuration=qual",
+    "build": "ionic build --prod",
+    "build-p": "ionic build --prod",
+    "build-q": "ionic build --configuration=qual",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "build-p-q": "npm run build-p && npm run build-q"
   },
   "private": true,
   "dependencies": {
