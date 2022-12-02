@@ -35,6 +35,7 @@ export class ToolRequestsService {
       this.filtersList.next(this.filterData());
     })
   }
+
   getAllToolRequests(): Observable<ToolRequest[]> {
     return this.requestService.createGetRequest(`${environment.toolApi}demandes`)
       .pipe(

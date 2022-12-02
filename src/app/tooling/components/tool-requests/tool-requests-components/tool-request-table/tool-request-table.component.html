@@ -1,12 +1,12 @@
-<ng-container *ngIf="newToolRequestsList$|async as toolRequests">
+<ng-container *ngIf="newToolRequestsList$| async as toolRequests">
   <ion-menu-toggle menu="tool-request-menu">
     <ion-button>Click to open the menu</ion-button>
   </ion-menu-toggle>
-  <ion-grid fixed>
+  <ion-grid [fixed=false]>
     <ion-row>
-      <ion-col size="6">
+      <ion-col size="2">
         <ion-button (click)="nextClick()" expand="block" fill="clear" shape="round">
-          next
+          Charger plus de demandes
         </ion-button>
       </ion-col>
     </ion-row>
@@ -16,10 +16,10 @@
       <ion-col size="2">Outillage</ion-col>
       <ion-col size="2">Date de la demande</ion-col>
       <ion-col size="2">Demandeur</ion-col>
-      <ion-col size="2">Date de besoin</ion-col>
+      <ion-col size="2" sort="">Date de besoin</ion-col>
     </ion-row>
     <ion-row appDataRow *ngFor="let request of toolRequests" (click)="openRequestClick(request)">
-      <ion-col size="2">{{request.id}}</ion-col>
+      <ion-col size="2" [style.border-left]="getBorder(request)">{{request.id}}</ion-col>
       <ion-col size="2">{{ request.statut }}</ion-col>
       <ion-col size="2">
         <ion-label *ngIf="request.controle">OT{{request.controle.outillage.sapToolNumber}} -

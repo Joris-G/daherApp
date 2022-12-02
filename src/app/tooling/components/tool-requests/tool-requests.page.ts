@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AlertService } from 'src/app/core/services/divers/alert.service';
 import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { RoleGuard } from 'src/app/core/services/users/role.guard';
@@ -27,7 +28,7 @@ export class ToolRequestsPage {
     private tableDataService: ToolRequestTableDataSourceService,
     private toolRequestsService: ToolRequestsService
   ) {
-    this.toolRequests$ = this.toolRequestsService.filtersList;
+    this.toolRequests$ = this.toolRequestsService.filtersList
   }
 
   ionViewWillEnter() {

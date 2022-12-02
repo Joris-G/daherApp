@@ -7,12 +7,12 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form [formGroup]="filtersForm">
+  <!-- <form [formGroup]="filtersForm">
 
     <ion-button block color="primary" type="submit" [disabled]="filtersForm.invalid">
       Login
     </ion-button>
-  </form>
+  </form> -->
   <ion-list>
     <ion-item *ngFor="let filterItem of filterSelectObjects" class="filter-item ion-margin">
       <ion-label>{{filterItem.name}}</ion-label>

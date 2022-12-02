@@ -14,14 +14,18 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./tool-request-filters.component.scss'],
 })
 export class ToolRequestFiltersComponent {
-  public filterSelectObjects = this.toolDataService.filterSelectObjects;
+  public filterSelectObjects: {
+    name: string;
+    columnProp: string;
+    options: any[];
+  }[];
   public filtersForm: FormGroup;
   constructor(
     private toolDataService: ToolRequestTableDataSourceService,
     private toolRequestsService: ToolRequestsService,
     private fb: FormBuilder
   ) {
-
+    this.filterSelectObjects = this.toolDataService.filterSelectObjects
     // this.filtersForm = this.fb.group(
     //   this.fb.array(this.filterSelectObjects)
     // );

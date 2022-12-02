@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { trigger, state, style } from '@angular/animations';
-import { MatTableDataSource } from '@angular/material/table';
 
 import { Observable } from 'rxjs';
 
@@ -10,7 +9,6 @@ import { NavController } from '@ionic/angular';
 
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
 import { RoleGuard } from 'src/app/core/services/users/role.guard';
-import { ToolRequestTableDataSourceService } from '../../tool-request-table-data-source.service';
 import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
 
 @Component({
@@ -40,7 +38,7 @@ export class ToolRequestTableComponent implements OnInit {
     private authGuard: RoleGuard,
     private toolRequestsService: ToolRequestsService
   ) {
-    this.newToolRequestsList$ = this.toolRequestsService.filtersList.asObservable();
+    this.newToolRequestsList$ = this.toolRequestsService.filtersList;
   }
 
   nextClick() { this.toolRequestsService.getNextPage() }
