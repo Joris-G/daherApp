@@ -2,27 +2,32 @@
   height: 100%;
   overflow: hidden;
 }
-
-
-
-
-.mat-row {
-  height: auto;
+ion-grid {
+  --ion-grid-columns: 18;
+  ion-row>ion-col{
+    padding: 10px 0;
+  }
 }
 
-.mat-cell {
-  padding: 8px 16px 8px 0;
-}
 
-.table {
-  display: flex;
-  padding: 14px;
-}
 
-.mat-table {
-  width: 100%
-}
+// .mat-row {
+//   height: auto;
+// }
 
-.mat-row:hover .mat-cell {
-  border-color: currentColor;
-}
+// .mat-cell {
+//   padding: 8px 16px 8px 0;
+// }
+
+// .table {
+//   display: flex;
+//   padding: 14px;
+// }
+
+// .mat-table {
+//   width: 100%
+// }
+
+// .mat-row:hover .mat-cell {
+//   border-color: currentColor;
+// }
