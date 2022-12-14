@@ -2,26 +2,23 @@
   <ion-menu-toggle menu="tool-request-menu">
     <ion-button>Click to open the menu</ion-button>
   </ion-menu-toggle>
+  <ion-button (click)="nextClick()" expand="block" fill="clear" shape="round">
+    Charger plus de demandes
+  </ion-button>
   <ion-grid [fixed]="false" class="">
-    <ion-row>
-      <ion-col size="4">
-        <ion-button (click)="nextClick()" expand="block" fill="clear" shape="round">
-          Charger plus de demandes
-        </ion-button>
-      </ion-col>
-    </ion-row>
     <ion-row appHeaderRow>
-      <ion-col size="1">ID</ion-col>
+      <ion-col size="2" [style.justify-content]="'center'">ID</ion-col>
       <ion-col size="2">Statut</ion-col>
-      <ion-col size="6">Outillage</ion-col>
+      <ion-col size="8">Outillage</ion-col>
       <ion-col size="3">Date de la demande</ion-col>
       <ion-col size="3">Demandeur</ion-col>
       <!-- <ion-col size="3" sort="">Date de besoin</ion-col> -->
     </ion-row>
     <ion-row appDataRow *ngFor="let request of toolRequests" (click)="openRequestClick(request)">
-      <ion-col size="1" [style.border-left]="getBorder(request)">{{request.id}}</ion-col>
+      <ion-col size="2" [style.border-left]="getBorder(request)" [style.justify-content]="'center'">{{request.id}}
+      </ion-col>
       <ion-col size="2">{{ request.statut }}</ion-col>
-      <ion-col size="6">
+      <ion-col size="8">
         <ion-label *ngIf="request.controle">OT{{request.controle.outillage.sapToolNumber}} -
           {{request.controle.outillage.designation}}</ion-label>
         <ion-label *ngIf="request.maintenance">OT{{request.maintenance.outillage.sapToolNumber}} -
