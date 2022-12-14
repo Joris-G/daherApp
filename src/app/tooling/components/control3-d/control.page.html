@@ -291,13 +291,23 @@
             </ion-modal>
           </ion-item>
 
+          <div class="vertical">
 
-          <ion-item>
-            <ion-label>Informations complémentaires
-            </ion-label>
-            <ion-input #infosComplementaire formControlName="infosComplementaire" type="text"
-              placeholder="Information complémentaire"></ion-input>
-          </ion-item>
+            <ion-item>
+              <ion-label>Informations complémentaires
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <!-- <ion-input #infosComplementaire formControlName="infosComplementaire" type="text"
+                placeholder="Information complémentaire"></ion-input> -->
+            </ion-item>
+            <editor #infosComplementaire slot="" formControlName="infosComplementaire" [init]="{
+                plugins: 'lists link image table wordcount',
+                menubar: false,
+                statusbar:false,
+                placeholder:'Information complémentaire',
+                height:150
+              }"></editor>
+          </div>
 
           <ion-item>
             <ion-label>Moyen de mesure</ion-label>
