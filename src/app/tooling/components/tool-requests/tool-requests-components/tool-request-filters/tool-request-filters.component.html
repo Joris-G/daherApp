@@ -1,36 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      <ion-icon slot="start" name="filter-outline"></ion-icon>
-      Filtres
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  <!-- <form [formGroup]="filtersForm">
+<ion-toolbar>
+  <ion-title>
+    <ion-icon slot="start" name="filter-outline"></ion-icon>
+    Filtres
+  </ion-title>
+</ion-toolbar>
 
-    <ion-button block color="primary" type="submit" [disabled]="filtersForm.invalid">
-      Login
+<ion-list>
+  <ion-item *ngFor="let filterItem of this.toolRequestsService.filterSelectObjects" class="filter-item ion-margin">
+    <ion-label>{{filterItem.name}}</ion-label>
+    <ion-select class="filter" multiple="false" [placeholder]="'Filtre ' + filterItem.name"
+      (ionChange)="filterChange(filterItem,$event)">
+      <ion-select-option *ngFor="let filter of filterItem.options" [value]="filter">{{filter}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
+
+
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button slot=end (click)="resetFiltersClick()">
+      Supprimer les filtres
     </ion-button>
-  </form> -->
-  <ion-list>
-    <ion-item *ngFor="let filterItem of filterSelectObjects" class="filter-item ion-margin">
-      <ion-label>{{filterItem.name}}</ion-label>
-      <ion-select class="filter" multiple="false" [placeholder]="'Filtre ' + filterItem.name"
-        (ionChange)="filterChange(filterItem,$event)">
-        <ion-select-option *ngFor="let filter of filterItem.options" [value]="filter">{{filter}}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
-
-</ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button slot=end (click)="resetFiltersClick()">
-        Supprimer les filtres
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
+  </ion-buttons>
+</ion-toolbar>

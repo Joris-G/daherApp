@@ -24,29 +24,18 @@
         </ion-textarea>
       </ion-item>
 
-      <ion-item button>
+      <ion-item lines="full" button>
         <ion-icon name="image" slot="start"></ion-icon>
+        <ion-input type="file" (change)="uploadImage($event)"></ion-input>
         <ion-label>Joindre une image</ion-label>
       </ion-item>
+      <ion-item lines="full" button>
+        <ion-label>Joindre une image</ion-label>
 
-      <!-- Datetime in overlay -->
-      <ion-item button [id]="'open-date-butoir' + maintenanceItem.rep">
-        <ion-label>Date butoir demandée</ion-label>
-        <ion-icon slot=end icon="calendar-outline"></ion-icon>
-        <ion-text slot="end">
-          {{maintenanceItem.delaiAction | date:"dd/MM/yyyy"}}</ion-text>
-        <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
-        <ion-modal [trigger]="'open-date-butoir' + maintenanceItem.rep">
-          <ng-template>
-            <ion-content>
-              <ion-datetime #delaiAction presentation="date" formControlName="delaiAction" display-format="DD.MM.YYYY"
-                (ngModelChange)="maintenanceItem.delaiAction = dateValue(delaiAction.value)">
-                <div slot="title">Date butoir demandée</div>
-              </ion-datetime>
-            </ion-content>
-          </ng-template>
-        </ion-modal>
+        <a class="item" href="file:///T:/Tarbes/DIAE-C-MC/DONNEES TECHNIQUES PREPARATION SERIE">Lien
+          test vers réseau DAHER</a>
       </ion-item>
+
       <ion-buttons slot="primary">
         <!-- <ion-button *ngIf="!validate" slot="start" (click)="validateItemClick()"
           [disabled]="maintenanceItemForm.invalid">

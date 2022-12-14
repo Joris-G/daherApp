@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ProgramsService } from 'src/app/core/services/programs/programs.service';
 // import { Editor } from 'ngx-editor';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
-import { AuthService } from 'src/app/core/services/users/auth.service';
+import { RequestType, ToolRequest, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
-import { RequestType } from 'src/app/_enums/request-type';
 import { Router } from '@angular/router';
+import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
+import { AuthService } from 'src/app/shared/services/users/auth.service';
 const MENU_ITEMS = [
   {
     title: 'Nouvelle demande outillage',
@@ -30,13 +29,12 @@ export class NewToolPage implements OnInit {
   public page: any;
   public requestTypeForm: FormGroup;
   public newToolForm: FormGroup;
-  public newToolRequestForm: FormGroup;
+  public newToolRequestForm: ToolRequestFormGroup;
   public programs: any[];
   // public editor: Editor;
   // public html: '';
   requestTypeEnum: typeof RequestType = RequestType;
   private newTool: Tool;
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,9 +43,7 @@ export class NewToolPage implements OnInit {
     private toolService: ToolService,
     private toolRequestService: ToolRequestService,
     private router: Router,
-
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     this.page = {
@@ -69,12 +65,7 @@ export class NewToolPage implements OnInit {
       identification: new FormControl(),
       designation: new FormControl()
     });
-    this.newToolRequestForm = this.formBuilder.group({
-      aircraftProgram: new FormControl(),
-      title: new FormControl(),
-      description: new FormControl(),
-      needDate: new FormControl()
-    });
+    this.newToolRequestForm = new ToolRequestFormGroup();
   }
 
   createToolClick() {
@@ -99,8 +90,8 @@ export class NewToolPage implements OnInit {
       type: RequestType.sbo,
       // title: this.newToolRequestForm.value.title,
       // Description: this.newToolRequestForm.value.description,
-      dateBesoin: this.newToolRequestForm.value.needDate,
       createdAt: new Date(),
+      bloquantProd: false,
       demandeur: this.authService.authUser,
       outillage: this.toolService.getIri(this.newTool)
     };

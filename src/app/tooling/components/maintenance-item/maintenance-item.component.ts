@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonInput } from '@ionic/angular';
+import { UploadFileService } from 'src/app/shared/services/upload-file.service';
 import { MaintenanceItem, MaintenanceItemFormGroup } from 'src/app/_interfaces/tooling/tool-request';
 
 @Component({
@@ -27,6 +28,7 @@ export class MaintenanceItemComponent implements OnInit, OnChanges {
 
   constructor(
     private alertController: AlertController,
+    private uploadFileService: UploadFileService,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -88,10 +90,26 @@ export class MaintenanceItemComponent implements OnInit, OnChanges {
 
   confirmRemoveItem(): void {
     this.evRemoveItem.emit(this.maintenanceItem);
-    this.validate = true;
   }
 
   validateRealMaintClick() {
     this.maintenanceRealisee = true;
+  }
+
+
+  uploadImage(ev: any) {
+    console.log(ev);
+    const file = ev.target.files[0];
+    if (file) {
+      this.uploadFileService.uploadFile(file)
+        .subscribe(
+          {
+            next: (resp) => {
+
+            }
+          }
+        )
+    }
+
   }
 }

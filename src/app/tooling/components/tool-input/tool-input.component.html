@@ -6,3 +6,11 @@
   <ion-spinner *ngIf="toolIsLoading" name="bubbles"></ion-spinner>
   <ion-icon *ngIf="tool" slot="end" name="checkmark" color=success></ion-icon>
 </ion-item>
+<ng-container *ngIf="tool">
+  <ion-item>
+    <ion-label>
+      Désignation outillage
+    </ion-label>
+    <ion-input type="text" disabled="true" [value]="tool.designation"></ion-input>
+  </ion-item>
+</ng-container>

@@ -1,10 +1,9 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { User } from 'src/app/_interfaces/user';
-import { PdfService } from 'src/app/core/services/divers/pdf.service';
-import { UsersService } from 'src/app/core/services/users/users.service';
 import { EventEmitter } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
+import { PdfService } from 'src/app/shared/services/divers/pdf.service';
+import { UsersService } from 'src/app/shared/services/users/users.service';
 
 @Component({
   selector: 'app-tool-request-footer',
@@ -29,15 +28,6 @@ export class ToolRequestFooterComponent implements OnInit {
    * @memberof ToolRequestFooterComponent
    */
   @Input() canUpdate: boolean;
-
-
-  /**
-   *
-   *
-   * @type {FormGroup}
-   * @memberof ToolRequestFooterComponent
-   */
-  @Input() form: FormGroup;
 
 
   /**
@@ -124,7 +114,7 @@ export class ToolRequestFooterComponent implements OnInit {
   }
 
   pdfExportClick() {
-    console.log(this.form, document.getElementById('toExport'));
+    console.log(document.getElementById('toExport'));
     this.pdfService.openPDF(document.getElementById('toExport'), 'test impression');
   }
 

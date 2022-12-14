@@ -1,12 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component } from '@angular/core';
 import { IonSelect } from '@ionic/angular';
-import { Observable } from 'rxjs';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
-import { RequestDataSource } from '../../tool-requests-data/request-data-source';
-import { ToolRequestTableDataSourceService } from '../../tool-request-table-data-source.service';
+
 import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-tool-request-filters',
@@ -14,27 +9,17 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./tool-request-filters.component.scss'],
 })
 export class ToolRequestFiltersComponent {
-  public filterSelectObjects: {
-    name: string;
-    columnProp: string;
-    options: any[];
-  }[];
-  public filtersForm: FormGroup;
+  private activeFilters: IonSelect[] = [];
   constructor(
-    private toolDataService: ToolRequestTableDataSourceService,
-    private toolRequestsService: ToolRequestsService,
-    private fb: FormBuilder
-  ) {
-    this.filterSelectObjects = this.toolDataService.filterSelectObjects
-    // this.filtersForm = this.fb.group(
-    //   this.fb.array(this.filterSelectObjects)
-    // );
-    console.log(this.filtersForm);
-  }
+    public toolRequestsService: ToolRequestsService,
+  ) { }
 
   resetFiltersClick() {
-    this.toolRequestsService.filters.next([]);
-
+    this.activeFilters.forEach((filter: IonSelect) => {
+      filter.value = null;
+    });
+    this.activeFilters = [];
+    this.toolRequestsService.resetFilters();
   }
 
   /**
@@ -45,6 +30,7 @@ export class ToolRequestFiltersComponent {
     * @memberof ToolRequestsPage
     */
   filterChange(filter: any, event: any) {
+    this.activeFilters.push(event.target);
     this.toolRequestsService.addFilter({ data: filter.columnProp, value: event.detail.value });
     //   this.filterValues[filter.columnProp] = event.target.value.trim();
   }

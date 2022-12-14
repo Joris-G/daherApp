@@ -3,7 +3,7 @@ import * as fr from '@angular/common/locales/fr';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { RoleGuard } from '../core/services/users/role.guard';
+import { RoleGuard } from '../shared/services/users/role.guard';
 import { Control3DPage } from './components/control3-d/control.page';
 import { IndicatorsPage } from './components/indicators/indicators.page';
 import { MaintenanceReparationPage } from './components/maintenance-reparation/maintenance-reparation.page';

@@ -1,15 +1,38 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { switchMap, share, finalize, map } from 'rxjs/operators';
-import { RequestService } from 'src/app/core/services/request.service';
+import { switchMap, share } from 'rxjs/operators';
+import { RequestService } from 'src/app/shared/services/request.service';
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ToolRequestsService {
+  public requestsAreLoading: boolean;
   public filtersList: Subject<ToolRequest[]> = new Subject();
+  public filterSelectObjects = [
+    {
+      name: 'Statut',
+      columnProp: 'statut',
+      options: []
+    },
+    {
+      name: 'Type de demande',
+      columnProp: 'type',
+      options: []
+    },
+    {
+      name: 'Demandeur',
+      columnProp: 'demandeur',
+      options: []
+    },
+    {
+      name: 'Outillage',
+      columnProp: 'tool',
+      options: []
+    },
+  ];
   public allToolRequests: BehaviorSubject<ToolRequest[]> = new BehaviorSubject([]);
-  public filters: BehaviorSubject<{ data: string, value: string }[]> = new BehaviorSubject([{ data: 'statut', value: 'NOUVELLE' }]);
+  private filters: BehaviorSubject<{ data: string, value: string }[]> = new BehaviorSubject([]);
   private toolRequestsList: ToolRequest[] = [];
   private pageCounter: BehaviorSubject<number> = new BehaviorSubject(1);
   constructor(
@@ -17,23 +40,28 @@ export class ToolRequestsService {
   ) {
     this.pageCounter.asObservable()
       .pipe(
-        switchMap((pageNumber) => this.getToolRequests(pageNumber, 5)),
+        switchMap((pageNumber) => {
+          this.requestsAreLoading = true;
+          return this.getToolRequests(pageNumber, 5)
+        }),
         switchMap((newToolRequestsElements: ToolRequest[]) => {
           this.toolRequestsList.push(...newToolRequestsElements);
+          this.populateFilter();
           return of(this.filterData());
         })
       )
       .subscribe((filterResult: ToolRequest[]) => {
+        this.requestsAreLoading = false;
         this.filtersList.next(filterResult);
       });
 
     this.getAllToolRequests().subscribe((toolRequests: ToolRequest[]) => {
       this.allToolRequests.next(toolRequests);
-    })
+    });
 
     this.filters.subscribe(() => {
       this.filtersList.next(this.filterData());
-    })
+    });
   }
 
   getAllToolRequests(): Observable<ToolRequest[]> {
@@ -57,24 +85,62 @@ export class ToolRequestsService {
 
 
   addFilter(filterToAdd) {
-    const filters = this.filters.getValue();
-    const duplicateFilterIndex = filters.findIndex((filterToTest) => filterToTest.data === filterToAdd.data);
+    const previousFilters = this.filters.getValue();
+    const duplicateFilterIndex = previousFilters.findIndex((filterToTest) => filterToTest.data === filterToAdd.data);
     if (duplicateFilterIndex !== -1) {
-      filters[duplicateFilterIndex] = filterToAdd
+      previousFilters[duplicateFilterIndex] = filterToAdd
     } else {
-
-      filters.push(filterToAdd);
+      previousFilters.push(filterToAdd);
     }
-    this.filters.next(filters);
+    this.filters.next(previousFilters);
   }
+
+  resetFilters() {
+    this.filters.next([]);
+  }
+
+
   filterData(): ToolRequest[] {
     const filters = this.filters.getValue();
-    console.log(filters);
     if (filters.length === 0) { return this.toolRequestsList }
-    return this.toolRequestsList.filter((toolRequest) => {
-      return filters.every(filter => {
-        return toolRequest[filter.data] === filter.value
+    return this.toolRequestsList.filter(
+      (toolRequest) => filters.every(
+        (filter) => {
+          const val1 = this.getCompareElement(filter.data, toolRequest)
+          const val2 = filter.value;
+          return val1 === val2;
+        }
+      )
+    );
+  }
+
+  private populateFilter() {
+    this.filterSelectObjects.forEach((ionSelect) => {
+      this.toolRequestsList.forEach((toolRequest) => {
+        const compareElement = this.getCompareElement(ionSelect.columnProp, toolRequest)
+        if (!ionSelect.options.find((option) => option == compareElement)) {
+          ionSelect.options.push(compareElement);
+        }
       });
     });
+  }
+  private getCompareElement(filterProp: string, toolRequest): string {
+    if (filterProp === 'tool') {
+      if (toolRequest.type === 'Maintenance') {
+        return toolRequest.maintenance.outillage.sapToolNumber;
+      } else if (toolRequest.type === 'Controle') {
+        return toolRequest.controle.outillage.sapToolNumber;
+      }
+    }
+    if (filterProp === 'demandeur') {
+      if (toolRequest.type === 'Maintenance') {
+        return toolRequest.maintenance.demandeur.username;
+      }
+      if (toolRequest.type === 'Controle') {
+        return toolRequest.controle.demandeur.username;
+      }
+    }
+
+    return toolRequest[filterProp];
   }
 }

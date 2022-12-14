@@ -3,11 +3,11 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToolRequest, SpecCtrlFormGroup, MoyenMesure, TypeRapport, SpecCtrl, ToolRequestFormGroup }
   from 'src/app/_interfaces/tooling/tool-request';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
-import { RoleGuard } from 'src/app/core/services/users/role.guard';
 import { NavController } from '@ionic/angular';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 
 @Component({
   selector: 'app-control',
@@ -39,13 +39,7 @@ export class Control3DPage implements OnInit {
 
   ngOnInit() {
     console.log('init');
-    this.toolRequestForm = this.formBuilder.group(
-      {
-        statut: new FormControl(),
-        groupeAffectation: new FormControl(),
-        id: new FormControl()
-      }
-    ) as ToolRequestFormGroup;
+    this.toolRequestForm = new ToolRequestFormGroup();
 
     this.controlForm = this.formBuilder.group(
       {

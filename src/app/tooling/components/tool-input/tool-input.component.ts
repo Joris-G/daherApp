@@ -25,8 +25,10 @@ export class ToolInputComponent implements OnInit, ControlValueAccessor {
   constructor(
     private toolService: ToolService,
   ) { }
-  public onChange = (tool: Tool) => { };
-  public onTouched = () => { };
+
+
+  onChange = (tool: Tool) => { };
+  onTouched = () => { };
 
   ngOnInit() { }
 

@@ -30,6 +30,18 @@
 
             <app-tool-input formControlName="outillage">
             </app-tool-input>
+            <ion-item>
+              <ion-label>Programme avion</ion-label>
+              <ion-input type="text" placeholder="Renseigner le programme"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Objet de la maintenance</ion-label>
+              <ion-input type="text" placeholder="Description de l'outillage"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Bloquant Prod</ion-label>
+              <ion-toggle slot="end"></ion-toggle>
+            </ion-item>
             <!-- <ion-item>
                             <ion-label>Outillage SAP :</ion-label>
                             <ion-input formControlName="outillage" #toolNumber type="text" placeholder="n°OT SAP ou n° Equipement SAP" (change)="toolOnChange(toolNumber.value.toString())"></ion-input>
@@ -73,7 +85,7 @@
 
 
               <ion-item>
-                <ion-label>Référence
+                <ion-label position="floating">Référence pièce
                   <ion-text color="danger">*</ion-text>
                 </ion-label>
                 <ion-input required #refPlan formControlName="refPlan" type="text" placeholder="indiquer n° de plan">
@@ -86,7 +98,7 @@
 
 
               <ion-item>
-                <ion-label>Indice plan
+                <ion-label position="floating">Indice plan
                   <ion-text color="danger">*</ion-text>
                 </ion-label>
                 <ion-input required #indPlan formControlName="indPlan" type="text"
@@ -101,7 +113,7 @@
 
 
             <ion-item>
-              <ion-label>Format du modèle 3D fourni si nécessaire
+              <ion-label position="floating">Format du modèle 3D fourni si nécessaire
                 <!-- <ion-text color="danger">*</ion-text> -->
               </ion-label>
               <ion-input #caoPath formControlName="cheminCAO" type="text"

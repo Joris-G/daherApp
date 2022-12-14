@@ -1,12 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { IonMenu, NavController } from '@ionic/angular';
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
-import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
-import { AuthService } from 'src/app/core/services/users/auth.service';
-import { RoleGuard } from 'src/app/core/services/users/role.guard';
-import { UsersService } from 'src/app/core/services/users/users.service';
 import { Router } from '@angular/router';
 import { ToolRequestsService } from '../tool-requests/tool-requests-data/tool-requests.service';
+import { AuthService } from 'src/app/shared/services/users/auth.service';
+import { RoleGuard } from 'src/app/shared/services/users/role.guard';
+import { UsersService } from 'src/app/shared/services/users/users.service';
 
 @Component({
   selector: 'app-tool-request-menu',

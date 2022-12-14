@@ -1,15 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { trigger, state, style } from '@angular/animations';
-
 import { Observable } from 'rxjs';
-
 import { NavController } from '@ionic/angular';
-
-
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
-import { RoleGuard } from 'src/app/core/services/users/role.guard';
 import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
+import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 
 @Component({
   selector: 'app-tool-request-table',
@@ -29,16 +25,14 @@ export class ToolRequestTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   public newToolRequestsList$: Observable<ToolRequest[]>;
   public displayedRequestColumns: string[] = ['statut', 'id', 'tool', 'createdAt', 'userCreat', 'needDate', 'buttons'];
-  // public toolRequestsDataSource$: Observable<MatTableDataSource<ToolRequest>> = this.toolDataService.toolRequestsDataSource$;
   public isAdmin = false;
 
   constructor(
-    // private toolDataService: ToolRequestTableDataSourceService,
     private navCtrl: NavController,
     private authGuard: RoleGuard,
     private toolRequestsService: ToolRequestsService
   ) {
-    this.newToolRequestsList$ = this.toolRequestsService.filtersList;
+    this.newToolRequestsList$ = this.toolRequestsService.filtersList.asObservable();
   }
 
   nextClick() { this.toolRequestsService.getNextPage() }
@@ -76,12 +70,19 @@ export class ToolRequestTableComponent implements OnInit {
 
   // TODO Créer une directive pour la bordure
   getBorder(request: ToolRequest | string): string {
-    // if (this.toolRequestService.getType(request) === 'controle') {
-    //   return '4px lawngreen solid';
-    // } else if (this.toolRequestService.getType(request) === 'maintenance') {
-    return '4px yellow solid';
-    // }
+    if (this.getType(request) === 'controle') {
+      return '4px lawngreen solid';
+    } else if (this.getType(request) === 'maintenance') {
+      return '4px yellow solid';
+    }
   }
 
-
+  private getType(request: ToolRequest | string): string {
+    if (typeof (request) === 'string') { return request; }
+    if (request.controle) {
+      return 'controle';
+    } else if (request.maintenance) {
+      return 'maintenance';
+    }
+  }
 }

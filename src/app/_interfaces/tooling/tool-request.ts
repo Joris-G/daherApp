@@ -1,29 +1,34 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { RequestStatus } from 'src/app/_enums/request-status';
-import { RequestType } from 'src/app/_enums/request-type';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { User } from 'src/app/_interfaces/user';
+export enum RequestType {
+  sbo = 1,
+  maintenance = 2,
+  controle = 3
+}
 
 export interface ToolRequest {
   id?: number;
   demandeur?: User | string;
+  bloquantProd: boolean;
   createdAt?: Date;
   dateBesoin?: Date;
   outillage?: Tool | string;
   groupeAffectation?: GroupeAffectation;
+  affectation?: string[];
   dateAffectation?: Date;
+  // datePlanif?: Date;
   statut?: string;
+  dateReal?: Date;
+  userReal?: User;
   toolingNote?: string;
   type?: RequestType | string;
   controle?: SpecCtrl;
   maintenance?: SpecMaintRep;
-  // sbo?: SpecSBO;
-  datePlanif?: Date;
-  dateReal?: Date;
-  userReal?: User;
-  affectation?: string[];
+  sbo?: SpecSBO;
 }
 
 export interface ToolRequestIri {
@@ -47,13 +52,32 @@ export interface ToolRequestIri {
 }
 
 
-export interface ToolRequestFormGroup extends FormGroup {
+export class ToolRequestFormGroup extends FormGroup {
   value: ToolRequest;
   controls: {
     id: AbstractControl;
     statut: AbstractControl;
     groupeAffectation?: AbstractControl;
+    demandeur: AbstractControl;
+    createdAt: AbstractControl;
+    dateAffectation: AbstractControl;
+    datePlanif: AbstractControl;
+    dateReal: AbstractControl;
+    bloquantProd: AbstractControl;
   };
+  constructor() {
+    super(({
+      id: new FormControl(),
+      statut: new FormControl(),
+      groupeAffectation: new FormControl(),
+      createdAt: new FormControl(),
+      dateAffectation: new FormControl(),
+      datePlanif: new FormControl(),
+      dateReal: new FormControl(),
+      demandeur: new FormControl(),
+      bloquantProd: new FormControl<boolean>(false)
+    }));
+  }
 }
 
 export interface SpecCtrl {
@@ -152,15 +176,14 @@ export enum MoyenMesure {
 }
 
 
-export interface SpecMaintRep {
+export class SpecMaintRep {
   id?: number;
   outillage?: Tool;
+  // equipement: string;
   // OT?: Tool;
   // equipement?: string;
-  dateBesoin: Date;
-  respo?: string[];
-  userReal?: string[];
-  dateReal?: string[];
+  // dateBesoin: Date;
+  // respo?: string[];
   rep?: string[];
   createdAt?: Date;
   modifiedAt?: Date;
@@ -169,19 +192,32 @@ export interface SpecMaintRep {
   userValideur?: User;
   image?: string;
   fichier?: string;
-  // equipement: string;
   sigle?: string;
-  causeDem?: string;
   dateValid?: Date;
-  itemActionCorrective?: MaintenanceItem[];
+  itemActionCorrective: MaintenanceItem[];
   demandeur?: User;
+
+  constructor() {
+    this.itemActionCorrective = [new MaintenanceItem(1)];
+  }
+
+  addMaintenanceItem(): number {
+    const rep = this.itemActionCorrective.length + 1;
+    const maintenanceItem: MaintenanceItem = new MaintenanceItem(rep);
+    return this.itemActionCorrective.push(maintenanceItem);
+  }
+
+  removeMaintenanceItem(rep: number) {
+    const index = rep - 1;
+    delete this.itemActionCorrective[index];
+  }
 }
 
 export interface SpecMaintRepIri {
   id?: number;
-  outillage?: string;
+  // outillage?: string;
   equipement?: string;
-  dateBesoin: Date;
+  // dateBesoin: Date;
   itemActionCorrective?: string[];
   respo?: string[];
   delaiAction?: string[];
@@ -201,19 +237,35 @@ export interface SpecMaintRepIri {
   dateValid?: Date;
 }
 
-export interface MaintFormGroup extends FormGroup {
+export class MaintFormGroup extends FormGroup {
   value: SpecMaintRep;
-  controls: {
-    id?: AbstractControl;
-    outillage?: AbstractControl;
-    equipement?: AbstractControl;
-    dateBesoin?: AbstractControl;
-    image?: AbstractControl;
-    fichier?: AbstractControl;
-    sigle?: AbstractControl;
-    userValideur?: AbstractControl;
-    dateValid?: AbstractControl;
-  };
+  // controls: {
+  //   id?: AbstractControl;
+  //   outillage?: AbstractControl;
+  //   equipement?: AbstractControl;
+  //   dateBesoin?: AbstractControl;
+  //   image?: AbstractControl;
+  //   fichier?: AbstractControl;
+  //   sigle?: AbstractControl;
+  //   userValideur?: AbstractControl;
+  //   dateValid?: AbstractControl;
+  // };
+  constructor() {
+    super(
+      {
+        outillage: new FormControl(),
+        dateBesoin: new FormControl(),
+        // equipment: new FormControl(),
+        image: new FormControl(),
+        fichier: new FormControl(),
+        sigle: new FormControl(),
+        userValideur: new FormControl(),
+        dateValid: new FormControl(),
+        // itemActionCorrective: new FormControl()
+      }
+    );
+    this.value.itemActionCorrective = [new MaintenanceItem(1)]
+  }
 }
 
 export class MaintenanceItem {
@@ -245,6 +297,12 @@ export interface MaintenanceItemFormGroup extends FormGroup {
   };
 }
 
+
+export class SpecSBO {
+  title: string;
+  description: string;
+  dateBesoin: Date;
+}
 // export interface MaintenanceItemIri {
 //   nonConformite?: string;
 //   actionsCorrectives?: string;

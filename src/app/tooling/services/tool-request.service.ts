@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { ToolRequest, ToolRequestIri, MaintenanceItem, SpecMaintRep, SpecMaintRepIri, SpecCtrl, SpecCtrlIri }
   from 'src/app/_interfaces/tooling/tool-request';
 import { environment } from 'src/environments/environment';
-import { RequestService } from 'src/app/core/services/request.service';
 import { ToolService } from 'src/app/tooling/services/tool.service';
-import { AuthService } from 'src/app/core/services/users/auth.service';
-import { UsersService } from 'src/app/core/services/users/users.service';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, concat, concatMap, debounceTime, finalize, map, mergeMap, share, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
+import { catchError, concatMap, finalize, map, share, mergeMap, switchMap } from 'rxjs/operators';
+import { RequestService } from 'src/app/shared/services/request.service';
+import { AuthService } from 'src/app/shared/services/users/auth.service';
+import { UsersService } from 'src/app/shared/services/users/users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,6 @@ export class ToolRequestService {
     private requestService: RequestService,
     private toolService: ToolService,
     private userService: UsersService,
-    private authService: AuthService,
   ) {
     this.loading$ = this.loadingSubject.asObservable();
   }
@@ -74,18 +73,16 @@ export class ToolRequestService {
     return new Promise<any>((resolve, reject) => {
       this.createAllMaintenaceItems(toolRequestToCreate)
         .then((maintenanceItemIri: string[]) => {
-          console.log(maintenanceItemIri);
           const toolRequestToCreateIri: SpecMaintRepIri = {
             id: toolRequestToCreate.id ?? null,
-            outillage: toolRequestToCreate.outillage ? this.toolService.getIri(toolRequestToCreate.outillage) : '',
-            dateBesoin: toolRequestToCreate.dateBesoin,
+            // outillage: toolRequestToCreate.outillage ? this.toolService.getIri(toolRequestToCreate.outillage) : '',
+            // dateBesoin: toolRequestToCreate.dateBesoin,
             // userCreat: this.userService.getIri(this.authService.authUser),
             rep: toolRequestToCreate.rep,
             itemActionCorrective: maintenanceItemIri,
             // ligneBudgetaire: toolRequestToCreate.ligneBudgetaire,
 
           };
-          console.log(toolRequestToCreateIri);
           this.requestService.createPostRequest(`${environment.toolApi}maintenances`, toolRequestToCreateIri)
             .subscribe((res) => {
               resolve(res);
@@ -128,44 +125,42 @@ export class ToolRequestService {
     return this.requestService.createPatchRequest(`${environment.toolApi}controles/${toolRequestToCreateIri.id}`, toolRequestToCreateIri);
   }
 
-  async updateMaintenanceItems(maintenanceItemsToUpdate: MaintenanceItem[]) {
-    const arrProm = maintenanceItemsToUpdate.map(item => {
-      if (item.id) {
-        return this.requestService.createPutRequest(`${environment.toolApi}maintenance_items/${item.id}`, item);
-      } else {
-        return this.requestService.createPostRequest(`${environment.toolApi}maintenance_items`, item);
-      }
-    });
-    return Promise.all(arrProm);
+  updateMaintenanceItems(maintenanceItemsToUpdate: MaintenanceItem[]): Observable<any[]> {
+    return of(maintenanceItemsToUpdate).pipe(
+      mergeMap(
+        (items) =>
+          forkJoin(items.map(
+            (item) => {
+              if (item.id) {
+                return this.requestService.createPutRequest(`${environment.toolApi}maintenance_items/${item.id}`, item);
+              } else {
+                return this.requestService.createPostRequest(`${environment.toolApi}maintenance_items`, item);
+              }
+            }))
+      ));
   }
 
-  updateMainteanceRequest(toolRequestToUpdate: SpecMaintRep) {
-    return new Promise((resolve, reject) => {
-      this.updateMaintenanceItems(toolRequestToUpdate.itemActionCorrective)
-        .then((responseMaintenanceItems) => {
-          responseMaintenanceItems.map((maintenanceItem$) => {
-            maintenanceItem$.subscribe((maintenanceItem) => {
-              toolRequestToUpdate.itemActionCorrective = maintenanceItem;
-              console.log(toolRequestToUpdate.itemActionCorrective);
-            });
-          });
-          console.log(toolRequestToUpdate.itemActionCorrective);
-          const maintenanceItemIri = toolRequestToUpdate.itemActionCorrective
-            .map((item => '/api/maintenance_items/' + item.id));
-          const toolRequestToCreateIri: SpecMaintRepIri = {
-            id: toolRequestToUpdate.id ?? null,
-            outillage: toolRequestToUpdate.outillage ? this.toolService.getIri(toolRequestToUpdate.outillage) : '',
-            dateBesoin: toolRequestToUpdate.dateBesoin,
-            userCreat: this.userService.getIri(toolRequestToUpdate.userCreat),
-            itemActionCorrective: maintenanceItemIri
-          };
-          console.log(toolRequestToCreateIri);
-          resolve(this.requestService.createPutRequest(
-            environment.toolApi + 'maintenances/' + toolRequestToCreateIri.id,
-            toolRequestToCreateIri));
-        });
-    });
-
+  updateMainteanceRequest(toolRequestToUpdate: SpecMaintRep): Observable<void> {
+    return this.updateMaintenanceItems(toolRequestToUpdate.itemActionCorrective)
+      .pipe(
+        switchMap(
+          (responseMaintenanceItems) => {
+            toolRequestToUpdate.itemActionCorrective = responseMaintenanceItems;
+            const maintenanceItemIri = toolRequestToUpdate.itemActionCorrective
+              .map((item => '/api/maintenance_items/' + item.id));
+            const toolRequestToCreateIri: SpecMaintRepIri = {
+              id: toolRequestToUpdate.id ?? null,
+              // outillage: toolRequestToUpdate.outillage ? this.toolService.getIri(toolRequestToUpdate.outillage) : '',
+              // dateBesoin: toolRequestToUpdate.dateBesoin,
+              userCreat: this.userService.getIri(toolRequestToUpdate.userCreat),
+              itemActionCorrective: maintenanceItemIri
+            };
+            return this.requestService.createPutRequest(
+              environment.toolApi + 'maintenances/' + toolRequestToCreateIri.id,
+              toolRequestToCreateIri);
+          }
+        )
+      );
   }
 
   getToolRequest(id): Observable<ToolRequest | undefined> {

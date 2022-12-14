@@ -10,28 +10,7 @@ import { ToolRequestService } from '../../services/tool-request.service';
 export class ToolRequestTableDataSourceService {
 
   public toolRequestsDataSource$: Observable<MatTableDataSource<ToolRequest>>;
-  public filterSelectObjects = [
-    {
-      name: 'Statut',
-      columnProp: 'statut',
-      options: []
-    },
-    {
-      name: 'Type de demande',
-      columnProp: 'type',
-      options: []
-    },
-    {
-      name: 'Demandeur',
-      columnProp: 'demandeur',
-      options: []
-    },
-    {
-      name: 'Outillage',
-      columnProp: 'tool',
-      options: []
-    },
-  ];
+  private filterSelectObjects;
   private matTableDataSource: MatTableDataSource<ToolRequest> = new MatTableDataSource<ToolRequest>([]);
   private subjectDataSource: BehaviorSubject<MatTableDataSource<ToolRequest>> = new BehaviorSubject(this.matTableDataSource);
   constructor(

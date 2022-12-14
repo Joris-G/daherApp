@@ -4,8 +4,9 @@ import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RequestService } from 'src/app/core/services/request.service';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { RequestService } from 'src/app/shared/services/request.service';
+
 
 @Injectable({
   providedIn: 'root'

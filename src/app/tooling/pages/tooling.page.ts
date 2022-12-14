@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TitleService } from 'src/app/core/services/title.service';
+import { TitleService } from 'src/app/shared/services/title.service';
 import { ToolRequestsService } from '../components/tool-requests/tool-requests-data/tool-requests.service';
 
 @Component({
