@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { AuthGuard } from 'src/app/core/services/users/auth.guard';
+import { AuthGuard } from '../shared/services/users/auth.guard';
 import { MoldingComponentsModule } from './modules/molding-components.module';
 import { MoldingDirectivesModule } from './modules/molding-directives.module';
 import { MoldingServicesModule } from './modules/molding-services.module';

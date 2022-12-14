@@ -1,13 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NavController, PopoverController } from '@ionic/angular';
 import { User } from 'src/app/_interfaces/user';
-import { AuthService } from 'src/app/core/services/users/auth.service';
 
 import { environment } from 'src/environments/environment';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { UserPopoverComponent } from '../user-popover/user-popover.component';
-import { TitleService } from 'src/app/core/services/title.service';
 import { Observable } from 'rxjs';
+import { LoadingService } from '../../services/divers/loading.service';
+import { TitleService } from '../../services/title.service';
+import { AuthService } from '../../services/users/auth.service';
 
 @Component({
   selector: 'app-shared-user-header',

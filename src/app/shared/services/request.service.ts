@@ -49,10 +49,6 @@ export class RequestService {
           return val;
         }),
         retry(3),
-        // retryWhen(err=> {
-        //   console.error(err);
-        //   return of(null);
-        // })
       );
   }
 

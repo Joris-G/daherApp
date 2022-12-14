@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from 'src/app/_interfaces/user';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
-import { UsersService } from 'src/app/core/services/users/users.service';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { UserSheetComponent } from 'src/app/shared/components/user-sheet/user-sheet.component';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { UsersService } from 'src/app/shared/services/users/users.service';
 
 
 const usersRole = {

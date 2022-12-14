@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { MoldingService } from 'src/app/molding/services/molding.service';
-import { RoleGuard } from 'src/app/core/services/users/role.guard';
 import { IonAccordionGroup } from '@ionic/angular';
-import { TitleService } from 'src/app/core/services/title.service';
+import { TitleService } from 'src/app/shared/services/title.service';
+import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 
 @Component({
   selector: 'app-create-molding',

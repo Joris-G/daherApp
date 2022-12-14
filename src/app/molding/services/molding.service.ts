@@ -7,13 +7,13 @@ import { IMoldingStatus, Molding, MoldingIri, MoldingStatus } from 'src/app/_int
 import { environment } from 'src/environments/environment';
 import { KitService } from './kit.service';
 import { ToolService } from 'src/app/tooling/services/tool.service';
-import { RequestService } from 'src/app/core/services/request.service';
 import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { CoreService } from './core.service';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { OtherMaterialsService } from './other-materials.service';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { RequestService } from 'src/app/shared/services/request.service';
 
 /**
  * Service de gestion des moulages

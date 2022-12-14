@@ -4,13 +4,13 @@ import { isDevMode } from '@angular/core';
 
 import { IonInput, NavController } from '@ionic/angular';
 
-import { UpdateAppService } from 'src/app/core/services/applicationUpdates/update-app.service';
-import { AuthService } from 'src/app/core/services/users/auth.service';
+import { UpdateAppService } from 'src/app/shared/services/applicationUpdates/update-app.service';
 import { environment } from 'src/environments/environment';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
 import packageJson from 'package.json';
-import { NoticeService } from 'src/app/core/services/notice/notice.service';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { NoticeService } from 'src/app/shared/services/notice/notice.service';
+import { AuthService } from 'src/app/shared/services/users/auth.service';
 
 @Component({
   selector: 'app-login',

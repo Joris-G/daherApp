@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NoticeService } from 'src/app/core/services/notice/notice.service';
+import { NoticeService } from '../../services/notice/notice.service';
 
 @Component({
   selector: 'app-login-notice',

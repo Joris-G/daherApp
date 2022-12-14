@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as JsBarcode from 'jsbarcode';
 import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Molding } from 'src/app/_interfaces/molding/molding';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { KitService } from 'src/app/molding/services/kit.service';
 import { MoldingService } from 'src/app/molding/services/molding.service';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 
 @Component({
   selector: 'app-print-molding-sheet',

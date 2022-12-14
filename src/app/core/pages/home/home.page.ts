@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NoticeService } from 'src/app/core/services/notice/notice.service';
-import { TitleService } from '../../services/title.service';
+import { NoticeService } from 'src/app/shared/services/notice/notice.service';
+import { TitleService } from 'src/app/shared/services/title.service';
 
 export interface IMenuItem {
   title: string;

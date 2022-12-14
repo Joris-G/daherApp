@@ -3,22 +3,18 @@ import { FormGroup, ValidatorFn, Validators, FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { RoleService } from 'src/app/shared/services/users/role.service';
+import { SericesService } from 'src/app/shared/services/users/serices.service';
+import { SiteService } from 'src/app/shared/services/users/site.service';
+import { UniteService } from 'src/app/shared/services/users/unite.service';
+import { UsersService } from 'src/app/shared/services/users/users.service';
 import { IDivision } from 'src/app/_interfaces/division';
 import { Poste } from 'src/app/_interfaces/poste';
 import { IService } from 'src/app/_interfaces/service';
 import { User, UserIri } from 'src/app/_interfaces/user';
 import { IUsine } from 'src/app/_interfaces/usine';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
-import { RoleService } from 'src/app/core/services/users/role.service';
-import { SericesService } from 'src/app/core/services/users/serices.service';
-import { SiteService } from 'src/app/core/services/users/site.service';
-import { UniteService } from 'src/app/core/services/users/unite.service';
-import { UsersService } from 'src/app/core/services/users/users.service';
-import { SwiperModule } from 'swiper/angular';
-// import Swiper core and required modules
-
-const LANGUAGES = ['FR', 'EN'];
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',

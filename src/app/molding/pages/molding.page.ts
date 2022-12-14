@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TitleService } from 'src/app/core/services/title.service';
+import { TitleService } from 'src/app/shared/services/title.service';
 
 @Component({
   selector: 'app-molding',

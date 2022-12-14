@@ -6,8 +6,8 @@ import { LoginPage } from './pages/login/login.page';
 import { RegisterPage } from './pages/register/register.page';
 import { AppSharedModule } from '../shared/shared.module';
 import { SwiperModule } from 'swiper/angular';
-import { UpdateAppService } from './services/applicationUpdates/update-app.service';
-import { AuthService } from './services/users/auth.service';
+import { UpdateAppService } from '../shared/services/applicationUpdates/update-app.service';
+import { AuthService } from '../shared/services/users/auth.service';
 
 @NgModule({
   declarations: [

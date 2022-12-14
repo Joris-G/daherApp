@@ -3,11 +3,11 @@ import {
   Component, ElementRef, OnInit, ViewChild
 } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { SericesService } from 'src/app/shared/services/users/serices.service';
+import { UsersService } from 'src/app/shared/services/users/users.service';
 import { IService } from 'src/app/_interfaces/service';
 import { User } from 'src/app/_interfaces/user';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
-import { SericesService } from 'src/app/core/services/users/serices.service';
-import { UsersService } from 'src/app/core/services/users/users.service';
 
 @Component({
   selector: 'app-admin-user',

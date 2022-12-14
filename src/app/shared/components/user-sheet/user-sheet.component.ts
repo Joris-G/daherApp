@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from 'src/app/_interfaces/user';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
-import { UsersService } from 'src/app/core/services/users/users.service';
 import { ModalController } from '@ionic/angular';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { AlertService } from '../../services/divers/alert.service';
+import { LoadingService } from '../../services/divers/loading.service';
+import { UsersService } from '../../services/users/users.service';
 
 @Component({
   selector: 'app-user-sheet',

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
-
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
-import { AuthService } from 'src/app/core/services/users/auth.service';
-
 import packageJson from 'package.json';
+import { LoadingService } from '../../services/divers/loading.service';
+import { AuthService } from '../../services/users/auth.service';
 import { UserSheetComponent } from '../user-sheet/user-sheet.component';
 
 @Component({

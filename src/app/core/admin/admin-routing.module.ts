@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-
-import { RoleGuard } from '../services/users/role.guard';
+import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { AdminPage } from './pages/admin-home/admin.page';
 import { AdminMoldingPage } from './pages/admin-molding/admin-molding.page';
 import { AdminUserPage } from './pages/admin-user/admin-user.page';

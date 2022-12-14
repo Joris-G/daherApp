@@ -1,11 +1,10 @@
-import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { RequestService } from 'src/app/core/services/request.service';
 import { of } from 'rxjs';
 import { map, } from 'rxjs/operators';
 import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { RequestService } from 'src/app/shared/services/request.service';
 
 @Injectable()
 export class KitService {

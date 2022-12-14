@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AdditionalMaterial, AdditionalMaterialForm } from 'src/app/_interfaces/molding/composite-material-types';
-import { RequestService } from 'src/app/core/services/request.service';
 import { environment } from 'src/environments/environment';
 import { MoldingService } from 'src/app/molding/services/molding.service';
+import { RequestService } from 'src/app/shared/services/request.service';
 
 
 @Component({
@@ -37,8 +37,8 @@ export class NidaComponent implements OnInit {
       {
         outillageMoulage: `api/tools/${this.moldingService.molding.OT.id}`,
         page: '1',
-        itemsPerPage:'50'
-       }
+        itemsPerPage: '50'
+      }
     );
   }
 
