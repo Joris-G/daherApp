@@ -60,7 +60,7 @@
             <ng-template>
               <ion-content>
                 <ion-datetime #dateReal presentation="date" formControlName="delaiAction" display-format="DD.MM.YYYY"
-                  (ngModelChange)="maintenanceItem.dateReal = dateValue(dateReal.value)">
+                  (ngModelChange)="maintenanceItem.dateReal = dateValue(dateReal.value.toString())">
                   <div slot="title">Date de réalisation de la maintenance</div>
                 </ion-datetime>
               </ion-content>

@@ -90,13 +90,3 @@
     (evUpdate)="updateForm()" (evAffectationChange)="onAffectationChange($event)" [canManage]="canManage"
     [canUpdate]="canUpDate"></app-tool-request-footer>
 </ion-footer>
-
-<ion-modal trigger="open-date-besoin">
-  <ng-template>
-    <!-- <ion-content> -->
-    <ion-datetime presentation="date" display-format="DD.MM.YYYY" [(ngModel)]="maintRep.dateBesoin">
-      <div slot="title">Date butoir demandée</div>
-    </ion-datetime>
-    <!-- </ion-content> -->
-  </ng-template>
-</ion-modal>

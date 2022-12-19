@@ -65,7 +65,7 @@
                   <ion-content>
                     <ion-datetime #dispoOut presentation="date" formControlName="dispoOut"
                       display-format="EEEE DD.MMMM.YYYY"
-                      (ionChange)="controlForm.value.dispoOut= dateValue(dispoOut.value)">
+                      (ionChange)="controlForm.value.dispoOut= dateValue(dispoOut.value.toString())">
                       <div slot="title">Date de mise à disposition au service outillage</div>
                     </ion-datetime>
                   </ion-content>
