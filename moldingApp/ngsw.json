@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1671459980950,
+  "timestamp": 1671464039534,
   "index": "./index.html",
   "assetGroups": [
     {
@@ -74,7 +74,7 @@
         "./9958.2c462429288e1f40.js",
         "./common.857ed53977f159b7.js",
         "./index.html",
-        "./main.312d94b317923304.js",
+        "./main.b7cf002f5ccaca81.js",
         "./manifest.webmanifest",
         "./polyfills-core-js.b3eb16f0f64e9b8c.js",
         "./polyfills-dom.3a5e3168052f1fc5.js",
@@ -192,8 +192,8 @@
     "./assets/img/logoDaher.png": "4421d131fb3d5834ba7dacee81fdc1d215752312",
     "./assets/shapes.svg": "5413e95adabcb2cb639970051f55e0ddb64ace53",
     "./common.857ed53977f159b7.js": "34e0b975be73cb8fdd61a1b42b8d4689ad645b67",
-    "./index.html": "e80d274d2b11411e29cb1d5324e319abc6951bb4",
-    "./main.312d94b317923304.js": "0e8a139b3af06c69142a3f09a86ae7a624067b17",
+    "./index.html": "cf5a155ddd2d55e6521c7c0db538c30404b6b581",
+    "./main.b7cf002f5ccaca81.js": "6079b7c67ad22396d9542be356a29b68e85aac8f",
     "./manifest.webmanifest": "f69c2f2db37de385e059cee1e4e9c591e40c76aa",
     "./polyfills-core-js.b3eb16f0f64e9b8c.js": "74f73ddfbee814abfb2702e1dd9ca4c9ddb994c5",
     "./polyfills-dom.3a5e3168052f1fc5.js": "50f6ff473a0568bffb8a9d412d7efaced2d36137",

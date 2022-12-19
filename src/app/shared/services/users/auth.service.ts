@@ -49,6 +49,7 @@ export class AuthService {
           // console.log(response);
           this.isAuth = false;
           this.authUser = null;
+          this.authToken = "";
         })
       );
   }
