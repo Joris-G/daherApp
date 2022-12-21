@@ -50,3 +50,14 @@ ion-modal.modal-adjusted{
  // height: fit-content;
   // --height: auto;
 }
+
+ion-item[ng-reflect-button]{
+  --background-hover: var(--ion-color-secondary);
+  --background-hover-opacity: 0.8;
+
+}
+
+ion-item[ng-reflect-button=false]{
+  --background-focused: var(--ion-color-secondary);
+  --background-focused-opacity: 0.8;
+}
