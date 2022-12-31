@@ -12,21 +12,22 @@
         <ion-label color=secondary>Faire une demande</ion-label>
       </ion-item-divider>
       <ion-menu-toggle auto-hide="true">
-        <ion-item [disabled]="false" [button]="true" routerDirection="forward" (click)="navigate('tooling/new-tool')">
+        <ion-item [disabled]="false" button routerDirection="forward" (click)="navigate('tooling/new-tool')"
+          [style.boder-right]="'solid 4px yellow'">
           <ion-label>
             Nouvel outillage (SBO)
           </ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle auto-hide="true">
-        <ion-item [button]="true" routerDirection="forward" (click)="navigate('tooling/repair-tool')">
+        <ion-item button routerDirection="forward" (click)="navigate('tooling/repair-tool')">
           <ion-label>
             Maintenance et réparation
           </ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle auto-hide="true">
-        <ion-item [button]="true" routerDirection="forward" (click)="navigate('tooling/3D-tool')">
+        <ion-item button routerDirection="forward" (click)="navigate('tooling/3D-tool')">
           <ion-label>
             Contrôle 3D
           </ion-label>

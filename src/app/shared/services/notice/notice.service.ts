@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { ComponentRef, Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { LoginNoticeComponent } from 'src/app/shared/notices/login-notice/login-notice.component';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +8,9 @@ export class NoticeService {
   private modal: HTMLIonModalElement;
 
   constructor(private modalController: ModalController) { }
-  async presentModal() {
+  async presentModal(noticeComponent: any) {
     this.modal = await this.modalController.create({
-      component: LoginNoticeComponent,
+      component: noticeComponent,
       cssClass: 'fullscreen'
     });
     await this.modal.present();

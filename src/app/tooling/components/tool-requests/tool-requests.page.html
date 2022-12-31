@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar color=dark>
     <ion-title>Liste des demandes</ion-title>
+    <ion-button color=secondary slot=end (click)="nextClick()" expand="block" fill="outline">
+      Charger plus de demandes
+    </ion-button>
     <ion-button color=secondary slot=end (click)="reloadClick()">
       <ion-icon slot="start" name="refresh-circle-outline"></ion-icon>
       Recharger

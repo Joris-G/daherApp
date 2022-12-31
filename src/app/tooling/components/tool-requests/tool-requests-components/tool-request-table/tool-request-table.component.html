@@ -2,20 +2,21 @@
   <ion-menu-toggle menu="tool-request-menu">
     <ion-button>Click to open the menu</ion-button>
   </ion-menu-toggle>
-  <ion-button (click)="nextClick()" expand="block" fill="clear" shape="round">
-    Charger plus de demandes
-  </ion-button>
-  <ion-grid [fixed]="false" class="">
+  <ion-grid [fixed]="false">
     <ion-row appHeaderRow>
-      <ion-col size="2" [style.justify-content]="'center'">ID</ion-col>
+      <ion-col size="1"></ion-col>
       <ion-col size="2">Statut</ion-col>
       <ion-col size="8">Outillage</ion-col>
-      <ion-col size="3">Date de la demande</ion-col>
+      <ion-col size="4">Date de la demande</ion-col>
       <ion-col size="3">Demandeur</ion-col>
       <!-- <ion-col size="3" sort="">Date de besoin</ion-col> -->
     </ion-row>
-    <ion-row appDataRow *ngFor="let request of toolRequests" (click)="openRequestClick(request)">
-      <ion-col size="2" [style.border-left]="getBorder(request)" [style.justify-content]="'center'">{{request.id}}
+    <ion-row *ngFor="let request of toolRequests" appDataRow isUrgent="{{request.bloquantProd}}"
+      (click)="openRequestClick(request)">
+      <ion-col size="1">
+        <div class="circle" [style.border]="getBorder(request)">
+          {{request.id}}
+        </div>
       </ion-col>
       <ion-col size="2">{{ request.statut }}</ion-col>
       <ion-col size="8">
@@ -24,7 +25,7 @@
         <ion-label *ngIf="request.maintenance">OT{{request.maintenance.outillage.sapToolNumber}} -
           {{request.maintenance.outillage.designation}}</ion-label>
       </ion-col>
-      <ion-col size="3"> {{request.createdAt | date :"EE dd MMM yyyy":"local" }}</ion-col>
+      <ion-col size="4"> {{request.createdAt | date :"EE dd MMM yyyy":"local" }}</ion-col>
       <ion-col size="3" (click)="userClick()">
         <ion-label *ngIf="request.controle">{{request.controle.demandeur.username}}</ion-label>
         <ion-label *ngIf="request.maintenance">{{request.maintenance.demandeur.username}}</ion-label>
@@ -37,129 +38,3 @@
     </ion-row>
   </ion-grid>
 </ng-container>
-
-
-
-
-
-
-
-<!-- 
-<table mat-table #table [dataSource]="toolRequestsDataSource$ | async" class="mat-elevation-z8" fixedLayout=true
-  matSort> -->
-
-<!-- ********* ****** ********* -->
-<!-- ********* STATUT ********* -->
-<!-- ********* ****** ********* -->
-<ng-container matColumnDef="statut">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>
-    Statut
-  </th>
-  <td [style.border-left]="getBorder(request)" mat-cell *matCellDef="let request">
-    {{ request.statut }}</td>
-</ng-container>
-
-
-<!-- ********* ****** ********* -->
-<!-- ********* Numéro DEMANDE ********* -->
-<!-- ********* ****** ********* -->
-<ng-container matColumnDef="id">
-  <th mat-header-cell mat-sort-header *matHeaderCellDef>
-    Numéro
-  </th>
-  <td mat-cell *matCellDef="let request">
-    {{request.id}}
-  </td>
-</ng-container>
-
-<!-- ********* ****** ********* -->
-<!-- ********* OUTILLAGE ********* -->
-<!-- ********* ****** ********* -->
-<ng-container matColumnDef="tool">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>
-    Outillage
-  </th>
-  <td mat-cell *matCellDef="let request">
-    <ion-label *ngIf="request.controle">OT{{request.controle.outillage.sapToolNumber}} -
-      {{request.controle.outillage.designation}}</ion-label>
-    <ion-label *ngIf="request.maintenance">OT{{request.maintenance.outillage.sapToolNumber}} -
-      {{request.maintenance.outillage.designation}}</ion-label>
-  </td>
-</ng-container>
-
-
-<!-- ********* ******** ******** -->
-<!-- **** DATE DE CRETATION **** -->
-<!-- ********* ******* ********* -->
-<ng-container matColumnDef="createdAt">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>
-    Date demande
-  </th>
-  <td mat-cell *matCellDef="let request">
-    {{request.createdAt | date :"EE dd MMM yyyy":"local" }}
-  </td>
-</ng-container>
-
-
-<!-- ********* ****** ********* -->
-<!-- ********* DEMANDEUR ********* -->
-<!-- ********* ****** ********* -->
-<ng-container matColumnDef="userCreat">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>
-    Demandeur
-  </th>
-  <td mat-cell *matCellDef="let request" (click)="userClick()">
-    <ion-label *ngIf="request.controle">{{request.controle.demandeur.username}}</ion-label>
-    <ion-label *ngIf="request.maintenance">{{request.maintenance.demandeur.username}}</ion-label>
-  </td>
-</ng-container>
-<!-- TODO a supprimer -->
-<!-- <ng-container matColumnDef="groupAffectation">
-            <th mat-header-cell *matHeaderCellDef>
-                Affectation
-            </th>
-            <td mat-cell *matCellDef="let request" (click)="userClick()">
-                <ion-label *ngIf="request.groupeAffectation">{{request.groupeAffectation}}</ion-label>
-            </td>
-        </ng-container> -->
-
-
-<!-- ********* ****** ********* -->
-<!-- ********* DATE BESOIN ********* -->
-<!-- ********* ****** ********* -->
-<ng-container matColumnDef="needDate">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>
-    Date Besoin
-  </th>
-  <td mat-cell *matCellDef="let request">
-    <ion-label *ngIf="request.controle"> {{request.controle.dateBesoin| date :"dd MMMM yyyy":"local"}}</ion-label>
-    <ion-label *ngIf="request.maintenance"> {{request.maintenance.dateBesoin| date :"dd MMMM yyyy":"local"}}
-    </ion-label>
-  </td>
-</ng-container>
-
-
-<!-- ********* ****** ********* -->
-<!-- ********* BOUTONS ********* -->
-<!-- ********* ****** ********* -->
-<ng-container matColumnDef="buttons">
-  <th mat-header-cell *matHeaderCellDef>
-
-  </th>
-  <td mat-cell *matCellDef="let request">
-    <ion-button size=small *ngIf="request.controle" (click)="openControlClick(request)">
-      Ouvrir
-    </ion-button>
-    <ion-button size=small *ngIf="request.maintenance" (click)="openMaintenanceClick(request)">
-      Ouvrir
-    </ion-button>
-    <ion-button size=small *ngIf="isAdmin" (click)="removeRequestClick(request)">
-      <ion-icon slot="end" name="trash-outline"></ion-icon>
-      Delete
-    </ion-button>
-  </td>
-</ng-container>
-<!-- <tr mat-header-row *matHeaderRowDef="displayedRequestColumns ;sticky: true"></tr>
-  <tr mat-row *matRowDef="let request; columns: displayedRequestColumns"
-    [@openClose]=" (request.statut==='EN COURS DE REALISATION') ? 'open' : ''"></tr>
-</table> -->

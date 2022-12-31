@@ -8,7 +8,6 @@ import { MaterialModule } from './material.module';
 import { IndicatorsModule } from './indicators/indicators.module';
 import { UserSheetComponent } from './components/user-sheet/user-sheet.component';
 import { UserPopoverComponent } from './components/user-popover/user-popover.component';
-import { LoginNoticeComponent } from './notices/login-notice/login-notice.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { MatSortModule } from '@angular/material/sort';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
@@ -20,18 +19,18 @@ import { AlertService } from './services/divers/alert.service';
 import { LoadingService } from './services/divers/loading.service';
 import { UsersService } from './services/users/users.service';
 import { IddleService } from './services/iddle.service';
+import { NotificationsService } from './services/notifications/notifications.service';
 
 @NgModule({
   declarations: [
     SharedUserHeaderComponent,
     UserSheetComponent,
     UserPopoverComponent,
-    LoginNoticeComponent,
     ChangePasswordComponent,
     BorderColorDirective,
     HeaderRowDirective,
     DataRowDirective,
-    TableComponent
+    TableComponent,
   ],
   imports: [
     CommonModule,
@@ -53,19 +52,20 @@ import { IddleService } from './services/iddle.service';
     SharedUserHeaderComponent,
     UserSheetComponent,
     UserPopoverComponent,
-    LoginNoticeComponent,
     EditorModule,
     BorderColorDirective,
     HeaderRowDirective,
     DataRowDirective,
-    TableComponent
+    TableComponent,
+
   ],
   providers: [
     LoadingService,
     AlertService,
     DatePipe,
     UsersService,
-    IddleService
+    IddleService,
+    NotificationsService
   ]
 })
 export class AppSharedModule { }

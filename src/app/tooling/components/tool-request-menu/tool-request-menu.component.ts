@@ -47,10 +47,10 @@ export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
       });
 
 
-    this.toolRequestsService.allToolRequests.asObservable()
-      .subscribe((toolRequests: ToolRequest[]) => {
-        this.newRequests = toolRequests.filter(request => request.statut === 'NOUVELLE').length;
-      });
+    // this.toolRequestsService.allToolRequests.asObservable()
+    //   .subscribe((toolRequests: ToolRequest[]) => {
+    //     this.newRequests = toolRequests.filter(request => request.statut === 'NOUVELLE').length;
+    //   });
   }
   buildManagerPage() {
     this.isManager = (this.roleGuard.isRole(['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL']) && this.authService.authUser.isActive);

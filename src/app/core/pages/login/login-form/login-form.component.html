@@ -1,0 +1,34 @@
+<form [formGroup]="loginForm" class="full-height" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
+  <div>
+    <div class="inputs ion-padding">
+      <ion-item>
+        <ion-label position="floating">Nom d'utilisateur
+          <ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-input usernameInput formControlName="username" required type="text" autocomplete=off autofocus="true">
+        </ion-input>
+        <ion-note>
+          Le nom d'utilisateur est le numéro de matricule présent sur le badge
+        </ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Mot de passe
+        </ion-label>
+        <ion-input #password type="password" value=""></ion-input>
+      </ion-item>
+    </div>
+    <div class="ion-justify-content-center ion-padding">
+      <ion-buttons class="buttons">
+        <ion-button block color="primary" type="submit" fill=solid [disabled]="loginForm.invalid">
+          Se connecter
+        </ion-button>
+        <ion-button color="primary" [routerLink]="['/register']"> Créer un compte
+        </ion-button>
+        <ion-button disabled="true" color="secondary" fill=solid type="submit">
+          <ion-icon slot="start" name="accessibility-outline"></ion-icon>
+          Visiteur
+        </ion-button>
+      </ion-buttons>
+    </div>
+  </div>
+</form>

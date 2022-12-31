@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,10 @@ export class TitleService {
   ) { }
 
   setTitle(newTitle: string): void {
-    this.titleService.setTitle(newTitle);
-    this.title.next(this.getTitle());
+    const prefixe: string = (environment.name === '') ? '' : `${environment.name} - `;
+    const title: string = `${prefixe}${newTitle}`;
+    this.titleService.setTitle(title);
+    this.title.next(newTitle);
   }
 
   getTitle(): string {

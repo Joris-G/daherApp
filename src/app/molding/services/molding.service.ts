@@ -14,6 +14,7 @@ import { OtherMaterialsService } from './other-materials.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { RequestService } from 'src/app/shared/services/request.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 /**
  * Service de gestion des moulages
@@ -44,6 +45,7 @@ export class MoldingService {
     private alertService: AlertService,
     private navCtrl: NavController,
     private loadingService: LoadingService,
+    private http: HttpClient,
   ) {
     this.moldingStatus$ = this.moldingStatus.moldingStatus.asObservable();
   }
@@ -99,6 +101,9 @@ export class MoldingService {
     //       console.log(resp);
     //       this.molding.materialSupplementary = resp;
     // resp.subscribe(() => {
+
+
+
     this.loadingService.startLoading('Sauvegarde du moulage en cours');
     const saveMethod = (this.molding.id) ? this.patchMolding() : this.postMolding();
     saveMethod
@@ -106,12 +111,19 @@ export class MoldingService {
         next: (val) => {
           this.loadingService.stopLoading();
           this.molding = val;
-          if (print) { this.printMolding(); }
         },
         error: (err) => {
           this.loadingService.stopLoading();
         }
       });
+
+
+
+    // const headers = new HttpHeaders();
+    // headers.append('Authorization', `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3MTY1NTkxOCwiZXhwIjoxNjcyMjYwNzE4fQ.T4VYADbQCQwKFhuACjlnn224rQi3j-ruVZeJcjFDivk`);
+    // this.http.post("http://localhost:5000/new_molding/", null, { headers }).subscribe((resp) => {
+    //   console.log(resp);
+    // });
     // });
 
     // });

@@ -58,7 +58,7 @@ import { ToolingPage } from '../pages/tooling.page';
     ToolRequestFiltersComponent,
   ],
   imports: [
-    AppSharedModule
+    AppSharedModule,
   ]
 })
 export class ToolingComponentsModule { }

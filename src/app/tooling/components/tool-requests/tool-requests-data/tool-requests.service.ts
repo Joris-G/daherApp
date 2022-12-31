@@ -42,7 +42,7 @@ export class ToolRequestsService {
       .pipe(
         switchMap((pageNumber) => {
           this.requestsAreLoading = true;
-          return this.getToolRequests(pageNumber, 5)
+          return this.getToolRequests(pageNumber, 3)
         }),
         switchMap((newToolRequestsElements: ToolRequest[]) => {
           this.toolRequestsList.push(...newToolRequestsElements);
@@ -55,9 +55,9 @@ export class ToolRequestsService {
         this.filtersList.next(filterResult);
       });
 
-    this.getAllToolRequests().subscribe((toolRequests: ToolRequest[]) => {
-      this.allToolRequests.next(toolRequests);
-    });
+    // this.getAllToolRequests().subscribe((toolRequests: ToolRequest[]) => {
+    //   this.allToolRequests.next(toolRequests);
+    // });
 
     this.filters.subscribe(() => {
       this.filtersList.next(this.filterData());

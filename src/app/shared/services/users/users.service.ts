@@ -1,5 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { User, UserIri } from 'src/app/_interfaces/user';
@@ -12,6 +11,8 @@ import { SericesService } from './serices.service';
 import { UniteService } from './unite.service';
 import { UsineService } from './usine.service';
 import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { LoadingService } from '../divers/loading.service';
 
 const JORIS: User = {
   id: 1,
@@ -34,7 +35,8 @@ export class UsersService {
     private serviceService: SericesService,
     private programService: ProgramsService,
     private uniteService: UniteService,
-    private usineService: UsineService
+    private usineService: UsineService,
+    private loadingService: LoadingService,
   ) { }
 
 
@@ -67,11 +69,15 @@ export class UsersService {
    *
    *
    * @param userObj un objet User
-   * @return retourne une Promise<User>
+   * @return retourne un Observable<User>
    * @memberof UsersService
    */
-  registerUser(userObj: UserIri) {
-    return this.requestService.createPostRequest(environment.usineApi + 'users', userObj);
+  registerUser(userObj: UserIri): Observable<User> {
+    this.loadingService.startLoading(`Patienter pendant la création de l'utilisateur`);
+    return this.requestService.createPostRequest(environment.usineApi + 'users', userObj)
+      .pipe(
+        finalize(() => this.loadingService.stopLoading())
+      );
   }
 
 

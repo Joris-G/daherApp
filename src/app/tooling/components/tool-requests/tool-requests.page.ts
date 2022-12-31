@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AlertService } from 'src/app/shared/services/divers/alert.service';
-import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
-import { ToolRequestTableDataSourceService } from './tool-request-table-data-source.service';
 import { ToolRequestsService } from './tool-requests-data/tool-requests.service';
 
 @Component({
@@ -25,7 +20,7 @@ export class ToolRequestsPage {
     // private tableDataService: ToolRequestTableDataSourceService,
     public toolRequestsService: ToolRequestsService
   ) {
-    // this.toolRequests$ = this.toolRequestsService.filtersList
+
   }
 
   ionViewWillEnter() {
@@ -34,4 +29,5 @@ export class ToolRequestsPage {
   reloadClick() {
     // this.tableDataService.refreshDatas();
   }
+  nextClick() { this.toolRequestsService.getNextPage() }
 }

@@ -1,24 +1,31 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SwPush } from '@angular/service-worker';
+import { io } from "socket.io-client";
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationsService {
+
+  public socket = io("http://localhost:5000", {
+    reconnectionDelayMax: 10000,
+    query: {
+      "my-key": "my-value"
+    }
+  });
+
   private httpHeaders = new HttpHeaders()
     .append('Access-Control-Allow-Origin', '*');
 
 
   constructor(
-    // private socket: Socket,
-    // private _swPush: SwPush,
     private http: HttpClient) {
-
-
     Notification.requestPermission()
       .then((returnedPermission) => {
         console.log(returnedPermission);
         if (returnedPermission === 'granted') {
+          this.socket.on('new_molding', (data) => {
+            console.log("new_molding received")
+          });
           // this.socket.on('connect_failed', () => { });
           // this.socket.on('notification', data => {
           // this.data = data;
@@ -35,11 +42,17 @@ export class NotificationsService {
           // });
         }
       });
+    this.socket.on('new_molding', () => {
+      console.log("new molding alert");
+    })
   }
+
   newNotif() {
-    this.http.post('http://localhost:3000/send-notification', { message: 'testmessage' }, { headers: this.httpHeaders })
+    this.http.post('http://localhost:5000/send-notification', { message: 'testmessage' }, { headers: this.httpHeaders })
       .subscribe((res) => {
         // alert(res);
       });
   }
+
+
 }

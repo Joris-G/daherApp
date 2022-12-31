@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   name: 'DEV',
-  apiServer: 'http://DHR56792/',
+  apiServer: 'http://DHR56792:80/',
   moldingApi: 'Tracakit-api-dev/public/index.php/api/',
   toolApi: 'outillage-api-dev/public/index.php/api/',
   usineApi: 'usine-api-dev/public/index.php/api/',

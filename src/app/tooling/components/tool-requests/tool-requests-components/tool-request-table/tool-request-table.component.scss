@@ -7,6 +7,19 @@ ion-grid {
   ion-row>ion-col{
     padding: 10px 0;
   }
+  ion-row>ion-col:first-child{
+    justify-content: center !important;
+  }
+}
+
+.circle{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // color: var(--ion-color-medium);
 }
 
 

@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { NoticeService } from '../../services/notice/notice.service';
+import { NoticeService } from 'src/app/shared/services/notice/notice.service';
 
 @Component({
   selector: 'app-login-notice',
   templateUrl: './login-notice.component.html',
   styleUrls: ['./login-notice.component.scss'],
 })
-export class LoginNoticeComponent implements OnInit {
-
+export class LoginNoticeComponent {
   constructor(private noticeService: NoticeService) { }
-
-  ngOnInit() { }
   backClick() {
     this.noticeService.closeModal();
   }
+
 }

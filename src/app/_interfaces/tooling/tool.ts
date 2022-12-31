@@ -14,3 +14,17 @@ export class Tool {
   //   return `api/tools/${this.id}`;
   // }
 }
+
+export class OtherTool {
+
+  id?: number;
+  identification: string;
+  description?: string;
+  designation: string;
+  programmeAvion?: string;
+
+
+  // getIri(): string{
+  //   return `api/tools/${this.id}`;
+  // }
+}

@@ -3,10 +3,9 @@ import { ToolRequest, ToolRequestIri, MaintenanceItem, SpecMaintRep, SpecMaintRe
   from 'src/app/_interfaces/tooling/tool-request';
 import { environment } from 'src/environments/environment';
 import { ToolService } from 'src/app/tooling/services/tool.service';
-import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { catchError, concatMap, finalize, map, share, mergeMap, switchMap } from 'rxjs/operators';
 import { RequestService } from 'src/app/shared/services/request.service';
-import { AuthService } from 'src/app/shared/services/users/auth.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 
 @Injectable({

@@ -1,0 +1,58 @@
+<form [formGroup]="registerForm">
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color=primary>Role dans l'application</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngIf="datas$ | async as data; else loading">
+        <ion-item>
+          <ion-label color=primary>Site
+            <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-select required formControlName="site" placeholder="Selectionner un site">
+            <ion-select-option *ngFor="let site of data[0]" [value]="site.id">
+              {{site.nom}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color=primary>Unite
+            <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-select required formControlName="unite" placeholder="Selectionner une unité">
+            <ion-select-option *ngFor="let unite of data[1]" [value]="unite.id">
+              {{unite.nom}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color=primary>Service
+            <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-select required formControlName="service" placeholder="Sélectionner un service">
+            <ion-select-option *ngFor="let service of data[2]" [value]="service.id">
+              {{service.nom}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Poste
+            <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-select required name="poste" formControlName="poste" placeholder="Sélectionner un poste">
+            <ion-select-option *ngFor="let role of data[3]" [value]="role.id">
+              {{role.libelle}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+      <ng-template #loading>
+        <ion-progress-bar type="indeterminate"></ion-progress-bar>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
+</form>

@@ -35,7 +35,7 @@ export class RequestService {
    */
   constructor(private http: HttpClient) { }
 
-  createPostRequest(url: string, body: any, full = false): Observable<any> {
+  createPostRequest(url: string, body?: any, full = false): Observable<any> {
     return this.http.post<HttpResponse<any>>(
       environment.apiServer + url,
       body,

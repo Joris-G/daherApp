@@ -35,7 +35,6 @@ export class ToolRequestTableComponent implements OnInit {
     this.newToolRequestsList$ = this.toolRequestsService.filtersList.asObservable();
   }
 
-  nextClick() { this.toolRequestsService.getNextPage() }
   openRequestClick(requestToOpen: ToolRequest) {
     if (requestToOpen.controle) { this.navCtrl.navigateForward('tooling/3D-tool/' + requestToOpen.id); }
     if (requestToOpen.maintenance) { this.navCtrl.navigateForward('tooling/repair-tool/' + requestToOpen.id); }
@@ -71,9 +70,9 @@ export class ToolRequestTableComponent implements OnInit {
   // TODO Créer une directive pour la bordure
   getBorder(request: ToolRequest | string): string {
     if (this.getType(request) === 'controle') {
-      return '4px lawngreen solid';
+      return 'solid 2px lawngreen';
     } else if (this.getType(request) === 'maintenance') {
-      return '4px yellow solid';
+      return 'solid 2px yellow';
     }
   }
 
