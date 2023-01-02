@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AppSharedModule } from 'src/app/shared/shared.module';
 import { Control3DPage } from '../components/control3-d/control.page';
+import { Control3DFormComponent } from '../components/control3-d/control3-dform/control3-dform.component';
 import { ControledddComponent } from '../components/controle3d/controleddd.component';
 import { IndicatorsPage } from '../components/indicators/indicators.page';
 import { MaintenanceItemComponent } from '../components/maintenance-item/maintenance-item.component';
@@ -36,7 +37,8 @@ import { ToolingPage } from '../pages/tooling.page';
     ToolRequestsPage,
     ToolRequestMenuComponent,
     ToolRequestTableComponent,
-    ToolRequestFiltersComponent
+    ToolRequestFiltersComponent,
+    Control3DFormComponent
   ],
   exports: [
     ToolingPage,
@@ -56,6 +58,7 @@ import { ToolingPage } from '../pages/tooling.page';
     ToolRequestMenuComponent,
     ToolRequestTableComponent,
     ToolRequestFiltersComponent,
+    Control3DFormComponent,
   ],
   imports: [
     AppSharedModule,

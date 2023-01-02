@@ -10,7 +10,7 @@ export enum RequestType {
   controle = 3
 }
 
-export interface ToolRequest {
+export class ToolRequest {
   id?: number;
   demandeur?: User | string;
   bloquantProd: boolean;
@@ -29,6 +29,7 @@ export interface ToolRequest {
   controle?: SpecCtrl;
   maintenance?: SpecMaintRep;
   sbo?: SpecSBO;
+  constructor() { }
 }
 
 export interface ToolRequestIri {
@@ -80,7 +81,7 @@ export class ToolRequestFormGroup extends FormGroup {
   }
 }
 
-export interface SpecCtrl {
+export class SpecCtrl {
   id?: number;
   outillage: Tool;
   // equipement?: Equipement;
@@ -108,6 +109,7 @@ export interface SpecCtrl {
   userModif?: User;
   interventionDate?: Date;
   statut?: string;
+  constructor() { }
 }
 
 export interface SpecCtrlIri {

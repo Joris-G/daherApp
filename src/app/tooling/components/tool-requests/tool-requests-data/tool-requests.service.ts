@@ -38,30 +38,30 @@ export class ToolRequestsService {
   constructor(
     private requestService: RequestService,
   ) {
-    this.pageCounter.asObservable()
-      .pipe(
-        switchMap((pageNumber) => {
-          this.requestsAreLoading = true;
-          return this.getToolRequests(pageNumber, 3)
-        }),
-        switchMap((newToolRequestsElements: ToolRequest[]) => {
-          this.toolRequestsList.push(...newToolRequestsElements);
-          this.populateFilter();
-          return of(this.filterData());
-        })
-      )
-      .subscribe((filterResult: ToolRequest[]) => {
-        this.requestsAreLoading = false;
-        this.filtersList.next(filterResult);
-      });
+    // this.pageCounter.asObservable()
+    //   .pipe(
+    //     switchMap((pageNumber) => {
+    //       this.requestsAreLoading = true;
+    //       return this.getToolRequests(pageNumber, 3)
+    //     }),
+    //     switchMap((newToolRequestsElements: ToolRequest[]) => {
+    //       this.toolRequestsList.push(...newToolRequestsElements);
+    //       this.populateFilter();
+    //       return of(this.filterData());
+    //     })
+    //   )
+    //   .subscribe((filterResult: ToolRequest[]) => {
+    //     this.requestsAreLoading = false;
+    //     this.filtersList.next(filterResult);
+    //   });
 
     // this.getAllToolRequests().subscribe((toolRequests: ToolRequest[]) => {
     //   this.allToolRequests.next(toolRequests);
     // });
 
-    this.filters.subscribe(() => {
-      this.filtersList.next(this.filterData());
-    });
+    // this.filters.subscribe(() => {
+    //   this.filtersList.next(this.filterData());
+    // });
   }
 
   getAllToolRequests(): Observable<ToolRequest[]> {
@@ -100,7 +100,7 @@ export class ToolRequestsService {
   }
 
 
-  filterData(): ToolRequest[] {
+  private filterData(): ToolRequest[] {
     const filters = this.filters.getValue();
     if (filters.length === 0) { return this.toolRequestsList }
     return this.toolRequestsList.filter(
@@ -124,6 +124,7 @@ export class ToolRequestsService {
       });
     });
   }
+
   private getCompareElement(filterProp: string, toolRequest): string {
     if (filterProp === 'tool') {
       if (toolRequest.type === 'Maintenance') {

@@ -3,26 +3,101 @@ import { ToolRequest, ToolRequestIri, MaintenanceItem, SpecMaintRep, SpecMaintRe
   from 'src/app/_interfaces/tooling/tool-request';
 import { environment } from 'src/environments/environment';
 import { ToolService } from 'src/app/tooling/services/tool.service';
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
-import { catchError, concatMap, finalize, map, share, mergeMap, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, merge, Observable, of, zip } from 'rxjs';
+import { catchError, concatMap, finalize, map, share, mergeMap, switchMap, concatMapTo, flatMap } from 'rxjs/operators';
 import { RequestService } from 'src/app/shared/services/request.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToolRequestService {
-  public loading$: Observable<boolean>;
+  toolRequest$: Observable<any>;
+  loading$: Observable<boolean>;
   private loadingSubject = new BehaviorSubject<boolean>(false);
+
   constructor(
     private requestService: RequestService,
     private toolService: ToolService,
     private userService: UsersService,
+    private loaderService: LoadingService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
   ) {
     this.loading$ = this.loadingSubject.asObservable();
   }
 
-  loadMaintenanceData(id: string) {
+  initToolRequest(): void {
+    console.log('init Tool request');
+    const requestType: string = this.getToolRequestType();
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    switch (requestType) {
+      case "3D-tool":
+        console.log("case 3D-tool");
+        this.toolRequest$ = this.getControlData(id)
+        break;
+
+      default:
+        break;
+    }
+
+    if (id) {
+
+      // this.loadControlData(id);
+    } else {
+      // this.requestState.canUpdate = false;
+    }
+  }
+
+  private getControlData(idDemande: string | null) {
+    return this.getToolRequest(idDemande)
+      .pipe(
+        concatMap((responseToolRequest) => {
+          const id = responseToolRequest.controle?.id;
+          return zip(of(responseToolRequest),
+            this.getControl(id))
+        })
+      );
+  }
+  //     =>{
+
+  //    responseToolRequest => {
+  //     console.log(responseToolRequest);
+  //     const id = responseToolRequest.controle?.id;
+  //     return ;
+  //   })
+  // );
+
+
+
+  // .subscribe((responseRequest: ToolRequest) => {
+  //   // ToolRequest
+  //   console.log(responseRequest);
+
+
+  //     // Controle
+  //     .subscribe((responseControle: SpecCtrl) => {
+  //       console.log(responseControle.id);
+  //       this.controlForm.patchValue(responseControle);
+  //       this.controlForm.controls.id.setValue(responseControle.id);
+  //       console.log(this.controlForm.value);
+  //       this.page.title = 'Modification demande de contrôle 3D : ID ' + this.toolRequestForm.value.id;
+  //     });
+  // },
+  //   () => {
+  //     this.navCtrl.back();
+  //   });
+  // }
+
+
+  private getToolRequestType() {
+    return this.router.url.split('/').pop();
+  }
+
+  loadMaintenanceData(id: string | null) {
+    this.loaderService.startLoading('Patienter pendant le chargement');
     return this.getToolRequest(id)
       .pipe(
         concatMap(
@@ -30,7 +105,8 @@ export class ToolRequestService {
             .pipe(
               map(specMaint => ({ request, specMaint }))
             )
-        )
+        ),
+        finalize(() => this.loaderService.stopLoading())
       );
   }
   getType(request: ToolRequest | string): string {
@@ -162,8 +238,8 @@ export class ToolRequestService {
       );
   }
 
-  getToolRequest(id): Observable<ToolRequest | undefined> {
-    return this.requestService.createGetRequest(`${environment.toolApi}demandes/${id}`);
+  getToolRequest(id: string): Observable<ToolRequest | undefined> {
+    return (!id) ? of(new ToolRequest()) : this.requestService.createGetRequest(`${environment.toolApi}demandes/${id}`)
   }
 
   getToolRequests(): Observable<any> {
@@ -178,8 +254,9 @@ export class ToolRequestService {
   }
 
 
-  getControl(id: number): Observable<SpecCtrl | undefined> {
-    return this.requestService.createGetRequest(`${environment.toolApi}controles/${id}`);
+  getControl(id: number): Observable<SpecCtrl> {
+    if (!id) { return of(new SpecCtrl()) }
+    return this.requestService.createGetRequest(`${environment.toolApi}controles/${id}`) as Observable<SpecCtrl>;
   }
 
 

@@ -14,6 +14,7 @@ import { ToolRequestsService } from './components/tool-requests/tool-requests-da
 import { ToolRequestsPage } from './components/tool-requests/tool-requests.page';
 import { ToolingComponentsModule } from './modules/components.module';
 import { ToolingPage } from './pages/tooling.page';
+import { ToolRequestManager } from './services/tool-request-manager.service';
 import { ToolRequestService } from './services/tool-request.service';
 import { ToolService } from './services/tool.service';
 
@@ -77,6 +78,7 @@ const routes: Routes = [
     ToolService,
     ToolRequestService,
     ToolRequestsService,
+    ToolRequestManager,
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
