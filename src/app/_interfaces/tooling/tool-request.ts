@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, AbstractFormGroupDirective, FormControl, FormGroup } from '@angular/forms';
 import { RequestStatus } from 'src/app/_enums/request-status';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
@@ -84,6 +84,11 @@ export class ToolRequestFormGroup extends FormGroup {
 export class SpecCtrl {
   id?: number;
   outillage: Tool;
+  outillNoRefSAP: {
+    identification: string,
+    description: string,
+    localisation: string
+  }
   // equipement?: Equipement;
   dateBesoin: Date;
   description: string;
@@ -100,6 +105,7 @@ export class SpecCtrl {
   infosComplementaire?: string;
   ligneBudgetaire: string;
   visaControleur?: string;
+
 
   userCreat?: string;
   demandeur?: User;
@@ -140,8 +146,28 @@ export interface SpecCtrlIri {
   userModif?: string;
 }
 
+export interface OutillNoRefSAP {
+  identification: string,
+  description: string,
+  localisation: string
+}
+export class OutillNoRefSAPFormGroup extends FormGroup {
+  value: OutillNoRefSAP;
+  controls: {
+    identification: AbstractControl,
+    description: AbstractControl,
+    localisation: AbstractControl<string>
+  };
+  constructor() {
+    super({
+      identification: new FormControl(''),
+      description: new FormControl(''),
+      localisation: new FormControl(''),
+    });
+  }
+}
 
-export interface SpecCtrlFormGroup extends FormGroup {
+export class SpecCtrlFormGroup extends FormGroup {
   value: SpecCtrl;
   controls: {
     refPlan: AbstractControl;
@@ -157,10 +183,36 @@ export interface SpecCtrlFormGroup extends FormGroup {
     moyenMesure: AbstractControl;
     infosComplementaire: AbstractControl;
     outillage: AbstractControl;
+    outillNoRefSAP: OutillNoRefSAPFormGroup;
     ligneBudgetaire: AbstractControl;
     statut: AbstractControl;
     visaControleur: AbstractControl;
+    bloquantProd: AbstractControl;
+    immobilisationOutillage: AbstractControl;
   };
+  constructor() {
+    super({
+      refPlan: new FormControl(''),
+      indPlan: new FormControl(''),
+      cheminCAO: new FormControl(''),
+      description: new FormControl(''),
+      detailsControle: new FormControl(''),
+      tolerances: new FormControl(''),
+      dispoOut: new FormControl(''),
+      dateBesoin: new FormControl(''),
+      typeRapport: new FormControl(''),
+      // interventionDate: new FormControl(''),
+      moyenMesure: new FormControl(''),
+      infosComplementaire: new FormControl(''),
+      outillage: new FormControl(''),
+      outillNoRefSAP: new OutillNoRefSAPFormGroup(),
+      ligneBudgetaire: new FormControl(''),
+      statut: new FormControl(''),
+      visaControleur: new FormControl(''),
+      bloquantProd: new FormControl(''),
+      immobilisationOutillage: new FormControl(''),
+    });
+  }
 }
 
 
@@ -181,6 +233,11 @@ export enum MoyenMesure {
 export class SpecMaintRep {
   id?: number;
   outillage?: Tool;
+  outillNoRefSAP: {
+    identification: string,
+    description: string,
+    localisation: string
+  }
   // equipement: string;
   // OT?: Tool;
   // equipement?: string;
@@ -241,17 +298,19 @@ export interface SpecMaintRepIri {
 
 export class MaintFormGroup extends FormGroup {
   value: SpecMaintRep;
-  // controls: {
-  //   id?: AbstractControl;
-  //   outillage?: AbstractControl;
-  //   equipement?: AbstractControl;
-  //   dateBesoin?: AbstractControl;
-  //   image?: AbstractControl;
-  //   fichier?: AbstractControl;
-  //   sigle?: AbstractControl;
-  //   userValideur?: AbstractControl;
-  //   dateValid?: AbstractControl;
-  // };
+  controls: {
+    id?: AbstractControl;
+    outillage?: AbstractControl;
+    equipement?: AbstractControl;
+    dateBesoin?: AbstractControl;
+    image?: AbstractControl;
+    fichier?: AbstractControl;
+    sigle?: AbstractControl;
+    userValideur?: AbstractControl;
+    dateValid?: AbstractControl;
+    itemActionCorrective: ItemActionCorrectiveFormGroup;
+    outillNoRefSAP: OutillNoRefSAPFormGroup;
+  };
   constructor() {
     super(
       {
@@ -263,10 +322,20 @@ export class MaintFormGroup extends FormGroup {
         sigle: new FormControl(),
         userValideur: new FormControl(),
         dateValid: new FormControl(),
-        // itemActionCorrective: new FormControl()
+        itemActionCorrective: new ItemActionCorrectiveFormGroup(),
+        outillNoRefSAP: new OutillNoRefSAPFormGroup(),
       }
     );
     this.value.itemActionCorrective = [new MaintenanceItem(1)]
+  }
+}
+
+export class ItemActionCorrectiveFormGroup extends FormGroup {
+  value: any;
+  controls: {
+  }
+  constructor() {
+    super({});
   }
 }
 

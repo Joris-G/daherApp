@@ -4,7 +4,7 @@ export class Tool {
   identification: string;
   sapToolNumber: string;
   designation: string;
-  programmeAvion?: string;
+  programme?: any;
   description?: string;
 
   static isTool(inputValue: any) {

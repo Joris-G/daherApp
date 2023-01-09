@@ -8,78 +8,9 @@
   <div class="content-container">
     <!-- <form class="main-form" style="display:flex;" [formGroup]=""> -->
     <div class="left-side">
-      <!-- ******************************* -->
-      <!-- *******   L'OUTILLAGE   ********* -->
-      <!-- ******************************* -->
-      <ion-card color=light padding class="tool">
-        <ion-card-header>
-          <ion-card-title class="ion-text-uppercase">L'outillage</ion-card-title>
-        </ion-card-header>
-        <app-tool-input [(ngModel)]="maintRep.outillage">
-        </app-tool-input>
-        <ion-item>
-          <ion-label>Programme avion</ion-label>
-          <ion-input type="text" placeholder="Renseigner le programme"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Objet de la maintenance</ion-label>
-          <ion-input type="text" placeholder="Description de l'outillage"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Bloquant Prod</ion-label>
-          <ion-toggle [(ngModel)]="toolRequestForm.value.bloquantProd" slot="end"></ion-toggle>
-        </ion-item>
-      </ion-card>
-
-      <!-- ************************************ -->
-      <!-- ****   LISTE DES MAINTENANCES   **** -->
-      <!-- ************************************ -->
-      <ion-card color="light" class="maintenance-list">
-        <ion-card-header class="flex-row" color=light>
-          <ion-card-title class="ion-text-uppercase">La maintenance</ion-card-title>
-          <!-- ****   BOUTONS   **** -->
-          <ion-button (click)="addMaintenanceItemClick()" size=small>
-            <ion-icon slot="start" name="add"></ion-icon>
-            Ajouter maintenance
-          </ion-button>
-        </ion-card-header>
-        <ion-card-content>
-          <!-- ****   LISTE   **** -->
-          <ion-list>
-            <ion-list-header>
-              <ion-label>Liste des maitenances</ion-label>
-            </ion-list-header>
-            <!-- TODO Ajouter une directive pour hilight hover -->
-            <ng-container *ngIf="maintRep.itemActionCorrective">
-
-              <ion-item button lines="full" *ngFor="let maintenanceItem of maintRep.itemActionCorrective.reverse()"
-                (click)="selectedItem = maintenanceItem">
-                <ion-label>{{maintenanceItem.rep}}</ion-label>
-              </ion-item>
-            </ng-container>
-          </ion-list>
-          <!-- <app-maintenance-item *ngFor="let maintenanceItem of maintRepForm.value.itemActionCorrective?.reverse()"
-            [maintenanceItem]="maintenanceItem" (evValidateItem)="onValidateItem($event,maintenanceItem)"
-            (evRemoveItem)="onRemoveItem($event,maintenanceItem)" [canUpdate]="canUpDate"></app-maintenance-item> -->
-        </ion-card-content>
-      </ion-card>
+      <app-maint-repair-form [(maintForm)]="maintForm" [(toolRequestForm)]="toolRequestForm">
+      </app-maint-repair-form>
     </div>
-    <ng-container *ngIf="selectedItem" class="righSide">
-      <!-- ************************************ -->
-      <!-- ****   MAINTENANCE ITEM   **** -->
-      <!-- ************************************ -->
-      <ion-card color="light">
-        <ion-card-header class="flex-row" color=light>
-          <ion-card-title class="ion-text-uppercase">DETAIL MAINTENANCE</ion-card-title>
-          <!-- ****   BOUTONS   **** -->
-        </ion-card-header>
-        <ion-card-content>
-          <!-- ****   LISTE   **** -->
-          <app-maintenance-item [maintenanceItem]="selectedItem" (evRemoveItem)="onRemoveItem($event,selectedItem)"
-            [canUpdate]="canUpDate"></app-maintenance-item>
-        </ion-card-content>
-      </ion-card>
-    </ng-container>
     <!-- </form> -->
     <!-- <app-spec-maintenance-reparation *ngIf="toolRequest" [toolRequest]="toolRequest"></app-spec-maintenance-reparation> -->
   </div>
@@ -87,6 +18,6 @@
 </ion-content>
 <ion-footer>
   <app-tool-request-footer (evStatusChange)="onChangeStatut($event)" (evSubmit)="submitMaintenanceForm()"
-    (evUpdate)="updateForm()" (evAffectationChange)="onAffectationChange($event)" [canManage]="canManage"
-    [canUpdate]="canUpDate"></app-tool-request-footer>
+    (evUpdate)="updateForm()" (evAffectationChange)="onAffectationChange($event)" [canManage]="requestState.canManage"
+    [canUpdate]="requestState.canUpdate"></app-tool-request-footer>
 </ion-footer>

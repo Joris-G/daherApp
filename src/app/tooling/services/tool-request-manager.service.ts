@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 
-export interface RequestState {
-  canUpdate: boolean;
-  canManage: boolean;
+export class RequestState {
+  canUpdate: boolean = false;
+  canManage: boolean = false;
+
 }
 @Injectable({
   providedIn: 'root'

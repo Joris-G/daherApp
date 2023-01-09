@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, ValidatorFn, Validators, FormBuilder, ValidationErrors, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
@@ -11,6 +11,7 @@ import { User, UserIri } from 'src/app/_interfaces/user';
   styleUrls: ['./register-form.component.scss'],
 })
 export class RegisterFormComponent implements OnInit {
+  @Input('formGroup')
   registerForm: FormGroup;
 
 
@@ -29,7 +30,7 @@ export class RegisterFormComponent implements OnInit {
   createForms() {
     this.registerForm = this.formBuilder.group({
       roleForm: this.formBuilder.group({
-        poste: ['', Validators.required],
+        poste: [''],
         service: ['', Validators.required],
         site: ['', Validators.required],
         unite: ['', Validators.required],

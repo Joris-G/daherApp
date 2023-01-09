@@ -1,0 +1,8 @@
+ion-list-header>ion-label{
+    color: var(--ion-color-primary);
+    font-weight: bold;
+    text-decoration: underline;
+}
+ion-list-header>ion-label::after{
+    content: ' :';
+}

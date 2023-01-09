@@ -5,12 +5,14 @@ import { Control3DFormComponent } from '../components/control3-d/control3-dform/
 import { ControledddComponent } from '../components/controle3d/controleddd.component';
 import { IndicatorsPage } from '../components/indicators/indicators.page';
 import { MaintenanceItemComponent } from '../components/maintenance-item/maintenance-item.component';
+import { MaintRepairFormComponent } from '../components/maintenance-reparation/maint-repair-form/maint-repair-form.component';
 import { MaintenanceReparationPage } from '../components/maintenance-reparation/maintenance-reparation.page';
 import { ManageTeamPage } from '../components/manage-team/manage-team.page';
 import { NewToolPage } from '../components/new-tool/new-tool.page';
 import { SboComponent } from '../components/sbo/sbo.component';
 import { SpecMaintenanceReparationComponent } from '../components/spec-maintenance-reparation/spec-maintenance-reparation.component';
 import { ToolInputComponent } from '../components/tool-input/tool-input.component';
+import { ToolInputDirective } from '../components/tool-input/tool-input.directive';
 import { ToolListPage } from '../components/tool-list/tool-list.page';
 import { ToolRequestFooterComponent } from '../components/tool-request-footer/tool-request-footer.component';
 import { ToolRequestMenuComponent } from '../components/tool-request-menu/tool-request-menu.component';
@@ -38,7 +40,9 @@ import { ToolingPage } from '../pages/tooling.page';
     ToolRequestMenuComponent,
     ToolRequestTableComponent,
     ToolRequestFiltersComponent,
-    Control3DFormComponent
+    Control3DFormComponent,
+    ToolInputDirective,
+    MaintRepairFormComponent
   ],
   exports: [
     ToolingPage,
@@ -59,6 +63,8 @@ import { ToolingPage } from '../pages/tooling.page';
     ToolRequestTableComponent,
     ToolRequestFiltersComponent,
     Control3DFormComponent,
+    ToolInputDirective,
+    MaintRepairFormComponent
   ],
   imports: [
     AppSharedModule,

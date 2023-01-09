@@ -25,10 +25,12 @@ export class RoleFormComponent implements OnInit {
     private siteService: SiteService,
     private uniteService: UniteService,
     private roleService: RoleService,
-  ) { }
+  ) {
+    this.getDatas();
+  }
 
   ngOnInit() {
-    this.getDatas();
+    // this.getDatas();
   }
   private getDatas() {
     const services$ = this.serviceService.getServices();

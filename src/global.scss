@@ -61,3 +61,6 @@ ion-item[ng-reflect-button=false]{
   --background-focused: var(--ion-color-secondary);
   --background-focused-opacity: 0.8;
 }
+[slot="helper"]{
+  font-size: 14px;
+}

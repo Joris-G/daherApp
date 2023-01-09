@@ -1,8 +1,11 @@
 <ion-item>
   <ion-label>Outillage SAP : </ion-label>
-  <ion-label *ngIf="tool"> {{(tool.sapToolNumber.length > 5) ? ' OT' : ' OT0'}}</ion-label>
-  <ion-input (ionChange)="toolOnChange($event)" placeholder="n°OT SAP ou n° Equipement SAP"></ion-input>
-  <ion-spinner *ngIf="toolIsLoading" name="bubbles"></ion-spinner>
+  <!-- <ion-label *ngIf="tool"> {{(tool.sapToolNumber.length > 5) ? ' OT' : ' OT0'}}</ion-label> -->
+  <ion-input toolInput placeholder="n°OT SAP ou n° Equipement SAP">
+  </ion-input>
+  <ng-container *ngIf="!tool">
+    <ion-icon slot="end" name="close-outline" color=danger></ion-icon>
+  </ng-container>
   <ion-icon *ngIf="tool" slot="end" name="checkmark" color=success></ion-icon>
 </ion-item>
 <ng-container *ngIf="tool">
@@ -12,4 +15,9 @@
     </ion-label>
     <ion-input type="text" disabled="true" [value]="tool.designation"></ion-input>
   </ion-item>
+  <ion-item>
+    <ion-label>Programme avion</ion-label>
+    <ion-input type="text" disabled="true" [value]="tool.programme.designation"></ion-input>
+  </ion-item>
+
 </ng-container>

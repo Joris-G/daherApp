@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { InputCustomEvent, IonInput } from '@ionic/angular';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { ToolService } from 'src/app/tooling/services/tool.service';
+import { ToolInputService } from './tool-input.service';
 
 @Component({
   selector: 'app-tool-input',
@@ -11,62 +11,49 @@ import { ToolService } from 'src/app/tooling/services/tool.service';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      multi: false,
+      multi: true,
       useExisting: ToolInputComponent
-    }
+    },
   ]
 })
-// export class ToolInputComponent implements ControlValueAccessor {
-export class ToolInputComponent {
-  // @ViewChild('toolInput')
-  // toolInput: IonInput;
-
-  @Output()
-  emitTool: EventEmitter<Tool> = new EventEmitter()
-  public toolIsLoading = false;
+export class ToolInputComponent implements ControlValueAccessor, OnInit {
   disabled = false;
   public tool: Tool;
 
   constructor(
-    private toolService: ToolService,
+    private toolInputService: ToolInputService
   ) { }
-
-  // onChange = (tool: Tool) => { };
-  // onTouched = () => { };
-
-  toolOnChange(toolEvent: any) {
-    console.log(toolEvent);
-    // this.toolIsLoading = true;
-    // this.toolService.getToolByInput((toolEvent as InputCustomEvent).detail.value)
-    //   .then((responseTool: Tool) => {
-    //     // console.log(responseTool);
-    //     // this.onChange(responseTool);
-    //     this.tool = responseTool;
-    //     this.toolIsLoading = false;
-    //   },
-    //     () => {
-    //       this.onChange(null);
-    //       this.tool = null;
-    //       // this.toolInput.value = '';
-    //       this.toolIsLoading = false;
-    //       // this.evOnToolChange.emit(null);
-    //     });
+  ngOnInit(): void {
+    this.toolInputService.inputTool$
+      .subscribe((tool) => {
+        this.tool = tool;
+        this.onChange(tool);
+      });
   }
 
 
-  // writeValue(tool: Tool): void {
-  //   this.tool = tool;
+
+  // onInputChange() {
+  //   const value = this.inputElementRef.nativeElement.value;
+  //   this.onChange(value);
   // }
 
-  // registerOnChange(onChange: any): void {
-  //   this.onChange = onChange;
-  // }
-  // registerOnTouched(onTouched: any): void {
-  //   this.onTouched = onTouched;
-  // }
-  // setDisabledState?(isDisabled: boolean): void {
-  //   this.disabled = isDisabled;
-  // }
+  onChange = (tool: Tool) => { };
+  onTouched = () => { };
+
+  writeValue(tool: Tool): void {
+    this.tool = tool;
+  }
+
+  registerOnChange(onChange: any): void {
+    this.onChange = onChange;
+  }
+  registerOnTouched(onTouched: any): void {
+    this.onTouched = onTouched;
+  }
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
 
 
 }

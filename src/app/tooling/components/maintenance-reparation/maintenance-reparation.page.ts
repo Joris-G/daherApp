@@ -1,14 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonSelect, NavController } from '@ionic/angular';
-import { MaintenanceItem, SpecMaintRep, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request';
+import { MaintFormGroup, OutillNoRefSAPFormGroup, SpecMaintRep, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request';
 import { User } from 'src/app/_interfaces/user';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
-import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { switchMap } from 'rxjs/operators';
+import { MaintenanceToolRequestService } from '../../services/maintenance-tool-request.service';
+import { RequestState, ToolRequestManager } from '../../services/tool-request-manager.service';
 
 @Component({
   selector: 'app-maintenance-reparation',
@@ -16,50 +15,56 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./maintenance-reparation.page.scss'],
 })
 export class MaintenanceReparationPage {
+  requestState: RequestState = new RequestState();
+
+  maintForm: MaintFormGroup = new MaintFormGroup();
+  toolRequestForm: ToolRequestFormGroup = new ToolRequestFormGroup();
+  outillNoRefSAPForm: OutillNoRefSAPFormGroup = new OutillNoRefSAPFormGroup();
+
 
   @ViewChild('statut') ctrlStatut: IonSelect;
   public page = {
     title: 'Nouvelle demande Maintenance et Réparation'
   };
 
-
-  public canManage: boolean;
-  public canUpDate = false;
-  //TODO quelle est la différence entre formbuilder et new FormGroup ?
-  public toolRequestForm = new ToolRequestFormGroup();
-
   public maintRep: SpecMaintRep = new SpecMaintRep();
-  public selectedItem: MaintenanceItem;
   public userList: User[];
 
   constructor(
     private toolRequestService: ToolRequestService,
+    private maintenanceRequestService: MaintenanceToolRequestService,
     private alertService: AlertService,
     private navCtrl: NavController,
     private loadingService: LoadingService,
-    private roleGuard: RoleGuard,
-    private activatedRoute: ActivatedRoute,
+    private toolRequestManager: ToolRequestManager
   ) { }
 
-  ionViewWillEnter() {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if (id) {
-      this.loadMaintenanceData(id);
-      this.canUpDate = true;
-    } else {
-      this.canUpDate = false;
-    }
+
+  ionViewCanEnter() {
+    this.maintenanceRequestService.initMaintToolRequest();
+    this.maintenanceRequestService.maintToolRequest$
+      .subscribe((resp) => {
+        console.log(resp);
+        this.toolRequestForm.patchValue(resp[0]);
+        this.maintForm.patchValue(resp[1]);
+        this.requestState = this.toolRequestManager.getStatus(resp[0].statut)
+      });
   }
+
+  ionViewDidLeave() {
+    this.maintForm.reset();
+  }
+
 
   private loadMaintenanceData(idDemande: string) {
     this.loadingService.startLoading('Patienter pendant le chargement');
-    this.toolRequestService.loadMaintenanceData(idDemande)
+    this.maintenanceRequestService.loadMaintenanceData(idDemande)
       .subscribe((response) => {
         this.toolRequestForm.patchValue(response.request);
         this.maintRep = response.specMaint;
         response.specMaint.itemActionCorrective.map((item, indexItem) => item.rep = indexItem + 1);
         this.maintRep.itemActionCorrective = response.specMaint.itemActionCorrective;
-        this.selectedItem = this.maintRep.itemActionCorrective[0];
+        // this.selectedItem = this.maintRep.itemActionCorrective[0];
         this.loadingService.stopLoading();
       });
     // this.toolRequest = null;
@@ -111,11 +116,7 @@ export class MaintenanceReparationPage {
   //   console.log(this.maintRepForm.value.itemActionCorrective);
   // }
 
-  onRemoveItem(ev: MaintenanceItem, item: MaintenanceItem) {
-    if (this.maintRep.itemActionCorrective.length == 1) { return; }
-    this.maintRep.itemActionCorrective.splice(item.rep - 1, 1);
-    this.selectedItem = this.maintRep.itemActionCorrective[this.maintRep.itemActionCorrective.length - 1];
-  }
+
 
   onChangeStatut(event: any) {
     console.log('status change', this.toolRequestForm);
@@ -130,14 +131,9 @@ export class MaintenanceReparationPage {
     this.toolRequestForm.controls.groupeAffectation.patchValue(event);
   }
 
-  addMaintenanceItemClick() {
-    const newItemIndex = this.maintRep.addMaintenanceItem();
-    this.selectedItem = this.maintRep.itemActionCorrective[newItemIndex - 1];
-  }
-
   submitMaintenanceForm() {
     console.log(this.maintRep);
-    this.toolRequestService.createMaintenanceRequest(this.maintRep)
+    this.maintenanceRequestService.createMaintenanceRequest(this.maintRep)
       .then(() => {
         this.alertService.simpleAlert(
           'Message de l\'application',
@@ -159,7 +155,7 @@ export class MaintenanceReparationPage {
     this.loadingService.startLoading('Patienter pendant la mise à jour de la demande');
     this.toolRequestService.updateRequest(this.toolRequestForm.value)
       .pipe(
-        switchMap(() => this.toolRequestService.updateMainteanceRequest(this.maintRep))
+        switchMap(() => this.maintenanceRequestService.updateMainteanceRequest(this.maintRep))
       )
       .subscribe(() => {
         this.loadingService.stopLoading();
