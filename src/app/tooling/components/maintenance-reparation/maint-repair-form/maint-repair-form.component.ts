@@ -45,12 +45,12 @@ export class MaintRepairFormComponent implements OnInit, OnChanges {
     if (changes.toolRequestForm) { this.toolRequestFormChange.emit(this.toolRequestForm); }
   }
   addMaintenanceItemClick() {
-    const newItemIndex = this.maintForm.controls.itemActionCorrective.value.addMaintenanceItem();
-    this.selectedItem = this.maintForm.controls.itemActionCorrective[newItemIndex - 1];
+    // const newItemIndex = this.maintForm.controls.itemActionCorrective.value.addMaintenanceItem();
+    // this.selectedItem = this.maintForm.controls.itemActionCorrective[newItemIndex - 1];
   }
   onRemoveItem(ev: MaintenanceItem, item: MaintenanceItem) {
-    if (this.maintForm.controls.itemActionCorrective.value.length === 1) { return; }
-    this.maintForm.controls.itemActionCorrective.value.splice(item.rep - 1, 1);
-    this.selectedItem = this.maintForm.controls.itemActionCorrective[this.maintForm.controls.itemActionCorrective.value.length - 1];
+    // if (this.maintForm.controls.itemActionCorrective.value.length === 1) { return; }
+    // this.maintForm.controls.itemActionCorrective.value.splice(item.rep - 1, 1);
+    // this.selectedItem = this.maintForm.controls.itemActionCorrective[this.maintForm.controls.itemActionCorrective.value.length - 1];
   }
 }

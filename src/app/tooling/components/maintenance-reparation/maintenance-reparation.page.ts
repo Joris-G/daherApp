@@ -116,7 +116,7 @@ export class MaintenanceReparationPage {
 
   updateForm() {
     this.loadingService.startLoading('Patienter pendant la mise à jour de la demande');
-    this.toolRequestService.updateRequest(this.toolRequestForm.value)
+    this.toolRequestService.updateToolRequest(this.toolRequestForm.value)
       .pipe(
         switchMap(() => this.maintenanceRequestService.updateMainteanceRequest(this.maintRep))
       )

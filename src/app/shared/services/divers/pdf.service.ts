@@ -3,9 +3,9 @@ import JSPDF from 'jspdf';
 import * as pdfmake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import domtoimage, { Options } from 'dom-to-image';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
-import { File, IWriteOptions } from '@ionic-native/file/ngx';
-import { PDFGenerator, PDFGeneratorOptions } from '@ionic-native/pdf-generator/ngx';
+// import { FileOpener } from '@ionic-native/file-opener/ngx';
+// import { File, IWriteOptions } from '@ionic-native/file/ngx';
+// import { PDFGenerator, PDFGeneratorOptions } from '@ionic-native/pdf-generator/ngx';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import html2canvas from 'html2canvas';
 
@@ -15,9 +15,9 @@ import html2canvas from 'html2canvas';
 export class PdfService {
 
   constructor(
-    private file: File,
-    private fileOpener: FileOpener,
-    private pdfGenerator: PDFGenerator,
+    // private file: File,
+    // private fileOpener: FileOpener,
+    // private pdfGenerator: PDFGenerator,
   ) { }
 
   // createPdf(divToConvert: HTMLElement) {
@@ -93,31 +93,31 @@ export class PdfService {
   // }
 
   makePdf(divToConvert: HTMLElement) {
-    const pngOptions: Options = {
-    };
-    domtoimage.toJpeg(divToConvert, pngOptions)
-      .then((fileUrl) => {
-        pdfmake.vfs = pdfFonts.pdfMake.vfs;
-        const docDefinition = {
-          content: [
-            {
-              columns: [
-                {
-                  image: 'data:image/jpeg;base64,' + fileUrl,
-                  // fit: [100, 100]
-                },
-              ]
-            }
-          ],
-          pageSize: 'A4',
-          pageOrientation: 'portrait'
-        };
-        pdfmake.createPdf(docDefinition).open();
-      })
-      .catch((err) => {
-        console.error(err);
+    // const pngOptions: Options = {
+    // };
+    // domtoimage.toJpeg(divToConvert, pngOptions)
+    //   .then((fileUrl) => {
+    //     pdfmake.vfs = pdfFonts.pdfMake.vfs;
+    //     const docDefinition = {
+    //       content: [
+    //         {
+    //           columns: [
+    //             {
+    //               image: 'data:image/jpeg;base64,' + fileUrl,
+    //               // fit: [100, 100]
+    //             },
+    //           ]
+    //         }
+    //       ],
+    //       pageSize: 'A4',
+    //       pageOrientation: 'portrait'
+    //     };
+    //     pdfmake.createPdf(docDefinition).open();
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
 
-      });
+    //   });
 
   }
 

@@ -41,9 +41,9 @@ export class ToolRequest {
   userReal?: User;
   toolingNote?: string;
   type?: RequestType | string;
-  // controle?: SpecCtrl;
-  // maintenance?: SpecMaintRep;
-  // sbo?: SpecSBO;
+  controle?: SpecCtrl;
+  maintenance?: SpecMaintRep;
+  sbo?: SpecSBO;
 }
 
 
