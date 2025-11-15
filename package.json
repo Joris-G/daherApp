@@ -18,6 +18,7 @@
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
     "build-p-q": "npm run build-p && npm run build-q"
+    "build:ci": "ionic build --configuration=qual --base-href /TEST/"
   },
   "private": true,
   "dependencies": {
