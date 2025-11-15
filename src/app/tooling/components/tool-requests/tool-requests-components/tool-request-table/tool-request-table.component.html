@@ -1,0 +1,40 @@
+<ng-container *ngIf="newToolRequestsList$| async as toolRequests">
+  <ion-menu-toggle menu="tool-request-menu">
+    <ion-button>Click to open the menu</ion-button>
+  </ion-menu-toggle>
+  <ion-grid [fixed]="false">
+    <ion-row appHeaderRow>
+      <ion-col size="1"></ion-col>
+      <ion-col size="2">Statut</ion-col>
+      <ion-col size="8">Outillage</ion-col>
+      <ion-col size="4">Date de la demande</ion-col>
+      <ion-col size="3">Demandeur</ion-col>
+      <!-- <ion-col size="3" sort="">Date de besoin</ion-col> -->
+    </ion-row>
+    <ion-row *ngFor="let request of toolRequests" appDataRow [isUrgent]="request.bloquantProd"
+      (click)="openRequestClick(request)">
+      <ion-col size="1">
+        <div class="circle" [style.border]="getBorder(request)">
+          {{request.id}}
+        </div>
+      </ion-col>
+      <ion-col size="2">{{ request.statut }}</ion-col>
+      <ion-col size="8">
+        <ion-label *ngIf="request.controle">OT{{request.controle.outillage.sapToolNumber}} -
+          {{request.controle.outillage.designation}}</ion-label>
+        <ion-label *ngIf="request.maintenance">OT{{request.maintenance.outillage.sapToolNumber}} -
+          {{request.maintenance.outillage.designation}}</ion-label>
+      </ion-col>
+      <ion-col size="4"> {{request.createdAt | date :"EE dd MMM yyyy":"local" }}</ion-col>
+      <ion-col size="3" (click)="userClick()">
+        <ion-label *ngIf="request.controle">{{request.controle.demandeur.username}}</ion-label>
+        <ion-label *ngIf="request.maintenance">{{request.maintenance.demandeur.username}}</ion-label>
+      </ion-col>
+      <!-- <ion-col size="3"> -->
+      <!-- <ion-label *ngIf="request.controle"> {{request.controle.dateBesoin| date :"dd MMMM yyyy":"local"}}</ion-label>
+        <ion-label *ngIf="request.maintenance"> {{request.maintenance.dateBesoin| date :"dd MMMM yyyy":"local"}}
+        </ion-label> -->
+      <!-- </ion-col> -->
+    </ion-row>
+  </ion-grid>
+</ng-container>

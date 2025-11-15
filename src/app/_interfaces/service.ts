@@ -1,7 +1,7 @@
 import { GroupeAffectation } from './groupe-affectation';
 import { User } from './user';
 
-export interface Service {
+export interface IService {
   id?: number;
   nom: string;
   users: User[];

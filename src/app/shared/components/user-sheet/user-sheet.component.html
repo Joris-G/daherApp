@@ -1,55 +1,80 @@
-<ion-modal [isOpen]="userState" trigger="trigger-button"
-  (ionModalDidDismiss)="userState=false; stateChangeEv.emit(false)">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title> Fiche utilisateur : {{user.nom}} {{user.prenom}}</ion-title>
-        <ion-icon button slot="end" name="close-outline" size="large" (click)="userState=false;">
-        </ion-icon>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-item>
-        <ion-label>Nom</ion-label>
-        <ion-input type="text" [value]="user.nom"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Prénom</ion-label>
-        <ion-input type="text" [value]="user.prenom"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Matricule</ion-label>
-        <ion-input disabled="true" type="text" [value]="user.matricule"></ion-input>
-        <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
-      </ion-item>
-      <ion-item>
-        <ion-label>E-Mail</ion-label>
-        <ion-input disabled="true" type="text" [value]="user.mail"></ion-input>
-        <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
-      </ion-item>
-      <ion-item>
-        <ion-label>Téléphone</ion-label>
-        <ion-input type="text" [value]="user.tel"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Date de création</ion-label>
-        <ion-input disabled="true" type="text" [value]="user.createdAt | date"></ion-input>
-        <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
-      </ion-item>
-    </ion-content>
+<!-- <ion-modal [isOpen]="userState" trigger="trigger-button" -->
+<!-- (ionModalDidDismiss)="userState=false; stateChangeEv.emit(false)"> -->
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title slot="start"> Fiche utilisateur</ion-title>
+    <ion-icon slot="end" name="close-circle" (click)="closeUserSheetClick()" size="large">
+    </ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ng-container *ngIf="user">
+  <ion-content>
+    <ion-item>
+      <ion-label>Nom</ion-label>
+      <ion-input type="text" [value]="user.nom"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Prénom</ion-label>
+      <ion-input type="text" [value]="user.prenom"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Matricule</ion-label>
+      <ion-input disabled="true" type="text" [value]="user.matricule"></ion-input>
+      <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>E-Mail</ion-label>
+      <ion-input disabled="true" type="text" [value]="user.mail"></ion-input>
+      <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>Téléphone</ion-label>
+      <ion-input type="text" [value]="user.tel"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Date de création</ion-label>
+      <ion-input disabled="true" type="text" [value]="user.createdAt | date"></ion-input>
+      <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>Date de dernière connexion</ion-label>
+      <ion-input disabled="true" type="text" [value]="user.lastCon | date"></ion-input>
+      <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>Site</ion-label>
+      <ion-label>{{user.site.nom}}</ion-label>
+      <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>Service</ion-label>
+      <ion-label>{{user.service.nom}}</ion-label>
+      <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>Division</ion-label>
+      <ion-label>{{user.unite.nom}}</ion-label>
+      <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
+    </ion-item>
+  </ion-content>
 
-    <ion-footer>
-      <ion-toolbar>
-        <ion-buttons>
-          <ion-button slot=end size=small (click)="updateUserClick()">
-            <label>Enregistrer</label>
-            <ion-icon slot="start" name="sync-outline"></ion-icon>
-          </ion-button>
-          <ion-button slot=end size=small (click)="deleteUserClick()">
-            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-footer>
-  </ng-template>
-</ion-modal>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot=start>
+        <ion-button slot=end size=small (click)="updatePasswordClick()">
+          <label>Changer mot de passe</label>
+          <ion-icon slot="start" name="key-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot=end>
+        <ion-button slot=end size=small (click)="updateUserClick()">
+          <label>Enregistrer</label>
+          <ion-icon slot="start" name="save-outline"></ion-icon>
+        </ion-button>
+        <!-- <ion-button slot=end size=small (click)="deleteUserClick()">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button> -->
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+</ng-container>

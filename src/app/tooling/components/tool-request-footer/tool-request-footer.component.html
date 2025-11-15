@@ -2,7 +2,8 @@
     <ion-item *ngIf="canManage">
         <ion-label>Affecter</ion-label>
         <ion-select multiple="true" placeholder="Séléctionner une personne" (ionChange)="affectationChange($event)">
-            <ion-select-option *ngFor="let affectationGroup of affectationGroups" [value]="affectationGroup">{{affectationGroup.libelle}}</ion-select-option>
+            <ion-select-option *ngFor="let affectationGroup of affectationGroups" [value]="affectationGroup">
+                {{affectationGroup.libelle}}</ion-select-option>
         </ion-select>
     </ion-item>
     <ion-item *ngIf="canManage">
@@ -16,17 +17,19 @@
             <ion-select-option value="EN COURS DE REALISATION">En cours de réalisation</ion-select-option>
             <ion-select-option value="TERMINEE">Terminée</ion-select-option>
             <ion-select-option value="CLOTUREE">Cloturer</ion-select-option>
+            <ion-select-option value="ATTENTE FOURNITURE EXT">Attente de fourniture extérieure</ion-select-option>
+            <ion-select-option value="DEM EXT">Demande externalisée</ion-select-option>
         </ion-select>
     </ion-item>
     <ion-button slot=end (click)="pdfExportClick()">
         <ion-icon slot="end" name="document-attach-outline"></ion-icon>
         Exporter pdf
     </ion-button>
-    <ion-button slot=end block color="success" *ngIf="!canUpdate" [disabled]="form.invalid" (click)="submitClick()">
+    <ion-button slot=end block color="success" *ngIf="!canUpdate" (click)="submitClick()">
         <ion-icon slot="end" name="send-outline"></ion-icon>
         Envoyer
     </ion-button>
-    <ion-button slot=end block color="success" *ngIf="canUpdate" [disabled]="form.invalid" (click)="updateClick()">
+    <ion-button slot=end block color="success" *ngIf="canUpdate" (click)="updateClick()">
         <ion-icon slot="end" name="send-outline"></ion-icon>
         Mettre à jour
     </ion-button>

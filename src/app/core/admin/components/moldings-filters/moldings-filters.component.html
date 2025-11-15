@@ -1,0 +1,35 @@
+<div class="filters-container">
+  <ion-item>
+    <ion-label>Créée par</ion-label>
+    <ion-input #inputUsername type="text" placeholder="Nom d'utilisateur"
+      (ionInput)="filterCreateByChange(inputUsername.value)">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Date de création</ion-label>
+    <ion-datetime color=dark display-format="DD.MM.YYYY" [firstDayOfWeek]="1" presentation="date" preferWheel=false>
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>Salle de moulage</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Programme avion</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>N°OT</ion-label>
+    <ion-input #inputTool type="text" placeholder="Numéro d'OT" (ionInput)="filterToolNameChange(inputTool.value)">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Outillage</ion-label>
+    <ion-select multiple="true" placeholder="Selectionner outillage" (ionChange)="filterToolChange($event)">
+      <ion-select-option *ngFor="let tool of uniqueTools | async" [value]="tool">
+        {{tool.designation}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-button (click)="resetFiltersClick()" expand="block" fill="outline" shape="round">
+    Restaurer
+  </ion-button>
+</div>

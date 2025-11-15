@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
+import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
 
 @Component({
   selector: 'app-tool-list',

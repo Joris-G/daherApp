@@ -1,4 +1,4 @@
-<ion-menu #menu side="start" type="push" contentId="molding-content">
+<ion-menu menuId="main-menu" #menu side="start" type="push" contentId="molding-content">
   <ion-header>
     <ion-toolbar color="succes">
       <ion-title>
@@ -15,11 +15,12 @@
           </ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-item [button]="false">
-        <ion-label>
+      <ion-item [button]="false" color=light>
+        <ion-label slot=start>
           Modifier moulage
         </ion-label>
-        <ion-input #inputIdMolding type="text" placeholder="" (change)="idMoldingInputChange()"></ion-input>
+        <ion-input #inputIdMolding type="text" placeholder="# ID" (change)="idMoldingInputChange()"></ion-input>
+        <ion-icon slot="end" name="search-outline"></ion-icon>
         <ion-note slot=helper>Entrer un numéro d'ID ou scanner le code barre de la feuille de moulage</ion-note>
       </ion-item>
     </ion-list>

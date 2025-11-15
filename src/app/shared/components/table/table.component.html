@@ -1,0 +1,10 @@
+<ion-grid fixed>
+  <ion-row appHeaderRow>
+    <ng-container *ngFor="let column of columns">
+      <ion-col size="1">{{column}}</ion-col>
+    </ng-container>
+  </ion-row>
+  <ion-row appDataRow *ngFor="let data of datas">
+    <ion-col size="1">test</ion-col>
+  </ion-row>
+</ion-grid>

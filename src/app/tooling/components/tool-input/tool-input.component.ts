@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IonInput } from '@ionic/angular';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { ToolService } from 'src/app/tooling/services/tool.service';
+import { ToolInputService } from './tool-input.service';
 
 @Component({
   selector: 'app-tool-input',
@@ -13,42 +13,33 @@ import { ToolService } from 'src/app/tooling/services/tool.service';
       provide: NG_VALUE_ACCESSOR,
       multi: true,
       useExisting: ToolInputComponent
-    }
+    },
   ]
 })
-export class ToolInputComponent implements OnInit, ControlValueAccessor {
-  @ViewChild('toolNumber') toolNumber: IonInput;
-  public toolIsLoading = false;
+export class ToolInputComponent implements ControlValueAccessor, OnInit {
   disabled = false;
   public tool: Tool;
 
   constructor(
-    private toolService: ToolService,
+    private toolInputService: ToolInputService
   ) { }
-  public onChange = (tool: Tool) => { };
-  public onTouched = () => { };
-
-  ngOnInit() { }
-
-
-  toolOnChange(inputOTValue: string) {
-    this.toolIsLoading = true;
-    this.toolService.getToolByInput(inputOTValue)
-      .then((responseTool: Tool) => {
-        console.log(responseTool);
-        this.onChange(responseTool);
-        this.tool = responseTool;
-        this.toolIsLoading = false;
-      },
-        () => {
-          this.onChange(null);
-          this.tool = null;
-          this.toolNumber.value = '';
-          this.toolIsLoading = false;
-          // this.evOnToolChange.emit(null);
-        });
+  ngOnInit(): void {
+    this.toolInputService.inputTool$
+      .subscribe((tool) => {
+        this.tool = tool;
+        this.onChange(tool);
+      });
   }
 
+
+
+  // onInputChange() {
+  //   const value = this.inputElementRef.nativeElement.value;
+  //   this.onChange(value);
+  // }
+
+  onChange = (tool: Tool) => { };
+  onTouched = () => { };
 
   writeValue(tool: Tool): void {
     this.tool = tool;

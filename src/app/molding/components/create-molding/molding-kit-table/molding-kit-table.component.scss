@@ -3,16 +3,19 @@
 // ********************************
 .table {
   color: black;
-  text-align: center;
+
 }
 .table-header-row {
   text-transform: uppercase;
   font-size: 14px;
   background-color: rgb(244, 245, 248);
-  align-items: center;
 }
 .table-data-row {
   font-size: 16px;
-  align-items: center;
   // padding: 3px;
 }
+ion-item{
+  --background-hover: var(--ion-color-secondary);
+
+}
+

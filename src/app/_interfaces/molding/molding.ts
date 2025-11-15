@@ -25,7 +25,7 @@ export class Molding {
   matDrap?: Kit;
   woList?: any[];
   updatedAt?: Date;
-  status?: boolean;
+  isActive?: boolean = false;
   userCreat?: User;
   OT?: Tool;
   materialSupplementary?: AdditionalMaterial[] = [];

@@ -1,8 +1,7 @@
-import { DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { SericesService } from 'src/app/shared/services/users/serices.service';
+import { UsersService } from 'src/app/shared/services/users/users.service';
 import { AppSharedModule } from 'src/app/shared/shared.module';
-import { SericesService } from '../services/users/serices.service';
-import { UsersService } from '../services/users/users.service';
 import { AdminRootingModule } from './admin-routing.module';
 import { AdminComponentsModule } from './components/admin-components.module';
 

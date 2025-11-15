@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { RequestService } from 'src/app/shared/services/request.service';
 import { AdditionalMaterial } from 'src/app/_interfaces/molding/composite-material-types';
-import { RequestService } from 'src/app/core/services/request.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

@@ -35,6 +35,7 @@ export class Kit {
   updateAt?: Date;
   status: boolean;
   createdAt: Date;
+  layupDate?: Date = null;
 
   static isKit(objTotest: any): boolean {
     return Object.getOwnPropertyNames(objTotest).includes('idMM');

@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
-import { RoleGuard } from 'src/app/core/services/users/role.guard';
-import { ToolRequestTableDataSourceService } from './tool-request-table-data-source.service';
+import { RoleGuard } from 'src/app/shared/services/users/role.guard';
+import { ToolRequestsService } from './tool-requests-data/tool-requests.service';
 
 @Component({
   selector: 'app-tool-requests',
@@ -16,34 +14,20 @@ import { ToolRequestTableDataSourceService } from './tool-request-table-data-sou
 export class ToolRequestsPage {
   //TODO commenter les propriétés
   public isAdmin = false;
-
+  // public toolRequests$: Observable<ToolRequest[]>;
   constructor(
-    private alertControleService: AlertService,
-    private loaderService: LoadingService,
     private authGuard: RoleGuard,
-    private tableDataService: ToolRequestTableDataSourceService
-  ) { }
+    // private tableDataService: ToolRequestTableDataSourceService,
+    public toolRequestsService: ToolRequestsService
+  ) {
+
+  }
 
   ionViewWillEnter() {
     this.isAdmin = this.authGuard.isRole(['ROLE_ADMIN']);
   }
   reloadClick() {
-    this.tableDataService.refreshDatas();
+    // this.tableDataService.refreshDatas();
   }
-
-  //       (error) => {
-  //         this.loaderService.stopLoading();
-  //         console.error(error);
-  //         this.alertControleService.simpleAlert(
-  //           'Erreur',
-  //           'Mise à jour de la liste',
-  //           'La liste des demandes outillage ne s\'est pas mise à jour correctement '
-  //         );
-  //         this.navCtrl.navigateRoot('home');
-  //       },
-  //       () => {
-  //         this.loaderService.stopLoading();
-  //         console.log('complete');
-  //       });
-  // }
+  nextClick() { this.toolRequestsService.getNextPage() }
 }

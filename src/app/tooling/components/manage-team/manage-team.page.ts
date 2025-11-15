@@ -1,10 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
+import { UsersService } from 'src/app/shared/services/users/users.service';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { User } from 'src/app/_interfaces/user';
-import { ProgramsService } from 'src/app/core/services/programs/programs.service';
-import { UsersService } from 'src/app/core/services/users/users.service';
 
 @Component({
   selector: 'app-manage-team',

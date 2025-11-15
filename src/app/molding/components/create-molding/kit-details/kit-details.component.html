@@ -1,0 +1,43 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Détails du kit</ion-card-subtitle>
+    <ion-card-title>
+      {{kit.id}} {{kit.designationSAP}}
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+
+      <ion-item>
+        <ion-label>status : {{kit.status}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>N° SAP : {{kit.referenceSAP}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>ID MM : {{kit.idMM}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>A cuire avant le : {{kit.aCuirAv}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>A draper avant le : {{kit.aDrapAv}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Péremption à -18°C : {{kit.peremptionMoins18}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Créé le : {{kit.createdAt}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Date et heure sortie du congélateur :{{kit.decongel}} </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>TackLife : {{kit.tackLife}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Timeout : {{kit.timeOut}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { MoldingService } from 'src/app/molding/services/molding.service';
-import { RoleGuard } from 'src/app/core/services/users/role.guard';
+import { IonAccordionGroup } from '@ionic/angular';
+import { TitleService } from 'src/app/shared/services/title.service';
+import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 
 @Component({
   selector: 'app-create-molding',
@@ -13,36 +14,41 @@ import { RoleGuard } from 'src/app/core/services/users/role.guard';
 })
 
 export class CreateMoldingPage implements OnInit {
-  @ViewChild(MatAccordion) accordion: MatAccordion;
-  @ViewChild('kitPanel') kitPanel: MatExpansionPanel;
+  @ViewChild('accordionGroup', { static: true }) accordionGroup: IonAccordionGroup;
 
-  public expanded = false;
   public isAdmin = false;
-
-  public molding$: Subject<Molding> = new Subject();
+  public molding: Molding = null;
+  private molding$: Observable<Molding> = this.moldingService.molding$.asObservable();
 
   constructor(
     private moldingService: MoldingService,
     private activatedRoute: ActivatedRoute,
     private roleGuard: RoleGuard,
-  ) {
-    this.molding$ = this.moldingService.molding$;
-  }
+    private titleService: TitleService,
+  ) { }
 
 
   ionViewWillEnter() {
-    console.log('enter create molding');
-    // const pageParam: PageParams = { title: 'MOULAGE', visible: true };
-    this.moldingService.molding = new Molding();
-    this.moldingService.molding$.next();
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
-      // pageParam.title = `MODIFICATION MOULAGE n°${id}`;
+      this.titleService.setTitle(`MODIFICATION MOULAGE n°${id}`);
       this.loadMoldingData(id);
+      return;
     }
+    this.moldingService.initMolding();
+    this.titleService.setTitle(`CREATION D'UN MOULAGE`);
+
   }
 
   ngOnInit() {
+    this.molding$.subscribe({
+      next: (molding: Molding) => {
+        this.molding = molding;
+        if (this.molding.kits.length > 0) { this.accordionGroup.value = 'kits'; }
+        if (this.molding.materialSupplementary.length > 0) { this.accordionGroup.value = 'materialSupplementary'; }
+
+      }
+    });
     this.isAdmin = this.roleGuard.isRole(['ROLE_ADMIN']);
   }
 
@@ -57,87 +63,4 @@ export class CreateMoldingPage implements OnInit {
     this.moldingService.loadMolding(moldingId);
   }
 
-  // async kitAlertPrompt() {
-  //   const alert = await this.alertController.create({
-  //     cssClass: 'my-custom-class',
-  //     header: 'Scannez un kit',
-  //     inputs: [
-  //       {
-  //         name: 'kitnumber',
-  //         type: 'text',
-  //         placeholder: 'Scannez le kit',
-  //         tabindex: 1,
-  //         id: 'kitNumberInput',
-  //       }
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: 'Annuler',
-  //         role: 'cancel',
-  //         cssClass: 'ion-color-secondary',
-  //         handler: (data) => {
-  //           console.log('Confirm Cancel', data);
-  //         }
-  //       }, {
-  //         text: 'Valider',
-  //         cssClass: ['ion-color-primary', 'button', 'button-solid'],
-  //         handler: (data) => {
-  //           // if (data.kitnumber !== '') { this.scanInputAction(data.kitnumber, 'test'); };
-  //         }
-  //       }
-  //     ]
-  //   });
-
-  //   await alert.present().then(() => {
-  //   });
-  // }
-  // associateToolClick() {
-  //   this.associateToolAlertPrompt();
-  // }
-
-  // associateCoreClick() {
-  //   this.alertService.simpleAlert(
-  //     'Message d\'information',
-  //     'Fonction inactive',
-  //     'La fonction permettra de lier un nida au moulage'
-  //   );
-  // }
-  // async associateToolAlertPrompt() {
-  //   const alert = await this.alertController.create({
-  //     cssClass: 'my-custom-class',
-  //     header: 'Associer l\'outillage de moulage',
-  //     inputs: [
-  //       {
-  //         name: 'toolNumber',
-  //         type: 'text',
-  //         placeholder: 'Scannez l\'outillage',
-  //         tabindex: 1,
-  //         id: 'toolNumberInput',
-  //       }
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: 'Annuler',
-  //         role: 'cancel',
-  //         cssClass: 'ion-color-secondary',
-  //         handler: (data) => {
-  //           console.log('Confirm Cancel', data);
-  //         }
-  //       }, {
-  //         text: 'Valider',
-  //         cssClass: ['ion-color-primary', 'button', 'button-solid'],
-  //         handler: (data) => {
-  //           // this.setLinkedTool(data.toolNumber);
-  //         }
-  //       }
-  //     ]
-  //   });
-
-  //   await alert.present().then(() => {
-  //     const toolNumberInput = document.getElementById('toolNumberInput');
-  //     if (toolNumberInput) {
-  //       toolNumberInput.focus();
-  //     }
-  //   });
-  // }
 }

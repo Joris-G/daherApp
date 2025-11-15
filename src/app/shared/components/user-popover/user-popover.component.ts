@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
-import { AuthService } from 'src/app/core/services/users/auth.service';
-
+import { ModalController, NavController } from '@ionic/angular';
 import packageJson from 'package.json';
+import { LoadingService } from '../../services/divers/loading.service';
+import { AuthService } from '../../services/users/auth.service';
+import { UserSheetComponent } from '../user-sheet/user-sheet.component';
 
 @Component({
   selector: 'app-user-popover',
@@ -12,12 +11,12 @@ import packageJson from 'package.json';
   styleUrls: ['./user-popover.component.css']
 })
 export class UserPopoverComponent implements OnInit {
-  public isUserOpen = false;
   public version: string = packageJson.version;
   constructor(
     private navCtrl: NavController,
     private authService: AuthService,
     private loadingService: LoadingService,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit(): void {
@@ -25,6 +24,15 @@ export class UserPopoverComponent implements OnInit {
 
   navigate(path: string) {
     this.navCtrl.navigateRoot(path);
+  }
+  async editProfilClick() {
+    const userModal = await this.modalCtrl.create({
+      component: UserSheetComponent,
+      componentProps: { user: this.authService.authUser },
+      animated: true,
+      backdropDismiss: false,
+    });
+    userModal.present();
   }
 
   logoutClick() {

@@ -1,17 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './services/users/auth.guard';
 import { HomePage } from './pages/home/home.page';
 import { LoginPage } from './pages/login/login.page';
 import { RegisterPage } from './pages/register/register.page';
-import { RoleGuard } from './services/users/role.guard';
+import { AuthGuard } from '../shared/services/users/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     canActivate: [AuthGuard],
-    component: HomePage,
+    children: [
+      {
+        path: 'home',
+        component: HomePage,
+      },
+
+      {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module')
+          .then(m => m.AdminModule),
+      },
+
+    ]
   },
   {
     path: 'login',
@@ -21,15 +32,7 @@ const routes: Routes = [
     path: 'register',
     component: RegisterPage
   },
-  {
-    path: 'admin',
-    canActivate: [AuthGuard],
-    data: {
-      expectedRole: ['ROLE_ADMIN']
-    },
-    loadChildren: () => import('./admin/admin.module')
-      .then(m => m.AdminModule),
-  },
+
   {
     path: '',
     redirectTo: '/home',

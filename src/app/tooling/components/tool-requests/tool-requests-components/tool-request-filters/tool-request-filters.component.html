@@ -1,0 +1,26 @@
+<ion-toolbar>
+  <ion-title>
+    <ion-icon slot="start" name="filter-outline"></ion-icon>
+    Filtres
+  </ion-title>
+</ion-toolbar>
+
+<ion-list>
+  <ion-item *ngFor="let filterItem of this.toolRequestsService.filterSelectObjects" class="filter-item ion-margin">
+    <ion-label>{{filterItem.name}}</ion-label>
+    <ion-select class="filter" multiple="false" [placeholder]="'Filtre ' + filterItem.name"
+      (ionChange)="filterChange(filterItem,$event)">
+      <ion-select-option *ngFor="let filter of filterItem.options" [value]="filter">{{filter}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
+
+
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button fill="solid" slot=end color="primary" slot=end (click)="resetFiltersClick()">
+      Supprimer les filtres
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>

@@ -1,156 +1,89 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { ToolRequest, SpecCtrlFormGroup, MoyenMesure, TypeRapport, SpecCtrl, ToolRequestFormGroup }
-  from 'src/app/_interfaces/tooling/tool-request';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
-import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
-import { RoleGuard } from 'src/app/core/services/users/role.guard';
+import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { OutillNoRefSAPFormGroup, SpecCtrlFormGroup, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request-types';
+import { ControlToolRequestService } from '../../services/control-tool-request.service';
+import { RequestState, ToolRequestManager } from '../../services/tool-request-manager.service';
+
 
 @Component({
   selector: 'app-control',
   templateUrl: './control.page.html',
   styleUrls: ['./control.page.scss'],
 })
-export class Control3DPage implements OnInit {
-  public toolRequestForm: FormGroup;
-  public controlForm: FormGroup;
-  public typeRapport = TypeRapport;
-  public canManage: boolean;
-  public canUpDate = false;
-  public moyenMesure = MoyenMesure;
+export class Control3DPage {
+  requestState: RequestState = new RequestState();
+
+  controlForm: SpecCtrlFormGroup = new SpecCtrlFormGroup();
+  toolRequestForm: ToolRequestFormGroup = new ToolRequestFormGroup();
+  outillNoRefSAPForm: OutillNoRefSAPFormGroup;
+
+
   public page = {
     title: 'Nouvelle demande de contrôle 3D'
   };
 
 
   constructor(
-    private toolRequestService: ToolRequestService,
+    private controlTooRequestService: ControlToolRequestService,
+    private toolRequestManager: ToolRequestManager,
+    private loaderService: LoadingService,
     private alertService: AlertService,
-    private activatedRoute: ActivatedRoute,
-    private roleGuard: RoleGuard,
-    private navCtrl: NavController,
-    public formBuilder: FormBuilder,
-    private loaderService: LoadingService
+    private navCtrl: NavController
   ) { }
 
-
-  ngOnInit() {
-    console.log('init');
-    this.toolRequestForm = this.formBuilder.group(
-      {
-        statut: new FormControl(),
-        groupeAffectation: new FormControl(),
-        id: new FormControl()
-      }
-    ) as ToolRequestFormGroup;
-
-    this.controlForm = this.formBuilder.group(
-      {
-        id: new FormControl(),
-        refPlan: new FormControl(),
-        indPlan: new FormControl(),
-        cheminCAO: new FormControl(),
-        description: new FormControl(),
-        detailsControle: new FormControl(),
-        tolerances: new FormControl(),
-        dispoOut: new FormControl(),
-        dateBesoin: new FormControl(),
-        typeRapport: new FormControl(),
-        //TODO  intervention
-        interventionDate: new FormControl(),
-        moyenMesure: new FormControl(),
-        infosComplementaire: new FormControl(),
-        outillage: new FormControl(),
-        ligneBudgetaire: new FormControl(),
-        statut: new FormControl(),
-        visaControleur: new FormControl(),
-      }
-    ) as SpecCtrlFormGroup;
+  ionViewCanEnter() {
+    this.controlTooRequestService.initCtrlToolRequest();
+    this.controlTooRequestService.ctrlToolRequest$
+      .subscribe((resp) => {
+        console.log(resp);
+        this.toolRequestForm.patchValue(resp[0]);
+        this.controlForm.patchValue(resp[1]);
+        this.requestState = this.toolRequestManager.getStatus(resp[0].statut);
+      });
   }
-
-  toolReceived(event) {
-    this.controlForm.value.outillage = event;
-  }
-
-  upDateSpec() {
-    console.log('updateSpec');
-  }
-
-  dateValue(dateValue: string): Date {
-    return new Date(dateValue);
-  }
-
 
   ionViewDidLeave() {
-    console.log('ctrl leave');
     this.controlForm.reset();
   }
 
 
-
   submitControlForm() {
     console.log(this.controlForm);
-    this.loaderService.startLoading('Envoi de la demande en cours');
-    this.toolRequestService.createControlRequest(this.controlForm.value)
+
+    this.controlTooRequestService.createControlRequest(this.controlForm.value)
       .subscribe(
-        async () => {
+        () => {
           this.controlForm.reset();
-          await this.loaderService.stopLoading();
           // this.alertService.simpleAlert(
           //   'Message de l\'application',
           //   'Création d\'une demande',
           //   'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes')
           //   .then(() => {
-          this.navCtrl.navigateRoot('tooling/tool-request-list');
+          // this.navCtrl.navigateRoot('tooling/tool-request-list');
           // });
-        },
-        async (error) => {
-          console.error(error);
-          await this.loaderService.stopLoading();
         });
   }
 
   updateToolRequestForm() {
     console.log('updateForm', this.toolRequestForm);
     this.loaderService.startLoading('Chargement de la mise à jour');
-    this.toolRequestService.updateRequest(this.toolRequestForm.value)
+
+    this.controlTooRequestService.updateControlRequest(this.controlForm.value, this.toolRequestForm.value)
       .subscribe(
-        (responseUpdatedRequest) => {
-          console.log(responseUpdatedRequest);
-          this.toolRequestService.updateControlRequest(this.controlForm.value)
-            .subscribe(
-              async () => {
-                await this.loaderService.stopLoading();
-                this.controlForm.reset();
-                await this.alertService.simpleAlert(
-                  'Message de l\'application',
-                  'Mise à jour d\'une demande',
-                  'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes')
-                  .then(() => {
-                    this.navCtrl.navigateRoot('tooling/tool-request-list');
-                  });
-              },
-              async (error) => {
-                await this.loaderService.stopLoading();
-                this.alertService.simpleAlert(
-                  'Erreur',
-                  'Mise à jour d\'une demande',
-                  'La demande n\'a pas pu être modifiée. Vérifiez les données');
-                console.error(error);
-                this.navCtrl.navigateRoot('tooling/tool-request-list');
-              });
-        },
-        (err) => {
-          this.loaderService.stopLoading();
+        () => {
+          // this.controlForm.reset();
           this.alertService.simpleAlert(
-            'Erreur',
+            'Message de l\'application',
             'Mise à jour d\'une demande',
-            'La demande n\'a pas pu être modifiée. Vérifiez les données');
-          console.error(err);
+            'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes');
+          //   .then(() => {
           this.navCtrl.navigateRoot('tooling/tool-request-list');
+          //   });
+        },
+        async (error) => {
+          this.onError(error);
         });
   }
 
@@ -158,44 +91,14 @@ export class Control3DPage implements OnInit {
     console.log('status change', this.toolRequestForm);
     this.toolRequestForm.controls.statut.patchValue(event);
   }
-
-  ionViewWillEnter() {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log(id);
-    if (id) {
-      this.loadControlData(id);
-    } else {
-      this.canUpDate = false;
-    }
+  private onError(error: any) {
+    this.alertService.simpleAlert(
+      'Erreur',
+      'Mise à jour d\'une demande',
+      'La demande n\'a pas pu être modifiée. Vérifiez les données');
+    console.error(error);
   }
 
-  private loadControlData(idDemande: string) {
-    this.loaderService.startLoading('Patienter pendant le chargement');
-    this.toolRequestService.getToolRequest(idDemande)
-      .subscribe((responseRequest: ToolRequest) => {
-        console.log(responseRequest);
-        this.toolRequestForm.patchValue(responseRequest);
-        if (this.toolRequestForm.get('statut').value === 'NOUVELLE') {
-          this.canUpDate = true;
-          this.canManage = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
-        } else {
-          this.canUpDate = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
-          this.canManage = this.canUpDate;
-        }
-        this.toolRequestService.getControl(responseRequest.controle.id)
-          .subscribe((responseControle: SpecCtrl) => {
-            console.log(responseControle.id);
-            this.controlForm.patchValue(responseControle);
-            this.controlForm.controls.id.setValue(responseControle.id);
-            console.log(this.controlForm.value);
-            this.loaderService.stopLoading();
-            this.page.title = 'Modification demande de contrôle 3D : ID ' + this.toolRequestForm.value.id;
-          });
-      },
-        () => {
-          this.navCtrl.back();
-        });
-  }
 
 
 }

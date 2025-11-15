@@ -3,22 +3,32 @@ import * as fr from '@angular/common/locales/fr';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { RoleGuard } from '../core/services/users/role.guard';
+import { RoleGuard } from '../shared/services/users/role.guard';
 import { Control3DPage } from './components/control3-d/control.page';
 import { IndicatorsPage } from './components/indicators/indicators.page';
 import { MaintenanceReparationPage } from './components/maintenance-reparation/maintenance-reparation.page';
 import { ManageTeamPage } from './components/manage-team/manage-team.page';
 import { NewToolPage } from './components/new-tool/new-tool.page';
+import { ToolInputService } from './components/tool-input/tool-input.service';
 import { ToolListPage } from './components/tool-list/tool-list.page';
+import { ToolRequestsService } from './components/tool-requests/tool-requests-data/tool-requests.service';
 import { ToolRequestsPage } from './components/tool-requests/tool-requests.page';
 import { ToolingComponentsModule } from './modules/components.module';
-import { ToolingServicesModule } from './modules/services.module';
-import { ToolRequestPage } from './pages/tool-request.page';
+import { ToolingPage } from './pages/tooling.page';
+import { ControlToolRequestService } from './services/control-tool-request.service';
+import { MaintenanceToolRequestService } from './services/maintenance-tool-request.service';
+import { ToolRequestManager } from './services/tool-request-manager.service';
+import { ToolRequestService } from './services/tool-request.service';
+import { ToolService } from './services/tool.service';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: ToolRequestPage,
+    component: ToolingPage,
+  },
+  {
+    path: '',
     children: [
       {
         path: 'new-tool', component: NewToolPage
@@ -40,44 +50,49 @@ const routes: Routes = [
       },
       {
         path: '3D-tool/:id', component: Control3DPage
-      },
+      }
+    ]
+  },
+  {
+    path: '',
+    canActivate: [RoleGuard],
+    data: { expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL'] },
+    children: [
       {
         path: 'manage-tool-team',
-        canActivate: [RoleGuard],
-        data: { expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL'] },
+
         component: ManageTeamPage
       },
       {
         path: 'tool-indicators',
-        canActivate: [RoleGuard],
-        data: {
-          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL']
-        },
         component: IndicatorsPage
       },
-      {
-        path: '**',
-        redirectTo: ''
-      }
     ]
   },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    ToolingServicesModule,
     ToolingComponentsModule,
   ],
   exports: [
     ToolingComponentsModule,
-    ToolingServicesModule
   ],
   providers: [
+    ToolService,
+    ToolRequestService,
+    ToolRequestsService,
+    ToolRequestManager,
+    ToolInputService,
+    ControlToolRequestService,
+    MaintenanceToolRequestService,
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
-  ],
-  declarations: [
   ],
 })
 export class AppToolingModule {

@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { MoldingService } from 'src/app/molding/services/molding.service';
+import { MoldingListService } from 'src/app/molding/services/molding-list.service';
 
 @Component({
   selector: 'app-admin-molding',
@@ -14,11 +15,12 @@ export class AdminMoldingPage implements OnInit {
   public moldings$: Observable<Molding[]>;
 
   constructor(
-    private moldingService: MoldingService
+    private moldingService: MoldingService,
+    private moldingListService: MoldingListService
   ) { }
 
   ngOnInit() {
-    this.moldings$ = this.moldingService.getMoldings();
+    this.moldings$ = this.moldingListService.getMoldings();
     // this.getMoldings();
     //TODO indicators to be reloaded with interval
     // this.refreshData = setInterval(() => {

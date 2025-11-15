@@ -9,12 +9,16 @@ import { IMoldingStatus } from 'src/app/_interfaces/molding/molding';
   styleUrls: ['./create-molding-toolbar.component.scss'],
 })
 export class CreateMoldingToolbarComponent {
-  // public isMoldingComplete = false;
+  public isActive: boolean;
   public isMoldingComplete: boolean;
   private moldingStatus$: Observable<IMoldingStatus>;
   constructor(
     private moldingService: MoldingService,
   ) {
+    this.moldingService.molding$.asObservable().subscribe((molding) => {
+      console.log("create molding toolbar receive new Molding");
+      this.isActive = molding.isActive;
+    });
     this.moldingStatus$ = this.moldingService.moldingStatus$;
     this.moldingStatus$.subscribe({
       next: (moldingStatus) => {
@@ -27,5 +31,9 @@ export class CreateMoldingToolbarComponent {
   saveMoldingClick(print?: boolean) {
     this.moldingService.saveMolding(print);
     // this.moldingService.moldingStatus.next(true);
+  }
+
+  setInactiveClick(): void {
+    this.moldingService.cancelMolding();
   }
 }

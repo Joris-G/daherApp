@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "username": "j.grangier",
+    "nom": "GRANGIER",
+    "prenom": "Joris",
+    "matricule": 204292,
+    "isActive": true,
+    "lastCon": null,
+    "mail": "j.grangeir@daher.com",
+    "roles": [
+      "ROLE_RESP_OUTIL",
+      "ROLE_ADMIN"
+    ],
+    "poste": "Poste",
+    "service": {
+      "id": 1,
+      "nom": "méthode",
+      "users": [],
+      "groupeAffectations": []
+    },
+    "password": "string",
+    "programmeAvion": [],
+    "createdAt": "21/12/2019",
+    "tel": [
+      687892425
+    ],
+    "unite": {
+      "id": 1,
+      "nom": "string",
+      "entreprise": "string",
+      "users": []
+    },
+    "site": {
+      "id": 1,
+      "nom": "string",
+      "divisions": [
+        {
+          "id": 1,
+          "nom": "string",
+          "entreprise": "string",
+          "users": []
+        }
+      ]
+    },
+    "groupeAffected": [
+      {
+        "id": 1,
+        "libelle": "string",
+        "createdAt": "25/12/2012",
+        "population": []
+      }
+    ],
+    "isUpdated": true,
+    "apiToken": "string"
+  }
+]

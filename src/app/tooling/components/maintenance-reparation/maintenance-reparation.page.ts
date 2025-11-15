@@ -1,15 +1,16 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
 import { IonSelect, NavController } from '@ionic/angular';
-import { RequestType } from 'src/app/_enums/request-type';
-import { ToolRequest, MaintenanceItem, SpecMaintRep, MaintFormGroup, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request';
+import { MaintFormGroup, OutillNoRefSAPFormGroup, SpecMaintRep, ToolRequest, ToolRequestFormGroup }
+  from 'src/app/_interfaces/tooling/tool-request-types';
 import { User } from 'src/app/_interfaces/user';
-import { AlertService } from 'src/app/core/services/divers/alert.service';
-import { LoadingService } from 'src/app/core/services/divers/loading.service';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
-import { AuthService } from 'src/app/core/services/users/auth.service';
-import { RoleGuard } from 'src/app/core/services/users/role.guard';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { switchMap } from 'rxjs/operators';
+import { MaintenanceToolRequestService } from '../../services/maintenance-tool-request.service';
+import { RequestState, ToolRequestManager } from '../../services/tool-request-manager.service';
+import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-maintenance-reparation',
@@ -17,70 +18,130 @@ import { RoleGuard } from 'src/app/core/services/users/role.guard';
   styleUrls: ['./maintenance-reparation.page.scss'],
 })
 export class MaintenanceReparationPage {
-
   @ViewChild('statut') ctrlStatut: IonSelect;
+  public requestState: RequestState = new RequestState();
+  public maintForm: MaintFormGroup = new MaintFormGroup();
+  public toolRequestForm: ToolRequestFormGroup = new ToolRequestFormGroup();
+  public outillNoRefSAPForm: OutillNoRefSAPFormGroup;
+
+
   public page = {
-    title: 'Nouvelle demandeMaintenance et Réparation'
+    title: 'Nouvelle demande Maintenance et Réparation'
   };
 
-
-  public selectedItem: MaintenanceItem = null;
-  public canManage: boolean;
-  public canUpDate = false;
-  //TODO quelle est la différence entre formbuilder et new FormGroup ?
-  public toolRequestForm = new FormGroup(
-    {
-      id: new FormControl(),
-      statut: new FormControl(),
-      groupeAffectation: new FormControl(),
-    }) as ToolRequestFormGroup;
-
-  public maintRepForm = new FormGroup(
-    {
-      outillage: new FormControl(),
-      dateBesoin: new FormControl(),
-      // equipment: new FormControl(),
-      image: new FormControl(),
-      fichier: new FormControl(),
-      sigle: new FormControl(),
-      userValideur: new FormControl(),
-      dateValid: new FormControl(),
-      // itemActionCorrective: new FormControl()
-    }
-  ) as MaintFormGroup;
-
-
+  public maintRep: SpecMaintRep = new SpecMaintRep();
   public userList: User[];
+  public maintToolRequest$: Observable<[ToolRequest, SpecMaintRep]>;
+  private id = this.activatedRoute.snapshot.paramMap.get('id');
 
   constructor(
     private toolRequestService: ToolRequestService,
-    private authService: AuthService,
+    private maintenanceRequestService: MaintenanceToolRequestService,
     private alertService: AlertService,
     private navCtrl: NavController,
     private loadingService: LoadingService,
-    private roleGuard: RoleGuard,
-    private activatedRoute: ActivatedRoute,
+    private toolRequestManager: ToolRequestManager,
+    private activatedRoute: ActivatedRoute
   ) { }
 
+
   ionViewWillEnter() {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if (id) {
-      this.loadMaintenanceData(id);
-      // this.loadMaintenanceData(id);
-      this.canUpDate = true;
-    } else {
-      this.canUpDate = false;
-    }
+    this.maintToolRequest$ = this.maintenanceRequestService.getMaintenanceData(this.id);
+    this.maintToolRequest$
+      .subscribe((resp) => {
+        this.toolRequestForm.patchValue(resp[0]);
+        this.maintForm.patchValue(resp[1]);
+        this.requestState = this.toolRequestManager.getStatus(resp[0].statut);
+      });
   }
 
-  loadMaintenanceData(idDemande: string) {
+  ionViewDidLeave() {
+    this.maintForm.reset();
+  }
+
+
+
+  dateValue(dateValue: string): Date {
+    return new Date(dateValue);
+  }
+
+  // private onValidateItem(ev: MaintenanceItem, item: MaintenanceItem) {
+  //   item = ev;
+  //   this.maintRepForm.value.itemActionCorrective.push(item);
+  //   console.log(this.maintRepForm.value.itemActionCorrective);
+  // }
+
+
+
+  onChangeStatut(event: any) {
+    console.log('status change', this.toolRequestForm);
+    this.toolRequestForm.controls.statut.patchValue(event);
+  }
+  // upDateSpec() {
+  //   this.maintRepForm.dateBesoin = this.maintRepForm.controls.dateBesoin.value;
+  //   this.toolRequest.maintenance.image = this.maintRepForm.controls.image.value;
+  //   this.toolRequest.maintenance.fichier = this.maintRepForm.controls.fichier.value;
+  // }
+  onAffectationChange(event: any) {
+    this.toolRequestForm.controls.groupeAffectation.patchValue(event);
+  }
+
+  submitMaintenanceForm() {
+    console.log(this.maintRep);
+    this.maintenanceRequestService.createMaintenanceRequest(this.maintRep)
+      .then(() => {
+        this.alertService.simpleAlert(
+          'Message de l\'application',
+          'Création d\'une demande',
+          'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes')
+          .then(() => {
+            this.navCtrl.navigateForward('tooling/tool-request-list');
+          });
+      },
+        () => {
+          console.log('reject');
+        })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  updateForm() {
+    this.loadingService.startLoading('Patienter pendant la mise à jour de la demande');
+    this.toolRequestService.updateRequest(this.toolRequestForm.value)
+      .pipe(
+        switchMap(() => this.maintenanceRequestService.updateMainteanceRequest(this.maintRep))
+      )
+      .subscribe(() => {
+        this.loadingService.stopLoading();
+        this.alertService.simpleAlert(
+          'Message de l\'application',
+          'Mise à jour d\'une demande',
+          'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes')
+          .then(() => {
+            this.navCtrl.navigateForward('tooling/tool-request-list');
+          });
+
+      },
+        (error) => {
+          this.loadingService.stopLoading();
+          this.alertService.simpleAlert(
+            'Erreur',
+            'Mise à jour d\'une demande',
+            'La demande n\'a pas pu être modifiée. Vérifiez les données');
+          console.error(error);
+        }
+      );
+  }
+  private loadMaintenanceData(idDemande: string) {
     this.loadingService.startLoading('Patienter pendant le chargement');
-    this.toolRequestService.loadMaintenanceData(idDemande)
+    this.maintenanceRequestService.loadMaintenanceData(idDemande)
       .subscribe((response) => {
         this.toolRequestForm.patchValue(response.request);
-        this.maintRepForm.patchValue(response.specMaint);
+        this.maintRep = response.specMaint;
         response.specMaint.itemActionCorrective.map((item, indexItem) => item.rep = indexItem + 1);
-        this.maintRepForm.value.itemActionCorrective = response.specMaint.itemActionCorrective;
+        this.maintRep.itemActionCorrective = response.specMaint.itemActionCorrective;
+        // this.selectedItem = this.maintRep.itemActionCorrective[0];
         this.loadingService.stopLoading();
       });
     // this.toolRequest = null;
@@ -120,103 +181,5 @@ export class MaintenanceReparationPage {
     //     () => {
     //       this.navCtrl.back();
     //     });
-  }
-
-  dateValue(dateValue: string): Date {
-    return new Date(dateValue);
-  }
-
-  // private onValidateItem(ev: MaintenanceItem, item: MaintenanceItem) {
-  //   item = ev;
-  //   this.maintRepForm.value.itemActionCorrective.push(item);
-  //   console.log(this.maintRepForm.value.itemActionCorrective);
-  // }
-
-  onRemoveItem(ev: MaintenanceItem, item: MaintenanceItem) {
-    this.maintRepForm.value.itemActionCorrective.splice(item.rep - 1, 1);
-    console.log(this.maintRepForm.value.itemActionCorrective);
-  }
-
-  onChangeStatut(event: any) {
-    console.log('status change', this.toolRequestForm);
-    this.toolRequestForm.controls.statut.patchValue(event);
-  }
-  // upDateSpec() {
-  //   this.maintRepForm.dateBesoin = this.maintRepForm.controls.dateBesoin.value;
-  //   this.toolRequest.maintenance.image = this.maintRepForm.controls.image.value;
-  //   this.toolRequest.maintenance.fichier = this.maintRepForm.controls.fichier.value;
-  // }
-  onAffectationChange(event: any) {
-    this.toolRequestForm.controls.groupeAffectation.patchValue(event);
-  }
-
-  addMaintenanceItemClick() {
-    let rep: number;
-    if (!this.maintRepForm.value.itemActionCorrective) {
-      rep = 1;
-      this.maintRepForm.value.itemActionCorrective = [];
-    } else {
-      rep = this.maintRepForm.value.itemActionCorrective.length + 1;
-    }
-    const maintenanceItem: MaintenanceItem = new MaintenanceItem(rep);
-    this.maintRepForm.value.itemActionCorrective.push(maintenanceItem);
-    this.selectedItem = maintenanceItem;
-  }
-
-  submitMaintenanceForm() {
-    console.log(this.maintRepForm.value);
-    this.toolRequestService.createMaintenanceRequest(this.maintRepForm.value)
-      .then(() => {
-        this.maintRepForm.reset();
-        this.alertService.simpleAlert(
-          'Message de l\'application',
-          'Création d\'une demande',
-          'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes')
-          .then(() => {
-            this.navCtrl.navigateForward('tooling/tool-request-list');
-          });
-      },
-        () => {
-          console.log('reject');
-        })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  updateForm() {
-    this.loadingService.startLoading('Patienter pendant la mise à jour de la demande');
-    this.toolRequestService.updateRequest(this.toolRequestForm.value)
-      .subscribe((responseUpdatedRequest) => {
-        console.log(responseUpdatedRequest);
-        this.toolRequestService.updateMainteanceRequest(this.maintRepForm.value)
-          .then(() => {
-            this.maintRepForm.reset();
-            this.loadingService.stopLoading();
-            this.alertService.simpleAlert(
-              'Message de l\'application',
-              'Mise à jour d\'une demande',
-              'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes')
-              .then(() => {
-                this.navCtrl.navigateForward('tooling/tool-request-list');
-              });
-
-          })
-          .catch((error) => {
-            this.loadingService.stopLoading();
-            this.alertService.simpleAlert(
-              'Erreur',
-              'Mise à jour d\'une demande',
-              'La demande n\'a pas pu être modifiée. Vérifiez les données');
-            console.error(error);
-          });
-      },
-        (err) => {
-          this.loadingService.stopLoading();
-          this.alertService.simpleAlert(
-            'Erreur',
-            'Mise à jour d\'une demande',
-            'La demande n\'a pas pu être modifiée. Vérifiez les données et recommencer');
-        });
   }
 }

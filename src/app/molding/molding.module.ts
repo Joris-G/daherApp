@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { AuthGuard } from 'src/app/core/services/users/auth.guard';
-import { AppSharedModule } from '../shared/shared.module';
+import { AuthGuard } from '../shared/services/users/auth.guard';
 import { MoldingComponentsModule } from './modules/molding-components.module';
 import { MoldingDirectivesModule } from './modules/molding-directives.module';
 import { MoldingServicesModule } from './modules/molding-services.module';
@@ -14,7 +12,7 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    component:MoldingPage,
+    component: MoldingPage,
     children: [
       {
         path: 'print-molding-sheet/:id',
@@ -36,10 +34,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: CreateMoldingPage,
       },
-      // {
-      //   path: '**',
-      //   redirectTo: 'home'
-      // }
+      {
+        path: '**',
+        redirectTo: ''
+      }
     ]
   }
 ];

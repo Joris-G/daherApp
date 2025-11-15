@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './core/services/users/auth.guard';
+import { AuthGuard } from './shared/services/users/auth.guard';
 
 const routes: Routes = [
   {
@@ -20,28 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./tooling/tooling.module')
       .then(m => m.AppToolingModule)
   },
-  {
-    path: 'login',
-    // canActivate: [AuthGuard],
-    loadChildren: () => import('./core/pages/login/login.page')
-      .then(m => m.LoginPage)
-  },
-
-  // {
-  //   path: 'admin',
-  //   canActivate: [RoleGuard],
-  //   data:
-  //   {
-  //     expectedRole: ['ROLE_ADMIN'],
-  //   },
-  //   loadChildren: () => import('./pages/admin/admin.module')
-  //     .then(m => m.AdminPageModule)
-  // },
-  // {
-  //   path: '',
-  //   redirectTo: 'home',
-  //   pathMatch: 'full'
-  // },
   {
     path: '**',
     redirectTo: '',

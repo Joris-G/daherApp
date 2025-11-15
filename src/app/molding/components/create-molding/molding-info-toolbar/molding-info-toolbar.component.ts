@@ -24,6 +24,8 @@ export class MoldingInfoToolbarComponent {
     });
   }
   noToolClick() {
+    this.moldingService.molding.outillage = '';
+    this.moldingService.updateMoldings();
     this.moldingService.setToolStatus(true);
   }
 }

@@ -1,5 +1,7 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { IonItemSliding } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { MoldingListService } from 'src/app/molding/services/molding-list.service';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 
 @Component({
@@ -7,23 +9,42 @@ import { Molding } from 'src/app/_interfaces/molding/molding';
   templateUrl: './admin-molding-list.component.html',
   styleUrls: ['./admin-molding-list.component.scss'],
 })
-export class AdminMoldingListComponent implements OnChanges {
-  @Input() moldings: Molding[];
+export class AdminMoldingListComponent implements OnChanges, OnInit {
+  public filteredMoldings: Molding[] = [];
   public moldingListLoading = false;
-  public dataSource: MatTableDataSource<Molding> = new MatTableDataSource();
-  public displayedMoldingColumns: string[] = ['status', 'id', 'moldingDay', 'createdBy', 'outillage', 'commands'];
-  constructor() { }
+  public filteredMoldings$: Observable<Molding[]>;
+  // public dataSource: MatTableDataSource<Molding> = new MatTableDataSource();
+  // public displayedMoldingColumns: string[] = ['id', 'moldingDay', 'createdBy', 'outillage', 'commands'];
+  constructor(
+    private moldingListService: MoldingListService,
+  ) {
+
+  }
+  nextPage() {
+    this.moldingListService.page.next(this.moldingListService.page.value + 1);
+  }
+  ngOnInit(): void {
+    this.moldingListLoading = true;
+    this.filteredMoldings$ = this.moldingListService.filteredMoldings$.asObservable();
+    this.filteredMoldings$.subscribe((moldings) => {
+      this.moldingListLoading = false;
+      this.filteredMoldings = moldings;
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.dataSource.data = this.moldings;
+    // this.dataSource.data = this.moldings;
   }
 
-  ngOnc(): void {
-    this.dataSource.data = this.moldings;
-  }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+  openMoldingClick(moldingIdex: number) {
+
+  }
+  toggleOptions(slidingItem: IonItemSliding) {
+    slidingItem.open('end');
+    setTimeout(() => {
+      slidingItem.close();
+    }, 3000);
   }
 }

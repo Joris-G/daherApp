@@ -1,7 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "defaultProject": "app",
   "newProjectRoot": "projects",
   "projects": {
     "app": {
@@ -198,7 +197,10 @@
           "builder": "@ionic/angular-toolkit:cordova-serve",
           "options": {
             "cordovaBuildTarget": "app:ionic-cordova-build",
-            "devServerTarget": "app:serve"
+            "devServerTarget": "app:serve",
+            "ssl": true,
+            "sslCert": "./localhost.crt",
+            "sslKey": "./localhost.key"
           },
           "configurations": {
             "production": {

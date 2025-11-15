@@ -1,0 +1,8 @@
+<ion-card *ngFor="let menuItem of menuItems" class="menu-item-card" [button]="(menuItem.type === 'button')"
+  routerDirection="root" [routerLink]="(menuItem.type ==='button') ? menuItem.path : ''">
+  <ion-card-header>
+    <ion-card-title>
+      {{menuItem.title}}
+    </ion-card-title>
+  </ion-card-header>
+</ion-card>

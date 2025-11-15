@@ -6,102 +6,18 @@
 
 <ion-content [fullscreen]="true">
   <div class="content-container">
-    <form class="main-form" [formGroup]="maintRepForm" style="display:flex;">
-      <div class="left-side">
-        <!-- *********************************************************************************************** -->
-        <!-- *********************************************************************************************** -->
-        <!-- ******************************* -->
-        <!-- *******   L'OUTILLAGE   ********* -->
-        <!-- ******************************* -->
-        <ion-card color=light padding class="tool">
-          <ion-card-header>
-            <ion-card-title class="ion-text-uppercase">L'outillage</ion-card-title>
-          </ion-card-header>
-          <app-tool-input formControlName="outillage">
-          </app-tool-input>
-        </ion-card>
-
-        <!-- ************************************ -->
-        <!-- ****   LISTE DES MAINTENANCES   **** -->
-        <!-- ************************************ -->
-        <ion-card color="light" class="maintenance-list">
-          <ion-card-header class="flex-row" color=light>
-            <ion-card-title class="ion-text-uppercase">La maintenance</ion-card-title>
-            <!-- ****   BOUTONS   **** -->
-            <ion-button (click)="addMaintenanceItemClick()" size=small>
-              <ion-icon slot="start" name="add"></ion-icon>
-              Ajouter maintenance
-            </ion-button>
-          </ion-card-header>
-          <ion-card-content>
-            <!-- ****   LISTE   **** -->
-            <ion-list>
-              <ion-list-header>
-                <ion-label>Liste des maitenances</ion-label>
-              </ion-list-header>
-              <!-- TODO Ajouter une directive pour hilight hover -->
-              <ion-item *ngFor="let maintenanceItem of maintRepForm.value.itemActionCorrective?.reverse()"
-                (click)="selectedItem = maintenanceItem">
-                <ion-label>{{maintenanceItem.rep}}</ion-label>
-              </ion-item>
-            </ion-list>
-            <!-- <app-maintenance-item *ngFor="let maintenanceItem of maintRepForm.value.itemActionCorrective?.reverse()"
-            [maintenanceItem]="maintenanceItem" (evValidateItem)="onValidateItem($event,maintenanceItem)"
-            (evRemoveItem)="onRemoveItem($event,maintenanceItem)" [canUpdate]="canUpDate"></app-maintenance-item> -->
-          </ion-card-content>
-        </ion-card>
-      </div>
-      <div class="righSide">
-        <!-- ************************************ -->
-        <!-- ****   MAINTENANCE ITEM   **** -->
-        <!-- ************************************ -->
-        <ion-card color="light">
-          <ion-card-header class="flex-row" color=light>
-            <ion-card-title class="ion-text-uppercase">DETAIL MAINTENANCE</ion-card-title>
-            <!-- ****   BOUTONS   **** -->
-          </ion-card-header>
-          <ion-card-content>
-            <!-- ****   LISTE   **** -->
-            <app-maintenance-item *ngIf="selectedItem" [maintenanceItem]="selectedItem"
-              (evRemoveItem)="onRemoveItem($event,selectedItem)" [canUpdate]="canUpDate"></app-maintenance-item>
-            <!-- <app-maintenance-item
-              *ngIf="selectedItem"
-              [maintenanceItem]="selectedItem"
-                (evValidateItem)="onValidateItem($event,selectedItem)"
-                (evRemoveItem)="onRemoveItem($event,selectedItem)"
-                [canUpdate]="canUpDate"></app-maintenance-item> -->
-          </ion-card-content>
-        </ion-card>
-        <ion-card>
-          <!-- Datetime in overlay -->
-          <ion-item button id="open-date-besoin">
-            <ion-label>Date butoir demandée</ion-label>
-            <ion-icon slot=end icon="calendar-outline"></ion-icon>
-            <ion-text slot="end">
-              {{maintRepForm.value.dateBesoin | date:"dd/MM/yyyy"}}
-            </ion-text>
-            <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
-            <ion-modal trigger="open-date-besoin">
-              <ng-template>
-                <ion-content>
-                  <ion-datetime #popoverDatetime2 presentation="date" formControlName="dateBesoin"
-                    display-format="DD.MM.YYYY"
-                    (ionChange)="maintRepForm.value.dateBesoin = dateValue(popoverDatetime2.value)">
-                    <div slot="title">Date butoir demandée</div>
-                  </ion-datetime>
-                </ion-content>
-              </ng-template>
-            </ion-modal>
-          </ion-item>
-        </ion-card>
-      </div>
-    </form>
+    <!-- <form class="main-form" style="display:flex;" [formGroup]=""> -->
+    <div class="left-side">
+      <app-maint-repair-form [(maintForm)]="maintForm" [(toolRequestForm)]="toolRequestForm">
+      </app-maint-repair-form>
+    </div>
+    <!-- </form> -->
     <!-- <app-spec-maintenance-reparation *ngIf="toolRequest" [toolRequest]="toolRequest"></app-spec-maintenance-reparation> -->
   </div>
 
 </ion-content>
 <ion-footer>
   <app-tool-request-footer (evStatusChange)="onChangeStatut($event)" (evSubmit)="submitMaintenanceForm()"
-    (evUpdate)="updateForm()" (evAffectationChange)="onAffectationChange($event)" [canManage]="canManage"
-    [canUpdate]="canUpDate" [form]="maintRepForm"></app-tool-request-footer>
+    (evUpdate)="updateForm()" (evAffectationChange)="onAffectationChange($event)" [canManage]="requestState.canManage"
+    [canUpdate]="requestState.canUpdate"></app-tool-request-footer>
 </ion-footer>

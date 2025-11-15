@@ -1,0 +1,9 @@
+ion-grid{
+    height: 100%;
+    ion-row{
+        height: 100%;
+        ion-col:first-child{
+            border-right: 2px solid var(--ion-color-medium);
+        }
+    }
+}
