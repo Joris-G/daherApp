@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import JSPDF from 'jspdf';
-import * as pdfmake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import domtoimage, { Options } from 'dom-to-image';
+// import JSPDF from 'jspdf';
+// import * as pdfmake from 'pdfmake/build/pdfmake';
+// import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// import domtoimage, { Options } from 'dom-to-image';
 // import { FileOpener } from '@ionic-native/file-opener/ngx';
 // import { File, IWriteOptions } from '@ionic-native/file/ngx';
 // import { PDFGenerator, PDFGeneratorOptions } from '@ionic-native/pdf-generator/ngx';
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import html2canvas from 'html2canvas';
+// import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+// import html2canvas from 'html2canvas';
 
 @Injectable({
   providedIn: 'root'
@@ -123,22 +123,22 @@ export class PdfService {
 
   openPDF(divToConvert: HTMLElement, fileName: string): void {
 
-    html2canvas(divToConvert, {
-      scale: 1,
+    //   html2canvas(divToConvert, {
+    //     scale: 1,
 
-    }).then((canvas) => {
-      const PDF = new JSPDF('p', 'mm', 'a4');
-      const FILEURI = canvas.toDataURL('image/png');
+    //   }).then((canvas) => {
+    //     const PDF = new JSPDF('p', 'mm', 'a4');
+    //     const FILEURI = canvas.toDataURL('image/png');
 
-      const width = PDF.internal.pageSize.getWidth();
-      const height = PDF.internal.pageSize.getHeight();
+    //     const width = PDF.internal.pageSize.getWidth();
+    //     const height = PDF.internal.pageSize.getHeight();
 
-      const widthRatio = width / canvas.width;
-      const heightRatio = height / canvas.height;
+    //     const widthRatio = width / canvas.width;
+    //     const heightRatio = height / canvas.height;
 
-      const ratio = widthRatio > heightRatio ? heightRatio : widthRatio;
-      PDF.addImage(FILEURI, 'png', 0, 0, canvas.width * ratio, canvas.height * ratio,);
-      PDF.save(fileName + '.pdf');
-    });
+    //     const ratio = widthRatio > heightRatio ? heightRatio : widthRatio;
+    //     PDF.addImage(FILEURI, 'png', 0, 0, canvas.width * ratio, canvas.height * ratio,);
+    //     PDF.save(fileName + '.pdf');
+    //   });
   }
 }

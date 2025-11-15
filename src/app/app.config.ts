@@ -1,7 +1,7 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { ApplicationConfig, LOCALE_ID } from "@angular/core";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { RouteReuseStrategy, provideRouter } from "@angular/router";
+import { PreloadAllModules, RouteReuseStrategy, provideRouter, withPreloading } from "@angular/router";
 import { IonicRouteStrategy } from "@ionic/angular";
 import { provideIonicAngular } from "@ionic/angular/standalone";
 import { TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
@@ -12,14 +12,14 @@ export const appConfig:ApplicationConfig = {
     providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideRouter(routes),
+        provideRouter(routes, withPreloading(PreloadAllModules)),
+        provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
-        File,
+        // File,
     // FileOpener,
-    // PDFGenerator,
-        provideHttpClient(withInterceptorsFromDi()),
+        // PDFGenerator,
         provideAnimations()
     ]
 }

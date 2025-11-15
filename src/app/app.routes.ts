@@ -6,7 +6,7 @@ import { LoginPage } from "./core/pages/login/login.page";
 import { RegisterPage } from "./core/pages/register/register.page";
 import { CreateMoldingPage } from "./molding/pages/create-molding/create-molding.page";
 import { PrintMoldingSheetPage } from "./molding/pages/print-molding-sheet/print-molding-sheet.page";
-import { AuthGuard } from "./shared/services/users/auth.guard";
+import { canActivateAuth } from "./shared/services/users/auth.guard";
 import { RoleGuard } from "./shared/services/users/role.guard";
 import { Control3DPage } from "./tooling/components/control3-d/control.page";
 import { IndicatorsPage } from "./tooling/components/indicators/indicators.page";
@@ -20,7 +20,7 @@ import { ToolRequestsPage } from "./tooling/components/tool-requests/tool-reques
 export const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard],
+    canActivate: [canActivateAuth],
     children: [
       {
         path: 'home',
@@ -50,7 +50,6 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterPage
   },
-
   {
     path: '',
     redirectTo: '/home',
@@ -58,26 +57,22 @@ export const routes: Routes = [
   },
   {
     path: 'molding',
-    canActivate: [AuthGuard],
+    canActivate: [canActivateAuth],
     children: [
       {
         path: 'print-molding-sheet/:id',
-        canActivate: [AuthGuard],
         component: PrintMoldingSheetPage
       },
       {
         path: 'print-molding-sheet',
-        canActivate: [AuthGuard],
         component: PrintMoldingSheetPage
       },
       {
         path: 'create-molding',
-        canActivate: [AuthGuard],
         component: CreateMoldingPage,
       },
       {
         path: 'create-molding/:id',
-        canActivate: [AuthGuard],
         component: CreateMoldingPage,
       },
       {
@@ -88,7 +83,7 @@ export const routes: Routes = [
   },
   {
     path: 'tooling',
-    canActivate: [AuthGuard],
+    canActivate: [canActivateAuth],
     children: [
       {
         path: '',

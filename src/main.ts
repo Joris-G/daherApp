@@ -6,14 +6,9 @@ import { registerLocaleData } from '@angular/common';
 import fr from '@angular/common/locales/fr';
 import { appConfig } from './app/app.config';
 
-
-
-
 if (environment.production) {
   enableProdMode();
 }
-
 registerLocaleData(fr);
-
-bootstrapApplication(AppComponent, appConfig);
-// .catch(err => console.log(err));
+bootstrapApplication(AppComponent, appConfig)
+  .catch(err => console.log(err));

@@ -3,7 +3,6 @@ import { NoticeService } from 'src/app/shared/services/notice/notice.service';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { LoginNoticeComponent } from '../login/login-notice/login-notice.component';
 import { SharedUserHeaderComponent } from '../../../shared/components/shared-user-header/shared-user-header.component';
-import { IonicModule } from '@ionic/angular';
 import { MenuHomeComponent } from './menu-home/menu-home.component';
 
 @Component({
@@ -12,8 +11,7 @@ import { MenuHomeComponent } from './menu-home/menu-home.component';
     styleUrls: ['home.page.scss'],
     standalone: true,
     imports: [
-        SharedUserHeaderComponent,
-        IonicModule,
+      SharedUserHeaderComponent,
         MenuHomeComponent,
     ],
 })

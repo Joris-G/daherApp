@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import packageJson from 'package.json';
 import { NoticeService } from 'src/app/shared/services/notice/notice.service';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { LoginNoticeComponent } from './login-notice/login-notice.component';
-import { IonicModule } from '@ionic/angular';
 import { LoginFormComponent } from './login-form/login-form.component';
 
 @Component({
@@ -11,17 +10,14 @@ import { LoginFormComponent } from './login-form/login-form.component';
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
     standalone: true,
-    imports: [IonicModule, LoginFormComponent],
+  imports: [LoginFormComponent],
 })
 export class LoginPage implements OnInit {
 
   public version: string = packageJson.version;
+  private readonly noticeService: NoticeService = inject(NoticeService);
+  private readonly titleService: TitleService = inject(TitleService);
 
-
-  constructor(
-    private noticeService: NoticeService,
-    private titleService: TitleService
-  ) { }
 
   showNotice() {
     this.noticeService.presentModal(LoginNoticeComponent);
