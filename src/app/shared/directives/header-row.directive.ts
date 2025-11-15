@@ -1,7 +1,8 @@
 import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: 'ion-row[appHeaderRow]'
+    selector: 'ion-row[appHeaderRow]',
+    standalone: true
 })
 export class HeaderRowDirective implements OnInit {
 

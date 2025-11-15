@@ -4,7 +4,8 @@ import { ToolService } from '../../services/tool.service';
 import { ToolInputService } from './tool-input.service';
 
 @Directive({
-    selector: '[toolInput]'
+    selector: '[toolInput]',
+    standalone: true
 })
 export class ToolInputDirective {
     @HostListener('change', ['$event.target'])

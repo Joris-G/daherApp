@@ -1,12 +1,14 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonInput, IonMenu, NavController } from '@ionic/angular';
+import { IonInput, IonMenu, NavController, IonicModule } from '@ionic/angular';
 import { ScanService } from 'src/app/molding/services/scan.service';
 
 @Component({
-  selector: 'app-molding-menu',
-  templateUrl: './molding-menu.component.html',
-  styleUrls: ['./molding-menu.component.scss'],
+    selector: 'app-molding-menu',
+    templateUrl: './molding-menu.component.html',
+    styleUrls: ['./molding-menu.component.scss'],
+    standalone: true,
+    imports: [IonicModule],
 })
 export class MoldingMenuComponent implements AfterViewInit {
   @ViewChild('inputIdMolding') inputIdMolding: IonInput;

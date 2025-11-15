@@ -2,24 +2,29 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { trigger, state, style } from '@angular/animations';
 import { Observable } from 'rxjs';
-import { NavController } from '@ionic/angular';
+import { NavController, IonicModule } from '@ionic/angular';
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
+import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
+import { HeaderRowDirective } from '../../../../../shared/directives/header-row.directive';
+import { DataRowDirective } from '../../../../../shared/directives/data-row.directive';
 
 @Component({
-  selector: 'app-tool-request-table',
-  templateUrl: './tool-request-table.component.html',
-  styleUrls: ['./tool-request-table.component.scss'],
-  animations: [
-    trigger('openClose', [
-      // animation triggers go here
-      state('open', style({
-        backgroundColor: 'DarkOrange',
-        opacity: '0.7'
-      })),
-    ])
-  ]
+    selector: 'app-tool-request-table',
+    templateUrl: './tool-request-table.component.html',
+    styleUrls: ['./tool-request-table.component.scss'],
+    animations: [
+        trigger('openClose', [
+            // animation triggers go here
+            state('open', style({
+                backgroundColor: 'DarkOrange',
+                opacity: '0.7'
+            })),
+        ])
+    ],
+    standalone: true,
+    imports: [NgIf, IonicModule, HeaderRowDirective, NgFor, DataRowDirective, AsyncPipe, DatePipe]
 })
 export class ToolRequestTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;

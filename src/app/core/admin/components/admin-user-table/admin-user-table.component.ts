@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/_interfaces/user';
 import { map } from 'rxjs/operators';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { UserSheetComponent } from 'src/app/shared/components/user-sheet/user-sheet.component';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { HeaderRowDirective } from '../../../../shared/directives/header-row.directive';
+import { DataRowDirective } from '../../../../shared/directives/data-row.directive';
+import { BorderColorDirective } from '../../../../shared/directives/border-color.directive';
 
 
 const usersRole = {
@@ -20,9 +24,19 @@ const usersRole = {
 
 const getRole = (role: string): string => usersRole[role];
 @Component({
-  selector: 'app-admin-user-table',
-  templateUrl: './admin-user-table.component.html',
-  styleUrls: ['./admin-user-table.component.scss'],
+    selector: 'app-admin-user-table',
+    templateUrl: './admin-user-table.component.html',
+    styleUrls: ['./admin-user-table.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        IonicModule,
+        HeaderRowDirective,
+        NgFor,
+        DataRowDirective,
+        BorderColorDirective,
+        AsyncPipe,
+    ],
 })
 export class AdminUserTableComponent implements OnInit {
   public users$: Observable<User[]>;

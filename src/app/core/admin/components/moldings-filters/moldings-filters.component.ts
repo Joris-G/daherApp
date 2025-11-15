@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { MoldingListService } from 'src/app/molding/services/molding-list.service';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
+import { IonicModule } from '@ionic/angular';
+import { NgFor, AsyncPipe } from '@angular/common';
 
 export class FiltersMolding {
   tools: string[] = [];
@@ -10,9 +12,15 @@ export class FiltersMolding {
 }
 
 @Component({
-  selector: 'app-moldings-filters',
-  templateUrl: './moldings-filters.component.html',
-  styleUrls: ['./moldings-filters.component.scss'],
+    selector: 'app-moldings-filters',
+    templateUrl: './moldings-filters.component.html',
+    styleUrls: ['./moldings-filters.component.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgFor,
+        AsyncPipe,
+    ],
 })
 export class MoldingsFiltersComponent implements OnInit {
   // public filteredMoldings: Molding[] = [];

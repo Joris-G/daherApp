@@ -1,14 +1,24 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, ValidatorFn, Validators, FormBuilder, ValidationErrors, AbstractControl } from '@angular/forms';
+import { FormGroup, ValidatorFn, Validators, FormBuilder, ValidationErrors, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { User, UserIri } from 'src/app/_interfaces/user';
+import { IonicModule } from '@ionic/angular';
+import { RoleFormComponent } from '../role-form/role-form.component';
+import { IdentityFormComponent } from '../identity-form/identity-form.component';
 
 @Component({
-  selector: 'app-register-form',
-  templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss'],
+    selector: 'app-register-form',
+    templateUrl: './register-form.component.html',
+    styleUrls: ['./register-form.component.scss'],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        IonicModule,
+        RoleFormComponent,
+        IdentityFormComponent,
+    ],
 })
 export class RegisterFormComponent implements OnInit {
   @Input('formGroup')

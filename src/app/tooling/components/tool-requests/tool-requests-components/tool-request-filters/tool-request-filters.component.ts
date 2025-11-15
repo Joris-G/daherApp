@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { IonSelect } from '@ionic/angular';
+import { IonSelect, IonicModule } from '@ionic/angular';
 
 import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
+import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-tool-request-filters',
-  templateUrl: './tool-request-filters.component.html',
-  styleUrls: ['./tool-request-filters.component.scss'],
+    selector: 'app-tool-request-filters',
+    templateUrl: './tool-request-filters.component.html',
+    styleUrls: ['./tool-request-filters.component.scss'],
+    standalone: true,
+    imports: [IonicModule, NgFor],
 })
 export class ToolRequestFiltersComponent {
   private activeFilters: IonSelect[] = [];

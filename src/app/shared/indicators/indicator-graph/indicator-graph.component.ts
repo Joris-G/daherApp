@@ -1,11 +1,14 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-indicator-graph',
-  templateUrl: './indicator-graph.component.html',
-  styleUrls: ['./indicator-graph.component.scss'],
+    selector: 'app-indicator-graph',
+    templateUrl: './indicator-graph.component.html',
+    styleUrls: ['./indicator-graph.component.scss'],
+    standalone: true,
+    imports: [IonicModule],
 })
 export class IndicatorGraphComponent implements OnInit, AfterViewInit {
 

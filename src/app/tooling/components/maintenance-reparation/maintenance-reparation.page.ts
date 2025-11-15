@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonSelect, NavController } from '@ionic/angular';
+import { IonSelect, NavController, IonicModule } from '@ionic/angular';
 import { MaintFormGroup, OutillNoRefSAPFormGroup, SpecMaintRep, ToolRequest, ToolRequestFormGroup }
   from 'src/app/_interfaces/tooling/tool-request-types';
 import { User } from 'src/app/_interfaces/user';
@@ -11,11 +11,19 @@ import { MaintenanceToolRequestService } from '../../services/maintenance-tool-r
 import { RequestState, ToolRequestManager } from '../../services/tool-request-manager.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { MaintRepairFormComponent } from './maint-repair-form/maint-repair-form.component';
+import { ToolRequestFooterComponent } from '../tool-request-footer/tool-request-footer.component';
 
 @Component({
-  selector: 'app-maintenance-reparation',
-  templateUrl: './maintenance-reparation.page.html',
-  styleUrls: ['./maintenance-reparation.page.scss'],
+    selector: 'app-maintenance-reparation',
+    templateUrl: './maintenance-reparation.page.html',
+    styleUrls: ['./maintenance-reparation.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        MaintRepairFormComponent,
+        ToolRequestFooterComponent,
+    ],
 })
 export class MaintenanceReparationPage {
   @ViewChild('statut') ctrlStatut: IonSelect;

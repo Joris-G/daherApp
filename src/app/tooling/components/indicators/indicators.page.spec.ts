@@ -9,9 +9,8 @@ describe('IndicatorsPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ IndicatorsPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), IndicatorsPage]
+}).compileComponents();
 
     fixture = TestBed.createComponent(IndicatorsPage);
     component = fixture.componentInstance;

@@ -3,11 +3,15 @@ import packageJson from 'package.json';
 import { NoticeService } from 'src/app/shared/services/notice/notice.service';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { LoginNoticeComponent } from './login-notice/login-notice.component';
+import { IonicModule } from '@ionic/angular';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+    selector: 'app-login',
+    templateUrl: './login.page.html',
+    styleUrls: ['./login.page.scss'],
+    standalone: true,
+    imports: [IonicModule, LoginFormComponent],
 })
 export class LoginPage implements OnInit {
 

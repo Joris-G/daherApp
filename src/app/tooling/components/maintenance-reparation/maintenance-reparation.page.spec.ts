@@ -9,9 +9,8 @@ describe('MaintenanceReparationPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [MaintenanceReparationPage],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), MaintenanceReparationPage]
+}).compileComponents();
 
     fixture = TestBed.createComponent(MaintenanceReparationPage);
     component = fixture.componentInstance;

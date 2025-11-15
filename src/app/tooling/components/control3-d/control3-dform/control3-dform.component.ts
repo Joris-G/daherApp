@@ -4,11 +4,18 @@ import { MoyenMesure, OutillNoRefSAPFormGroup, SpecCtrlFormGroup, ToolRequestFor
 
 import { ToolInputService } from '../../tool-input/tool-input.service';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
+import { ReactiveFormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { ToolInputComponent } from '../../tool-input/tool-input.component';
+import { NgIf, NgFor, DatePipe, KeyValuePipe } from '@angular/common';
+import { EditorComponent } from '@tinymce/tinymce-angular';
 
 @Component({
-  selector: 'app-control3-dform',
-  templateUrl: './control3-dform.component.html',
-  styleUrls: ['./control3-dform.component.scss']
+    selector: 'app-control3-dform',
+    templateUrl: './control3-dform.component.html',
+    styleUrls: ['./control3-dform.component.scss'],
+    standalone: true,
+    imports: [ReactiveFormsModule, IonicModule, ToolInputComponent, NgIf, NgFor, EditorComponent, DatePipe, KeyValuePipe]
 })
 export class Control3DFormComponent implements OnInit, OnChanges {
   @Input()

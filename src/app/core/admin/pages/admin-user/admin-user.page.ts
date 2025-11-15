@@ -8,14 +8,18 @@ import { SericesService } from 'src/app/shared/services/users/serices.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { IService } from 'src/app/_interfaces/service';
 import { User } from 'src/app/_interfaces/user';
+import { IonicModule } from '@ionic/angular';
+import { AdminUserTableComponent } from '../../components/admin-user-table/admin-user-table.component';
 
 @Component({
-  selector: 'app-admin-user',
-  templateUrl: './admin-user.page.html',
-  styleUrls: ['./admin-user.page.scss'],
-  providers: [
-    UsersService, SericesService
-  ]
+    selector: 'app-admin-user',
+    templateUrl: './admin-user.page.html',
+    styleUrls: ['./admin-user.page.scss'],
+    providers: [
+        UsersService, SericesService
+    ],
+    standalone: true,
+    imports: [IonicModule, AdminUserTableComponent]
 })
 export class AdminUserPage implements OnInit {
   @ViewChild('newUsers') private newUsersCanvas: ElementRef;

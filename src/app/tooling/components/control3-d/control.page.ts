@@ -1,16 +1,24 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, IonicModule } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { OutillNoRefSAPFormGroup, SpecCtrlFormGroup, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ControlToolRequestService } from '../../services/control-tool-request.service';
 import { RequestState, ToolRequestManager } from '../../services/tool-request-manager.service';
+import { Control3DFormComponent } from './control3-dform/control3-dform.component';
+import { ToolRequestFooterComponent } from '../tool-request-footer/tool-request-footer.component';
 
 
 @Component({
-  selector: 'app-control',
-  templateUrl: './control.page.html',
-  styleUrls: ['./control.page.scss'],
+    selector: 'app-control',
+    templateUrl: './control.page.html',
+    styleUrls: ['./control.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        Control3DFormComponent,
+        ToolRequestFooterComponent,
+    ],
 })
 export class Control3DPage {
   requestState: RequestState = new RequestState();

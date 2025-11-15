@@ -1,15 +1,22 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from 'src/app/_interfaces/user';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { AlertService } from '../../services/divers/alert.service';
 import { LoadingService } from '../../services/divers/loading.service';
 import { UsersService } from '../../services/users/users.service';
+import { NgIf, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-user-sheet',
-  templateUrl: './user-sheet.component.html',
-  styleUrls: ['./user-sheet.component.scss'],
+    selector: 'app-user-sheet',
+    templateUrl: './user-sheet.component.html',
+    styleUrls: ['./user-sheet.component.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        DatePipe,
+    ],
 })
 export class UserSheetComponent {
   @Input('user') user: User;

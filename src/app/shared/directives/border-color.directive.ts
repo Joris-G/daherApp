@@ -1,7 +1,8 @@
 import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[appBorderColor]'
+    selector: '[appBorderColor]',
+    standalone: true
 })
 export class BorderColorDirective implements OnInit {
   @Input() borderColor: string | boolean;

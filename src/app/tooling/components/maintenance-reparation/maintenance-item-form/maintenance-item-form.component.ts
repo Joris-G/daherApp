@@ -1,12 +1,20 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { MaintenanceItem, MaintenanceItemFormGroup } from 'src/app/_interfaces/tooling/tool-request-types';
+import { NgIf, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-maintenance-item-form',
-  templateUrl: './maintenance-item-form.component.html',
-  styleUrls: ['./maintenance-item-form.component.scss'],
+    selector: 'app-maintenance-item-form',
+    templateUrl: './maintenance-item-form.component.html',
+    styleUrls: ['./maintenance-item-form.component.scss'],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        IonicModule,
+        NgIf,
+        DatePipe,
+    ],
 })
 export class MaintenanceItemFormComponent implements OnInit {
   @Input() maintenanceItem: MaintenanceItem;

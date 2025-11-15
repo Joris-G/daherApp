@@ -1,15 +1,34 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { User } from 'src/app/_interfaces/user';
+import { IonicModule } from '@ionic/angular';
+import { NgFor, NgIf, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-manage-team',
-  templateUrl: './manage-team.page.html',
-  styleUrls: ['./manage-team.page.scss'],
+    selector: 'app-manage-team',
+    templateUrl: './manage-team.page.html',
+    styleUrls: ['./manage-team.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgFor,
+        NgIf,
+        MatTable,
+        MatColumnDef,
+        MatHeaderCellDef,
+        MatHeaderCell,
+        MatCellDef,
+        MatCell,
+        MatHeaderRowDef,
+        MatHeaderRow,
+        MatRowDef,
+        MatRow,
+        DatePipe,
+    ],
 })
 export class ManageTeamPage implements OnInit {
   public page = {

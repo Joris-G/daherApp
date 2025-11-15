@@ -1,16 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AdditionalMaterial, AdditionalMaterialForm } from 'src/app/_interfaces/molding/composite-material-types';
 import { environment } from 'src/environments/environment';
 import { MoldingService } from 'src/app/molding/services/molding.service';
 import { RequestService } from 'src/app/shared/services/request.service';
+import { IonicModule } from '@ionic/angular';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 
 @Component({
-  selector: 'app-nida',
-  templateUrl: './nida.component.html',
-  styleUrls: ['./nida.component.scss']
+    selector: 'app-nida',
+    templateUrl: './nida.component.html',
+    styleUrls: ['./nida.component.scss'],
+    standalone: true,
+    imports: [ReactiveFormsModule, IonicModule, NgIf, NgFor, AsyncPipe]
 })
 export class NidaComponent implements OnInit {
   @Output() nidaEmitter: EventEmitter<AdditionalMaterial> = new EventEmitter();

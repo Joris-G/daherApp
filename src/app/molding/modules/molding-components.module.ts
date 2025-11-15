@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CreateMoldingToolbarComponent } from '../components/create-molding/create-molding-toolbar/create-molding-toolbar.component';
 import { MoldingMenuComponent } from '../components/molding-menu/molding-menu.component';
-import { MoldingDirectivesModule } from './molding-directives.module';
+
 import { ScanMoldingInputComponent } from '../components/create-molding/scan-molding-input/scan-molding-input.component';
 import { NonExpiredMaterialInputComponent }
   from '../components/create-molding/non-expired-material-input/non-expired-material-input.component';
@@ -14,16 +14,12 @@ import { CreateMoldingPage } from '../pages/create-molding/create-molding.page';
 import { PrintMoldingSheetPage } from '../pages/print-molding-sheet/print-molding-sheet.page';
 import { AppSharedModule } from 'src/app/shared/shared.module';
 import { DateHeurePipe } from 'src/app/_pipes/dateHeure.pipe';
-import { PipeModule } from 'src/app/_pipes/pipe.module';
+
 import { KitDetailsComponent } from '../components/create-molding/kit-details/kit-details.component';
 
 @NgModule({
-  imports: [
+    imports: [
     AppSharedModule,
-    MoldingDirectivesModule,
-    PipeModule,
-  ],
-  declarations: [
     ScanMoldingInputComponent,
     MoldingMenuComponent,
     NonExpiredMaterialInputComponent,
@@ -36,20 +32,20 @@ import { KitDetailsComponent } from '../components/create-molding/kit-details/ki
     CreateMoldingPage,
     PrintMoldingSheetPage,
     KitDetailsComponent,
-  ],
-  exports: [
-    MoldingMenuComponent,
-    ScanMoldingInputComponent,
-    NonExpiredMaterialInputComponent,
-    NidaComponent,
-    MoldingKitTableComponent,
-    MoldingMaterialsTableComponent,
-    MoldingInfoToolbarComponent,
-    CreateMoldingToolbarComponent,
-    MoldingPage,
-    CreateMoldingPage,
-    PrintMoldingSheetPage,
-    KitDetailsComponent
-  ],
+],
+    exports: [
+        MoldingMenuComponent,
+        ScanMoldingInputComponent,
+        NonExpiredMaterialInputComponent,
+        NidaComponent,
+        MoldingKitTableComponent,
+        MoldingMaterialsTableComponent,
+        MoldingInfoToolbarComponent,
+        CreateMoldingToolbarComponent,
+        MoldingPage,
+        CreateMoldingPage,
+        PrintMoldingSheetPage,
+        KitDetailsComponent
+    ],
 })
 export class MoldingComponentsModule { }

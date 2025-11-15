@@ -1,17 +1,20 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { IonMenu, NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { IonMenu, NavController, IonicModule } from '@ionic/angular';
+import { Router, RouterLink } from '@angular/router';
 import { ToolRequestsService } from '../tool-requests/tool-requests-data/tool-requests.service';
 import { AuthService } from 'src/app/shared/services/users/auth.service';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/_interfaces/user';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-tool-request-menu',
-  templateUrl: './tool-request-menu.component.html',
-  styleUrls: ['./tool-request-menu.component.css']
+    selector: 'app-tool-request-menu',
+    templateUrl: './tool-request-menu.component.html',
+    styleUrls: ['./tool-request-menu.component.css'],
+    standalone: true,
+    imports: [IonicModule, RouterLink, NgIf, AsyncPipe]
 })
 export class ToolRequestMenuComponent implements OnInit {
   @ViewChild('menuTool') menu: IonMenu;

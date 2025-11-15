@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { IonicModule } from '@ionic/angular';
+import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-tool-list',
-  templateUrl: './tool-list.page.html',
-  styleUrls: ['./tool-list.page.scss'],
+    selector: 'app-tool-list',
+    templateUrl: './tool-list.page.html',
+    styleUrls: ['./tool-list.page.scss'],
+    standalone: true,
+    imports: [IonicModule, NgFor],
 })
 export class ToolListPage implements OnInit {
   public requestList: ToolRequest[];

@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SharedUserHeaderComponent } from './components/shared-user-header/shared-user-header.component';
-import { MaterialModule } from './material.module';
-import { IndicatorsModule } from './indicators/indicators.module';
+
+
 import { UserSheetComponent } from './components/user-sheet/user-sheet.component';
 import { UserPopoverComponent } from './components/user-popover/user-popover.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
@@ -22,7 +22,12 @@ import { IddleService } from './services/iddle.service';
 import { NotificationsService } from './services/notifications/notifications.service';
 
 @NgModule({
-  declarations: [
+    imports: [
+    CommonModule,
+    IonicModule,
+    EditorModule,
+    ReactiveFormsModule,
+    FormsModule,
     SharedUserHeaderComponent,
     UserSheetComponent,
     UserPopoverComponent,
@@ -30,23 +35,13 @@ import { NotificationsService } from './services/notifications/notifications.ser
     BorderColorDirective,
     HeaderRowDirective,
     DataRowDirective,
-    TableComponent,
-  ],
-  imports: [
-    CommonModule,
-    IonicModule,
-    IndicatorsModule,
-    EditorModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
-  exports: [
+    TableComponent
+],
+    exports: [
     CommonModule,
     IonicModule,
     RouterModule,
-    MaterialModule,
     MatSortModule,
-    IndicatorsModule,
     FormsModule,
     ReactiveFormsModule,
     SharedUserHeaderComponent,
@@ -57,15 +52,14 @@ import { NotificationsService } from './services/notifications/notifications.ser
     HeaderRowDirective,
     DataRowDirective,
     TableComponent,
-
-  ],
-  providers: [
-    LoadingService,
-    AlertService,
-    DatePipe,
-    UsersService,
-    IddleService,
-    NotificationsService
-  ]
+],
+    providers: [
+        LoadingService,
+        AlertService,
+        DatePipe,
+        UsersService,
+        IddleService,
+        NotificationsService
+    ]
 })
 export class AppSharedModule { }

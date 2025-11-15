@@ -9,9 +9,8 @@ describe('RoleFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RoleFormComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), RoleFormComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(RoleFormComponent);
     component = fixture.componentInstance;

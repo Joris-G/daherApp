@@ -9,9 +9,8 @@ describe('ToolRequestFooterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ToolRequestFooterComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), ToolRequestFooterComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ToolRequestFooterComponent);
     component = fixture.componentInstance;

@@ -9,9 +9,8 @@ describe('ToolRequestFiltersComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ToolRequestFiltersComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), ToolRequestFiltersComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ToolRequestFiltersComponent);
     component = fixture.componentInstance;

@@ -4,7 +4,8 @@ import { KitService } from '../services/kit.service';
 import { MoldingService } from '../services/molding.service';
 
 @Directive({
-  selector: '[appPeremp]',
+    selector: '[appPeremp]',
+    standalone: true,
 })
 export class PerempDirective implements OnInit, OnChanges {
   @Input() appPeremp: {

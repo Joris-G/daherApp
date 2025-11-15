@@ -9,9 +9,8 @@ describe('MoldingInfoToolbarComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MoldingInfoToolbarComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), MoldingInfoToolbarComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(MoldingInfoToolbarComponent);
     component = fixture.componentInstance;

@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, IonicModule } from '@ionic/angular';
 import packageJson from 'package.json';
 import { LoadingService } from '../../services/divers/loading.service';
 import { AuthService } from '../../services/users/auth.service';
 import { UserSheetComponent } from '../user-sheet/user-sheet.component';
 
 @Component({
-  selector: 'app-user-popover',
-  templateUrl: './user-popover.component.html',
-  styleUrls: ['./user-popover.component.css']
+    selector: 'app-user-popover',
+    templateUrl: './user-popover.component.html',
+    styleUrls: ['./user-popover.component.css'],
+    standalone: true,
+    imports: [IonicModule]
 })
 export class UserPopoverComponent implements OnInit {
   public version: string = packageJson.version;

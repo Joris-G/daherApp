@@ -1,17 +1,27 @@
 import { Component, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { AlertController, IonItemSliding, ModalController } from '@ionic/angular';
+import { AlertController, IonItemSliding, ModalController, IonicModule } from '@ionic/angular';
 import { ComponentProps } from '@ionic/core';
 import { KitService } from 'src/app/molding/services/kit.service';
 import { MoldingService } from 'src/app/molding/services/molding.service';
 import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { KitDetailsComponent } from '../kit-details/kit-details.component';
+import { NgFor, NgIf, DatePipe } from '@angular/common';
+import { PerempDirective } from '../../../directives/peremp.directive';
 
 @Component({
-  selector: 'app-molding-kit-table',
-  templateUrl: './molding-kit-table.component.html',
-  styleUrls: ['./molding-kit-table.component.scss'],
+    selector: 'app-molding-kit-table',
+    templateUrl: './molding-kit-table.component.html',
+    styleUrls: ['./molding-kit-table.component.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgFor,
+        NgIf,
+        PerempDirective,
+        DatePipe,
+    ],
 })
 export class MoldingKitTableComponent {
   @Input() molding: Molding;

@@ -9,9 +9,8 @@ describe('AdminMoldingDashboardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminMoldingDashboardComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), AdminMoldingDashboardComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AdminMoldingDashboardComponent);
     component = fixture.componentInstance;

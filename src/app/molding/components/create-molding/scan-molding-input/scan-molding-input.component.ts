@@ -1,15 +1,18 @@
 import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { IonButton, IonInput } from '@ionic/angular';
+import { IonButton, IonInput, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { AdditionalMaterial, Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { ScanService } from 'src/app/molding/services/scan.service';
+import { NgIf } from '@angular/common';
 
 
 @Component({
-  selector: 'app-scan-molding-input',
-  templateUrl: './scan-molding-input.component.html',
-  styleUrls: ['./scan-molding-input.component.scss'],
+    selector: 'app-scan-molding-input',
+    templateUrl: './scan-molding-input.component.html',
+    styleUrls: ['./scan-molding-input.component.scss'],
+    standalone: true,
+    imports: [IonicModule, NgIf],
 })
 export class ScanMoldingInputComponent implements AfterViewInit, OnInit {
   /**

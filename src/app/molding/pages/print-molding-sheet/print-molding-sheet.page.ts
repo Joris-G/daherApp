@@ -6,11 +6,34 @@ import { Molding } from 'src/app/_interfaces/molding/molding';
 import { KitService } from 'src/app/molding/services/kit.service';
 import { MoldingService } from 'src/app/molding/services/molding.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { IonicModule } from '@ionic/angular';
+import { NgIf, NgFor, JsonPipe, DatePipe } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 @Component({
-  selector: 'app-print-molding-sheet',
-  templateUrl: './print-molding-sheet.page.html',
-  styleUrls: ['./print-molding-sheet.page.scss'],
+    selector: 'app-print-molding-sheet',
+    templateUrl: './print-molding-sheet.page.html',
+    styleUrls: ['./print-molding-sheet.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        MatDivider,
+        MatTable,
+        MatColumnDef,
+        MatHeaderCellDef,
+        MatHeaderCell,
+        MatCellDef,
+        MatCell,
+        MatHeaderRowDef,
+        MatHeaderRow,
+        MatRowDef,
+        MatRow,
+        NgFor,
+        JsonPipe,
+        DatePipe,
+    ],
 })
 export class PrintMoldingSheetPage implements OnInit {
   public molding: Molding;

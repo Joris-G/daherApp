@@ -16,25 +16,23 @@ import { RoleFormComponent } from './pages/register/role-form/role-form.componen
 import { IdentityFormComponent } from './pages/register/identity-form/identity-form.component';
 
 @NgModule({
-  declarations: [
-    HomePage,
-    LoginPage,
-    RegisterPage,
-    LoginFormComponent,
-    LoginNoticeComponent,
-    MenuHomeComponent,
-    RegisterFormComponent,
-    RoleFormComponent,
-    IdentityFormComponent
-  ],
-  imports: [
-    AppSharedModule,
-    SwiperModule,
-    CoreRoutingModule,
-  ],
-  providers: [
-    UpdateAppService
-  ]
+    imports: [
+        AppSharedModule,
+        SwiperModule,
+        CoreRoutingModule,
+        HomePage,
+        LoginPage,
+        RegisterPage,
+        LoginFormComponent,
+        LoginNoticeComponent,
+        MenuHomeComponent,
+        RegisterFormComponent,
+        RoleFormComponent,
+        IdentityFormComponent,
+    ],
+    providers: [
+        UpdateAppService
+    ]
 })
 export class CoreModule {
 

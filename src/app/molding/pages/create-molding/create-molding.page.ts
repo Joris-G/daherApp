@@ -3,14 +3,30 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { MoldingService } from 'src/app/molding/services/molding.service';
-import { IonAccordionGroup } from '@ionic/angular';
+import { IonAccordionGroup, IonicModule } from '@ionic/angular';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
+import { ScanMoldingInputComponent } from '../../components/create-molding/scan-molding-input/scan-molding-input.component';
+import { NgIf } from '@angular/common';
+import { MoldingKitTableComponent } from '../../components/create-molding/molding-kit-table/molding-kit-table.component';
+import { MoldingMaterialsTableComponent } from '../../components/create-molding/molding-materials-table/molding-materials-table.component';
+import { MoldingInfoToolbarComponent } from '../../components/create-molding/molding-info-toolbar/molding-info-toolbar.component';
+import { CreateMoldingToolbarComponent } from '../../components/create-molding/create-molding-toolbar/create-molding-toolbar.component';
 
 @Component({
-  selector: 'app-create-molding',
-  templateUrl: './create-molding.page.html',
-  styleUrls: ['./create-molding.page.scss'],
+    selector: 'app-create-molding',
+    templateUrl: './create-molding.page.html',
+    styleUrls: ['./create-molding.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        ScanMoldingInputComponent,
+        NgIf,
+        MoldingKitTableComponent,
+        MoldingMaterialsTableComponent,
+        MoldingInfoToolbarComponent,
+        CreateMoldingToolbarComponent,
+    ],
 })
 
 export class CreateMoldingPage implements OnInit {

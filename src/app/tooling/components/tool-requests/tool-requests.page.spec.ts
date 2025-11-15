@@ -9,9 +9,8 @@ describe('ToolRequestsPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ToolRequestsPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), ToolRequestsPage]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ToolRequestsPage);
     component = fixture.componentInstance;

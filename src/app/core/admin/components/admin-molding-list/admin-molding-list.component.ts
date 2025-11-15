@@ -1,13 +1,26 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { IonItemSliding } from '@ionic/angular';
+import { IonItemSliding, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { MoldingListService } from 'src/app/molding/services/molding-list.service';
 import { Molding } from 'src/app/_interfaces/molding/molding';
+import { NgIf, NgFor } from '@angular/common';
+import { MoldingsFiltersComponent } from '../moldings-filters/moldings-filters.component';
+import { RouterLink } from '@angular/router';
+import { DateHeurePipe } from '../../../../_pipes/dateHeure.pipe';
 
 @Component({
-  selector: 'app-admin-molding-list',
-  templateUrl: './admin-molding-list.component.html',
-  styleUrls: ['./admin-molding-list.component.scss'],
+    selector: 'app-admin-molding-list',
+    templateUrl: './admin-molding-list.component.html',
+    styleUrls: ['./admin-molding-list.component.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        MoldingsFiltersComponent,
+        NgFor,
+        RouterLink,
+        DateHeurePipe,
+    ],
 })
 export class AdminMoldingListComponent implements OnChanges, OnInit {
   public filteredMoldings: Molding[] = [];

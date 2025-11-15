@@ -9,9 +9,8 @@ describe('Control3DFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ Control3DFormComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), Control3DFormComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(Control3DFormComponent);
     component = fixture.componentInstance;

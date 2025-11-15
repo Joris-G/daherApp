@@ -1,17 +1,24 @@
 import { Component, isDevMode, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonInput, NavController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { IonInput, NavController, IonicModule } from '@ionic/angular';
 import { UpdateAppService } from 'src/app/shared/services/applicationUpdates/update-app.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { AuthService } from 'src/app/shared/services/users/auth.service';
 import { environment } from 'src/environments/environment';
 import { LoginRedirectionService } from '../services/login-redirection.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss'],
+    selector: 'app-login-form',
+    templateUrl: './login-form.component.html',
+    styleUrls: ['./login-form.component.scss'],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        IonicModule,
+        RouterLink,
+    ],
 })
 export class LoginFormComponent implements OnInit {
 

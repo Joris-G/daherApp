@@ -1,11 +1,25 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
 import { ToolRequestFormGroup, MaintFormGroup, MaintenanceItem } from 'src/app/_interfaces/tooling/tool-request-types';
+import { ReactiveFormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { ToolInputComponent } from '../../tool-input/tool-input.component';
+import { NgIf, NgFor } from '@angular/common';
+import { MaintenanceItemComponent } from '../maintenance-item/maintenance-item.component';
 
 @Component({
-  selector: 'app-maint-repair-form',
-  templateUrl: './maint-repair-form.component.html',
-  styleUrls: ['./maint-repair-form.component.scss'],
+    selector: 'app-maint-repair-form',
+    templateUrl: './maint-repair-form.component.html',
+    styleUrls: ['./maint-repair-form.component.scss'],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        IonicModule,
+        ToolInputComponent,
+        NgIf,
+        NgFor,
+        MaintenanceItemComponent,
+    ],
 })
 export class MaintRepairFormComponent implements OnInit, OnChanges {
   @Input()

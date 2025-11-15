@@ -1,12 +1,23 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { IonSegment } from '@ionic/angular';
+import { IonSegment, IonicModule } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { AdditionalMaterial, Core, Densif } from 'src/app/_interfaces/molding/composite-material-types';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { NidaComponent } from '../nida/nida.component';
 
 @Component({
-  selector: 'app-non-expired-material-input',
-  templateUrl: './non-expired-material-input.component.html',
-  styleUrls: ['./non-expired-material-input.component.scss'],
+    selector: 'app-non-expired-material-input',
+    templateUrl: './non-expired-material-input.component.html',
+    styleUrls: ['./non-expired-material-input.component.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgIf,
+        NidaComponent,
+    ],
 })
 export class NonExpiredMaterialInputComponent implements OnInit, OnDestroy {
   @Input() materialObject: Subject<AdditionalMaterial>;

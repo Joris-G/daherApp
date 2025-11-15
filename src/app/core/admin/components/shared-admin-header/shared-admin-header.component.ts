@@ -5,11 +5,14 @@ import { Observable, Subscription } from 'rxjs';
 // import { Socket } from 'ngx-socket-io';
 import { AuthService } from 'src/app/shared/services/users/auth.service';
 import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-shared-admin-header',
-  templateUrl: './shared-admin-header.component.html',
-  styleUrls: ['./shared-admin-header.component.scss'],
+    selector: 'app-shared-admin-header',
+    templateUrl: './shared-admin-header.component.html',
+    styleUrls: ['./shared-admin-header.component.scss'],
+    standalone: true,
+    imports: [IonicModule],
 })
 export class SharedAdminHeaderComponent implements OnInit, OnDestroy {
   public user: User;

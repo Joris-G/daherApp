@@ -2,7 +2,8 @@ import { formatDate } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'DateHeure'
+    name: 'DateHeure',
+    standalone: true
 })
 export class DateHeurePipe implements PipeTransform {
 

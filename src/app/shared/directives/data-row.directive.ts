@@ -1,7 +1,8 @@
 import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: 'ion-row[appDataRow]',
+    selector: 'ion-row[appDataRow]',
+    standalone: true,
 })
 export class DataRowDirective implements OnInit {
   @Input() isUrgent: boolean;
