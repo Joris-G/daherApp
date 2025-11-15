@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToolRequest, ToolRequestIri }
-  from 'src/app/_interfaces/tooling/tool-request';
+  from 'src/app/_interfaces/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { Observable, of } from 'rxjs';
@@ -43,10 +43,15 @@ export class ToolRequestService {
 
 
 
-  private getToolRequestType() {
-    return this.router.url.split('/').pop();
-  }
 
+  updateToolRequest(toolRequestToUpdate: ToolRequest) {
+    const toolRequestToUpdateIri: ToolRequestIri = {
+      statut: toolRequestToUpdate.statut,
+      createdAt: toolRequestToUpdate.createdAt,
+      id: toolRequestToUpdate.id
+    };
+    return this.requestService.createPatchRequest(`${environment.toolApi}demandes/${toolRequestToUpdateIri.id}`, toolRequestToUpdateIri);
+  }
 
   getType(request: ToolRequest | string): string {
     if (typeof (request) === 'string') { return request; }
@@ -65,22 +70,14 @@ export class ToolRequestService {
 
 
 
-  updateRequest(toolRequestToUpdate: ToolRequest) {
-    const toolRequestToUpdateIri: ToolRequestIri = {
-      statut: toolRequestToUpdate.statut,
-      createdAt: toolRequestToUpdate.createdAt,
-      id: toolRequestToUpdate.id
-    };
-    return this.requestService.createPatchRequest(`${environment.toolApi}demandes/${toolRequestToUpdateIri.id}`, toolRequestToUpdateIri);
-  }
 
 
   getToolRequest(id: string): Observable<ToolRequest | undefined> {
-    return (!id) ? of(new ToolRequest()) : this.requestService.createGetRequest(`${environment.toolApi}demandes/${id}`)
+    return (!id) ? of(new ToolRequest()) : this.requestService.createGetRequest(`${environment.toolApi}demandes/${id}`);
   }
 
   getToolRequests(): Observable<ToolRequest[]> {
-    this.loaderService.startLoading('Chargement des demandes')
+    this.loaderService.startLoading('Chargement des demandes');
     return this.requestService.createGetRequest(`${environment.toolApi}demandes`)
       .pipe(
         share(),
@@ -103,5 +100,12 @@ export class ToolRequestService {
       // }
     });
   }
+
+
+
+
+  // private getToolRequestType() {
+  //   return this.router.url.split('/').pop();
+  // }
 
 }

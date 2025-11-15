@@ -26,6 +26,9 @@ const routes: Routes = [
   {
     path: '',
     component: ToolingPage,
+  },
+  {
+    path: '',
     children: [
       {
         path: 'new-tool', component: NewToolPage
@@ -47,27 +50,29 @@ const routes: Routes = [
       },
       {
         path: '3D-tool/:id', component: Control3DPage
-      },
+      }
+    ]
+  },
+  {
+    path: '',
+    canActivate: [RoleGuard],
+    data: { expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL'] },
+    children: [
       {
         path: 'manage-tool-team',
-        canActivate: [RoleGuard],
-        data: { expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL'] },
+
         component: ManageTeamPage
       },
       {
         path: 'tool-indicators',
-        canActivate: [RoleGuard],
-        data: {
-          expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL']
-        },
         component: IndicatorsPage
       },
-      {
-        path: '**',
-        redirectTo: ''
-      }
     ]
   },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({

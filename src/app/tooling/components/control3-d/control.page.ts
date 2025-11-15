@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
-import { OutillNoRefSAPFormGroup, SpecCtrlFormGroup, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request';
+import { OutillNoRefSAPFormGroup, SpecCtrlFormGroup, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ControlToolRequestService } from '../../services/control-tool-request.service';
 import { RequestState, ToolRequestManager } from '../../services/tool-request-manager.service';
 
@@ -17,7 +17,7 @@ export class Control3DPage {
 
   controlForm: SpecCtrlFormGroup = new SpecCtrlFormGroup();
   toolRequestForm: ToolRequestFormGroup = new ToolRequestFormGroup();
-  outillNoRefSAPForm: OutillNoRefSAPFormGroup = new OutillNoRefSAPFormGroup();
+  outillNoRefSAPForm: OutillNoRefSAPFormGroup;
 
 
   public page = {
@@ -40,7 +40,7 @@ export class Control3DPage {
         console.log(resp);
         this.toolRequestForm.patchValue(resp[0]);
         this.controlForm.patchValue(resp[1]);
-        this.requestState = this.toolRequestManager.getStatus(resp[0].statut)
+        this.requestState = this.toolRequestManager.getStatus(resp[0].statut);
       });
   }
 
@@ -77,7 +77,7 @@ export class Control3DPage {
           this.alertService.simpleAlert(
             'Message de l\'application',
             'Mise à jour d\'une demande',
-            'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes')
+            'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes');
           //   .then(() => {
           this.navCtrl.navigateRoot('tooling/tool-request-list');
           //   });
@@ -87,6 +87,10 @@ export class Control3DPage {
         });
   }
 
+  onChangeStatut(event: any) {
+    console.log('status change', this.toolRequestForm);
+    this.toolRequestForm.controls.statut.patchValue(event);
+  }
   private onError(error: any) {
     this.alertService.simpleAlert(
       'Erreur',
@@ -95,10 +99,6 @@ export class Control3DPage {
     console.error(error);
   }
 
-  onChangeStatut(event: any) {
-    console.log('status change', this.toolRequestForm);
-    this.toolRequestForm.controls.statut.patchValue(event);
-  }
 
 
 }

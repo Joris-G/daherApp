@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
+import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ToolRequestService } from '../../services/tool-request.service';
 
 @Injectable({

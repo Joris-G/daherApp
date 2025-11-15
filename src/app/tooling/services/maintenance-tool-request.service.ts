@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { RequestService } from 'src/app/shared/services/request.service';
-import { MaintenanceItem, SpecMaintRep, SpecMaintRepIri, ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
+import { MaintenanceItem, SpecMaintRep, SpecMaintRepIri, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
 import { concatMap, finalize, map } from 'rxjs/operators';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
@@ -9,57 +9,11 @@ import { ToolRequestService } from './tool-request.service';
 import { ActivatedRoute } from '@angular/router';
 @Injectable()
 export class MaintenanceToolRequestService {
-    maintToolRequest$: Observable<[ToolRequest, SpecMaintRep]>;
     constructor(
         private requestService: RequestService,
         private loaderService: LoadingService,
         private toolReqService: ToolRequestService,
-        private activatedRoute: ActivatedRoute
     ) { }
-
-    initMaintToolRequest(): void {
-        this.loaderService.startLoading('Patienter pendant le chargement du controle');
-        const id = this.activatedRoute.snapshot.paramMap.get('id');
-        this.maintToolRequest$ = this.getMaintenanceData(id)
-    }
-
-    private createAllMaintenaceItems(toolRequestToCreate: SpecMaintRep) {
-        const maintenanceItemIri: string[] = [];
-        return new Promise<string[]>((resolve, reject) => {
-            toolRequestToCreate.itemActionCorrective.forEach((itemAction: MaintenanceItem) => {
-                console.log(itemAction);
-                this.requestService.createPostRequest(`${environment.toolApi}maintenance_items`, itemAction)
-                    .subscribe((response: MaintenanceItem) => {
-                        maintenanceItemIri.push(`/api/maintenance_items/${response.id}`);
-                        console.log(maintenanceItemIri.length, toolRequestToCreate.itemActionCorrective.length);
-                        if (maintenanceItemIri.length === toolRequestToCreate.itemActionCorrective.length) {
-                            resolve(maintenanceItemIri);
-                        }
-                    },
-                        (err) => {
-                            reject();
-                        });
-            });
-
-        });
-    }
-
-    private getMaintenance(id: number): Observable<SpecMaintRep | undefined> {
-        if (!id) { return of(new SpecMaintRep()) }
-        return this.requestService.createGetRequest(`${environment.toolApi}maintenances/${id}`);
-    }
-
-    private getMaintenanceData(idDemande: string | null) {
-        return this.toolReqService.getToolRequest(idDemande)
-            .pipe(
-                concatMap((responseToolRequest) => {
-                    const id = responseToolRequest.maintenance?.id;
-                    return forkJoin([of(responseToolRequest), this.getMaintenance(id)])
-                }),
-                finalize(() => this.loaderService.stopLoading())
-            );
-    }
-
 
 
     // private updateMaintenanceItems(maintenanceItemsToUpdate: MaintenanceItem[]): Observable<any[]> {
@@ -125,6 +79,17 @@ export class MaintenanceToolRequestService {
         });
 
     }
+    getMaintenanceData(idDemande: string | null) {
+        this.loaderService.startLoading('Patienter pendant le chargement du controle');
+        return this.toolReqService.getToolRequest(idDemande)
+            .pipe(
+                concatMap((responseToolRequest) => {
+                    const id = responseToolRequest.maintenance?.id;
+                    return forkJoin([of(responseToolRequest), this.getMaintenance(id)]);
+                }),
+                finalize(() => this.loaderService.stopLoading())
+            );
+    }
 
 
     loadMaintenanceData(id: string | null) {
@@ -140,4 +105,31 @@ export class MaintenanceToolRequestService {
                 finalize(() => this.loaderService.stopLoading())
             );
     }
+
+    private createAllMaintenaceItems(toolRequestToCreate: SpecMaintRep) {
+        const maintenanceItemIri: string[] = [];
+        return new Promise<string[]>((resolve, reject) => {
+            toolRequestToCreate.itemActionCorrective.forEach((itemAction: MaintenanceItem) => {
+                console.log(itemAction);
+                this.requestService.createPostRequest(`${environment.toolApi}maintenance_items`, itemAction)
+                    .subscribe((response: MaintenanceItem) => {
+                        maintenanceItemIri.push(`/api/maintenance_items/${response.id}`);
+                        console.log(maintenanceItemIri.length, toolRequestToCreate.itemActionCorrective.length);
+                        if (maintenanceItemIri.length === toolRequestToCreate.itemActionCorrective.length) {
+                            resolve(maintenanceItemIri);
+                        }
+                    },
+                        (err) => {
+                            reject();
+                        });
+            });
+
+        });
+    }
+
+    private getMaintenance(id: number): Observable<SpecMaintRep | undefined> {
+        if (!id) { return of(new SpecMaintRep()); }
+        return this.requestService.createGetRequest(`${environment.toolApi}maintenances/${id}`);
+    }
+
 }

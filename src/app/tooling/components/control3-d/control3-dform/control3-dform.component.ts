@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
-import { MoyenMesure, OutillNoRefSAPFormGroup, SpecCtrlFormGroup, ToolRequestFormGroup, TypeRapport } from 'src/app/_interfaces/tooling/tool-request';
+import { MoyenMesure, OutillNoRefSAPFormGroup, SpecCtrlFormGroup, ToolRequestFormGroup, TypeRapport } from 'src/app/_interfaces/tooling/tool-request-types';
 
 import { ToolInputService } from '../../tool-input/tool-input.service';
 import { Tool } from 'src/app/_interfaces/tooling/tool';

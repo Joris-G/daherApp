@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { User, UserIri } from 'src/app/_interfaces/user';
@@ -10,7 +10,7 @@ import { RoleService } from './role.service';
 import { SericesService } from './serices.service';
 import { UniteService } from './unite.service';
 import { UsineService } from './usine.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { LoadingService } from '../divers/loading.service';
 
@@ -143,6 +143,9 @@ export class UsersService {
   }
 
   getUsersByService(serviceId: string): Observable<User[]> {
+    if (isDevMode()) {
+      return of();
+    }
     return this.requestService.createGetRequest(`${environment.usineApi}services/${serviceId}`);
   }
 

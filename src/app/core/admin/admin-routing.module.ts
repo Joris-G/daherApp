@@ -9,22 +9,18 @@ import { AdminUserPage } from './pages/admin-user/admin-user.page';
 const routes: Routes = [
   {
     path: '',
+    canActivate: [RoleGuard],
     component: AdminPage,
+    data: {
+      expectedRole: ['ROLE_ADMIN']
+    },
     children:
       [{
         path: 'admin-user',
         component: AdminUserPage,
-        canActivate: [RoleGuard],
-        data: {
-          expectedRole: ['ROLE_ADMIN']
-        },
       },
       {
         path: 'admin-molding',
-        canActivate: [RoleGuard],
-        data: {
-          expectedRole: ['ROLE_ADMIN']
-        },
         component: AdminMoldingPage,
       },
       ]

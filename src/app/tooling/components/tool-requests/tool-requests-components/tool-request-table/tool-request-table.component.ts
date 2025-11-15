@@ -3,7 +3,7 @@ import { MatSort } from '@angular/material/sort';
 import { trigger, state, style } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { NavController } from '@ionic/angular';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
+import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 

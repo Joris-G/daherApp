@@ -4,6 +4,14 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, retry, timeout } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
+const stateMap = (val: HttpResponse<any>): any => {
+  if (val.status === 500) {
+    console.log(val);
+    throw (val);
+  }
+  console.log(val);
+  return val.body;
+};
 /**
  * Service des requêtes.
  *
@@ -43,70 +51,42 @@ export class RequestService {
         headers: this.httpHeaders
       })
       .pipe(
-        map((val) => {
-          if (val.status === 500) { throw (val); }
-          console.table(val);
-          return val;
-        }),
-        retry(3),
+        map(stateMap)
       );
   }
 
   createPutRequest(url: string, body: any): Observable<any> {
-    return this.http.put<HttpResponse<any>>(`${environment.apiServer}${url}`, body, {
-      headers: this.httpHeaders
-    })
+    return this.http.put<HttpResponse<any>>(
+      environment.apiServer + url, body,
+      {
+        headers: this.httpHeaders
+      })
       .pipe(
-        timeout(1000),
-        map((val) => {
-          if (val.status === 500) { throw (val); }
-          console.table(val);
-          return val;
-        }),
-        retry(2),
-        // retryWhen(err=> {
-        //   console.error(err);
-        //   return of(null);
-        // })
+        map(stateMap),
       );
   }
 
-  createPatchRequest(url: string, body: any) {
-    return this.http.patch<any>(`${environment.apiServer}${url}`, body, {
+  createPatchRequest(url: string, body: any): Observable<any> {
+    return this.http.patch<any>(
+      environment.apiServer + url, body, {
       headers: this.patchHttpHeaders
     })
       .pipe(
-        map((val) => {
-          if (val.status === 500) { throw (val); }
-          console.table(val);
-          return val;
-        }),
-        retry(2),
-        // retryWhen(err=> {
-        //   console.error(err);
-        //   return of(null);
-        // })
+        map(stateMap)
       );
   }
 
   createGetRequest(url: string, params?: any): Observable<any> {
-    return this.http.get<any>(`${environment.apiServer}${url}`, { headers: this.httpHeaders, params })
+    return this.http.get<HttpResponse<any>>(
+      environment.apiServer + url, { headers: this.httpHeaders, params })
       .pipe(
-        // timeout(15000),
-        map((val) => {
-          if (val.status === 500) { throw (val); }
-          console.log(val);
-          return val;
-        }),
-        retry(2),
-        // catchError((err,test)=>{
-        //   console.error(err);
-        //   return of();
-        // })
+        map(stateMap)
       );
   }
 
   createDeleteRequest(url: string): Observable<any> {
-    return this.http.delete(`${environment.apiServer}${url}`, { headers: this.httpHeaders });
+    return this.http.delete(
+      environment.apiServer + url, { headers: this.httpHeaders });
   }
 }
+

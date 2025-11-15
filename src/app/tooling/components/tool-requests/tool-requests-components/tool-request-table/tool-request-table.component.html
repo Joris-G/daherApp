@@ -11,7 +11,7 @@
       <ion-col size="3">Demandeur</ion-col>
       <!-- <ion-col size="3" sort="">Date de besoin</ion-col> -->
     </ion-row>
-    <ion-row *ngFor="let request of toolRequests" appDataRow isUrgent="{{request.bloquantProd}}"
+    <ion-row *ngFor="let request of toolRequests" appDataRow [isUrgent]="request.bloquantProd"
       (click)="openRequestClick(request)">
       <ion-col size="1">
         <div class="circle" [style.border]="getBorder(request)">

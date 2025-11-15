@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { IonRadioGroup } from '@ionic/angular';
-import { ToolRequest, MoyenMesure, TypeRapport } from 'src/app/_interfaces/tooling/tool-request';
+import { ToolRequest, MoyenMesure, TypeRapport } from 'src/app/_interfaces/tooling/tool-request-types';
 
 @Component({
   selector: 'app-controleddd',

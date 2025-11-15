@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { switchMap, share } from 'rxjs/operators';
 import { RequestService } from 'src/app/shared/services/request.service';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request';
+import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
 
 @Injectable()

@@ -8,11 +8,16 @@
   </ion-header>
   <ion-content>
     <ion-list>
+
+
       <ion-item-divider>
         <ion-label color=secondary>Faire une demande</ion-label>
       </ion-item-divider>
+
+
+
       <ion-menu-toggle auto-hide="true">
-        <ion-item [disabled]="false" button routerDirection="forward" (click)="navigate('tooling/new-tool')"
+        <ion-item [disabled]="true" button routerDirection="forward" [routerLink]="'new-tool'"
           [style.boder-right]="'solid 4px yellow'">
           <ion-label>
             Nouvel outillage (SBO)
@@ -20,24 +25,28 @@
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle auto-hide="true">
-        <ion-item button routerDirection="forward" (click)="navigate('tooling/repair-tool')">
+        <ion-item button routerDirection="forward" [routerLink]="'repair-tool'">
           <ion-label>
             Maintenance et réparation
           </ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle auto-hide="true">
-        <ion-item button routerDirection="forward" (click)="navigate('tooling/3D-tool')">
+        <ion-item button routerDirection="forward" [routerLink]="'3D-tool'">
           <ion-label>
             Contrôle 3D
           </ion-label>
         </ion-item>
       </ion-menu-toggle>
+
+
       <ion-item-divider>
         <ion-label color=secondary>Suivi</ion-label>
       </ion-item-divider>
+
+
       <ion-menu-toggle auto-hide="true">
-        <ion-item [button]="true" routerDirection="root" (click)="navigate('tooling/tool-request-list')">
+        <ion-item [button]="true" routerDirection="forward" [routerLink]="'tool-request-list'">
           <ion-label>
             Liste des demandes outillages
           </ion-label>
@@ -45,27 +54,33 @@
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle auto-hide="true">
-        <ion-item [disabled]="true" [button]="true" (click)="navigate('tooling/tool-list')" routerDirection="root">
+        <ion-item [disabled]="true" [button]="true" [routerLink]="'tool-list'" routerDirection="forward">
           <ion-label>
             Liste des outillages
           </ion-label>
         </ion-item>
       </ion-menu-toggle>
+
+
+
       <ion-item-group *ngIf="isManager">
+
         <ion-item-divider>
           <ion-label color=secondary>L'équipe</ion-label>
         </ion-item-divider>
+
+
         <ion-menu-toggle auto-hide="true">
-          <ion-item [button]="true" routerDirection="root" (click)="navigate('tooling/manage-tool-team')">
+          <ion-item [button]="true" routerDirection="forward" [routerLink]="'manage-tool-team'">
             <ion-label>
               Gestion de l'équipe
             </ion-label>
-            <ion-badge *ngIf="newUsers" color="danger">New {{newUsers}}</ion-badge>
+            <ion-badge *ngIf="newUsers$ | async as newUsers" color="danger">New {{newUsers.length}}</ion-badge>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle auto-hide="true">
-          <ion-item [disabled]="!roleGuard.isRole(['ROLE_ADMIN'])" [button]="true"
-            (click)="navigate('tooling/tool-indicators')" routerDirection="root">
+          <ion-item [button]="true"
+            [routerLink]="'tool-indicators'" routerDirection="forward">
             <ion-label>
               Indicateurs
             </ion-label>

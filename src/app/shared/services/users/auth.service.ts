@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
-import { of, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, isDevMode } from '@angular/core';
+import { Observable, of, throwError } from 'rxjs';
 import { map, finalize, catchError } from 'rxjs/operators';
+import { LoginRedirectionService } from 'src/app/core/pages/login/services/login-redirection.service';
 import { User } from 'src/app/_interfaces/user';
 import { environment } from 'src/environments/environment';
 import { AlertService } from '../divers/alert.service';
@@ -19,6 +21,8 @@ export class AuthService {
     public requestService: RequestService,
     private loadingService: LoadingService,
     private alertService: AlertService,
+    private redirectionService: LoginRedirectionService,
+    private http: HttpClient
   ) { }
 
   getToken(): string {
@@ -29,32 +33,40 @@ export class AuthService {
   }
 
 
-  authenticate(userName: string, password: string) {
-    this.loadingService.startLoading('Patienter pendant la connexion');
-    return this.requestService.createPostRequest(`${environment.usineApi}login`,
-      { matricule: userName, password })
-      .pipe(
-        map((returnsData: any) => {
-          if (returnsData) {
-            console.log(returnsData.apiToken);
-            this.authToken = returnsData.apiToken;
-            this.isAuth = true;
-            this.authUser = returnsData.user;
+  authenticate(userName: string, password: string): void {
+    let auth$: Observable<any>;
+    if (isDevMode()) {
+      auth$ = this.http.get('http://localhost:3000/api/users');
+    } else {
 
-          } else {
-            this.authUser = null;
-            this.isAuth = false;
-          }
-        }),
-        catchError((err) => {
-          this.alertService.simpleAlert(
-            'Erreur d\'authentification',
-            '',
-            'Le nom d\'utilisateur ou votre mot de passe n\'est pas correct',
-          );
-          return throwError(err)
-        }),
-        finalize(() => this.loadingService.stopLoading()));
+      auth$ = this.requestService.createPostRequest(
+        `${environment.usineApi}login`,
+        { matricule: userName, password }
+      );
+    }
+    auth$.pipe(
+      finalize(() => {
+        this.loadingService.stopLoading();
+      })
+    );
+    // this.loadingService.startLoading('Patienter pendant la connexion');
+    auth$.subscribe({
+      error: (err) => {
+        console.error(err);
+        this.alertService.simpleAlert(
+          'Erreur d\'authentification',
+          '',
+          'Le nom d\'utilisateur ou votre mot de passe n\'est pas correct',
+        );
+      },
+      next: (data) => {
+        console.log(data);
+        this.authToken = data.user.apiToken;
+        this.isAuth = true;
+        this.authUser = data.user;
+        this.redirectionService.reRouteUser(data.user);
+      }
+    });
   }
 
   logout() {
@@ -64,7 +76,7 @@ export class AuthService {
           // console.log(response);
           this.isAuth = false;
           this.authUser = null;
-          this.authToken = "";
+          this.authToken = '';
         })
       );
   }
@@ -76,3 +88,9 @@ export class AuthService {
     });
   }
 }
+
+//   } else {
+//     console.log('returnsData.apiToken');
+//     this.authUser = null;
+//     this.isAuth = false;
+//   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/shared/services/users/auth.service';
+import { User } from 'src/app/_interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,6 @@ export class LoginRedirectionService {
     },
   ];
   constructor(
-    private authService: AuthService,
     private navControler: NavController,
 
   ) { }
@@ -32,9 +32,9 @@ export class LoginRedirectionService {
    * @private
    * @memberof LoginPage
    */
-  reRouteUser() {
+  reRouteUser(user: User) {
     const prefRoute = this.reRouteOpts.find(
-      (curRouteOpt) => this.authService.authUser.roles.some(
+      (curRouteOpt) => user.roles.some(
         (role) => curRouteOpt.roles.find(roleOpt => roleOpt === role)));
     console.log(prefRoute);
     if (prefRoute !== undefined) {

@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'tooling',
-    canActivate: [],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./tooling/tooling.module')
       .then(m => m.AppToolingModule)
   },

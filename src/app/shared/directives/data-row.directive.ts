@@ -5,6 +5,8 @@ import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@
 })
 export class DataRowDirective implements OnInit {
   @Input() isUrgent: boolean;
+  constructor(private elemRef: ElementRef, private renderer: Renderer2) { }
+
   @HostListener('mouseenter') onMouseEnter() {
     this.highlight(true);
   }
@@ -13,24 +15,26 @@ export class DataRowDirective implements OnInit {
     this.highlight(false);
   }
 
-  constructor(private elemRef: ElementRef, private renderer: Renderer2) { }
+
   ngOnInit(): void {
     this.setBackground();
     this.renderer.setStyle(this.elemRef.nativeElement, 'cursor', `pointer`);
     this.renderer.setStyle(this.elemRef.nativeElement, 'border-bottom', `1px solid var(--ion-color-light)`);
-    for (let i = 0; i < this.elemRef.nativeElement.children.length; i++) {
-      const element = this.elemRef.nativeElement.children[i];
-      this.renderer.setStyle(element, 'display', `flex`);
-      this.renderer.setStyle(element, 'justify-content', `left`);
-      this.renderer.setStyle(element, 'align-items', `center`);
+    for (const child of this.elemRef.nativeElement.children) {
+      this.renderer.setStyle(child, 'display', `flex`);
+      this.renderer.setStyle(child, 'justify-content', `left`);
+      this.renderer.setStyle(child, 'align-items', `center`);
     }
   }
-  private highlight(state: boolean) {
-    (state) ? this.setStyleHighligth() : this.setBackground();
 
+  private setBackground(): void {
+    if (this.isUrgent) { this.setStyleUrgent(); }
+    else { this.setStyleNormal(); }
   }
-  setBackground() {
-    (this.isUrgent) ? this.setStyleUrgent() : this.setStyleNormal();
+
+  private highlight(state: boolean) {
+    if (state) { this.setStyleHighligth(); }
+    else { this.setBackground(); }
   }
   private setStyleNormal() {
     this.elemRef.nativeElement.style.backgroundColor = '';

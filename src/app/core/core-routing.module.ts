@@ -8,9 +8,21 @@ import { AuthGuard } from '../shared/services/users/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     canActivate: [AuthGuard],
-    component: HomePage,
+    children: [
+      {
+        path: 'home',
+        component: HomePage,
+      },
+
+      {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module')
+          .then(m => m.AdminModule),
+      },
+
+    ]
   },
   {
     path: 'login',
@@ -20,15 +32,7 @@ const routes: Routes = [
     path: 'register',
     component: RegisterPage
   },
-  {
-    path: 'admin',
-    canActivate: [AuthGuard],
-    data: {
-      expectedRole: ['ROLE_ADMIN']
-    },
-    loadChildren: () => import('./admin/admin.module')
-      .then(m => m.AdminModule),
-  },
+
   {
     path: '',
     redirectTo: '/home',

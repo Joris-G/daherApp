@@ -48,7 +48,7 @@ export class LoadingService {
   async stopLoading() {
     setTimeout(() => {
       this.loadingController.dismiss();
-    }, 100);
+    }, 2000);
 
   }
 }

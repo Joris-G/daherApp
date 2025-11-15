@@ -20,7 +20,7 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private redirectionService: LoginRedirectionService,
+
   ) { }
 
   ngOnInit() {
@@ -42,16 +42,6 @@ export class LoginFormComponent implements OnInit {
     // TODO this.updateService.showUpdates();
     const userName = this.loginForm.get('username').value.replace(/^0+/, '');
     const password = this.loginForm.get('password').value || userName;
-    this.authService.authenticate(userName, password)
-      .subscribe({
-        next: () => {
-          this.redirectionService.reRouteUser();
-        },
-        error: () => {
-          this.loginForm.reset();
-        }
-      });
+    this.authService.authenticate(userName, password);
   }
-
-
 }

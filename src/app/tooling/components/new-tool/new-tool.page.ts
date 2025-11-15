@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 // import { Editor } from 'ngx-editor';
-import { RequestType, ToolRequest, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request';
+import { RequestType, ToolRequest, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
