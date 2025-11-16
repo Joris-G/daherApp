@@ -4,16 +4,14 @@ import { TitleService } from 'src/app/shared/services/title.service';
 import { LoginNoticeComponent } from '../login/login-notice/login-notice.component';
 import { SharedUserHeaderComponent } from '../../../shared/components/shared-user-header/shared-user-header.component';
 import { MenuHomeComponent } from './menu-home/menu-home.component';
+import { IonIcon, IonFabButton, IonContent, IonFab } from "@ionic/angular/standalone";
 
 @Component({
     selector: 'app-home',
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
     standalone: true,
-    imports: [
-      SharedUserHeaderComponent,
-        MenuHomeComponent,
-    ],
+  imports: [IonFab, IonContent, IonFabButton, IonIcon, SharedUserHeaderComponent, MenuHomeComponent,],
 })
 export class HomePage {
   public page: any;

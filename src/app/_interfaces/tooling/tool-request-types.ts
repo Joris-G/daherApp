@@ -82,6 +82,8 @@ export class ToolRequestFormGroup extends FormGroup {
     dateReal: AbstractControl;
     bloquantProd: AbstractControl;
     aircraftProgram: AbstractControl;
+    needDate: AbstractControl;
+    title: AbstractControl;
   };
   constructor() {
     super(({
@@ -94,7 +96,9 @@ export class ToolRequestFormGroup extends FormGroup {
       dateReal: new FormControl(),
       demandeur: new FormControl(),
       aircraftProgram: new FormControl(),
-      bloquantProd: new FormControl<boolean>(false)
+      bloquantProd: new FormControl<boolean>(false),
+      needDate: new FormControl(),
+      title: new FormControl(),
     }));
   }
 }
@@ -425,6 +429,7 @@ export class SpecSBO {
   title: string;
   description: string;
   dateBesoin: Date;
+  aircraftProgram: string;
 }
 // export interface MaintenanceItemIri {
 //   nonConformite?: string;

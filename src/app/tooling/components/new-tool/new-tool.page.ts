@@ -7,12 +7,12 @@ import { Tool } from 'src/app/_interfaces/tooling/tool';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
 import { Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
-import { AuthService } from 'src/app/shared/services/users/auth.service';
 import { IonicModule } from '@ionic/angular';
 import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
 import { NgFor } from '@angular/common';
 import { SboComponent } from '../sbo/sbo.component';
 import { AuthStore } from 'src/app/shared/services/users/auth.store';
+import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 const MENU_ITEMS = [
   {
     title: 'Nouvelle demande outillage',
@@ -44,18 +44,18 @@ const MENU_ITEMS = [
 })
 export class NewToolPage implements OnInit {
   private readonly authStore: AuthStore = inject(AuthStore);
+  private readonly formBuilder: FormBuilder = inject(FormBuilder);
   public page: any;
   public requestTypeForm: FormGroup;
   public newToolForm: FormGroup;
   public newToolRequestForm: ToolRequestFormGroup;
-  public programs: any[];
+  public programs: ProgrammeAvion[];
   // public editor: Editor;
   // public html: '';
   requestTypeEnum: typeof RequestType = RequestType;
   private newTool: Tool;
 
   constructor(
-    private formBuilder: FormBuilder,
     private programService: ProgramsService,
     private toolService: ToolService,
     private toolRequestService: ToolRequestService,
@@ -71,7 +71,8 @@ export class NewToolPage implements OnInit {
     };
 
     this.programService.getPrograms()
-      .subscribe((programList: any[]) => {
+      .subscribe((programList: ProgrammeAvion[]) => {
+        console.table(programList);
         this.programs = programList;
       });
 

@@ -55,7 +55,7 @@
             <ion-label>Programme avion</ion-label>
             <ion-select formControlName="aircraftProgram" multiple="true" placeholder="Sélectionner le programme avion">
               <ion-select-option *ngFor="let program of programs" [value]="program.id">
-                {{program.Designation}}
+                {{program.designation}}
               </ion-select-option>
             </ion-select>
           </ion-item>
