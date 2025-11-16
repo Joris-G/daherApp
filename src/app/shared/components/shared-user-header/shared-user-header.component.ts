@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { NavController, PopoverController, IonicModule } from '@ionic/angular';
 import { User } from 'src/app/_interfaces/user';
 
@@ -9,6 +9,7 @@ import { LoadingService } from '../../services/divers/loading.service';
 import { TitleService } from '../../services/title.service';
 import { AuthService } from '../../services/users/auth.service';
 import { NgIf } from '@angular/common';
+import { AuthStore } from '../../services/users/auth.store';
 
 @Component({
     selector: 'app-shared-user-header',
@@ -23,20 +24,21 @@ export class SharedUserHeaderComponent implements OnInit {
   @Input()
   public hideMenuIcon: boolean;
 
+  private readonly authStore: AuthStore = inject(AuthStore);
+
   public user: User;
   public envMode: string;
 
   private title$: Observable<string>
 
   constructor(
-    private authService: AuthService,
     private loadingService: LoadingService,
     private navCtrl: NavController,
     private popoverCtrl: PopoverController,
     private titleService: TitleService
 
   ) {
-    this.user = this.authService.authUser;
+    this.user = this.authStore.user();
     this.title$ = this.titleService.title.asObservable();
   }
 
@@ -48,11 +50,7 @@ export class SharedUserHeaderComponent implements OnInit {
   }
 
   logoutClick() {
-    this.authService.logout()
-      .subscribe(() => {
-        this.loadingService.stopLoading();
-        this.navCtrl.navigateRoot('/login');
-      });
+    this.authStore.logout();
   }
 
   async triggerUserPopover(ev: MouseEvent) {

@@ -1,18 +1,16 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { AlertService } from '../divers/alert.service';
-import { AuthService } from './auth.service';
+import { AuthStore } from './auth.store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleGuard  {
-  constructor(
-    private authService: AuthService,
-    private alerteService: AlertService,
-    private router: Router,
+  private readonly authStore: AuthStore = inject(AuthStore);
+  private readonly alerteService: AlertService = inject(AlertService);
+  private readonly router: Router = inject(Router);
 
-  ) { }
   canActivate(
     route: ActivatedRouteSnapshot): boolean {
     const expectedRole = route.data.expectedRole;
@@ -27,14 +25,14 @@ export class RoleGuard  {
       this.router.navigate(['home']);
     }
     return (
-      this.authService.isAuth && isRole && this.authService.authUser.isActive
+      this.authStore.isAuthenticated() && isRole && this.authStore.user().isActive
     );
   }
 
   isRole(expectedRoles: string[]): boolean {
     // console.log(expectedRoles);
-    if (this.authService.authUser) {
-      return expectedRoles.some((expectedRole => this.authService.authUser.roles.includes(expectedRole)));
+    if (this.authStore.user()) {
+      return expectedRoles.some((expectedRole => this.authStore.user().roles.includes(expectedRole)));
     }
     return false;
   }

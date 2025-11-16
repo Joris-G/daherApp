@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
 import { MoyenMesure, OutillNoRefSAPFormGroup, SpecCtrlFormGroup, ToolRequestFormGroup, TypeRapport } from 'src/app/_interfaces/tooling/tool-request-types';
 
@@ -31,14 +31,11 @@ export class Control3DFormComponent implements OnInit, OnChanges {
   @Output()
   controlFormChange = new EventEmitter<SpecCtrlFormGroup>;
 
+  private readonly toolInputService: ToolInputService = inject(ToolInputService);
   moyenMesure = MoyenMesure;
   typeRapport = TypeRapport;
   inputTool$ = this.toolInputService.inputTool$;
 
-
-  constructor(
-    private toolInputService: ToolInputService,
-  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);

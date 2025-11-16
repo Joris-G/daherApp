@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Molding } from 'src/app/_interfaces/molding/molding';
@@ -31,13 +31,13 @@ import { CreateMoldingToolbarComponent } from '../../components/create-molding/c
 
 export class CreateMoldingPage implements OnInit {
   @ViewChild('accordionGroup', { static: true }) accordionGroup: IonAccordionGroup;
-
+  private readonly moldingService: MoldingService = inject(MoldingService);
   public isAdmin = false;
   public molding: Molding = null;
   private molding$: Observable<Molding> = this.moldingService.molding$.asObservable();
 
   constructor(
-    private moldingService: MoldingService,
+
     private activatedRoute: ActivatedRoute,
     private roleGuard: RoleGuard,
     private titleService: TitleService,

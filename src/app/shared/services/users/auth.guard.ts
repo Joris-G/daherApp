@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { AlertService } from '../divers/alert.service';
-import { AuthService } from './auth.service';
+import { AuthStore } from './auth.store';
 
 export const canActivateAuth: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => {
   return inject(AuthGuard).canActivate(route)
@@ -16,13 +15,13 @@ export const canActivateAuth: CanActivateFn = (route: ActivatedRouteSnapshot, st
   providedIn: 'root'
 })
 class AuthGuard {
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private alerteService: AlertService,
-  ) { }
+  private readonly authStore: AuthStore = inject(AuthStore);
+  private readonly alerteService: AlertService = inject(AlertService);
+  private readonly router: Router = inject(Router);
+
+
   canActivate(route: ActivatedRouteSnapshot) {
-    if (!this.authService.isAuth) { //|| environment.name === 'DEV' || environment.name === 'QUAL') {
+    if (!this.authStore.isAuthenticated()) { //|| environment.name === 'DEV' || environment.name === 'QUAL') {
       return this.router.parseUrl('/login');
     }
 
@@ -39,7 +38,7 @@ class AuthGuard {
         this.router.navigate(['home']);
       }
       return (
-        this.authService.isAuth && isRole && this.authService.authUser.isActive
+        this.authStore.isAuthenticated() && isRole && this.authStore.user().isActive
       );
     }
 
@@ -50,8 +49,8 @@ class AuthGuard {
 
   private isRole(expectedRoles: string[]): boolean {
     // console.log(expectedRoles);
-    if (this.authService.authUser) {
-      return expectedRoles.some((expectedRole => this.authService.authUser.roles.includes(expectedRole)));
+    if (this.authStore.user) {
+      return expectedRoles.some((expectedRole => this.authStore.user().roles.includes(expectedRole)));
     }
     return false;
   }

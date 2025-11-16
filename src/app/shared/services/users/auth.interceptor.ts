@@ -1,12 +1,12 @@
 import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { map, retry } from 'rxjs/operators';
-import { AuthService } from './users/auth.service';
+import { AuthService } from './auth.service';
+import { AuthStore } from './auth.store';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
-  constructor(private authService: AuthService) { }
+  private readonly authStore: AuthStore = inject(AuthStore);
 
   /**
    * @description inject le token reçu à la connexion dans le header
@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
    * @date 20/01/2023
    */
   intercept(req: HttpRequest<any>, next: HttpHandler): any {
-    const authToken = this.authService.authToken;
+    const authToken = this.authStore.token();
     if (authToken && req.method !== 'GET') {
       req = req.clone({
         headers: req.headers.set('x-auth-token', authToken)

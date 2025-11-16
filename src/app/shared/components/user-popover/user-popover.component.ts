@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ModalController, NavController, IonicModule } from '@ionic/angular';
 import packageJson from 'package.json';
 import { LoadingService } from '../../services/divers/loading.service';
 import { AuthService } from '../../services/users/auth.service';
 import { UserSheetComponent } from '../user-sheet/user-sheet.component';
+import { AuthStore } from '../../services/users/auth.store';
 
 @Component({
     selector: 'app-user-popover',
@@ -13,10 +14,10 @@ import { UserSheetComponent } from '../user-sheet/user-sheet.component';
     imports: [IonicModule]
 })
 export class UserPopoverComponent implements OnInit {
+  private readonly authStore: AuthStore = inject(AuthStore);
   public version: string = packageJson.version;
   constructor(
     private navCtrl: NavController,
-    private authService: AuthService,
     private loadingService: LoadingService,
     private modalCtrl: ModalController,
   ) { }
@@ -30,7 +31,7 @@ export class UserPopoverComponent implements OnInit {
   async editProfilClick() {
     const userModal = await this.modalCtrl.create({
       component: UserSheetComponent,
-      componentProps: { user: this.authService.authUser },
+      componentProps: { user: this.authStore.user() },
       animated: true,
       backdropDismiss: false,
     });
@@ -39,10 +40,6 @@ export class UserPopoverComponent implements OnInit {
 
   logoutClick() {
     this.loadingService.startLoading('Déconnexion');
-    this.authService.logout()
-      .subscribe(() => {
-        this.loadingService.stopLoading();
-        this.navCtrl.navigateRoot('/login');
-      });
+    this.authStore.logout();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { IonSelect, NavController, IonicModule } from '@ionic/angular';
 import { MaintFormGroup, OutillNoRefSAPFormGroup, SpecMaintRep, ToolRequest, ToolRequestFormGroup }
   from 'src/app/_interfaces/tooling/tool-request-types';
@@ -27,6 +27,9 @@ import { ToolRequestFooterComponent } from '../tool-request-footer/tool-request-
 })
 export class MaintenanceReparationPage {
   @ViewChild('statut') ctrlStatut: IonSelect;
+
+  private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+
   public requestState: RequestState = new RequestState();
   public maintForm: MaintFormGroup = new MaintFormGroup();
   public toolRequestForm: ToolRequestFormGroup = new ToolRequestFormGroup();
@@ -49,7 +52,7 @@ export class MaintenanceReparationPage {
     private navCtrl: NavController,
     private loadingService: LoadingService,
     private toolRequestManager: ToolRequestManager,
-    private activatedRoute: ActivatedRoute
+
   ) { }
 
 

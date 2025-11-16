@@ -1,4 +1,4 @@
-import { Component, isDevMode, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, isDevMode, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonInput, NavController, IonicModule } from '@ionic/angular';
 import { UpdateAppService } from 'src/app/shared/services/applicationUpdates/update-app.service';
@@ -7,7 +7,8 @@ import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { AuthService } from 'src/app/shared/services/users/auth.service';
 import { environment } from 'src/environments/environment';
 import { LoginRedirectionService } from '../services/login-redirection.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthStore } from 'src/app/shared/services/users/auth.store';
 
 @Component({
     selector: 'app-login-form',
@@ -21,14 +22,12 @@ import { RouterLink } from '@angular/router';
     ],
 })
 export class LoginFormComponent implements OnInit {
-
+  private readonly authStore: AuthStore = inject(AuthStore);
+  private readonly formBuilder: FormBuilder = inject(FormBuilder);
+  private readonly router: Router = inject(Router);
   @ViewChild('password') password: IonInput;
   public loginForm: FormGroup;
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
 
-  ) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -45,10 +44,19 @@ export class LoginFormComponent implements OnInit {
       });
     }
   }
-  onSubmit() {
+  async onSubmit() {
     // TODO this.updateService.showUpdates();
     const userName = this.loginForm.get('username').value.replace(/^0+/, '');
     const password = this.loginForm.get('password').value || userName;
-    this.authService.authenticate(userName, password);
+    try {
+
+      await this.authStore.login({ userName, password });
+      this.router.navigate(['/home']);
+    } catch (error) {
+      this.router.navigate(['/home']);
+      // L'erreur est déjà gérée dans le store
+    }
+
+
   }
 }

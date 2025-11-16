@@ -5,7 +5,7 @@ import { ProgrammeAvion } from './programme-avion';
 import { IService } from './service';
 import { IUsine } from './usine';
 
-export interface User {
+export class User {
   id?: number;
   username?: string;
   nom: string;
@@ -26,6 +26,14 @@ export interface User {
   groupeAffected?: GroupeAffectation[];
   isUpdated?: boolean;
   apiToken?: string;
+
+  static getFakeUser(nom: string = "Gr", prenom: string = "Joris"): User {
+    return {
+      matricule: 123456,
+      nom,
+      prenom,
+    }
+  }
 }
 
 export interface UserIri {

@@ -70,8 +70,8 @@ export interface ToolRequestIri {
 
 
 export class ToolRequestFormGroup extends FormGroup {
-  value: ToolRequest;
-  controls: {
+  declare value: ToolRequest;
+  declare controls: {
     id: AbstractControl;
     statut: AbstractControl;
     groupeAffectation?: AbstractControl;
@@ -189,8 +189,8 @@ export interface OutillNoRefSAP {
   localisation: string;
 }
 export class OutillNoRefSAPFormGroup extends FormGroup {
-  value: OutillNoRefSAP;
-  controls: {
+  declare value: OutillNoRefSAP;
+  declare controls: {
     identification: AbstractControl;
     description: AbstractControl;
     localisation: AbstractControl<string>;
@@ -205,8 +205,8 @@ export class OutillNoRefSAPFormGroup extends FormGroup {
 }
 
 export class SpecCtrlFormGroup extends FormGroup {
-  value: SpecCtrl;
-  controls: {
+  declare value: SpecCtrl;
+  declare controls: {
     refPlan: AbstractControl;
     indPlan: AbstractControl;
     cheminCAO: AbstractControl;
@@ -334,8 +334,8 @@ export interface SpecMaintRepIri {
 }
 
 export class MaintFormGroup extends FormGroup {
-  value: SpecMaintRep;
-  controls: {
+  declare value: SpecMaintRep;
+  declare controls: {
     id?: AbstractControl;
     outillage?: AbstractControl;
     equipement?: AbstractControl;
@@ -368,8 +368,8 @@ export class MaintFormGroup extends FormGroup {
 }
 
 export class ItemActionCorrectiveFormGroup extends FormGroup {
-  value: MaintenanceItem;
-  controls: {
+  declare value: MaintenanceItem;
+  declare controls: {
     nonConformite: AbstractControl;
     actionsCorrectives: AbstractControl;
     respo?: AbstractControl;

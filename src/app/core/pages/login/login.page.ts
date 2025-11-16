@@ -4,13 +4,14 @@ import { NoticeService } from 'src/app/shared/services/notice/notice.service';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { LoginNoticeComponent } from './login-notice/login-notice.component';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { IonContent, IonFab, IonFabButton, IonIcon, IonToolbar, IonFooter } from "@ionic/angular/standalone";
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
     standalone: true,
-  imports: [LoginFormComponent],
+  imports: [IonFooter, IonToolbar, IonIcon, IonFabButton, IonFab, IonContent, LoginFormComponent],
 })
 export class LoginPage implements OnInit {
 

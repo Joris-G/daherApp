@@ -5,7 +5,7 @@ import { PreloadAllModules, RouteReuseStrategy, provideRouter, withPreloading } 
 import { IonicRouteStrategy } from "@ionic/angular";
 import { provideIonicAngular } from "@ionic/angular/standalone";
 import { TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
-import { AuthInterceptor } from "./shared/services/auth.interceptor";
+import { AuthInterceptor } from "./shared/services/users/auth.interceptor";
 import { routes } from "./app.routes";
 
 export const appConfig:ApplicationConfig = {

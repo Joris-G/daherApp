@@ -58,8 +58,8 @@ export class AdditionalMaterial {
   outillageMoulage?: Tool;
 }
 export class AdditionalMaterialForm extends FormGroup {
-  value: AdditionalMaterial;
-  controls: {
+  declare value: AdditionalMaterial;
+  declare controls: {
     id?: AbstractControl;
     designation?: AbstractControl;
     ref: AbstractControl;

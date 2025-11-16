@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Update } from 'src/app/_interfaces/update';
 import { AlertService } from '../divers/alert.service';
-import { AuthService } from '../users/auth.service';
+import { AuthStore } from '../users/auth.store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UpdateAppService {
+  private readonly authStore: AuthStore = inject(AuthStore);
+  private readonly alertService: AlertService = inject(AlertService);
 
   private tableUpdates = [
     {
@@ -25,14 +27,6 @@ export class UpdateAppService {
       title: 'Module Outillage'
     },
   ];
-
-  constructor(
-    private authService: AuthService,
-    private alertService: AlertService,
-  ) {
-    console.log('hello update');
-  }
-
 
 
   /**
@@ -76,7 +70,7 @@ export class UpdateAppService {
    * @memberof UpdateAppService
    */
   private getUpdatesToShow(): Observable<Update[]> {
-    const lastConnection = this.authService.authUser.lastCon;
+    const lastConnection = this.authStore.user().lastCon;
     return of(this.getUpdates(lastConnection));
   }
 }

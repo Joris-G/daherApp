@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 // import { Editor } from 'ngx-editor';
 import { RequestType, ToolRequest, ToolRequestFormGroup } from 'src/app/_interfaces/tooling/tool-request-types';
@@ -12,6 +12,7 @@ import { IonicModule } from '@ionic/angular';
 import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
 import { NgFor } from '@angular/common';
 import { SboComponent } from '../sbo/sbo.component';
+import { AuthStore } from 'src/app/shared/services/users/auth.store';
 const MENU_ITEMS = [
   {
     title: 'Nouvelle demande outillage',
@@ -42,6 +43,7 @@ const MENU_ITEMS = [
     ],
 })
 export class NewToolPage implements OnInit {
+  private readonly authStore: AuthStore = inject(AuthStore);
   public page: any;
   public requestTypeForm: FormGroup;
   public newToolForm: FormGroup;
@@ -55,7 +57,7 @@ export class NewToolPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private programService: ProgramsService,
-    private authService: AuthService,
+
     private toolService: ToolService,
     private toolRequestService: ToolRequestService,
     private router: Router,
@@ -108,7 +110,7 @@ export class NewToolPage implements OnInit {
       // Description: this.newToolRequestForm.value.description,
       createdAt: new Date(),
       bloquantProd: false,
-      demandeur: this.authService.authUser,
+      demandeur: this.authStore.user(),
       outillage: this.toolService.getIri(this.newTool)
     };
     // on soummet la toolrequest
