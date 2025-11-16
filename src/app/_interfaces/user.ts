@@ -32,6 +32,7 @@ export class User {
       matricule: 123456,
       nom,
       prenom,
+      roles: ['ROLE_ADMIN']
     }
   }
 }

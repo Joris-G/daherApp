@@ -3,6 +3,7 @@ import { TitleService } from 'src/app/shared/services/title.service';
 import { SharedUserHeaderComponent } from '../../shared/components/shared-user-header/shared-user-header.component';
 import { IonicModule } from '@ionic/angular';
 import { ToolRequestMenuComponent } from '../components/tool-request-menu/tool-request-menu.component';
+import { IonContent, IonRouterOutlet } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'app-tooling',
@@ -10,8 +11,9 @@ import { ToolRequestMenuComponent } from '../components/tool-request-menu/tool-r
     styleUrls: ['./tooling.page.scss'],
     standalone: true,
     imports: [
-        SharedUserHeaderComponent,
-        IonicModule,
+      IonContent,
+      IonRouterOutlet,
+      SharedUserHeaderComponent,
         ToolRequestMenuComponent,
     ],
 })

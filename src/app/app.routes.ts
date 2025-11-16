@@ -15,6 +15,7 @@ import { ManageTeamPage } from "./tooling/components/manage-team/manage-team.pag
 import { NewToolPage } from "./tooling/components/new-tool/new-tool.page";
 import { ToolListPage } from "./tooling/components/tool-list/tool-list.page";
 import { ToolRequestsPage } from "./tooling/components/tool-requests/tool-requests.page";
+import { ToolingPage } from "./tooling/pages/tooling.page";
 
 
 export const routes: Routes = [
@@ -87,6 +88,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        component: ToolingPage,
         children: [
           {
             path: 'new-tool', component: NewToolPage

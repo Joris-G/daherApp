@@ -11,8 +11,7 @@ export class RoleGuard  {
   private readonly alerteService: AlertService = inject(AlertService);
   private readonly router: Router = inject(Router);
 
-  canActivate(
-    route: ActivatedRouteSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot): boolean {
     const expectedRole = route.data.expectedRole;
     const isRole = this.isRole(expectedRole);
     if (!isRole) {
