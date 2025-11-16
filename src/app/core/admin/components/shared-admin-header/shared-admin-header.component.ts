@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/_interfaces/user';
 import { Observable, Subscription } from 'rxjs';
@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/users/auth.service';
 import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
 import { IonicModule } from '@ionic/angular';
+import { AuthStore } from 'src/app/shared/services/users/auth.store';
 
 @Component({
     selector: 'app-shared-admin-header',
@@ -15,12 +16,13 @@ import { IonicModule } from '@ionic/angular';
     imports: [IonicModule],
 })
 export class SharedAdminHeaderComponent implements OnInit, OnDestroy {
+  private readonly authStore: AuthStore = inject(AuthStore);
   public user: User;
   public documents: Observable<string>;
   public data: any;
   private docSub: Subscription;
   constructor(
-    public authService: AuthService,
+
     private router: Router,
     private notificationsService: NotificationsService,
     // private socket: Socket
@@ -36,13 +38,10 @@ export class SharedAdminHeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.user = this.authService.authUser;
+    this.user = this.authStore.user();
   }
   logoutClick() {
-    this.authService.logout()
-      .subscribe(() => {
-        this.router.navigate(['/login']);
-      });
+    this.authStore.logout();
   }
   navigateHome() {
     this.router.navigate(['/home']);
