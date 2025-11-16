@@ -57,7 +57,6 @@ export class NewToolPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private programService: ProgramsService,
-
     private toolService: ToolService,
     private toolRequestService: ToolRequestService,
     private router: Router,

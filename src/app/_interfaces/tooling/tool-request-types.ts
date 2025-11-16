@@ -81,6 +81,7 @@ export class ToolRequestFormGroup extends FormGroup {
     datePlanif: AbstractControl;
     dateReal: AbstractControl;
     bloquantProd: AbstractControl;
+    aircraftProgram: AbstractControl;
   };
   constructor() {
     super(({
@@ -92,6 +93,7 @@ export class ToolRequestFormGroup extends FormGroup {
       datePlanif: new FormControl(),
       dateReal: new FormControl(),
       demandeur: new FormControl(),
+      aircraftProgram: new FormControl(),
       bloquantProd: new FormControl<boolean>(false)
     }));
   }
