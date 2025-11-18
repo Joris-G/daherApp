@@ -1,10 +1,10 @@
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
-import { MoyenMesure, OutillNoRefSAPFormGroup, SpecCtrlFormGroup, ToolRequestFormGroup, TypeRapport } from 'src/app/_interfaces/tooling/tool-request-types';
+import { MoyenMesure, TypeRapport } from 'src/app/_interfaces/tooling/tool-request-types';
 
 import { ToolInputService } from '../../tool-input/tool-input.service';
 import { Tool } from 'src/app/_interfaces/tooling/tool';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ToolInputComponent } from '../../tool-input/tool-input.component';
 import { NgIf, NgFor, DatePipe, KeyValuePipe } from '@angular/common';
@@ -19,17 +19,17 @@ import { EditorComponent } from '@tinymce/tinymce-angular';
 })
 export class Control3DFormComponent implements OnInit, OnChanges {
   @Input()
-  requestState: RequestState = { canManage: false, canUpdate: false };
+  requestState: RequestState = { canManage: false, canUpdate: false, canEdit: false };
 
   @Input()
-  toolRequestForm: ToolRequestFormGroup;
+  toolRequestForm: FormGroup;
   @Output()
-  toolRequestFormChange = new EventEmitter<ToolRequestFormGroup>;
+  toolRequestFormChange = new EventEmitter<FormGroup>;
 
   @Input()
-  controlForm: SpecCtrlFormGroup;
+  controlForm: FormGroup;
   @Output()
-  controlFormChange = new EventEmitter<SpecCtrlFormGroup>;
+  controlFormChange = new EventEmitter<FormGroup>;
 
   private readonly toolInputService: ToolInputService = inject(ToolInputService);
   moyenMesure = MoyenMesure;

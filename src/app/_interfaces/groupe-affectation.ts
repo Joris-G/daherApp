@@ -9,12 +9,4 @@ export interface GroupeAffectation {
 }
 
 
-export interface GroupeAffectationIri {
-  id?: number;
-  libelle: string;
-  proprietaire?: string;
-  createdAt?: Date;
-  population?: string[];
-}
-
 

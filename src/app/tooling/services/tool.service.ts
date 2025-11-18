@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Tool } from 'src/app/_interfaces/tooling/tool';
+import { Tool, ToolCreation } from 'src/app/_interfaces/tooling/tool';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class ToolService {
   getToolByInput(inputOTValue: string) {
     return new Promise((resolve, reject) => {
       switch (inputOTValue.length) {
-        case 5 || 6:
+        case 5 | 6:
           this.getToolByToolNumber(inputOTValue)
             .subscribe((responseTool: Tool) => {
               resolve(responseTool);
@@ -124,9 +124,9 @@ export class ToolService {
     return `/api/tools/${tool.id}`;
   }
 
-  createTool(toolToCreate: Tool) {
+  createTool(toolToCreate: ToolCreation) {
     const tool: any = toolToCreate;
     tool.sapToolNumber = parseInt(toolToCreate.sapToolNumber.substring(2), 10);
-    return this.requestService.createPostRequest(`${environment.toolApi}tools`, tool);
+    return this.http.post<Tool>(`api/tools`, tool);
   }
 }

@@ -3,7 +3,7 @@ import { MatSort } from '@angular/material/sort';
 import { trigger, state, style } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { NavController, IonicModule } from '@ionic/angular';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
+import { RequestType, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
@@ -41,8 +41,8 @@ export class ToolRequestTableComponent implements OnInit {
   }
 
   openRequestClick(requestToOpen: ToolRequest) {
-    if (requestToOpen.controle) { this.navCtrl.navigateForward('tooling/3D-tool/' + requestToOpen.id); }
-    if (requestToOpen.maintenance) { this.navCtrl.navigateForward('tooling/repair-tool/' + requestToOpen.id); }
+    if (requestToOpen.type === RequestType.CONTROLE) { this.navCtrl.navigateForward('tooling/3D-tool/' + requestToOpen.id); }
+    if (requestToOpen.type === RequestType.MAINTENANCE) { this.navCtrl.navigateForward('tooling/repair-tool/' + requestToOpen.id); }
   }
 
   ngOnInit() {
@@ -83,9 +83,9 @@ export class ToolRequestTableComponent implements OnInit {
 
   private getType(request: ToolRequest | string): string {
     if (typeof (request) === 'string') { return request; }
-    if (request.controle) {
+    if (request.type === RequestType.CONTROLE) {
       return 'controle';
-    } else if (request.maintenance) {
+    } else if (request.type === RequestType.MAINTENANCE) {
       return 'maintenance';
     }
   }

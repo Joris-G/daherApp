@@ -4,7 +4,7 @@ import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 export class RequestState {
   canUpdate: boolean = false;
   canManage: boolean = false;
-
+  canEdit: boolean = false;
 }
 @Injectable({
   providedIn: 'root'
@@ -16,10 +16,12 @@ export class ToolRequestManager {
 
     return (isNouvelle) ? {
       canUpdate: true,
-      canManage: isManager
+      canManage: isManager,
+      canEdit: true,
     } : {
       canUpdate: isManager,
-      canManage: isManager
+        canManage: isManager,
+        canEdit: isManager,
     }
 
   }

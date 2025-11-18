@@ -1,135 +1,334 @@
-import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs';
-import { RequestService } from 'src/app/shared/services/request.service';
-import { MaintenanceItem, SpecMaintRep, SpecMaintRepIri, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
+import { inject, Injectable } from '@angular/core';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { MaintenanceItem, SpecMaintRep, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
-import { concatMap, finalize, map } from 'rxjs/operators';
+import { catchError, concatMap, finalize, map, switchMap, tap } from 'rxjs/operators';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { ToolRequestService } from './tool-request.service';
-import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
+// ============================================================================
+// INTERFACES POUR LES RÉPONSES API
+// ============================================================================
+
+interface MaintenanceItemResponse extends MaintenanceItem {
+    id: number;
+}
+
+interface MaintenanceResponse extends SpecMaintRep {
+    id: number;
+}
+
+// interface MaintenanceRequestPayload {
+//     toolRequest: ToolRequest;
+//     specMaintenance: SpecMaintenance;
+//     maintenanceItemsIris: string[];
+// }
+
 @Injectable()
 export class MaintenanceToolRequestService {
-    constructor(
-        private requestService: RequestService,
-        private loaderService: LoadingService,
-        private toolReqService: ToolRequestService,
-    ) { }
+    // ============================================================================
+    // INJECTION DE DÉPENDANCES
+    // ============================================================================
+    private readonly http = inject(HttpClient);
+    private readonly loaderService = inject(LoadingService);
+    private readonly toolReqService = inject(ToolRequestService);
 
+    // URLs API
+    private readonly maintenanceUrl = `${environment.toolApi}maintenances`;
+    private readonly maintenanceItemUrl = `${environment.toolApi}maintenance_items`;
 
-    // private updateMaintenanceItems(maintenanceItemsToUpdate: MaintenanceItem[]): Observable<any[]> {
-    //     return of(maintenanceItemsToUpdate)
-    //         .pipe(
-    //             mergeMap(
-    //                 (items) =>
-    //                     forkJoin(items.map(
-    //                         (item) => {
-    //                             if (item.id) {
-    //                                 return this.requestService.createPutRequest(`${environment.toolApi}maintenance_items/${item.id}`, item);
-    //                             } else {
-    //                                 return this.requestService.createPostRequest(`${environment.toolApi}maintenance_items`, item);
-    //                             }
-    //                         }))
-    //             ));
-    // }
+    // ============================================================================
+    // CRÉATION DE DEMANDE DE MAINTENANCE
+    // ============================================================================
 
-    updateMainteanceRequest(toolRequestToUpdate: SpecMaintRep): Observable<void> {
-        return of();
-        //     return this.updateMaintenanceItems(toolRequestToUpdate.itemActionCorrective)
-        //         .pipe(
-        //             switchMap(
-        //                 (responseMaintenanceItems) => {
-        //                     toolRequestToUpdate.itemActionCorrective = responseMaintenanceItems;
-        //                     const maintenanceItemIri = toolRequestToUpdate.itemActionCorrective
-        //                         .map((item => '/api/maintenance_items/' + item.id));
-        //                     const toolRequestToCreateIri: SpecMaintRepIri = {
-        //                         id: toolRequestToUpdate.id ?? null,
-        //                         // outillage: toolRequestToUpdate.outillage ? this.toolService.getIri(toolRequestToUpdate.outillage) : '',
-        //                         // dateBesoin: toolRequestToUpdate.dateBesoin,
-        //                         userCreat: this.userService.getIri(toolRequestToUpdate.userCreat),
-        //                         itemActionCorrective: maintenanceItemIri
-        //                     };
-        //                     return this.requestService.createPutRequest(
-        //                         environment.toolApi + 'maintenances/' + toolRequestToCreateIri.id,
-        //                         toolRequestToCreateIri);
-        //                 }
-        //             )
-        //         );
+    /**
+     * Crée une nouvelle demande de maintenance complète
+     * 1. Crée tous les items de maintenance
+     * 2. Crée la demande de maintenance avec les références des items
+     */
+    createMaintenanceRequest(
+        maintenanceSpec: SpecMaintRep
+    ): Observable<MaintenanceResponse> {
+        this.loaderService.startLoading('Création de la demande de maintenance...');
+
+        return this.createAllMaintenanceItems(maintenanceSpec.itemActionCorrective).pipe(
+            switchMap((createdItems) => {
+                // Construire le payload avec les IRIs des items créés
+                const payload = this.buildMaintenancePayload(maintenanceSpec, createdItems);
+
+                return this.http.post<MaintenanceResponse>(
+                    this.maintenanceUrl,
+                    payload
+                );
+            }),
+            tap((response) => {
+                console.log('✅ Demande de maintenance créée:', response);
+            }),
+            catchError((error) => {
+                console.error('❌ Erreur lors de la création de la maintenance:', error);
+                return throwError(() => new Error('Échec de la création de la demande de maintenance'));
+            }),
+            finalize(() => this.loaderService.stopLoading())
+        );
     }
 
-    createMaintenanceRequest(toolRequestToCreate: SpecMaintRep) {
-        return new Promise<any>((resolve, reject) => {
-            this.createAllMaintenaceItems(toolRequestToCreate)
-                .then((maintenanceItemIri: string[]) => {
-                    const toolRequestToCreateIri: SpecMaintRepIri = {
-                        id: toolRequestToCreate.id ?? null,
-                        // outillage: toolRequestToCreate.outillage ? this.toolService.getIri(toolRequestToCreate.outillage) : '',
-                        // dateBesoin: toolRequestToCreate.dateBesoin,
-                        // userCreat: this.userService.getIri(this.authService.authUser),
-                        rep: toolRequestToCreate.rep,
-                        itemActionCorrective: maintenanceItemIri,
-                        // ligneBudgetaire: toolRequestToCreate.ligneBudgetaire,
+    // ============================================================================
+    // MISE À JOUR DE DEMANDE DE MAINTENANCE
+    // ============================================================================
 
-                    };
-                    this.requestService.createPostRequest(`${environment.toolApi}maintenances`, toolRequestToCreateIri)
-                        .subscribe((res) => {
-                            resolve(res);
-                        });
+    /**
+     * Met à jour une demande de maintenance existante
+     * 1. Met à jour ou crée les items de maintenance
+     * 2. Met à jour la demande de maintenance
+     */
+    updateMaintenanceRequest(
+        maintenanceSpec: SpecMaintRep
+    ): Observable<MaintenanceResponse> {
+        if (!maintenanceSpec.id) {
+            return throwError(() => new Error('ID de maintenance manquant pour la mise à jour'));
+        }
 
-                });
-        });
+        this.loaderService.startLoading('Mise à jour de la demande de maintenance...');
 
+        return this.updateOrCreateMaintenanceItems(maintenanceSpec.itemActionCorrective).pipe(
+            switchMap((updatedItems) => {
+                const payload = this.buildMaintenancePayload(maintenanceSpec, updatedItems);
+
+                return this.http.put<MaintenanceResponse>(
+                    `${this.maintenanceUrl}/${maintenanceSpec.id}`,
+                    payload
+                );
+            }),
+            tap((response) => {
+                console.log('✅ Demande de maintenance mise à jour:', response);
+            }),
+            catchError((error) => {
+                console.error('❌ Erreur lors de la mise à jour de la maintenance:', error);
+                return throwError(() => new Error('Échec de la mise à jour de la demande de maintenance'));
+            }),
+            finalize(() => this.loaderService.stopLoading())
+        );
     }
-    getMaintenanceData(idDemande: string | null) {
-        this.loaderService.startLoading('Patienter pendant le chargement du controle');
-        return this.toolReqService.getToolRequest(idDemande)
-            .pipe(
-                concatMap((responseToolRequest) => {
-                    const id = responseToolRequest.maintenance?.id;
-                    return forkJoin([of(responseToolRequest), this.getMaintenance(id)]);
+
+    // ============================================================================
+    // CHARGEMENT DE DONNÉES DE MAINTENANCE
+    // ============================================================================
+
+    /**
+     * Charge les données complètes d'une demande de maintenance
+     * Retourne à la fois la ToolRequest et la SpecMaintenance
+     */
+    loadMaintenanceData(toolRequestId: string): Observable<{
+        toolRequest: ToolRequest;
+        specMaintenance: SpecMaintRep;
+    }> {
+        this.loaderService.startLoading('Chargement de la demande de maintenance...');
+
+        return this.toolReqService.getToolRequest(toolRequestId).pipe(
+            concatMap((toolRequest) => {
+                if (!toolRequest.typeData.id) {
+                    return throwError(() => new Error('Aucune maintenance associée à cette demande'));
+                }
+
+                return this.getMaintenance(toolRequest.typeData.id).pipe(
+                    map((specMaintenance) => ({
+                        toolRequest,
+                        specMaintenance
+                    }))
+                );
+            }),
+            tap((data) => {
+                console.log('✅ Données de maintenance chargées:', data);
+            }),
+            catchError((error) => {
+                console.error('❌ Erreur lors du chargement de la maintenance:', error);
+                return throwError(() => error);
+            }),
+            finalize(() => this.loaderService.stopLoading())
+        );
+    }
+
+    /**
+     * Charge uniquement les données de maintenance (sans la ToolRequest)
+     */
+    getMaintenance(maintenanceId: number): Observable<SpecMaintRep> {
+        if (!maintenanceId) {
+            return of(this.createEmptyMaintenance());
+        }
+
+        return this.http.get<MaintenanceResponse>(
+            `${this.maintenanceUrl}/${maintenanceId}`
+        ).pipe(
+            catchError((error) => {
+                console.error('❌ Erreur lors du chargement de la maintenance:', error);
+                return of(this.createEmptyMaintenance());
+            })
+        );
+    }
+
+    // ============================================================================
+    // GESTION DES ITEMS DE MAINTENANCE
+    // ============================================================================
+
+    /**
+     * Crée tous les items de maintenance en parallèle
+     * Utilise forkJoin pour attendre que tous soient créés
+     */
+    private createAllMaintenanceItems(
+        items: MaintenanceItem[]
+    ): Observable<MaintenanceItemResponse[]> {
+        if (!items || items.length === 0) {
+            return of([]);
+        }
+
+        const createRequests = items.map((item) =>
+            this.http.post<MaintenanceItemResponse>(
+                this.maintenanceItemUrl,
+                this.cleanMaintenanceItem(item)
+            ).pipe(
+                tap((response) => {
+                    console.log(`✅ Item de maintenance créé: #${response.id}`);
                 }),
-                finalize(() => this.loaderService.stopLoading())
-            );
+                catchError((error) => {
+                    console.error('❌ Erreur création item:', error);
+                    return throwError(() => error);
+                })
+            )
+        );
+
+        return forkJoin(createRequests);
     }
 
-
-    loadMaintenanceData(id: string | null) {
-        this.loaderService.startLoading('Patienter pendant le chargement');
-        return this.toolReqService.getToolRequest(id)
-            .pipe(
-                concatMap(
-                    request => this.getMaintenance(request.maintenance.id)
-                        .pipe(
-                            map(specMaint => ({ request, specMaint }))
-                        )
-                ),
-                finalize(() => this.loaderService.stopLoading())
-            );
+    /**
+     * Met à jour les items existants ou crée les nouveaux
+     */
+    private updateOrCreateMaintenanceItems(
+        items: MaintenanceItem[]
+    ): Observable<MaintenanceItemResponse[]> {
+        if (!items || items.length === 0) {
+            return of([]);
     }
 
-    private createAllMaintenaceItems(toolRequestToCreate: SpecMaintRep) {
-        const maintenanceItemIri: string[] = [];
-        return new Promise<string[]>((resolve, reject) => {
-            toolRequestToCreate.itemActionCorrective.forEach((itemAction: MaintenanceItem) => {
-                console.log(itemAction);
-                this.requestService.createPostRequest(`${environment.toolApi}maintenance_items`, itemAction)
-                    .subscribe((response: MaintenanceItem) => {
-                        maintenanceItemIri.push(`/api/maintenance_items/${response.id}`);
-                        console.log(maintenanceItemIri.length, toolRequestToCreate.itemActionCorrective.length);
-                        if (maintenanceItemIri.length === toolRequestToCreate.itemActionCorrective.length) {
-                            resolve(maintenanceItemIri);
-                        }
-                    },
-                        (err) => {
-                            reject();
-                        });
-            });
+        const requests = items.map((item) => {
+            const cleanedItem = this.cleanMaintenanceItem(item);
 
+            if (item.id) {
+                // Mise à jour d'un item existant
+                return this.http.put<MaintenanceItemResponse>(
+                    `${this.maintenanceItemUrl}/${item.id}`,
+                    cleanedItem
+                ).pipe(
+                    tap((response) => {
+                        console.log(`✅ Item de maintenance mis à jour: #${response.id}`);
+                    })
+                );
+            } else {
+                // Création d'un nouvel item
+                return this.http.post<MaintenanceItemResponse>(
+                    this.maintenanceItemUrl,
+                    cleanedItem
+                ).pipe(
+                    tap((response) => {
+                        console.log(`✅ Nouvel item de maintenance créé: #${response.id}`);
+                    })
+                );
+            }
         });
+
+        return forkJoin(requests).pipe(
+            catchError((error) => {
+                console.error('❌ Erreur lors de la gestion des items:', error);
+                return throwError(() => error);
+            })
+        );
     }
 
-    private getMaintenance(id: number): Observable<SpecMaintRep | undefined> {
-        if (!id) { return of(new SpecMaintRep()); }
-        return this.requestService.createGetRequest(`${environment.toolApi}maintenances/${id}`);
+    /**
+     * Supprime un item de maintenance
+     */
+    deleteMaintenanceItem(itemId: number): Observable<void> {
+        return this.http.delete<void>(
+            `${this.maintenanceItemUrl}/${itemId}`
+        ).pipe(
+            tap(() => {
+                console.log(`✅ Item de maintenance supprimé: #${itemId}`);
+            }),
+            catchError((error) => {
+                console.error('❌ Erreur suppression item:', error);
+                return throwError(() => error);
+            })
+        );
     }
 
+    // ============================================================================
+    // HELPERS PRIVÉS
+    // ============================================================================
+
+    /**
+     * Construit le payload pour l'API de maintenance
+     */
+    private buildMaintenancePayload(
+        maintenanceSpec: SpecMaintRep,
+        items: MaintenanceItemResponse[]
+    ): any {
+        return {
+            ...maintenanceSpec,
+            itemActionCorrective: items.map((item) => `/api/maintenance_items/${item.id}`),
+            // Convertir les références d'objets en IRIs si nécessaire
+            outillage: maintenanceSpec.outillage
+                ? (typeof maintenanceSpec.outillage === 'string'
+                    ? maintenanceSpec.outillage
+                    : `/api/tools/${maintenanceSpec.outillage.id}`)
+                : null,
+            userCreat: maintenanceSpec.userCreat
+                ? (typeof maintenanceSpec.userCreat === 'string'
+                    ? maintenanceSpec.userCreat
+                    : `/api/users/${maintenanceSpec.userCreat.id}`)
+                : null,
+        };
+    }
+
+    /**
+     * Nettoie un item de maintenance pour l'envoi à l'API
+     * Supprime les propriétés calculées ou temporaires
+     */
+    private cleanMaintenanceItem(item: MaintenanceItem): Partial<MaintenanceItem> {
+        const cleaned: any = { ...item };
+
+        // Supprimer les propriétés qui ne doivent pas être envoyées
+        delete cleaned.id; // L'ID est dans l'URL pour les PUT
+
+        // Convertir les dates en format ISO si nécessaire
+        if (cleaned.delaiAction) {
+            cleaned.delaiAction = new Date(cleaned.delaiAction).toISOString();
+        }
+        if (cleaned.dateReal) {
+            cleaned.dateReal = new Date(cleaned.dateReal).toISOString();
+        }
+
+        return cleaned;
+    }
+
+    /**
+     * Crée un objet de maintenance vide
+     */
+    private createEmptyMaintenance(): SpecMaintRep {
+        return {
+            itemActionCorrective: [],
+            rep: [],
+            outillNoRefSAP: {
+                description: '',
+                identification: '',
+                localisation: ''
+            }
+        };
+    }
+
+    /**
+     * Convertit les items de maintenance en IRIs
+     */
+    private itemsToIris(items: MaintenanceItemResponse[]): string[] {
+        return items.map((item) => `/api/maintenance_items/${item.id}`);
+    }
 }

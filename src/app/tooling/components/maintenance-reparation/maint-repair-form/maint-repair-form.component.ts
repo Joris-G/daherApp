@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
-import { ToolRequestFormGroup, MaintFormGroup, MaintenanceItem } from 'src/app/_interfaces/tooling/tool-request-types';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MaintenanceItem } from 'src/app/_interfaces/tooling/tool-request-types';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ToolInputComponent } from '../../tool-input/tool-input.component';
 import { NgIf, NgFor } from '@angular/common';
@@ -23,17 +23,17 @@ import { MaintenanceItemComponent } from '../maintenance-item/maintenance-item.c
 })
 export class MaintRepairFormComponent implements OnInit, OnChanges {
   @Input()
-  requestState: RequestState = { canManage: false, canUpdate: false };
+  requestState: RequestState = { canManage: false, canUpdate: false, canEdit: false };
 
   @Input()
-  toolRequestForm: ToolRequestFormGroup;
+  toolRequestForm: FormGroup;
   @Output()
-  toolRequestFormChange = new EventEmitter<ToolRequestFormGroup>();
+  toolRequestFormChange = new EventEmitter<FormGroup>();
 
   @Input()
-  maintForm: MaintFormGroup;
+  maintForm: FormGroup;
   @Output()
-  maintFormChange = new EventEmitter<MaintFormGroup>();
+  maintFormChange = new EventEmitter<FormGroup>();
   public selectedItem: MaintenanceItem;
 
   constructor() { }

@@ -1,5 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
+import { Tool, ToolCreation } from 'src/app/_interfaces/tooling/tool';
+import { RequestStatus, RequestType, SpecSBO, SpecSBOCreation, ToolRequest, ToolRequestCreation } from 'src/app/_interfaces/tooling/tool-request-types';
 import { User } from 'src/app/_interfaces/user';
 
 
@@ -16,6 +18,34 @@ const mockProgrammesAvion: ProgrammeAvion[] = [
   {client:'AIRBUS', designation:'A330',id:3},
   {client:'GULFSTREAM', designation:'G600 ELEVATOR',id:4},
 ];
+
+const mockTools: Tool[] = [
+  {
+    id: 1, sapToolNumber: 'OT099123', description: 'Outillage test', identification: 'TB17904-Z01-F46C575656465', designation: 'Outillage de moulage LH SKIN', programme: 'F8X'
+  }
+];
+
+const mockToolRequests: ToolRequest[] = [
+  {
+    id: 1,
+    bloquantProd: true,
+    type: RequestType.SBO,
+    createdAt: new Date(),
+    demandeur: mockUsers[0],
+    outillage: mockTools[0],
+    statut: RequestStatus.IN_PROGRESS
+  }
+]
+
+const mockSBO: SpecSBO[] = [
+  {
+    id: 1,
+    title: 'Titre Test',
+    description: 'Description Test',
+    aircraftProgram: '1',
+    dateBesoin: new Date()
+  }
+]
 
 // Définition des handlers
 export const handlers = [
@@ -92,6 +122,49 @@ export const handlers = [
       limit
     });
   }),
+
+  // POST - Créer un outillage
+  http.post('/api/tools', async ({ request }) => {
+    const newTool = await request.json() as ToolCreation;
+    const tool: Tool = {
+      id: mockTools.length + 1,
+      ...newTool
+    };
+    mockTools.push(tool);
+
+    return HttpResponse.json(tool, { status: 201 });
+  }),
+  // POST - Créer une request
+  http.post('/api/tools/request', async ({ request }) => {
+    const newToolRequest = await request.json() as ToolRequestCreation;
+    const toolRequest: ToolRequest = {
+      id: mockToolRequests.length + 1,
+      ...newToolRequest
+    };
+    mockToolRequests.push(toolRequest);
+    console.log(mockToolRequests,RequestType.SBO    );
+    
+    switch (toolRequest.type) {
+      case RequestType.SBO:
+        const newSpecSBO = newToolRequest.typeData as SpecSBOCreation;
+        const newSBO: SpecSBO = {
+          id: mockSBO.length + 1,
+          ...newSpecSBO
+        };
+        mockSBO.push(newSBO);
+        break;
+    
+      default:
+        break;
+    }
+    console.log(mockSBO);
+    return HttpResponse.json(toolRequest, { status: 201 });
+  }),
+  // // POST - Créer une demande outillage SBO
+  // http.post('api/tools/request/SBO', async ({ request }) => {
+    
+  //   return HttpResponse.json(newSBO, { status: 201 });
+  // }),
 
   // Simuler un délai réseau (optionnel)
   http.get('/api/slow-endpoint', async () => {

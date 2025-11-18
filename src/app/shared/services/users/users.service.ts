@@ -2,7 +2,6 @@ import { Injectable, isDevMode } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { User, UserIri } from 'src/app/_interfaces/user';
-import { GroupeAffectationIri } from 'src/app/_interfaces/groupe-affectation';
 import { environment } from 'src/environments/environment';
 import { ProgramsService } from '../programs/programs.service';
 import { RequestService } from '../request.service';
@@ -122,16 +121,11 @@ export class UsersService {
   }
 
   addUserToGroup(user: User) {
-    return new Promise<User>(async (resolve, reject) => {
+    return new Promise<User>((resolve, reject) => {
       for (const group of user.groupeAffected) {
-        const groupAffectationIri: GroupeAffectationIri = {
-          libelle: group.libelle,
-          population: group.population.map(userGroup => this.getIri(userGroup))
-        };
-        groupAffectationIri.population.push(this.getIri(user));
-        await this.requestService.createPatchRequest(
+        this.requestService.createPatchRequest(
           `${environment.usineApi}groupe_affectations/${group.id}/addUsers`,
-          { population: groupAffectationIri.population }
+          { population: group.population }
         )
           .subscribe((responseGroup) => {
             user.groupeAffected = responseGroup;

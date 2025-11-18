@@ -34,7 +34,7 @@
           </ion-item>
         </ion-item-group>
         <ion-toolbar>
-          <ion-button slot=end (click)="createToolClick()" expand="block" color=primary>
+          <ion-button slot=end (click)="onCreateTool()" expand="block" color=primary>
             Créer l'OT
           </ion-button>
         </ion-toolbar>
@@ -54,11 +54,13 @@
           <ion-item>
             <ion-label>Programme avion</ion-label>
             <ion-select formControlName="aircraftProgram" multiple="true" placeholder="Sélectionner le programme avion">
-              <ion-select-option *ngFor="let program of programs" [value]="program.id">
+              <ion-select-option *ngFor="let program of programs()" [value]="program.id">
                 {{program.designation}}
               </ion-select-option>
             </ion-select>
           </ion-item>
+          </ion-item-group>
+          <ion-item-group formGroupName="typeData">
           <ion-item>
             <ion-label>Titre
               <ion-text color="danger">*</ion-text>
@@ -69,27 +71,31 @@
             <ion-label>Description
               <ion-text color="danger">*</ion-text>
             </ion-label>
-            <!-- <div class="NgxEditor__Wrapper">
+            <div class="NgxEditor__Wrapper">
                             <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-                            <ngx-editor [editor]="editor" [ngModel]="html" formControlName="description" [disabled]="false" [placeholder]="'Taper la description ici'"></ngx-editor>
-                        </div> -->
+                            <ngx-editor [editor]="editor" formControlName="description" [disabled]="false"
+                              [placeholder]="'Taper la description ici'"></ngx-editor>
+                            </div>
           </ion-item>
 
           <ion-item>
             <ion-label>Date
               <ion-text color="danger">*</ion-text>
             </ion-label>
-            <ion-datetime display-format="DD.MM.YYYY HH:mm" formControlName="needDate"></ion-datetime>
+            <ion-datetime display-format="DD.MM.YYYY HH:mm" formControlName="dateBesoin"></ion-datetime>
           </ion-item>
         </ion-item-group>
       </form>
     </mat-expansion-panel>
   </mat-accordion>
-  <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo>
+  <!-- <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo> -->
+  <div>
+    {{newToolRequestForm.value | json}}
+  </div>
 </ion-content>
 <ion-footer>
   <ion-toolbar color="light">
-    <ion-button [disabled]="newToolRequestForm.invalid" (click)="createToolRequestClick()" slot=end expand="block"
+    <ion-button [disabled]="newToolRequestForm.invalid" (click)="onCreateToolRequest()" slot=end expand="block"
       color=primary>
       Créer la demande
     </ion-button>

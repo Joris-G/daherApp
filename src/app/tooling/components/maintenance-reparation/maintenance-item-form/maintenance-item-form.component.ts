@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, IonicModule } from '@ionic/angular';
-import { MaintenanceItem, MaintenanceItemFormGroup } from 'src/app/_interfaces/tooling/tool-request-types';
+import { MaintenanceItem } from 'src/app/_interfaces/tooling/tool-request-types';
 import { NgIf, DatePipe } from '@angular/common';
 
 @Component({
@@ -16,7 +16,10 @@ import { NgIf, DatePipe } from '@angular/common';
         DatePipe,
     ],
 })
-export class MaintenanceItemFormComponent implements OnInit {
+export class MaintenanceItemFormComponent {
+  uploadImage($event: Event) {
+    throw new Error('Method not implemented.');
+  }
   @Input() maintenanceItem: MaintenanceItem;
   @Output() evRemoveItem: EventEmitter<MaintenanceItem> = new EventEmitter<MaintenanceItem>();
   public validate = false;
@@ -28,10 +31,9 @@ export class MaintenanceItemFormComponent implements OnInit {
       delaiAction: new FormControl(),
       dateReal: new FormControl(),
     }
-  ) as MaintenanceItemFormGroup;
+  );
   private alertController = inject(AlertController);
 
-  ngOnInit() { }
   async removeItemClick() {
     // êtes vous sûr ?
     const alert = await this.alertController.create({

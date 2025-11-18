@@ -52,6 +52,7 @@
     "jsbarcode": "^3.11.5",
     "jspdf": "^2.5.1",
     "msw": "^2.12.2",
+    "ngx-editor": "18.0.0",
     "ngx-webcam": "^0.4.1",
     "pdfmake": "^0.2.9",
     "phonegap-plugin-barcodescanner": "^8.1.0",

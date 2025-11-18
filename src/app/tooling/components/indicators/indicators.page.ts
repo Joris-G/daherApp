@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { NgIf } from '@angular/common';
 import { IndicatorGraphComponent } from '../../../shared/indicators/indicator-graph/indicator-graph.component';
 import { IndicatorNumberComponent } from '../../../shared/indicators/indicator-number/indicator-number.component';
+import { RequestStatus, RequestType } from 'src/app/_interfaces/tooling/tool-request-types';
 
 @Component({
     selector: 'app-indicators',
@@ -38,12 +39,12 @@ export class IndicatorsPage implements OnInit {
         const startDate = new Date().getTime();
         toolRequestList.forEach((toolRequest) => {
           console.log(toolRequest);
-          if (toolRequest.statut !== 'CLOTUREE') { this.openRequestCount = this.openRequestCount + 1; }
-          if (toolRequest.statut !== 'EN COURS DE REALISATION') { this.onGoingRequestCount = this.onGoingRequestCount + 1; }
+          if (toolRequest.statut !== RequestStatus.COMPLETED) { this.openRequestCount = this.openRequestCount + 1; }
+          if (toolRequest.statut !== RequestStatus.IN_PROGRESS) { this.onGoingRequestCount = this.onGoingRequestCount + 1; }
         });
         this.requestTypeDistribution = {
-          controle: toolRequestList.filter(toolRequest => toolRequest.type === 'Controle').length,
-          maintenance: toolRequestList.filter(toolRequest => toolRequest.type === 'Maintenance').length
+          controle: toolRequestList.filter(toolRequest => toolRequest.type === RequestType.CONTROLE).length,
+          maintenance: toolRequestList.filter(toolRequest => toolRequest.type === RequestType.MAINTENANCE).length
         };
         const endForEach = new Date().getTime();
         console.log(this.openRequestCount, this.onGoingRequestCount, `${endForEach - startDate}ms`);

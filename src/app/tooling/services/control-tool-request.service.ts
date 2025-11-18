@@ -4,7 +4,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { concatMap, finalize } from 'rxjs/operators';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { RequestService } from 'src/app/shared/services/request.service';
-import { SpecCtrl, SpecCtrlIri, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
+import { SpecCtrl, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
 import { ToolRequestService } from './tool-request.service';
 import { ToolService } from './tool.service';
@@ -32,7 +32,7 @@ export class ControlToolRequestService {
         return this.toolReqService.getToolRequest(idDemande)
             .pipe(
                 concatMap((responseToolRequest) => {
-                    const id = responseToolRequest.controle?.id;
+                    const id = responseToolRequest.typeData?.id;
                     return forkJoin([of(responseToolRequest), this.getControl(id)])
                 }),
                 finalize(() => this.loaderService.stopLoading())
@@ -43,7 +43,7 @@ export class ControlToolRequestService {
     //TODO modifer le type de retour ==> pas de any
     public createControlRequest(specCtrlToCreate: SpecCtrl): Observable<any> {
         this.loaderService.startLoading('Envoi de la demande en cours');
-        return this.requestService.createPostRequest(`${environment.toolApi}controles`, SpecCtrlIri.toIri(specCtrlToCreate))
+        return this.requestService.createPostRequest(`${environment.toolApi}controles`, specCtrlToCreate)
             .pipe(
                 finalize(() => this.loaderService.stopLoading())
             );
@@ -55,28 +55,10 @@ export class ControlToolRequestService {
     updateControlRequest(ctrlToolRequestToUpdate: SpecCtrl, toolRequestToUpdate: ToolRequest): Observable<any> {
         this.loaderService.startLoading('Envoi de la demande en cours');
         this.toolReqService.updateToolRequest(toolRequestToUpdate);
-        const toolRequestToCreateIri: SpecCtrlIri = {
-            id: ctrlToolRequestToUpdate.id,
-            outillage: ctrlToolRequestToUpdate.outillage ? this.toolService.getIri(ctrlToolRequestToUpdate.outillage) : '',
-            dateBesoin: ctrlToolRequestToUpdate.dateBesoin,
-            refPlan: ctrlToolRequestToUpdate.refPlan,
-            indPlan: ctrlToolRequestToUpdate.indPlan,
-            cheminCAO: ctrlToolRequestToUpdate.cheminCAO,
-            description: ctrlToolRequestToUpdate.description,
-            detailsControle: ctrlToolRequestToUpdate.detailsControle,
-            tolerances: ctrlToolRequestToUpdate.tolerances,
-            dispoOut: ctrlToolRequestToUpdate.dispoOut,
-            ligneBudgetaire: ctrlToolRequestToUpdate.ligneBudgetaire,
-            interventionDate: ctrlToolRequestToUpdate.interventionDate,
-            moyenMesure: ctrlToolRequestToUpdate.moyenMesure,
-            infosComplementaire: ctrlToolRequestToUpdate.infosComplementaire,
-            visaControleur: ctrlToolRequestToUpdate.visaControleur,
-            typeRapport: ctrlToolRequestToUpdate.typeRapport,
-        };
-        console.log(toolRequestToCreateIri);
+        console.log(ctrlToolRequestToUpdate);
         return this.requestService.createPatchRequest(
-            `${environment.toolApi}controles/${toolRequestToCreateIri.id}`,
-            toolRequestToCreateIri)
+            `${environment.toolApi}controles/${ctrlToolRequestToUpdate.id}`,
+            ctrlToolRequestToUpdate)
             .pipe(
                 finalize(() => this.loaderService.stopLoading())
             );

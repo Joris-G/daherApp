@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { ToolRequest, ToolRequestIri }
+import { inject, Injectable } from '@angular/core';
+import { RequestType, ToolRequest }
   from 'src/app/_interfaces/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
 import { ToolService } from 'src/app/tooling/services/tool.service';
@@ -9,12 +9,13 @@ import { RequestService } from 'src/app/shared/services/request.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToolRequestService {
-
+  private readonly http: HttpClient = inject(HttpClient);
 
   constructor(
     private requestService: RequestService,
@@ -44,26 +45,22 @@ export class ToolRequestService {
 
 
 
-  updateToolRequest(toolRequestToUpdate: ToolRequest) {
-    const toolRequestToUpdateIri: ToolRequestIri = {
-      statut: toolRequestToUpdate.statut,
-      createdAt: toolRequestToUpdate.createdAt,
-      id: toolRequestToUpdate.id
-    };
-    return this.requestService.createPatchRequest(`${environment.toolApi}demandes/${toolRequestToUpdateIri.id}`, toolRequestToUpdateIri);
+  updateToolRequest(toolRequestToUpdate: Partial<ToolRequest>) {
+
+    return this.requestService.createPatchRequest(`${environment.toolApi}demandes/${toolRequestToUpdate.id}`, toolRequestToUpdate);
   }
 
   getType(request: ToolRequest | string): string {
     if (typeof (request) === 'string') { return request; }
-    if (request.controle) {
+    if (request.type === RequestType.CONTROLE) {
       return 'controle';
-    } else if (request.maintenance) {
+    } else if (request.type === RequestType.MAINTENANCE) {
       return 'maintenance';
     }
   }
 
-  createToolRequest(toolRequestToCreate: ToolRequest) {
-    return this.requestService.createPostRequest(`${environment.toolApi}demandes`, toolRequestToCreate);
+  createToolRequest(toolRequestToCreate: ToolRequest): Observable<ToolRequest> {
+    return this.http.post<ToolRequest>(`api/tools/request`, toolRequestToCreate);
   }
 
 
