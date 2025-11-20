@@ -1,16 +1,17 @@
 <!-- <app-shared-user-header [page]="page"></app-shared-user-header> -->
 
 <ion-content color=light>
-  <mat-accordion class="example-headers-align" multi>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
+  <ion-accordion-group [multiple]="true">
+    <ion-accordion color>
+      <ion-item slot="header">
+        <ion-label>
           Définition
-        </mat-panel-title>
-        <mat-panel-description>
+        </ion-label>
+        <ion-text>
           Créer ou sélectionner l'outillage
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+        </ion-text>
+        </ion-item>
+        <ion-item slot="content">
       <form [formGroup]="newToolForm">
         <ion-item-group>
           <ion-item>
@@ -39,16 +40,15 @@
           </ion-button>
         </ion-toolbar>
       </form>
-    </mat-expansion-panel>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
+      </ion-item>
+      </ion-accordion>
+      <ion-accordion>
+        <ion-item slot="header">
+          <ion-label>
           Descritpion
-        </mat-panel-title>
-        <mat-panel-description>
-
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+        </ion-label>
+        </ion-item>
+        <ion-item slot="content">
       <form [formGroup]="newToolRequestForm">
         <ion-item-group>
           <ion-item>
@@ -73,7 +73,7 @@
             </ion-label>
             <div class="NgxEditor__Wrapper">
                             <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-                            <ngx-editor [editor]="editor" formControlName="description" [disabled]="false"
+                            <ngx-editor [editor]="editor" formControlName="description"
                               [placeholder]="'Taper la description ici'"></ngx-editor>
                             </div>
           </ion-item>
@@ -86,8 +86,9 @@
           </ion-item>
         </ion-item-group>
       </form>
-    </mat-expansion-panel>
-  </mat-accordion>
+      </ion-item>
+      </ion-accordion>
+      </ion-accordion-group>
   <!-- <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo> -->
   <div>
     {{newToolRequestForm.value | json}}

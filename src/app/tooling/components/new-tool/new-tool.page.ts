@@ -1,5 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { JsonPipe, NgFor } from '@angular/common';
+import { FormGroup, FormControl, FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { IonAccordion, IonAccordionGroup, IonButton, IonContent, IonDatetime, IonFooter, IonInput, IonItem, IonItemGroup, IonLabel, IonSelect, IonSelectOption, IonText, IonToolbar } from '@ionic/angular/standalone';
 import { Editor, NgxEditorModule } from 'ngx-editor';
 import { RequestType, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ToolService } from 'src/app/tooling/services/tool.service';
@@ -7,9 +9,6 @@ import { Tool, ToolCreation } from 'src/app/_interfaces/tooling/tool';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
 import { Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
-import { IonicModule } from '@ionic/angular';
-import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
-import { JsonPipe, NgFor } from '@angular/common';
 import { SboComponent } from '../sbo/sbo.component';
 import { AuthStore } from 'src/app/shared/services/users/auth.store';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
@@ -34,12 +33,18 @@ const MENU_ITEMS = [
     styleUrls: ['./new-tool.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        MatAccordion,
-        MatExpansionPanel,
-        MatExpansionPanelHeader,
-        MatExpansionPanelTitle,
-        MatExpansionPanelDescription,
+      IonItem,
+      IonAccordion,
+      IonContent,
+      IonAccordionGroup,
+      IonItemGroup,
+      IonLabel,
+      IonText,
+      IonFooter, IonToolbar, IonInput,
+      IonButton,
+      IonDatetime,
+      IonSelect,
+      IonSelectOption,
         ReactiveFormsModule,
         NgFor,
         SboComponent,

@@ -165,7 +165,7 @@ export class ToolRequestFormBuilder {
 
   createNewToolForm(initialValue?: { sapToolNumber?: string; identification?: string; designation?: string }): FormGroup {
     return this.fb.group({
-      sapToolNumber: [initialValue?.sapToolNumber ?? ''],
+      sapToolNumber: [initialValue?.sapToolNumber ?? '', Validators.required],
       identification: [initialValue?.identification ?? '', Validators.required],
       designation: [initialValue?.designation ?? '', Validators.required]
     });
