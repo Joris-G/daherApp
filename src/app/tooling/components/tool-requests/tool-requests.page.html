@@ -12,7 +12,8 @@
 
 </ion-header>
 <ion-content [fullscreen]="false" id="tool-request-content">
-  <ng-container>
+  @if(toolRequestList$ | async; as toolRequestList){
+<ng-container>
     <!-- <app-table [datas]="toolRequests"></app-table> -->
     <ion-grid class="ion-no-padding">
       <ion-row>
@@ -20,11 +21,12 @@
           <app-tool-request-filters></app-tool-request-filters>
         </ion-col>
         <ion-col size="8">
-          <app-tool-request-table></app-tool-request-table>
+          <app-tool-request-table [toolRequestList]="toolRequestList"></app-tool-request-table>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ng-container>
+  }
 
 
 </ion-content>

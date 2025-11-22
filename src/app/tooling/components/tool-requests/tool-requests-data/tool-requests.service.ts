@@ -1,12 +1,16 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { switchMap, share } from 'rxjs/operators';
-import { RequestService } from 'src/app/shared/services/request.service';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { share } from 'rxjs/operators';
 import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ToolRequestsService {
+  ////////////////////////////////////////////////////////////////
+  // INJECTION DE DEPENDANCES
+  ////////////////////////////////////////////////////////////////
+  private readonly http: HttpClient = inject(HttpClient);
   public requestsAreLoading: boolean;
   public filtersList: Subject<ToolRequest[]> = new Subject();
   public filterSelectObjects = [
@@ -36,7 +40,7 @@ export class ToolRequestsService {
   private toolRequestsList: ToolRequest[] = [];
   private pageCounter: BehaviorSubject<number> = new BehaviorSubject(1);
   constructor(
-    private requestService: RequestService,
+    // private requestService: RequestService,
   ) {
     // this.pageCounter.asObservable()
     //   .pipe(
@@ -65,14 +69,14 @@ export class ToolRequestsService {
   }
 
   getAllToolRequests(): Observable<ToolRequest[]> {
-    return this.requestService.createGetRequest(`${environment.toolApi}demandes`)
+    return this.http.get<ToolRequest[]>(`${environment.toolApi}demandes`)
       .pipe(
         share()
       );
   }
 
-  getToolRequests(page: number, itemsPerPage: number): Observable<ToolRequest[]> {
-    return this.requestService.createGetRequest(`${environment.toolApi}demandes`, { page, itemsPerPage })
+  getToolRequests(page: number = 1, itemsPerPage: number = 25): Observable<ToolRequest[]> {
+    return this.http.get<ToolRequest[]>(`api/tools/request`, { params: { page, itemsPerPage } })
       .pipe(
         share()
       );
@@ -81,7 +85,7 @@ export class ToolRequestsService {
   getNextPage() {
     let currentPage = this.pageCounter.getValue();
     this.pageCounter.next(currentPage + 1);
-  }
+  } 
 
 
   addFilter(filterToAdd) {

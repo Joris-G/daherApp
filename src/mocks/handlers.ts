@@ -1,17 +1,14 @@
 import { http, HttpResponse } from 'msw';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { Tool, ToolCreation } from 'src/app/_interfaces/tooling/tool';
-import { RequestStatus, RequestType, SpecSBO, SpecSBOCreation, ToolRequest, ToolRequestCreation } from 'src/app/_interfaces/tooling/tool-request-types';
+import { RequestType, SpecSBO, SpecSBOCreation, ToolRequest, ToolRequestCreation } from 'src/app/_interfaces/tooling/tool-request-types';
 import { User } from 'src/app/_interfaces/user';
+import { mockToolRequests } from './mockData/mockToolRequest.mock';
+import { mockTools } from './mockData/mockTools.mock';
+import { mockUsers } from './mockData/mockUser.mock';
 
 
 // Données mockées
-const mockUsers: User[] = [
-  { id: 1, nom: 'Dupont', prenom:'Jean', matricule:123456, mail: 'jean@example.com' },
-  { id: 2, nom: 'Martin', prenom: 'Marie',  matricule:123456, mail: 'marie@example.com' },
-    { id: 3, nom: 'Gr', prenom:'Jo', matricule:123456, mail: 'gr.jo@example.com' },
-];
-
 const mockProgrammesAvion: ProgrammeAvion[] = [
  {client:'AIRBUS', designation:'MLGD-900',id:1},
   {client:'AIRBUS', designation:'MLGD-1000',id:2},
@@ -19,23 +16,8 @@ const mockProgrammesAvion: ProgrammeAvion[] = [
   {client:'GULFSTREAM', designation:'G600 ELEVATOR',id:4},
 ];
 
-const mockTools: Tool[] = [
-  {
-    id: 1, sapToolNumber: 'OT099123', description: 'Outillage test', identification: 'TB17904-Z01-F46C575656465', designation: 'Outillage de moulage LH SKIN', programme: 'F8X'
-  }
-];
 
-const mockToolRequests: ToolRequest[] = [
-  {
-    id: 1,
-    bloquantProd: true,
-    type: RequestType.SBO,
-    createdAt: new Date(),
-    demandeur: mockUsers[0],
-    outillage: mockTools[0],
-    statut: RequestStatus.IN_PROGRESS
-  }
-]
+
 
 const mockSBO: SpecSBO[] = [
   {
@@ -159,6 +141,9 @@ export const handlers = [
     }
     console.log(mockSBO);
     return HttpResponse.json(toolRequest, { status: 201 });
+  }),
+  http.get('/api/tools/request', async ({ request }) => {
+    return HttpResponse.json(mockToolRequests, { status: 201 });
   }),
   // // POST - Créer une demande outillage SBO
   // http.post('api/tools/request/SBO', async ({ request }) => {

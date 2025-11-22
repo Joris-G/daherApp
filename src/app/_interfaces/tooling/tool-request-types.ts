@@ -16,14 +16,13 @@ export enum RequestType {
 }
 
 export enum RequestStatus {
-  DRAFT = 'draft',
-  SUBMITTED = 'submitted',
-  AFFECTED = 'affected',
-  IN_PROGRESS = 'in_progress',
-  COMPLETED = 'completed',
-  RETURNED = 'returned',
-  CANCELLED = 'cancelled',
-  STANDBY = 'standby'
+  DRAFT = 'Brouillon',
+  SUBMITTED = 'Nouvelle',
+  IN_PROGRESS = 'En cours',
+  COMPLETED = 'Finalisée',
+  RETURNED = 'Retournée',
+  CANCELLED = 'Annulée',
+  STANDBY = 'En attente'
 }
 
 export enum TypeRapport {
@@ -46,11 +45,11 @@ export class ToolRequest {
   id?: number;
   type: RequestType;
   typeData?: SpecCtrl | SpecMaintRep | SpecSBO;
-  demandeur?: User | string;
+  demandeur?: User;
   bloquantProd: boolean;
   createdAt?: Date;
   dateBesoin?: Date;
-  outillage?: Tool | string;
+  outillage?: Tool;
   groupeAffectation?: GroupeAffectation;
   affectation?: string[];
   dateAffectation?: Date;

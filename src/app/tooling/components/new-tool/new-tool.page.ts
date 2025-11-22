@@ -211,7 +211,7 @@ export class NewToolPage implements OnInit {
       bloquantProd: this.newToolRequestForm.value.bloquantProd,
       dateBesoin: this.newToolRequestForm.value.dateBesoin,
       demandeur: this.authStore.user(),
-      outillage: this.toolService.getIri(this.createdTool()!),
+      outillage: this.createdTool(),
       toolingNote: this.newToolRequestForm.value.toolingNote,
       typeData: this.specSboForm.value
     };
