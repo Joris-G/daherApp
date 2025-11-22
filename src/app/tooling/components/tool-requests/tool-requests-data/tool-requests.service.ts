@@ -13,28 +13,7 @@ export class ToolRequestsService {
   private readonly http: HttpClient = inject(HttpClient);
   public requestsAreLoading: boolean;
   public filtersList: Subject<ToolRequest[]> = new Subject();
-  public filterSelectObjects = [
-    {
-      name: 'Statut',
-      columnProp: 'statut',
-      options: []
-    },
-    {
-      name: 'Type de demande',
-      columnProp: 'type',
-      options: []
-    },
-    {
-      name: 'Demandeur',
-      columnProp: 'demandeur',
-      options: []
-    },
-    {
-      name: 'Outillage',
-      columnProp: 'tool',
-      options: []
-    },
-  ];
+
   public allToolRequests: BehaviorSubject<ToolRequest[]> = new BehaviorSubject([]);
   private filters: BehaviorSubject<{ data: string, value: string }[]> = new BehaviorSubject([]);
   private toolRequestsList: ToolRequest[] = [];
@@ -104,48 +83,48 @@ export class ToolRequestsService {
   }
 
 
-  private filterData(): ToolRequest[] {
-    const filters = this.filters.getValue();
-    if (filters.length === 0) { return this.toolRequestsList }
-    return this.toolRequestsList.filter(
-      (toolRequest) => filters.every(
-        (filter) => {
-          const val1 = this.getCompareElement(filter.data, toolRequest)
-          const val2 = filter.value;
-          return val1 === val2;
-        }
-      )
-    );
-  }
+  // private filterData(): ToolRequest[] {
+  //   const filters = this.filters.getValue();
+  //   if (filters.length === 0) { return this.toolRequestsList }
+  //   return this.toolRequestsList.filter(
+  //     (toolRequest) => filters.every(
+  //       (filter) => {
+  //         const val1 = this.getCompareElement(filter.data, toolRequest)
+  //         const val2 = filter.value;
+  //         return val1 === val2;
+  //       }
+  //     )
+  //   );
+  // }
 
-  private populateFilter() {
-    this.filterSelectObjects.forEach((ionSelect) => {
-      this.toolRequestsList.forEach((toolRequest) => {
-        const compareElement = this.getCompareElement(ionSelect.columnProp, toolRequest)
-        if (!ionSelect.options.find((option) => option == compareElement)) {
-          ionSelect.options.push(compareElement);
-        }
-      });
-    });
-  }
+  // private populateFilter() {
+  //   this.filterSelectObjects.forEach((ionSelect) => {
+  //     this.toolRequestsList.forEach((toolRequest) => {
+  //       const compareElement = this.getCompareElement(ionSelect.columnProp, toolRequest)
+  //       if (!ionSelect.options.find((option) => option == compareElement)) {
+  //         ionSelect.options.push(compareElement);
+  //       }
+  //     });
+  //   });
+  // }
 
-  private getCompareElement(filterProp: string, toolRequest): string {
-    if (filterProp === 'tool') {
-      if (toolRequest.type === 'Maintenance') {
-        return toolRequest.maintenance.outillage.sapToolNumber;
-      } else if (toolRequest.type === 'Controle') {
-        return toolRequest.controle.outillage.sapToolNumber;
-      }
-    }
-    if (filterProp === 'demandeur') {
-      if (toolRequest.type === 'Maintenance') {
-        return toolRequest.maintenance.demandeur.username;
-      }
-      if (toolRequest.type === 'Controle') {
-        return toolRequest.controle.demandeur.username;
-      }
-    }
+  // private getCompareElement(filterProp: string, toolRequest): string {
+  //   if (filterProp === 'tool') {
+  //     if (toolRequest.type === 'Maintenance') {
+  //       return toolRequest.maintenance.outillage.sapToolNumber;
+  //     } else if (toolRequest.type === 'Controle') {
+  //       return toolRequest.controle.outillage.sapToolNumber;
+  //     }
+  //   }
+  //   if (filterProp === 'demandeur') {
+  //     if (toolRequest.type === 'Maintenance') {
+  //       return toolRequest.maintenance.demandeur.username;
+  //     }
+  //     if (toolRequest.type === 'Controle') {
+  //       return toolRequest.controle.demandeur.username;
+  //     }
+  //   }
 
-    return toolRequest[filterProp];
-  }
+  //   return toolRequest[filterProp];
+  // }
 }

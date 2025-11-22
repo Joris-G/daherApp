@@ -1,11 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { RequestType, ToolRequest }
   from 'src/app/_interfaces/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { Observable, of } from 'rxjs';
-import { catchError, finalize, share } from 'rxjs/operators';
-import { RequestService } from 'src/app/shared/services/request.service';
+import { catchError, finalize, share, tap } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { Router } from '@angular/router';
@@ -15,16 +14,50 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ToolRequestService {
+  ////////////////////////////////////////////////////
+  //INJECTION DEPENDANCES
+  ////////////////////////////////////////////////////
   private readonly http: HttpClient = inject(HttpClient);
+  private readonly loaderService: LoadingService = inject(LoadingService);
+  ////////////////////////////////////////////////////
+  //PROPRIETES
+  ////////////////////////////////////////////////////
+  public readonly toolRequestList = signal<ToolRequest[]>([])
+
 
   constructor(
-    private requestService: RequestService,
-    private toolService: ToolService,
-    private userService: UsersService,
-    private loaderService: LoadingService,
-    private router: Router,
-  ) { }
+    // private toolService: ToolService,
+    // private userService: UsersService,
 
+    // private router: Router,
+  ) {
+    console.log("hello toolRequestService");
+    this.initializeToolRequests();
+    // this.getToolRequests();
+  }
+
+  /**
+     * Initialise les toolRequests au chargement du service
+     */
+  private initializeToolRequests(): void {
+    this.getToolRequests().subscribe({
+      next: (requests) => {
+        this.toolRequestList.set(requests);
+        console.log('ToolRequests initialisées:', requests);
+      },
+      error: (error) => {
+        console.error('Erreur lors de l\'initialisation des toolRequests:', error);
+        this.toolRequestList.set([]);
+      }
+    });
+  }
+
+  /**
+    * Méthode publique pour recharger les toolRequests si nécessaire
+    */
+  public refreshToolRequests(): void {
+    this.initializeToolRequests();
+  }
 
   // initToolRequest(): void {
   //   const requestType: string = this.getToolRequestType();
@@ -47,7 +80,13 @@ export class ToolRequestService {
 
   updateToolRequest(toolRequestToUpdate: Partial<ToolRequest>) {
 
-    return this.requestService.createPatchRequest(`${environment.toolApi}demandes/${toolRequestToUpdate.id}`, toolRequestToUpdate);
+    return this.http.patch(`${environment.toolApi}demandes/${toolRequestToUpdate.id}`, toolRequestToUpdate)
+      .pipe(
+        tap(() => {
+          // Rafraîchir la liste après mise à jour
+          this.refreshToolRequests();
+        })
+      );
   }
 
   getType(request: ToolRequest | string): string {
@@ -70,15 +109,18 @@ export class ToolRequestService {
 
 
   getToolRequest(id: string): Observable<ToolRequest | undefined> {
-    return (!id) ? of(new ToolRequest()) : this.requestService.createGetRequest(`${environment.toolApi}demandes/${id}`);
+    return (!id) ? of(new ToolRequest()) : this.http.get<ToolRequest>(`${environment.toolApi}demandes/${id}`);
   }
 
-  getToolRequests(): Observable<ToolRequest[]> {
+  private getToolRequests(): Observable<ToolRequest[]> {
     this.loaderService.startLoading('Chargement des demandes');
-    return this.requestService.createGetRequest(`${environment.toolApi}demandes`)
+    return this.http.get<ToolRequest[]>(`api/tools/request`)
       .pipe(
         share(),
-        catchError(() => of([])),
+        catchError((error) => {
+          console.error('Erreur lors du chargement des demandes:', error);
+          return of([]);
+        }),
         finalize(() => this.loaderService.stopLoading())
       );
   }
@@ -87,15 +129,14 @@ export class ToolRequestService {
 
 
 
-  removeRequest(request: ToolRequest) {
-    return new Promise((resolve, reject) => {
-      this.requestService.createDeleteRequest('demandes/' + request.id);
-      // if (request.controle) {
-      //   this.requestService.createDeleteRequest('controles/' + request.controle.id);
-      // } else if (request.maintenance) {
-      //   this.requestService.createDeleteRequest('maintenances/' + request.maintenance.id);
-      // }
-    });
+  removeRequest(request: ToolRequest): Observable<any> {
+    return this.http.delete(`demandes/${request.id}`)
+      .pipe(
+        tap(() => {
+          // Rafraîchir la liste après suppression
+          this.refreshToolRequests();
+        })
+      );
   }
 
 

@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { IonSelect, IonicModule } from '@ionic/angular';
 
 import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
 import { NgFor } from '@angular/common';
+import { ToolRequestFilterService } from './tool-request-filters.service';
+import { ToolRequestFilter } from 'src/app/_interfaces/tooling/tool-request-filters';
 
 @Component({
     selector: 'app-tool-request-filters',
@@ -12,17 +14,28 @@ import { NgFor } from '@angular/common';
     imports: [IonicModule, NgFor],
 })
 export class ToolRequestFiltersComponent {
+  ////////////////////////////////////////////////////
+  //INPUTS
+  ////////////////////////////////////////////////////
+  public readonly toolRequestFilters = input<ToolRequestFilter[]>([]);
+
+  ////////////////////////////////////////////////////
+  //OUTPUTS
+  ////////////////////////////////////////////////////
+  public readonly onFilterChange = output<{ columnProp: string, selectedValues: string[] }>();
+
+  ////////////////////////////////////////////////////
+  //PROPRIETES
+  ////////////////////////////////////////////////////
   private activeFilters: IonSelect[] = [];
-  constructor(
-    public toolRequestsService: ToolRequestsService,
-  ) { }
 
   resetFiltersClick() {
     this.activeFilters.forEach((filter: IonSelect) => {
       filter.value = null;
     });
     this.activeFilters = [];
-    this.toolRequestsService.resetFilters();
+
+    this.onFilterChange.emit({ columnProp: 'reset', selectedValues: [] });
   }
 
   /**
@@ -32,10 +45,19 @@ export class ToolRequestFiltersComponent {
     * @param event
     * @memberof ToolRequestsPage
     */
-  filterChange(filter: any, event: any) {
-    this.activeFilters.push(event.target);
-    this.toolRequestsService.addFilter({ data: filter.columnProp, value: event.detail.value });
-    //   this.filterValues[filter.columnProp] = event.target.value.trim();
+  filterChange(filter: ToolRequestFilter, event: any) {
+    const selectedValues = event.detail.value;
+
+    // Stocker la référence du select pour reset
+    if (event.target && !this.activeFilters.includes(event.target)) {
+      this.activeFilters.push(event.target);
+    }
+
+    // Émettre l'événement avec les données du filtre
+    this.onFilterChange.emit({
+      columnProp: filter.columnProp,
+      selectedValues: Array.isArray(selectedValues) ? selectedValues : [selectedValues]
+    });
   }
 
 

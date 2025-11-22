@@ -6,14 +6,16 @@
 </ion-toolbar>
 
 <ion-list>
-  <ion-item *ngFor="let filterItem of this.toolRequestsService.filterSelectObjects" class="filter-item ion-margin">
+  @for (filterItem of toolRequestFilters(); track $index) {
+  <ion-item class="filter-item ion-margin">
     <ion-label>{{filterItem.name}}</ion-label>
-    <ion-select class="filter" multiple="false" [placeholder]="'Filtre ' + filterItem.name"
+    <ion-select class="filter" multiple="true" [placeholder]="'Filtre ' + filterItem.name"
       (ionChange)="filterChange(filterItem,$event)">
       <ion-select-option *ngFor="let filter of filterItem.options" [value]="filter">{{filter}}
       </ion-select-option>
     </ion-select>
   </ion-item>
+}
 </ion-list>
 
 
