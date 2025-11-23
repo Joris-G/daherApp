@@ -25,7 +25,7 @@ interface MaintenanceResponse extends SpecMaintRep {
 //     maintenanceItemsIris: string[];
 // }
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class MaintenanceToolRequestService {
     // ============================================================================
     // INJECTION DE DÉPENDANCES

@@ -16,9 +16,6 @@ const mockProgrammesAvion: ProgrammeAvion[] = [
   {client:'GULFSTREAM', designation:'G600 ELEVATOR',id:4},
 ];
 
-
-
-
 const mockSBO: SpecSBO[] = [
   {
     id: 1,
@@ -144,6 +141,10 @@ export const handlers = [
   }),
   http.get('/api/tools/request', async ({ request }) => {
     return HttpResponse.json(mockToolRequests, { status: 201 });
+  }),
+  http.get('/api/tools/request/:id', async ({ request, params }) => {
+    const { id } = params;
+    return HttpResponse.json(mockToolRequests[+id - 1], { status: 201 });
   }),
   // // POST - Créer une demande outillage SBO
   // http.post('api/tools/request/SBO', async ({ request }) => {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable, of } from 'rxjs';
 import { concatMap, finalize } from 'rxjs/operators';
@@ -8,27 +8,36 @@ import { SpecCtrl, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-
 import { environment } from 'src/environments/environment';
 import { ToolRequestService } from './tool-request.service';
 import { ToolService } from './tool.service';
-@Injectable()
+
+@Injectable({ providedIn: "root" })
 export class ControlToolRequestService {
+    ////////////////////////////////////////////////////
+    //INJECTION DEPENDANCES
+    ////////////////////////////////////////////////////
+    private readonly loaderService: LoadingService = inject(LoadingService);
+    private readonly requestService: RequestService = inject(RequestService);
+    private readonly toolReqService: ToolRequestService = inject(ToolRequestService);
+    private readonly toolService: ToolService = inject(ToolService);
+    private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+
     ctrlToolRequest$: Observable<[ToolRequest, SpecCtrl]>;
     constructor(
-        private loaderService: LoadingService,
-        private requestService: RequestService,
-        private toolReqService: ToolRequestService,
-        private toolService: ToolService,
-        private activatedRoute: ActivatedRoute,
+
     ) {
 
     }
 
     initCtrlToolRequest(): void {
-        this.loaderService.startLoading('Patienter pendant le chargement du controle');
+        console.log("hello init ctrl tool request");
+        this.loaderService.startLoading('Patienter pendant le chargement du controle test');
         const id = this.activatedRoute.snapshot.paramMap.get('id');
+        console.log(id);
         this.ctrlToolRequest$ = this.getControlData(id);
     }
 
 
     getControlData(idDemande: string | null) {
+        console.log("hello get control data");
         return this.toolReqService.getToolRequest(idDemande)
             .pipe(
                 concatMap((responseToolRequest) => {

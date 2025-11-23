@@ -1,89 +1,172 @@
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
-import { MoyenMesure, TypeRapport } from 'src/app/_interfaces/tooling/tool-request-types';
-
-import { ToolInputService } from '../../tool-input/tool-input.service';
-import { Tool } from 'src/app/_interfaces/tooling/tool';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ToolInputComponent } from '../../tool-input/tool-input.component';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { NgIf, NgFor, DatePipe, KeyValuePipe } from '@angular/common';
 import { EditorComponent } from '@tinymce/tinymce-angular';
+import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
+import { MoyenMesure, RequestStatus, ToolRequest, ToolRequestCreation, TypeRapport } from 'src/app/_interfaces/tooling/tool-request-types';
+import { ToolInputComponent } from '../../tool-input/tool-input.component';
+import { IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonCardTitle, IonText, IonIcon, IonModal, IonContent, IonSelectOption, IonNote, IonInput, IonTextarea, IonSelect, IonToggle, IonDatetime } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'app-control3-dform',
     templateUrl: './control3-dform.component.html',
     styleUrls: ['./control3-dform.component.scss'],
     standalone: true,
-    imports: [ReactiveFormsModule, IonicModule, ToolInputComponent, NgIf, NgFor, EditorComponent, DatePipe, KeyValuePipe]
+  imports: [
+    IonCardTitle,
+    ReactiveFormsModule,
+    ToolInputComponent,
+    NgIf, NgFor,
+    EditorComponent,
+    DatePipe, KeyValuePipe,
+    IonGrid, IonRow, IonCol, IonInput,
+    IonCard, IonCardHeader, IonCardContent, IonList,
+    IonListHeader, IonLabel, IonItem, IonText, IonIcon,
+    IonModal, IonContent, IonSelectOption, IonNote,
+    IonSelect,
+    IonSelectOption,
+    IonToggle,
+    IonDatetime]
 })
-export class Control3DFormComponent implements OnInit, OnChanges {
-  @Input()
-  requestState: RequestState = { canManage: false, canUpdate: false, canEdit: false };
+export class Control3DFormComponent {
+  // ============================================================================
+  // INJECTION DEPENDANCES
+  // ============================================================================
+  private readonly fb = inject(FormBuilder);
+  // ============================================================================
+  // INPUTS (Signals modernes)
+  // ============================================================================
+  readonly toolRequest = input<ToolRequest | null>(null);
+  readonly requestState = input<RequestState>({
+    canManage: false,
+    canUpdate: false,
+    canEdit: false
+  });
 
-  @Input()
-  toolRequestForm: FormGroup;
-  @Output()
-  toolRequestFormChange = new EventEmitter<FormGroup>;
+  // ============================================================================
+  // OUTPUTS (Signals modernes)
+  // ============================================================================
+  readonly submit = output<ToolRequestCreation>();
+  readonly update = output<Partial<ToolRequest>>();
+  readonly statusChange = output<RequestStatus>();
 
-  @Input()
-  controlForm: FormGroup;
-  @Output()
-  controlFormChange = new EventEmitter<FormGroup>;
+  // ============================================================================
+  // PROPRIETES
+  // ============================================================================
+  protected readonly moyenMesure = MoyenMesure;
+  protected readonly typeRapport = TypeRapport;
 
-  private readonly toolInputService: ToolInputService = inject(ToolInputService);
-  moyenMesure = MoyenMesure;
-  typeRapport = TypeRapport;
-  inputTool$ = this.toolInputService.inputTool$;
+  // Formulaires
+  protected readonly toolRequestForm: FormGroup;
+  protected readonly controlForm: FormGroup;
+  protected readonly outillNoRefSAPForm: FormGroup;
 
+  // État du formulaire
+  protected readonly isEditMode = computed(() => !!this.toolRequest()?.id);
+  protected readonly formValid = signal(false);
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    if (changes.controlForm) { this.controlFormChange.emit(this.controlForm) }
-    if (changes.toolRequestForm) { this.toolRequestFormChange.emit(this.toolRequestForm) }
+  // Configuration TinyMCE
+  protected readonly editorConfig = {
+    plugins: 'lists link image table wordcount',
+    toolbar: 'bold italic underline strikethrough forecolor fontsize styles | alignleft aligncenter alignright alignjustify | bullist numlist | h1 h2 h3',
+    menubar: false,
+    statusbar: false,
+    object_resizing: true,
+    height: 150,
+    inline: false
+  };
+
+  // ============================================================================
+  // CONSTRUCTOR
+  // ============================================================================
+  constructor() {
+    // Initialisation des formulaires
+    this.outillNoRefSAPForm = this.fb.group({
+      identification: [''],
+      description: [''],
+      localisation: ['']
+    });
+
+    this.toolRequestForm = this.fb.group({
+      id: [null],
+      statut: [''],
+      // Ajouter les autres champs nécessaires
+    });
+
+    this.controlForm = this.fb.group({
+      id: [null],
+      outillage: [null],
+      outillNoRefSAP: [this.outillNoRefSAPForm],
+      bloquantProd: [false],
+      dispoOut: [null],
+      refPlan: ['', Validators.required],
+      indPlan: ['', Validators.required],
+      cheminCAO: [''],
+      dateBesoin: [null],
+      ligneBudgetaire: ['', Validators.required],
+      typeRapport: [''],
+      description: ['', Validators.required],
+      detailsControle: ['', Validators.required],
+      tolerances: ['', Validators.required],
+      immobilisationOutillage: [null],
+      interventionDate: [null],
+      infosComplementaire: [''],
+      moyenMesure: [''],
+      visaControleur: ['']
+    });
+
+    // Synchroniser les données d'entrée avec les formulaires
+    effect(() => {
+      console.log("hello from effect ctrl3D");
+      const toolReq = this.toolRequest();
+      const ctrlReq = toolReq.typeData;
+
+      if (toolReq) {
+        this.toolRequestForm.patchValue(toolReq, { emitEvent: false });
+      }
+
+      if (ctrlReq) {
+        this.controlForm.patchValue(ctrlReq, { emitEvent: false });
+      }
+    });
+
+    // Surveiller la validité du formulaire
+    effect(() => {
+      this.formValid.set(
+        this.controlForm.valid && this.toolRequestForm.valid
+      );
+    });
   }
 
-  ngOnInit(): void {
-    // this.controlForm = this.formBuilder.group(
-    //   {
-    //     id: new FormControl(),
-    //     refPlan: new FormControl(),
-    //     indPlan: new FormControl(),
-    //     cheminCAO: new FormControl(),
-    //     description: new FormControl(),
-    //     detailsControle: new FormControl(),
-    //     tolerances: new FormControl(),
-    //     dispoOut: new FormControl(),
-    //     dateBesoin: new FormControl(),
-    //     typeRapport: new FormControl(),
-    //     outillNoRefSAP: this.outillNoRefSAPForm,
-    //     //TODO  intervention
-    //     interventionDate: new FormControl(),
-    //     moyenMesure: new FormControl(),
-    //     infosComplementaire: new FormControl(),
-    //     outillage: new FormControl(),
-    //     ligneBudgetaire: new FormControl(),
-    //     statut: new FormControl(),
-    //     visaControleur: new FormControl(),
-    //     bloquantProd: new FormControl(),
-    //     immobilisationOutillage: new FormControl(),
-    //   }
-    // ) as SpecCtrlFormGroup;
-
-    this.inputTool$.subscribe((tool) => this.toolReceived(tool))
-
+  // ============================================================================
+  // MÉTHODES PUBLIQUES
+  // ============================================================================
+  protected onToolSelected(tool: any) {
+    this.controlForm.patchValue({ outillage: tool });
   }
 
-
-
-
-  toolReceived(tool: Tool) {
-    this.controlForm.value.outillage = tool;
-  }
-
-
-  dateValue(dateValue: string): Date {
+  protected formatDate(dateValue: string): Date {
     return new Date(dateValue);
+  }
+
+  protected handleSubmit() {
+    if (this.controlForm.valid) {
+      const data: ToolRequest = {
+        ...this.toolRequestForm.value,
+        typeData: this.controlForm.value
+      };
+
+      if (this.isEditMode()) {
+        this.update.emit(data);
+      } else {
+        this.submit.emit(data);
+      }
+    }
+  }
+
+  protected handleStatusChange(newStatus: RequestStatus) {
+    this.statusChange.emit(newStatus);
+    this.toolRequestForm.patchValue({ statut: newStatus });
   }
 
 }

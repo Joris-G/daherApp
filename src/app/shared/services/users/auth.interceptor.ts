@@ -4,7 +4,7 @@ import { map, retry } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AuthStore } from './auth.store';
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class AuthInterceptor implements HttpInterceptor {
   private readonly authStore: AuthStore = inject(AuthStore);
 

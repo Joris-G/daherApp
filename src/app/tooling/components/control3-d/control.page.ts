@@ -1,111 +1,152 @@
-import { Component } from '@angular/core';
-import { NavController, IonicModule } from '@ionic/angular';
+import { Component, effect, inject, signal } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
-import { ControlToolRequestService } from '../../services/control-tool-request.service';
 import { RequestState, ToolRequestManager } from '../../services/tool-request-manager.service';
 import { Control3DFormComponent } from './control3-dform/control3-dform.component';
 import { ToolRequestFooterComponent } from '../tool-request-footer/tool-request-footer.component';
-import { FormGroup } from '@angular/forms';
-
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter } from '@ionic/angular/standalone';
+import { RequestStatus, ToolRequest, ToolRequestCreation } from 'src/app/_interfaces/tooling/tool-request-types';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToolRequestService } from '../../services/tool-request.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-control',
     templateUrl: './control.page.html',
     styleUrls: ['./control.page.scss'],
     standalone: true,
-    imports: [
-        IonicModule,
+  imports: [
         Control3DFormComponent,
         ToolRequestFooterComponent,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonFooter
     ],
 })
 export class Control3DPage {
-  requestState: RequestState = new RequestState();
-  controlForm: FormGroup
-  toolRequestForm: FormGroup
-  outillNoRefSAPForm: FormGroup;
+  ////////////////////////////////////////////////////
+  //INJECTION DEPENDANCES
+  ////////////////////////////////////////////////////
+  private readonly toolRequestService = inject(ToolRequestService);
+  private readonly toolRequestManager: ToolRequestManager = inject(ToolRequestManager);
+  private readonly loaderService: LoadingService = inject(LoadingService);
+  private readonly alertService: AlertService = inject(AlertService);
+  private readonly navCtrl: NavController = inject(NavController);
+  private readonly route = inject(ActivatedRoute);
+  // ============================================================================
+  // SIGNALS (État réactif)
+  // ============================================================================
+  protected readonly toolRequest = signal<ToolRequest | null>(null);
+  // protected readonly controlRequest = signal<ControlRequest | null>(null);
+  protected readonly requestState = signal<RequestState>(new RequestState());
+  protected readonly pageTitle = signal('Nouvelle demande de contrôle 3D');
 
+  readonly toolRequestId: string;
+  // controlForm: FormGroup
+  // toolRequestForm: FormGroup
+  // outillNoRefSAPForm: FormGroup;
 
-  public page = {
-    title: 'Nouvelle demande de contrôle 3D'
-  };
-
-
-  constructor(
-    private controlTooRequestService: ControlToolRequestService,
-    private toolRequestManager: ToolRequestManager,
-    private loaderService: LoadingService,
-    private alertService: AlertService,
-    private navCtrl: NavController
-  ) { }
+  // ============================================================================
+  // LIFECYCLE HOOKS
+  // ============================================================================
+  constructor() {
+    // Access route parameters from snapshot
+    this.toolRequestId = this.route.snapshot.paramMap.get('id');
+    // Écouter les changements de requête pour mettre à jour le titre
+    effect(() => {
+      const tool = this.toolRequest();
+      // this.controlRequest.set(tool.typeData);
+      if (tool?.id) {
+        this.pageTitle.set(`Modification demande de contrôle 3D : ID ${tool.id}`);
+      }
+    });
+  }
 
   ionViewCanEnter() {
-    this.controlTooRequestService.initCtrlToolRequest();
-    this.controlTooRequestService.ctrlToolRequest$
-      .subscribe((resp) => {
-        console.log(resp);
-        this.toolRequestForm.patchValue(resp[0]);
-        this.controlForm.patchValue(resp[1]);
-        this.requestState = this.toolRequestManager.getStatus(resp[0].statut);
+
+    this.toolRequestService.getToolRequest(this.toolRequestId)
+      .pipe(
+        takeUntilDestroyed()
+      )
+      .subscribe({
+        next: (toolRequest) => {
+          this.toolRequest.set(toolRequest);
+          this.requestState.set(
+            this.toolRequestManager.getStatus(toolRequest.statut)
+          );
+        },
+        error: (error) => this.handleError('Chargement de la demande', error)
       });
   }
 
-  ionViewDidLeave() {
-    this.controlForm.reset();
-  }
 
+  // ============================================================================
+  // HANDLERS D'ÉVÉNEMENTS
+  // ============================================================================
+  protected onSubmit(toolRequest: ToolRequestCreation) {
+    this.loaderService.startLoading('Création de la demande');
 
-  submitControlForm() {
-    console.log(this.controlForm);
-
-    this.controlTooRequestService.createControlRequest(this.controlForm.value)
-      .subscribe(
-        () => {
-          this.controlForm.reset();
-          // this.alertService.simpleAlert(
-          //   'Message de l\'application',
-          //   'Création d\'une demande',
-          //   'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes')
-          //   .then(() => {
-          // this.navCtrl.navigateRoot('tooling/tool-request-list');
-          // });
-        });
-  }
-
-  updateToolRequestForm() {
-    console.log('updateForm', this.toolRequestForm);
-    this.loaderService.startLoading('Chargement de la mise à jour');
-
-    this.controlTooRequestService.updateControlRequest(this.controlForm.value, this.toolRequestForm.value)
-      .subscribe(
-        () => {
-          // this.controlForm.reset();
+    this.toolRequestService.createToolRequest(toolRequest)
+      .subscribe({
+        next: () => {
           this.alertService.simpleAlert(
-            'Message de l\'application',
-            'Mise à jour d\'une demande',
-            'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes');
-          //   .then(() => {
-          this.navCtrl.navigateRoot('tooling/tool-request-list');
-          //   });
+            'Succès',
+            'Création d\'une demande',
+            'La demande a bien été créée. Vous allez être redirigé vers la liste des demandes'
+          ).then(() => {
+            this.navCtrl.navigateRoot('tooling/tool-request-list');
+          });
         },
-        async (error) => {
-          this.onError(error);
-        });
+        error: (error) => this.handleError('Création de la demande', error),
+        complete: () => this.loaderService.stopLoading()
+      });
   }
 
-  onChangeStatut(event: any) {
-    console.log('status change', this.toolRequestForm);
-    this.toolRequestForm.controls.statut.patchValue(event);
+
+  protected onUpdate(toolRequest: Partial<ToolRequest>) {
+    this.loaderService.startLoading('Mise à jour de la demande');
+
+    this.toolRequestService.updateToolRequest(toolRequest)
+      .subscribe({
+        next: () => {
+          this.alertService.simpleAlert(
+            'Succès',
+            'Mise à jour d\'une demande',
+            'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes'
+          ).then(() => {
+            this.navCtrl.navigateRoot('tooling/tool-request-list');
+          });
+        },
+        error: (error) => this.handleError('Mise à jour de la demande', error),
+        complete: () => this.loaderService.stopLoading()
+      });
   }
-  private onError(error: any) {
+
+  protected onStatusChange(newStatus: RequestStatus) {
+    const currentToolRequest = this.toolRequest();
+    if (currentToolRequest) {
+      this.toolRequest.set({ ...currentToolRequest, statut: newStatus });
+    }
+  }
+
+
+  // ============================================================================
+  // MÉTHODES PRIVÉES
+  // ============================================================================
+  private handleError(operation: string, error: any) {
+    console.error(`[Control3DPage] ${operation}:`, error);
     this.alertService.simpleAlert(
       'Erreur',
-      'Mise à jour d\'une demande',
-      'La demande n\'a pas pu être modifiée. Vérifiez les données');
-    console.error(error);
+      operation,
+      'Une erreur est survenue. Veuillez vérifier les données et réessayer.'
+    );
+    this.loaderService.stopLoading();
   }
 
 
 
 }
+

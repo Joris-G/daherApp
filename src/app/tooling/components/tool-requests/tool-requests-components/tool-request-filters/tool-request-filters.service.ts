@@ -111,7 +111,6 @@ export class ToolRequestFilterService {
     if (filterProp === 'demandeur') {
       return toolRequest.demandeur.nom;
     }
-    console.log(toolRequest[filterProp]);
     return toolRequest[filterProp];
   }
 }

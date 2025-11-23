@@ -69,7 +69,7 @@
                   <ion-content>
                     <ion-datetime #dispoOut presentation="date" formControlName="dispoOut"
                       display-format="EEEE DD.MMMM.YYYY"
-                      (ionChange)="controlForm.value.dispoOut= dateValue(dispoOut.value.toString())">
+                      (ionChange)="controlForm.value.dispoOut= dispoOut.value">
                       <div slot="title">Date de mise à disposition au service outillage</div>
                     </ion-datetime>
                   </ion-content>
@@ -275,7 +275,7 @@
         <!-- ******************************* -->
         <!-- *******   LA MESURE   ********* -->
         <!-- ******************************* -->
-        <ion-card *ngIf="requestState.canManage">
+        <ion-card *ngIf="requestState">
           <ion-card-header color=light>
             <ion-card-title class="ion-text-uppercase">La Mesure</ion-card-title>
           </ion-card-header>

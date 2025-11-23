@@ -1,25 +1,32 @@
+<!-- ******************************* -->
+<!-- **********   HEADER   *********** -->
+<!-- ******************************* -->
 <ion-header>
   <ion-toolbar color=dark no-padding>
-    <ion-title>{{page.title}}</ion-title>
+    <ion-title>{{pageTitle()}}</ion-title>
   </ion-toolbar>
 </ion-header>
+<!-- ******************************* -->
+<!-- **********   CONTENT   *********** -->
+<!-- ******************************* -->
 <ion-content color=light>
   <!-- TODO Revoir la mise en page scroll partie droite -->
   <div class="content-container">
     <div class="control-form">
 
-      <!-- ******************************* -->
       <!-- **********   FORM   *********** -->
-      <!-- ******************************* -->
-      <app-control3-dform [(controlForm)]="controlForm" [(toolRequestForm)]="toolRequestForm"></app-control3-dform>
+      <app-control3-dform [toolRequest]="toolRequest()" [requestState]="requestState()" (submit)="onSubmit($event)"
+        (update)="onUpdate($event)" (statusChange)="onStatusChange($event)" />
     </div>
     <!-- <div class="print-preview">
       <app-controleddd [toolRequest]="toolRequest"></app-controleddd>
     </div> -->
   </div>
 </ion-content>
+<!-- ******************************* -->
+<!-- **********   FOOTER   *********** -->
+<!-- ******************************* -->
 <ion-footer>
-  <app-tool-request-footer (evStatusChange)="onChangeStatut($event)" (evSubmit)="submitControlForm()"
-    (evUpdate)="updateToolRequestForm()" [canManage]="requestState.canManage" [canUpdate]="requestState.canUpdate">
-  </app-tool-request-footer>
+  <app-tool-request-footer [canManage]="requestState().canManage" [canUpdate]="requestState().canUpdate"
+    (evStatusChange)="onStatusChange($event)" (evSubmit)="onSubmit($event)" (evUpdate)="onUpdate($event)" />
 </ion-footer>

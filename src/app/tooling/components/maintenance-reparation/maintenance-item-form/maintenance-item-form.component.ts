@@ -28,7 +28,7 @@ export class MaintenanceItemFormComponent {
       nonConformite: new FormControl(),
       rep: new FormControl(),
       actionsCorrectives: new FormControl(),
-      delaiAction: new FormControl(),
+      delaiAction: new FormControl<Date>(new Date()),
       dateReal: new FormControl(),
     }
   );
@@ -62,5 +62,9 @@ export class MaintenanceItemFormComponent {
 
   confirmRemoveItem(): void {
     this.evRemoveItem.emit(this.maintenanceItem);
+  }
+
+  validateMaintenance() {
+
   }
 }

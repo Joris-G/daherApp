@@ -219,18 +219,18 @@ export interface SpecSBOFormValue {
 // ============================================================================
 // REQUÊTES COMPLÈTES (avec spécifications)
 // ============================================================================
-export interface ControlRequest {
-  toolRequest: ToolRequest;
-  specCtrl: SpecCtrl;
-}
-export interface MaintenanceRequest {
-  toolRequest: ToolRequest;
-  specMaintenance: SpecMaintRep;
-}
-export interface NewTool {
-  toolRequest: ToolRequest;
-  specSbo: SpecSBO;
-}
+// export interface ControlRequest {
+//   toolRequest: ToolRequest;
+//   specCtrl: SpecCtrl;
+// }
+// export interface MaintenanceRequest {
+//   toolRequest: ToolRequest;
+//   specMaintenance: SpecMaintRep;
+// }
+// export interface NewTool {
+//   toolRequest: ToolRequest;
+//   specSbo: SpecSBO;
+// }
 
 
 // export class ToolRequestFormGroup extends FormGroup {

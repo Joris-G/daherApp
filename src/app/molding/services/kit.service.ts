@@ -6,7 +6,7 @@ import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { RequestService } from 'src/app/shared/services/request.service';
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class KitService {
   constructor(
     private requestService: RequestService,

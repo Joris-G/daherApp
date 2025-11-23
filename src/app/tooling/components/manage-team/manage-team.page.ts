@@ -93,21 +93,21 @@ export class ManageTeamPage implements OnInit {
 
 
   updateUser(user: User) {
-    this.userService.addUserToGroup(user)
-      .then((responseUser: User) => {
-        user = responseUser;
-        this.getToolUsers();
-      });
+    // this.userService.addUserToGroup(user)
+    //   .then((responseUser: User) => {
+    //     user = responseUser;
+    //     this.getToolUsers();
+    //   });
   }
 
   removeUsersOfTeam(users: User[]) {
-    users.forEach((user) => {
-      this.userService.addUserToGroup(user)
-        .then((responseUser: User) => {
-          user = responseUser;
-          this.getToolUsers();
-        });
-    });
+    // users.forEach((user) => {
+    //   this.userService.addUserToGroup(user)
+    //     .then((responseUser: User) => {
+    //       user = responseUser;
+    //       this.getToolUsers();
+    //     });
+    // });
 
   }
 }

@@ -6,6 +6,8 @@ export class RequestState {
   canManage: boolean = false;
   canEdit: boolean = false;
 }
+
+
 @Injectable({
   providedIn: 'root'
 })

@@ -13,7 +13,7 @@ const REGEXPROG = new RegExp('^PR[A-Z]([0-9]){5}$');
 const REGEXSAPTOOLNUMBER = new RegExp('^OT([0-9]){6}$');
 const REGEXNIDAHEXCEL = new RegExp('^]C201');
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class ScanService {
 
   public focusState$ = new Subject<boolean>();

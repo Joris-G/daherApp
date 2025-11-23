@@ -22,12 +22,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
  * @export
  * @class MoldingService
  */
-@Injectable(
-	{
-		providedIn: 'root'
-	}
-)
-
+@Injectable({ providedIn: 'root' })
 export class MoldingService {
 	public molding: Molding = new Molding();
 	public molding$: BehaviorSubject<Molding> = new BehaviorSubject(this.molding);

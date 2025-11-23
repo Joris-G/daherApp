@@ -16,14 +16,22 @@ import { IonHeader, IonMenu, IonTitle, IonToolbar, IonContent, IonList, IonItemD
   imports: [IonList, IonMenu, IonContent, RouterLink, NgIf, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup]
 })
 export class ToolRequestMenuComponent implements OnInit {
-  @ViewChild('menuTool') menu: IonMenu;
-
-  public newRequests: number;
-  public isManager = false;
-  public newUsers$: Observable<User[]>;
+  ////////////////////////////////////////////////////
+  //INJECTION DEPENDANCES
+  ////////////////////////////////////////////////////
   private userService = inject(UsersService);
   private authStore = inject(AuthStore);
   private roleGuard = inject(RoleGuard);
+
+
+  @ViewChild('menuTool') menu: IonMenu;
+
+  ////////////////////////////////////////////////////
+  //PROPRIETES
+  ////////////////////////////////////////////////////
+  public newRequests: number;
+  public isManager = false;
+  public newUsers$: Observable<User[]>;
 
   ngOnInit(): void {
     this.buildManagerPage();

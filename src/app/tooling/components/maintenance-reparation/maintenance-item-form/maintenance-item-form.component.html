@@ -53,7 +53,7 @@
         <ng-template>
           <ion-content>
             <ion-datetime #dateReal presentation="date" formControlName="delaiAction" display-format="DD.MM.YYYY"
-              (ngModelChange)="maintenanceItem.dateReal = dateValue(dateReal.value.toString())">
+              (ionChange)="maintenanceItem.dateReal =maintenanceItemForm.controls.delaiAction.value">
               <div slot="title">Date de réalisation de la maintenance</div>
             </ion-datetime>
           </ion-content>
@@ -61,7 +61,7 @@
       </ion-modal>
     </ion-item>
     <ion-buttons slot="primary">
-      <ion-button *ngIf="!maintenanceRealisee" slot="start" (click)="validateRealMaintClick()"
+      <ion-button *ngIf="!maintenanceItem.dateReal" slot="start" (click)="validateMaintenance()"
         [disabled]="maintenanceItemForm.invalid">
         <ion-icon slot="start" name="checkmark"></ion-icon>
         Effectuée

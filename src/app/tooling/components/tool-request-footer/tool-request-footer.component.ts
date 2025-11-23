@@ -6,6 +6,7 @@ import { PdfService } from 'src/app/shared/services/divers/pdf.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor } from '@angular/common';
+import { RequestStatus } from 'src/app/_interfaces/tooling/tool-request-types';
 
 @Component({
     selector: 'app-tool-request-footer',
@@ -44,7 +45,7 @@ export class ToolRequestFooterComponent implements OnInit {
    * @type {EventEmitter}
    * @memberof ToolRequestFooterComponent
    */
-  @Output() evStatusChange: EventEmitter<string> = new EventEmitter();
+  @Output() evStatusChange: EventEmitter<RequestStatus> = new EventEmitter();
 
 
   /**

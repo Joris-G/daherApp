@@ -1,4 +1,4 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { inject, Injectable, isDevMode } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { User, UserIri } from 'src/app/_interfaces/user';
@@ -9,9 +9,10 @@ import { RoleService } from './role.service';
 import { SericesService } from './serices.service';
 import { UniteService } from './unite.service';
 import { UsineService } from './usine.service';
-import { Observable, of } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, finalize, map } from 'rxjs/operators';
 import { LoadingService } from '../divers/loading.service';
+import { HttpClient } from '@angular/common/http';
 
 const JORIS: User = {
   id: 1,
@@ -28,15 +29,17 @@ const JORIS: User = {
   providedIn: 'root'
 })
 export class UsersService {
-  constructor(
-    private requestService: RequestService,
-    private roleService: RoleService,
-    private serviceService: SericesService,
-    private programService: ProgramsService,
-    private uniteService: UniteService,
-    private usineService: UsineService,
-    private loadingService: LoadingService,
-  ) { }
+  ////////////////////////////////////////////////////
+  //INJECTION DEPENDANCES
+  ////////////////////////////////////////////////////
+  private readonly http: HttpClient = inject(HttpClient);
+  private readonly roleService: RoleService = inject(RoleService);
+  private readonly serviceService: SericesService = inject(SericesService);
+  private readonly programService: ProgramsService = inject(ProgramsService);
+  private readonly uniteService: UniteService = inject(UniteService);
+  private readonly usineService: UsineService = inject(UsineService);
+  private readonly loadingService: LoadingService = inject(LoadingService);
+
 
 
 
@@ -47,9 +50,7 @@ export class UsersService {
    * @return retourne une Promise<User>
    * @memberof UsersService
    */
-  getUserById(idUser: string) {
-    return this.requestService.createGetRequest(environment.usineApi + `users/${idUser}`);
-  }
+  getUserById(idUser: string): Observable<User> { return this.http.get<User>(environment.usineApi + `users/${idUser}`) }
 
 
   /**
@@ -59,9 +60,7 @@ export class UsersService {
    * @return retourne une Promise<User[]>
    * @memberof UsersService
    */
-  getUsers(filters?: any): Observable<User[]> {
-    return this.requestService.createGetRequest(`${environment.usineApi}users`, filters);
-  }
+  getUsers(filters?: any): Observable<User[]> { return this.http.get<User[]>(`${environment.usineApi}users`, { params: filters }) }
 
 
   /**
@@ -73,7 +72,7 @@ export class UsersService {
    */
   registerUser(userObj: UserIri): Observable<User> {
     this.loadingService.startLoading(`Patienter pendant la création de l'utilisateur`);
-    return this.requestService.createPostRequest(environment.usineApi + 'users', userObj)
+    return this.http.post<User>(environment.usineApi + 'users', userObj)
       .pipe(
         finalize(() => this.loadingService.stopLoading())
       );
@@ -97,14 +96,14 @@ export class UsersService {
   }
 
   getGroups(): Observable<GroupeAffectation[]> {
-    return this.requestService.createGetRequest(`${environment.usineApi}groupe_affectations`);
+    return this.http.get<GroupeAffectation[]>(`${environment.usineApi}groupe_affectations`);
   }
 
   createGroup(groupObj: GroupeAffectation): Observable<GroupeAffectation> {
-    return this.requestService.createPostRequest(`${environment.usineApi}groupe_affectations`, groupObj);
+    return this.http.post<GroupeAffectation>(`${environment.usineApi}groupe_affectations`, groupObj);
   }
 
-  updateUser(user: User) {
+  updateUser(user: User): Observable<User> {
     const userToUpdate: UserIri = {
       password: user.password,
       matricule: user.matricule,
@@ -117,38 +116,45 @@ export class UsersService {
       site: this.usineService.getIri(user.site),
       tel: user.tel
     };
-    return this.requestService.createPatchRequest(`${environment.usineApi}users/${user.id}`, userToUpdate);
+    return this.http.patch<User>(`${environment.usineApi}users/${user.id}`, userToUpdate);
   }
-
   addUserToGroup(user: User) {
-    return new Promise<User>((resolve, reject) => {
-      for (const group of user.groupeAffected) {
-        this.requestService.createPatchRequest(
-          `${environment.usineApi}groupe_affectations/${group.id}/addUsers`,
-          { population: group.population }
-        )
-          .subscribe((responseGroup) => {
-            user.groupeAffected = responseGroup;
-          });
-      }
-      resolve(user);
-    });
+    // Crée un tableau d'observables pour toutes les requêtes
+    const groupRequests = user.groupeAffected.map(group =>
+      this.http.patch<GroupeAffectation>(
+        `${environment.usineApi}groupe_affectations/${group.id}/addUsers`,
+        { population: group.population }
+    ).pipe(
+      catchError(error => {
+        console.error(`Erreur avec le groupe ${group.id}:`, error);
+        // Retourne le groupe original en cas d'erreur
+        return of(group);
+      })
+    )
+  );
 
+    // Exécute toutes les requêtes en parallèle
+    return forkJoin(groupRequests).pipe(
+      map(updatedGroups => ({
+        ...user,
+        groupeAffected: updatedGroups
+      }))
+    );
   }
 
   getUsersByService(serviceId: string): Observable<User[]> {
     if (isDevMode()) {
       return of();
     }
-    return this.requestService.createGetRequest(`${environment.usineApi}services/${serviceId}`);
+    return this.http.get<User[]>(`${environment.usineApi}services/${serviceId}`);
   }
 
   deleteUser(userId: number) {
-    return this.requestService.createDeleteRequest(`${environment.usineApi}users/${userId}`);
+    return this.http.delete(`${environment.usineApi}users/${userId}`);
   }
 
   confirmUser(userId: number, status: boolean): Observable<User> {
-    return this.requestService.createPatchRequest(`${environment.usineApi}users/${userId}`, { isActive: status });
+    return this.http.patch<User>(`${environment.usineApi}users/${userId}`, { isActive: status });
   }
 
 }

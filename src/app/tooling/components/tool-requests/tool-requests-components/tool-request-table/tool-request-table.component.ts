@@ -55,8 +55,8 @@ export class ToolRequestTableComponent implements OnInit {
   }
 
   openRequestClick(requestToOpen: ToolRequest) {
-    if (requestToOpen.type === RequestType.CONTROLE) { this.navCtrl.navigateForward('tooling/3D-tool/' + requestToOpen.id); }
-    if (requestToOpen.type === RequestType.MAINTENANCE) { this.navCtrl.navigateForward('tooling/repair-tool/' + requestToOpen.id); }
+    if (requestToOpen.type === RequestType.CONTROLE) { this.navCtrl.navigateForward('tooling/3d/' + requestToOpen.id); }
+    if (requestToOpen.type === RequestType.MAINTENANCE) { this.navCtrl.navigateForward('tooling/repair/' + requestToOpen.id); }
   }
 
   ngOnInit() {
