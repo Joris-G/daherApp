@@ -22,15 +22,15 @@ export class ToolRequestFormBuilder {
   // TOOL REQUEST PRINCIPAL
   // ==========================================================================
 
-  createToolRequestForm(initialValue?: Partial<ToolRequestFormValue>): FormGroup {
+  createToolRequestForm(initialValue?: ToolRequestFormValue): FormGroup {
     return this.fb.group({
       type: [initialValue?.type ?? RequestType.SBO, Validators.required],
       bloquantProd: [initialValue?.bloquantProd ?? false, Validators.required],
-      // dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
-      aircraftProgram: [initialValue?.aircraftProgram ?? ''],
+      dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
       groupeAffectation: [initialValue?.groupeAffectation ?? null],
       toolingNote: [initialValue?.toolingNote ?? ''],
-      typeData: initialValue?.typeData ?? null
+      typeData: initialValue?.typeData ?? null,
+
     });
   }
 

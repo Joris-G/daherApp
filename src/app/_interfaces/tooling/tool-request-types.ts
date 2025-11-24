@@ -42,37 +42,43 @@ export enum MoyenMesure {
 // TOOL REQUEST (Demande principale)
 // ============================================================================
 export class ToolRequest {
-  id?: number;
+  id: number;
   type: RequestType;
-  typeData?: SpecCtrl | SpecMaintRep | SpecSBO;
-  demandeur?: User;
+  typeData: SpecCtrl | SpecMaintRep | SpecSBO;
+  demandeur: User;
   bloquantProd: boolean;
-  createdAt?: Date;
-  dateBesoin?: Date;
-  outillage?: Tool;
-  groupeAffectation?: GroupeAffectation;
-  affectation?: string[];
-  dateAffectation?: Date;
-  datePlanif?: Date;
-  statut?: RequestStatus;
-  dateReal?: Date;
-  userReal?: User;
-  toolingNote?: string;
-  // controle?: SpecCtrl;
-  // maintenance?: SpecMaintRep;
-  // sbo?: SpecSBO;
+  createdAt: Date;
+  dateBesoin: Date;
+  outillage: Tool;
+  groupeAffectation: GroupeAffectation;
+  affectation: string[];
+  dateAffectation: Date;
+  datePlanif: Date;
+  statut: RequestStatus;
+  dateReal: Date;
+  userReal: User;
+  toolingNote: string;
 }
-export type ToolRequestCreation = Omit<ToolRequest, 'programme' | 'description'>
+export type ToolRequestCreation = Omit<ToolRequest, 
+'id'|'createdAt'|'demandeur'|'groupeAffectation'| 
+'affectation'|'dateAffectation'|'datePlanif'|'statut'|
+ 'dateReal'| 'userReal'|'toolingNote'>
 
 // Type pour les formulaires (sans les champs auto-générés)
 export interface ToolRequestFormValue {
   type: RequestType;
   bloquantProd: boolean;
-  dateBesoin?: Date;
-  aircraftProgram?: string;
-  groupeAffectation?: number;
-  toolingNote?: string;
-  typeData: FormGroup
+  dateBesoin: Date;
+  outillage: Tool;
+  groupeAffectation: GroupeAffectation;
+  affectation: string[];
+  dateAffectation: Date;
+  datePlanif: Date;
+  statut: RequestStatus;
+  dateReal: Date;
+  userReal: User;
+  toolingNote: string;
+  typeData: FormGroup;
 }
 
 // ============================================================================
