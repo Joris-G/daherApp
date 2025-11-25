@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/core/pages/home/home.page.scss"],
+  "sourcesContent": [".menu-item-card {\r\n    width: auto;\r\n}"],
+  "mappings": ";AAAA,CAAA;AACI,SAAA;;",
+  "names": []
+}

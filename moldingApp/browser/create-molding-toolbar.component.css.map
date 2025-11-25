@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/molding/components/create-molding/create-molding-toolbar/create-molding-toolbar.component.scss"],
+  "sourcesContent": ["ion-toolbar {\r\n  > * {\r\n    padding-inline: 10px;\r\n  }\r\n  .col {\r\n    display: flex;\r\n    flex-direction: column;\r\n  }\r\n}\r\n"],
+  "mappings": ";AACE,YAAA,EAAA;AACE,kBAAA;;AAEF,YAAA,CAAA;AACE,WAAA;AACA,kBAAA;;",
+  "names": []
+}

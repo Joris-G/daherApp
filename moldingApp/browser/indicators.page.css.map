@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/tooling/components/indicators/indicators.page.scss"],
+  "sourcesContent": [".graph {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    // height: 100%;\r\n    overflow: hidden;\r\n    >* {\r\n        min-width: 25%;\r\n        max-width: 50%;\r\n        max-height: 50%;\r\n        min-height: 1/3;\r\n    }\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACI,WAAA;AACA,kBAAA;AACA,aAAA;AAEA,YAAA;;AACA,CANJ,MAMI,EAAA;AACI,aAAA;AACA,aAAA;AACA,cAAA;AACA,cAAA,CAAA,CAAA;;",
+  "names": []
+}

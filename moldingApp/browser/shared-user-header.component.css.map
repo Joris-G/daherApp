@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/components/shared-user-header/shared-user-header.component.scss"],
+  "sourcesContent": [".margin {\r\n  margin-right: 10px;\r\n}\r\n\r\n.logo {\r\n  width: 100px;\r\n}\r\n\r\n@media print {\r\n  :host {\r\n    display: none;\r\n  }\r\n}\r\n.dev {\r\n  color: red;\r\n  text-transform: uppercase;\r\n  font-size: large;\r\n  font-weight: bold;\r\n  padding-right: 100px;\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACE,gBAAA;;AAGF,CAAA;AACE,SAAA;;AAGF,OAAA;AACE;AACE,aAAA;;;AAGJ,CAAA;AACE,SAAA;AACA,kBAAA;AACA,aAAA;AACA,eAAA;AACA,iBAAA;;",
+  "names": []
+}

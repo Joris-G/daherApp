@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/molding/components/create-molding/scan-molding-input/scan-molding-input.component.scss"],
+  "sourcesContent": [":host{\r\n  width: 33%;\r\n  display: flex;\r\n  width: 200%;\r\n  align-items: center;\r\n}\r\n"],
+  "mappings": ";AAAA;AACE,SAAA;AACA,WAAA;AACA,SAAA;AACA,eAAA;;",
+  "names": []
+}

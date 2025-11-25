@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/tooling/components/maintenance-reparation/maintenance-item/maintenance-item.component.scss"],
+  "sourcesContent": [".flex-row {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n}\r\n\r\nion-card {\r\n    width: 100%;\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACI,WAAA;AACA,kBAAA;AACA,mBAAA;;AAGJ;AACI,SAAA;;",
+  "names": []
+}

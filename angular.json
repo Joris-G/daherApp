@@ -39,6 +39,11 @@
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
               },
+              {
+                "glob": "mockServiceWorker.js",
+                "input": "src",
+                "output": "/"
+              },
               "src/manifest.webmanifest",
               "src/mockServiceWorker.js"
             ],

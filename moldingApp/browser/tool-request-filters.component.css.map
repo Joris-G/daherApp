@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.component.scss"],
+  "sourcesContent": ["\r\n.filters {\r\n  display: flex;\r\n  // flex-grow: 1;\r\n  max-width: 100%;\r\n  flex-wrap: wrap;\r\n  width: max-content;\r\n  .filter-item {\r\n    width: auto;\r\n}\r\nion-item{\r\n  margin :0;\r\n}\r\n}\r\n"],
+  "mappings": ";AACA,CAAA;AACE,WAAA;AAEA,aAAA;AACA,aAAA;AACA,SAAA;;AACA,CANF,QAME,CAAA;AACE,SAAA;;AAEJ,CATA,QASA;AACE,UAAA;;",
+  "names": []
+}

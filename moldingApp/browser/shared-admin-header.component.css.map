@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/core/admin/components/shared-admin-header/shared-admin-header.component.scss"],
+  "sourcesContent": [".logo {\r\n    width: 100px;\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACI,SAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/tooling/components/manage-team/manage-team.page.scss"],
+  "sourcesContent": [".content {\r\n    display: flex;\r\n    flex-direction: row;\r\n    height: 100%;\r\n    ion-card {\r\n        max-height: 100%;\r\n        flex-grow: 1;\r\n        .table,\r\n        .table-card-content {\r\n            width: 100%;\r\n            height: 100%;\r\n            overflow: auto;\r\n            table {\r\n                width: 100%;\r\n            }\r\n        }\r\n    }\r\n    .table-card {\r\n        flex-grow: 4;\r\n    }\r\n}\r\n\r\n.row-selected>td {\r\n    color: var(--ion-color-danger);\r\n}\r\n\r\ntr:hover>td {\r\n    color: var(--ion-color-danger);\r\n}\r\n\r\n// .ion-margin {\r\n//     margin: 8px\r\n// }\r\n"],
+  "mappings": ";AAAA,CAAA;AACI,WAAA;AACA,kBAAA;AACA,UAAA;;AACA,CAJJ,QAII;AACI,cAAA;AACA,aAAA;;AACA,CAPR,QAOQ,SAAA,CAAA;AAAA,CAPR,QAOQ,SAAA,CAAA;AAEI,SAAA;AACA,UAAA;AACA,YAAA;;AACA,CAZZ,QAYY,SAAA,CALJ,MAKI;AAAA,CAZZ,QAYY,SAAA,CALJ,mBAKI;AACI,SAAA;;AAIZ,CAjBJ,QAiBI,CAAA;AACI,aAAA;;AAIR,CAAA,aAAA,EAAA;AACI,SAAA,IAAA;;AAGJ,EAAA,OAAA,EAAA;AACI,SAAA,IAAA;;",
+  "names": []
+}

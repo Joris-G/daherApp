@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/tooling/components/sbo/sbo.component.scss"],
+  "sourcesContent": [".logo {\r\n    width: 100px;\r\n}\r\n\r\n.sbo-title {\r\n    font-weight: bold;\r\n}\r\n\r\n.table>* {\r\n    border: solid 1px;\r\n}\r\n\r\n.interch {\r\n    font-size: small;\r\n}\r\n\r\n.data-grid {\r\n    .header-row * {\r\n        border: solid 1px;\r\n    }\r\n    .data-row * {\r\n        border: solid 1px;\r\n    }\r\n}\r\n\r\n.toolnfl {}"],
+  "mappings": ";AAAA,CAAA;AACI,SAAA;;AAGJ,CAAA;AACI,eAAA;;AAGJ,CAAA,MAAA,EAAA;AACI,UAAA,MAAA;;AAGJ,CAAA;AACI,aAAA;;AAIA,CAAA,UAAA,CAAA,WAAA;AACI,UAAA,MAAA;;AAEJ,CAHA,UAGA,CAAA,SAAA;AACI,UAAA,MAAA;;",
+  "names": []
+}

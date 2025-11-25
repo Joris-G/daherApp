@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/core/admin/components/admin-molding-list/admin-molding-list.component.scss"],
+  "sourcesContent": ["ion-grid{\r\n  height: 100%;\r\n  overflow: hidden;\r\n  overflow-y: scroll;\r\n  .data-row{\r\n  }\r\n}\r\n.molding-list-content{\r\n  height: 100%;\r\n}\r\n"],
+  "mappings": ";AAAA;AACE,UAAA;AACA,YAAA;AACA,cAAA;;AAIF,CAAA;AACE,UAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/molding/components/create-molding/molding-kit-table/molding-kit-table.component.scss"],
+  "sourcesContent": ["// ********************************\r\n// MATERIAL TABLE STYLING\r\n// ********************************\r\n.table {\r\n  color: black;\r\n\r\n}\r\n.table-header-row {\r\n  text-transform: uppercase;\r\n  font-size: 14px;\r\n  background-color: rgb(244, 245, 248);\r\n}\r\n.table-data-row {\r\n  font-size: 16px;\r\n  // padding: 3px;\r\n}\r\nion-item{\r\n  --background-hover: var(--ion-color-secondary);\r\n\r\n}\r\n\r\n"],
+  "mappings": ";AAGA,CAAA;AACE,SAAA;;AAGF,CAAA;AACE,kBAAA;AACA,aAAA;AACA,oBAAA,IAAA,GAAA,EAAA,GAAA,EAAA;;AAEF,CAAA;AACE,aAAA;;AAGF;AACE,sBAAA,IAAA;;",
+  "names": []
+}

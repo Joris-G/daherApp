@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/services/title.service.ts"],
+  "sourcesContent": ["import { Injectable } from '@angular/core';\r\nimport { Title } from '@angular/platform-browser';\r\nimport { BehaviorSubject } from 'rxjs';\r\nimport { environment } from 'src/environments/environment';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class TitleService {\r\n  public title: BehaviorSubject<string> = new BehaviorSubject('');\r\n  constructor(\r\n    private titleService: Title\r\n  ) { }\r\n\r\n  setTitle(newTitle: string): void {\r\n    const prefixe: string = (environment.name === '') ? '' : `${environment.name} - `;\r\n    const title: string = `${prefixe}${newTitle}`;\r\n    this.titleService.setTitle(title);\r\n    this.title.next(newTitle);\r\n  }\r\n\r\n  getTitle(): string {\r\n    return this.titleService.getTitle();\r\n  }\r\n}\r\n"],
+  "mappings": ";;;;;;;;;AAQO,IAAM,eAAN,MAAMA,cAAY;EAGb;EAFH,QAAiC,IAAI,gBAAgB,EAAE;EAC9D,YACU,cAAmB;AAAnB,SAAA,eAAA;EACN;EAEJ,SAAS,UAAgB;AACvB,UAAM,UAAmB,YAAY,SAAS,KAAM,KAAK,GAAG,YAAY,IAAI;AAC5E,UAAM,QAAgB,GAAG,OAAO,GAAG,QAAQ;AAC3C,SAAK,aAAa,SAAS,KAAK;AAChC,SAAK,MAAM,KAAK,QAAQ;EAC1B;EAEA,WAAQ;AACN,WAAO,KAAK,aAAa,SAAQ;EACnC;;;;;AAfW,eAAY,WAAA;EAHxB,WAAW;IACV,YAAY;GACb;GACY,YAAY;",
+  "names": ["TitleService"]
+}

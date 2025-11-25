@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/tooling/components/maintenance-reparation/maintenance-reparation.page.scss"],
+  "sourcesContent": [".flex-row {\r\n    display: flex;\r\n    flex-direction: column;\r\n    ion-button {\r\n        align-items: center;\r\n    }\r\n}\r\n\r\n.content-container {\r\n    display: flex;\r\n    height: 100%;\r\n    overflow: hidden;\r\n}\r\n\r\n.main-form {\r\n    overflow-y: auto;\r\n}\r\n\r\n.left-side{\r\n  height: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\njustify-content: flex-start;\r\nalign-content: stretch;\r\n> *{\r\n  height: 100%;\r\n}\r\n.tool{\r\n  // height: 150px;\r\n}\r\n}\r\n\r\n"],
+  "mappings": ";AAAA,CAAA;AACI,WAAA;AACA,kBAAA;;AACA,CAHJ,SAGI;AACI,eAAA;;AAIR,CAAA;AACI,WAAA;AACA,UAAA;AACA,YAAA;;AAGJ,CAAA;AACI,cAAA;;AAGJ,CAAA;AACE,UAAA;AACA,WAAA;AACA,kBAAA;AACF,mBAAA;AACA,iBAAA;;AACA,CANA,UAMA,EAAA;AACE,UAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/core/admin/components/admin-user-table/admin-user-table.component.scss"],
+  "sourcesContent": ["ion-icon{\r\n    // border: solid red 2px;\r\n    border-radius: 50%;\r\n}"],
+  "mappings": ";AAAA;AAEI,iBAAA;;",
+  "names": []
+}

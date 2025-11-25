@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/molding/pages/create-molding/create-molding.page.scss"],
+  "sourcesContent": [".padding {\r\n  padding-right: 10px;\r\n  padding-left: 10px;\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACE,iBAAA;AACA,gBAAA;;",
+  "names": []
+}

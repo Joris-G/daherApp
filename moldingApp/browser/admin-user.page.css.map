@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/core/admin/pages/admin-user/admin-user.page.scss"],
+  "sourcesContent": ["mat-cell {\r\n  padding: 100px !important;\r\n}\r\n\r\ntable {\r\n  width: 100%;\r\n}\r\n\r\n.commands {\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: space-around;\r\n}\r\nion-card {\r\n  max-height: 100%;\r\n  flex-grow: 1;\r\n}\r\n.table-card-content {\r\n  width: 100%;\r\n  height: 100%;\r\n  overflow: auto;\r\n  table {\r\n    width: 100%;\r\n  }\r\n}\r\n"],
+  "mappings": ";AAAA;AACE,WAAA;;AAGF;AACE,SAAA;;AAGF,CAAA;AACE,WAAA;AACA,kBAAA;AACA,mBAAA;;AAEF;AACE,cAAA;AACA,aAAA;;AAEF,CAAA;AACE,SAAA;AACA,UAAA;AACA,YAAA;;AACA,CAJF,mBAIE;AACE,SAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/core/admin/components/moldings-filters/moldings-filters.component.scss"],
+  "sourcesContent": [".filters-container{\r\n  padding: 0.5rem;\r\n  // border: solid 1px black;\r\n  // border-radius: 1rem;\r\n  background-color: var(--ion-color-light);\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACE,WAAA;AAGA,oBAAA,IAAA;;",
+  "names": []
+}

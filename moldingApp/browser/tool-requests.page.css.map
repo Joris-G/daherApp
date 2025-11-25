@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/tooling/components/tool-requests/tool-requests.page.scss"],
+  "sourcesContent": ["ion-grid{\r\n    height: 100%;\r\n    ion-row{\r\n        height: 100%;\r\n        ion-col:first-child{\r\n            border-right: 2px solid var(--ion-color-medium);\r\n        }\r\n    }\r\n}"],
+  "mappings": ";AAAA;AACI,UAAA;;AACA,SAAA;AACI,UAAA;;AACA,SAAA,QAAA,OAAA;AACI,gBAAA,IAAA,MAAA,IAAA;;",
+  "names": []
+}

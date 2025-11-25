@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/tooling/components/control3-d/control.page.scss"],
+  "sourcesContent": ["// .content-container {\r\n//   display: flex;\r\n//   height: 100%;\r\n//   overflow: auto;\r\n//   width: 100%;\r\n// }\r\n// .control-form {\r\n//   width: 100%;\r\n//   height: 100%;\r\n// }\r\n.main-form {\r\n  height: 100%;\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  justify-content: space-around;\r\n  .left-side {\r\n    max-width: 30%;\r\n  }\r\n  > * {\r\n    width: auto;\r\n    height: auto;\r\n  }\r\n}\r\n\r\n.flex-row {\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: space-between;\r\n}\r\n\r\n.print-preview {\r\n  overflow-y: auto;\r\n}\r\n.vertical {\r\n  display: flex;\r\n  flex-direction: column;\r\n}\r\n.vertical *[contentEditable=\"true\"]:focus,\r\n.vertical *[contentEditable=\"true\"]:hover {\r\n  outline: 2px solid #1976d2;\r\n}\r\n"],
+  "mappings": ";AAUA,CAAA;AACE,UAAA;AACA,SAAA;AACA,WAAA;AACA,kBAAA;AACA,aAAA;AACA,mBAAA;;AACA,CAPF,UAOE,CAAA;AACE,aAAA;;AAEF,CAVF,UAUE,EAAA;AACE,SAAA;AACA,UAAA;;AAIJ,CAAA;AACE,WAAA;AACA,kBAAA;AACA,mBAAA;;AAGF,CAAA;AACE,cAAA;;AAEF,CAAA;AACE,WAAA;AACA,kBAAA;;AAEF,CAJA,SAIA,CAAA,CAAA,qBAAA;AAAA,CAJA,SAIA,CAAA,CAAA,qBAAA;AAEE,WAAA,IAAA,MAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/core/pages/register/register.page.scss"],
+  "sourcesContent": ["ion-content {\r\n  overflow-y: hidden;\r\n}\r\nion-card {\r\n  margin: 0;\r\n  max-height: 100%;\r\n  // height: -webkit-fill-available;\r\n}\r\nion-select {\r\n  max-width: 100% !important;\r\n}\r\n.perso-list {\r\n  width: 25%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  padding: 5px;\r\n  height: 500px;\r\n  // height: -webkit-fill-available;\r\n}\r\n"],
+  "mappings": ";AAAA;AACE,cAAA;;AAEF;AACE,UAAA;AACA,cAAA;;AAGF;AACE,aAAA;;AAEF,CAAA;AACE,SAAA;AACA,WAAA;AACA,kBAAA;AACA,WAAA;AACA,UAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/indicators/indicator-number/indicator-number.component.scss"],
+  "sourcesContent": ["ion-text {\r\n    font-size: 500%;\r\n    color: var(--ion-color-primary-contrast)\r\n}\r\n\r\nion-card-content {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n}\r\n"],
+  "mappings": ";AAAA;AACI,aAAA;AACA,SAAA,IAAA;;AAGJ;AACI,WAAA;AACA,mBAAA;AACA,eAAA;;",
+  "names": []
+}

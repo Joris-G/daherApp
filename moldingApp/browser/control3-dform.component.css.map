@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/tooling/components/control3-d/control3-dform/control3-dform.component.scss"],
+  "sourcesContent": ["ion-list-header>ion-label{\r\n    color: var(--ion-color-primary);\r\n    font-weight: bold;\r\n    text-decoration: underline;\r\n}\r\nion-list-header>ion-label::after{\r\n    content: ' :';\r\n}"],
+  "mappings": ";AAAA,gBAAA,EAAA;AACI,SAAA,IAAA;AACA,eAAA;AACA,mBAAA;;AAEJ,gBAAA,EAAA,SAAA;AACI,WAAA;;",
+  "names": []
+}

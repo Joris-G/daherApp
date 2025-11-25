@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/components/user-sheet/user-sheet.component.scss"],
+  "sourcesContent": ["// :host {\r\n//   overflow: auto;\r\n// }\r\n\r\nion-content {\r\n  height: 50%;\r\n}\r\n"],
+  "mappings": ";AAIA;AACE,UAAA;;",
+  "names": []
+}
