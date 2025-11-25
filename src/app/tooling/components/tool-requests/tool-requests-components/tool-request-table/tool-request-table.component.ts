@@ -9,6 +9,7 @@ import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { DatePipe } from '@angular/common';
 import { HeaderRowDirective } from '../../../../../shared/directives/header-row.directive';
 import { DataRowDirective } from '../../../../../shared/directives/data-row.directive';
+import { Tool, OutillNoRefSAP } from 'src/app/_interfaces/tooling/tool';
 
 
 @Component({
@@ -28,6 +29,9 @@ import { DataRowDirective } from '../../../../../shared/directives/data-row.dire
   imports: [IonicModule, HeaderRowDirective, DataRowDirective, DatePipe]
 })
 export class ToolRequestTableComponent implements OnInit {
+  hasSapToolNumber(tool: Tool | OutillNoRefSAP): tool is Tool {
+    return "sapToolNumber" in tool;
+  }
   ////////////////////////////////////////////////////////////////
   // INJECTION DE DEPENDANCES
   ////////////////////////////////////////////////////////////////

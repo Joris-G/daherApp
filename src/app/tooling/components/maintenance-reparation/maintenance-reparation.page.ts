@@ -156,17 +156,15 @@ export class MaintenanceReparationPage {
   ): void {
     // Formulaire ToolRequest
     this.toolRequestForm = this.formBuilder.createToolRequestForm({
-      type: toolRequest.type,
+      // type: toolRequest.type,
       bloquantProd: toolRequest.bloquantProd,
       dateBesoin: toolRequest.dateBesoin,
-      groupeAffectation: toolRequest.groupeAffectation?.id,
+      // groupeAffectation: toolRequest.groupeAffectation?.id,
       toolingNote: toolRequest.toolingNote,
     });
 
     // Formulaire Maintenance avec les items
     this.maintenanceForm = this.formBuilder.createSpecMaintenanceForm({
-      outillage: maintenance.outillage?.id,
-      outillNoRefSAP: maintenance.outillNoRefSAP,
       sigle: maintenance.sigle,
       dateValid: maintenance.dateValid,
       userValideur: maintenance.userValideur?.id,

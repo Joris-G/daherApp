@@ -1,11 +1,12 @@
 import { http, HttpResponse } from 'msw';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { Tool, ToolCreation } from 'src/app/_interfaces/tooling/tool';
-import { RequestType, SpecSBO, SpecSBOCreation, ToolRequest, ToolRequestCreation } from 'src/app/_interfaces/tooling/tool-request-types';
+import { RequestStatus, RequestType, SpecSBO, SpecSBOCreation, ToolRequest, ToolRequestCreation } from 'src/app/_interfaces/tooling/tool-request-types';
 import { User } from 'src/app/_interfaces/user';
 import { mockToolRequests } from './mockData/mockToolRequest.mock';
 import { mockTools } from './mockData/mockTools.mock';
 import { mockUsers } from './mockData/mockUser.mock';
+import { mockSpecCtrl } from './mockData/mockSpecCtrl.mock';
 
 
 // Données mockées
@@ -16,15 +17,6 @@ const mockProgrammesAvion: ProgrammeAvion[] = [
   {client:'GULFSTREAM', designation:'G600 ELEVATOR',id:4},
 ];
 
-const mockSBO: SpecSBO[] = [
-  {
-    id: 1,
-    title: 'Titre Test',
-    description: 'Description Test',
-    aircraftProgram: '1',
-    dateBesoin: new Date()
-  }
-]
 
 // Définition des handlers
 export const handlers = [
@@ -118,6 +110,9 @@ export const handlers = [
     const newToolRequest = await request.json() as ToolRequestCreation;
     const toolRequest: ToolRequest = {
       id: mockToolRequests.length + 1,
+      demandeur: mockUsers[0],
+      createdAt: new Date(),
+      statut: RequestStatus.SUBMITTED,
       ...newToolRequest
     };
     mockToolRequests.push(toolRequest);
@@ -127,16 +122,16 @@ export const handlers = [
       case RequestType.SBO:
         const newSpecSBO = newToolRequest.typeData as SpecSBOCreation;
         const newSBO: SpecSBO = {
-          id: mockSBO.length + 1,
+          id: mockSpecCtrl.length + 1,
           ...newSpecSBO
         };
-        mockSBO.push(newSBO);
+        mockSpecCtrl.push(newSBO);
         break;
     
       default:
         break;
     }
-    console.log(mockSBO);
+    console.log(mockSpecCtrl);
     return HttpResponse.json(toolRequest, { status: 201 });
   }),
   http.get('/api/tools/request', async ({ request }) => {

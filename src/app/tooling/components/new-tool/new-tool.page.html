@@ -51,14 +51,20 @@
         <ion-item slot="content">
       <form [formGroup]="newToolRequestForm">
         <ion-item-group>
-          <ion-item>
+          <!-- <ion-item>
             <ion-label>Programme avion</ion-label>
             <ion-select formControlName="aircraftProgram" multiple="true" placeholder="Sélectionner le programme avion">
               <ion-select-option *ngFor="let program of programs()" [value]="program.id">
                 {{program.designation}}
               </ion-select-option>
             </ion-select>
-          </ion-item>
+          </ion-item> -->
+          <ion-item>
+            <ion-label>Date
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-datetime display-format="DD.MM.YYYY HH:mm" formControlName="dateBesoin"></ion-datetime>
+                    </ion-item>
           </ion-item-group>
           <ion-item-group formGroupName="typeData">
           <ion-item>
@@ -76,13 +82,6 @@
                             <ngx-editor [editor]="editor" formControlName="description"
                               [placeholder]="'Taper la description ici'"></ngx-editor>
                             </div>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Date
-              <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <ion-datetime display-format="DD.MM.YYYY HH:mm" formControlName="dateBesoin"></ion-datetime>
           </ion-item>
         </ion-item-group>
       </form>

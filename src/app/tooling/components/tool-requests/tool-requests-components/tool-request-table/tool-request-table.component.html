@@ -20,9 +20,11 @@
           </ion-col>
         <ion-col size="2">{{ toolRequest.statut }}</ion-col>
         <ion-col size="8">
-        <ion-label>OT{{toolRequest.outillage.sapToolNumber}} -
-          {{toolRequest.outillage.designation}}</ion-label>
-        </ion-col>
+          @if(hasSapToolNumber(toolRequest.tool)){
+          <ion-label>OT{{toolRequest.tool.sapToolNumber}} -
+            {{toolRequest.tool.designation}}</ion-label>
+          }
+          </ion-col>
         <ion-col size="4"> {{toolRequest.createdAt | date :"EE dd MMM yyyy":"local" }}</ion-col>
         <ion-col size="3" (click)="userClick()">
           <ion-label>{{toolRequest.demandeur.nom}}</ion-label>

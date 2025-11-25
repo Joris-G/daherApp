@@ -1,5 +1,4 @@
 import { computed, inject, Injectable, signal, Signal } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
 import { filterSelectObjects, ToolRequestFilter } from "src/app/_interfaces/tooling/tool-request-filters";
 import { ToolRequest } from "src/app/_interfaces/tooling/tool-request-types";
 import { ToolRequestService } from "src/app/tooling/services/tool-request.service";
@@ -105,8 +104,8 @@ export class ToolRequestFilterService {
   // MÉTHODE PRIVÉE
   // ============================================================================
   private getCompareElement(filterProp: string, toolRequest: ToolRequest): string {
-    if (filterProp === 'outillage') {
-      return toolRequest.outillage.sapToolNumber;
+    if (filterProp === 'tool') {
+      return toolRequest.tool.identification;
     }
     if (filterProp === 'demandeur') {
       return toolRequest.demandeur.nom;

@@ -22,7 +22,7 @@ export class ToolRequestFormBuilder {
   // TOOL REQUEST PRINCIPAL
   // ==========================================================================
 
-  createToolRequestForm(initialValue?: ToolRequestFormValue): FormGroup {
+  createToolRequestForm(initialValue?: Partial<ToolRequestFormValue>): FormGroup {
     return this.fb.group({
       tool:[initialValue.tool ?? null, Validators.required],
       bloquantProd: [initialValue?.bloquantProd ?? false, Validators.required],
@@ -107,9 +107,6 @@ export class ToolRequestFormBuilder {
     );
 
     return this.fb.group({
-      tool: [initialValue?.tool ?? null],
-      outillNoRefSAP: this.createOutillNoRefSAPForm(initialValue?.outillNoRefSAP),
-      dateBesoin: [initialValue?.dateBesoin ?? null],
       image: [initialValue?.image ?? ''],
       fichier: [initialValue?.fichier ?? ''],
       sigle: [initialValue?.sigle ?? ''],
@@ -146,7 +143,6 @@ export class ToolRequestFormBuilder {
     return this.fb.group({
       title: [initialValue?.title ?? '', Validators.required],
       description: [initialValue?.description ?? '', Validators.required],
-      dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
       // aircraftProgram: [initialValue?.aircraftProgram ?? '', Validators.required]
     });
   }

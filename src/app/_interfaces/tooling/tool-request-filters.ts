@@ -18,7 +18,7 @@ export const filterSelectObjects: ToolRequestFilter[] = [
     },
     {
       name: 'Outillage',
-      columnProp: 'outillage',
+      columnProp: 'tool',
       options: []
     },
   ];

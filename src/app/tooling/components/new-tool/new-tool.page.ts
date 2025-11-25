@@ -1,9 +1,9 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { JsonPipe, NgFor } from '@angular/common';
-import { FormGroup, FormControl, FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IonAccordion, IonAccordionGroup, IonButton, IonContent, IonDatetime, IonFooter, IonInput, IonItem, IonItemGroup, IonLabel, IonSelect, IonSelectOption, IonText, IonToolbar } from '@ionic/angular/standalone';
 import { Editor, NgxEditorModule } from 'ngx-editor';
-import { RequestType, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
+import { RequestType, ToolRequestCreation } from 'src/app/_interfaces/tooling/tool-request-types';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { Tool, ToolCreation } from 'src/app/_interfaces/tooling/tool';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
@@ -121,7 +121,6 @@ export class NewToolPage implements OnInit {
 
     // Formulaire pour la demande d'outillage
     this.newToolRequestForm = this.formBuilderService.createToolRequestForm({
-      type: RequestType.SBO,
       typeData: this.specSboForm,
     });
 
@@ -205,14 +204,11 @@ export class NewToolPage implements OnInit {
     this.isCreatingRequest.set(true);
 
   // Construire l'objet ToolRequest
-    const toolRequest: ToolRequest = {
+    const toolRequest: ToolRequestCreation = {
       type: RequestType.SBO,
-      createdAt: new Date(),
       bloquantProd: this.newToolRequestForm.value.bloquantProd,
       dateBesoin: this.newToolRequestForm.value.dateBesoin,
-      demandeur: this.authStore.user(),
-      outillage: this.createdTool(),
-      toolingNote: this.newToolRequestForm.value.toolingNote,
+      tool: this.createdTool(),
       typeData: this.specSboForm.value
     };
 

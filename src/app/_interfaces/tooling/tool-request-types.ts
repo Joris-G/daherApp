@@ -50,14 +50,14 @@ export class ToolRequest {
   createdAt: Date;
   dateBesoin: Date;
   tool: Tool | OutillNoRefSAP;
-  groupeAffectation: GroupeAffectation;
-  affectation: string[];
-  dateAffectation: Date;
-  datePlanif: Date;
+  groupeAffectation?: GroupeAffectation;
+  affectation?: string[];
+  dateAffectation?: Date;
+  datePlanif?: Date;
   statut: RequestStatus;
-  dateReal: Date;
-  userReal: User;
-  toolingNote: string;
+  dateReal?: Date;
+  userReal?: User;
+  toolingNote?: string;
 }
 export type ToolRequestCreation = Omit<ToolRequest, 
 'id'|'createdAt'|'demandeur'|'groupeAffectation'| 
@@ -174,7 +174,6 @@ export interface MaintenanceItem {
   // }
 }
 export interface SpecMaintenanceFormValue {
-  dateBesoin?: Date;
   image?: string;
   fichier?: string;
   sigle?: string;
@@ -190,7 +189,6 @@ export interface SpecSBO {
   id: number;
   title: string;
   description: string;
-  dateBesoin: Date;
   aircraftProgram?: string;
 }
 export type SpecSBOCreation = Omit<SpecSBO, "id" | "aircraftProgram">
@@ -198,6 +196,5 @@ export type SpecSBOCreation = Omit<SpecSBO, "id" | "aircraftProgram">
 export interface SpecSBOFormValue {
   title: string;
   description: string;
-  dateBesoin: Date;
   aircraftProgram: string;
 }
