@@ -9,8 +9,11 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[0],
-    outillage: mockTools[0],
-    statut: RequestStatus.SUBMITTED
+    tool: mockTools[0],
+    statut: RequestStatus.SUBMITTED,
+    typeData:,
+    dateBesoin:new Date(),
+    groupeAffectation:null
   },
   {
     id: 2,
@@ -18,7 +21,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[1],
-    outillage: mockTools[2],
+    tool: mockTools[2],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -27,7 +30,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[2],
-    outillage: mockTools[2],
+    tool: mockTools[2],
     statut: RequestStatus.DRAFT
   },
   {
@@ -36,7 +39,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[3],
-    outillage: mockTools[0],
+    tool: mockTools[0],
     statut: RequestStatus.COMPLETED
   },
   {
@@ -45,7 +48,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.CONTROLE,
     createdAt: new Date(),
     demandeur: mockUsers[0],
-    outillage: mockTools[1],
+    tool: mockTools[1],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -54,7 +57,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.CONTROLE,
     createdAt: new Date(),
     demandeur: mockUsers[0],
-    outillage: mockTools[5],
+    tool: mockTools[5],
     statut: RequestStatus.RETURNED
   },
   {
@@ -63,7 +66,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.MAINTENANCE,
     createdAt: new Date(),
     demandeur: mockUsers[1],
-    outillage: mockTools[4],
+    tool: mockTools[4],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -72,7 +75,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[1],
-    outillage: mockTools[3],
+    tool: mockTools[3],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -81,7 +84,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[0],
-    outillage: mockTools[2],
+    tool: mockTools[2],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -90,7 +93,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[3],
-    outillage: mockTools[1],
+    tool: mockTools[1],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -99,7 +102,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[3],
-    outillage: mockTools[0],
+    tool: mockTools[0],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -108,7 +111,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[3],
-    outillage: mockTools[1],
+    tool: mockTools[1],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -117,7 +120,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[2],
-    outillage: mockTools[2],
+    tool: mockTools[2],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -126,7 +129,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[2],
-    outillage: mockTools[3],
+    tool: mockTools[3],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -135,7 +138,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[1],
-    outillage: mockTools[4],
+    tool: mockTools[4],
     statut: RequestStatus.IN_PROGRESS
   },
   {
@@ -144,7 +147,7 @@ export const mockToolRequests: ToolRequest[] = [
     type: RequestType.SBO,
     createdAt: new Date(),
     demandeur: mockUsers[2],
-    outillage: mockTools[5],
+    tool: mockTools[5],
     statut: RequestStatus.IN_PROGRESS
   },
 ]

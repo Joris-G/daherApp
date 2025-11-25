@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { OutillNoRefSAP } from 'src/app/_interfaces/tooling/tool';
-import { MaintenanceItem, RequestType, SpecCtrlFormValue, SpecMaintenanceFormValue, SpecSBOFormValue, ToolRequestFormValue } from 'src/app/_interfaces/tooling/tool-request-types';
+import { MaintenanceItem, RequestType, SpecCtrlFormValue, SpecMaintenanceFormValue, SpecSBOFormValue, ToolRequestCreation, ToolRequestFormValue } from 'src/app/_interfaces/tooling/tool-request-types';
 
 // ============================================================================
 // TYPES POUR TYPED FORMS
@@ -24,13 +24,12 @@ export class ToolRequestFormBuilder {
 
   createToolRequestForm(initialValue?: ToolRequestFormValue): FormGroup {
     return this.fb.group({
-      type: [initialValue?.type ?? RequestType.SBO, Validators.required],
+      tool:[initialValue.tool ?? null, Validators.required],
       bloquantProd: [initialValue?.bloquantProd ?? false, Validators.required],
       dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
       groupeAffectation: [initialValue?.groupeAffectation ?? null],
       toolingNote: [initialValue?.toolingNote ?? ''],
       typeData: initialValue?.typeData ?? null,
-
     });
   }
 
@@ -63,7 +62,6 @@ export class ToolRequestFormBuilder {
       tolerances: [initialValue?.tolerances ?? ''],
 
       // Dates
-      dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
       dispoOut: [initialValue?.dispoOut ?? null],
 
       // Type de contrôle
@@ -72,15 +70,9 @@ export class ToolRequestFormBuilder {
 
       // Informations complémentaires
       infosComplementaire: [initialValue?.infosComplementaire ?? ''],
-      ligneBudgetaire: [initialValue?.ligneBudgetaire ?? '', Validators.required],
       visaControleur: [initialValue?.visaControleur ?? ''],
 
-      // Outillage
-      outillage: [initialValue?.outillage ?? null],
-      outillNoRefSAP: this.createOutillNoRefSAPForm(initialValue?.outillNoRefSAP),
-
       // Options
-      bloquantProd: [initialValue?.bloquantProd ?? false],
       immobilisationOutillage: [initialValue?.immobilisationOutillage ?? false]
     });
   }
@@ -115,7 +107,7 @@ export class ToolRequestFormBuilder {
     );
 
     return this.fb.group({
-      outillage: [initialValue?.outillage ?? null],
+      tool: [initialValue?.tool ?? null],
       outillNoRefSAP: this.createOutillNoRefSAPForm(initialValue?.outillNoRefSAP),
       dateBesoin: [initialValue?.dateBesoin ?? null],
       image: [initialValue?.image ?? ''],
