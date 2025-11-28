@@ -1,5 +1,5 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Tool } from '../tooling/tool';
+import { Tool } from '../../tooling/tool';
 
 export class Core {
   idCore?: number;

@@ -1,56 +1,30 @@
 <!-- <app-shared-user-header [page]="page"></app-shared-user-header> -->
 
 <ion-content color=light>
-  <ion-accordion-group [multiple]="true">
-    <ion-accordion color>
-      <ion-item slot="header">
-        <ion-label>
-          Définition
-        </ion-label>
-        <ion-text>
-          Créer ou sélectionner l'outillage
-        </ion-text>
-        </ion-item>
-        <ion-item slot="content">
-      <form [formGroup]="newToolForm">
-        <ion-item-group>
-          <ion-item>
-            <ion-label position="floating">Numéro d'OT SAP
-              <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <ion-input required formControlName="sapToolNumber" type="text" placeholder="ex. OT095999"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Numéro d'identification
-              <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <ion-input required formControlName="identification" type="text" placeholder="ex. 19900Z01-T700P5522000123">
-            </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Désignation
-              <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <ion-input required formControlName="designation" type="text"></ion-input>
-          </ion-item>
-        </ion-item-group>
-        <ion-toolbar>
-          <ion-button slot=end (click)="onCreateTool()" expand="block" color=primary>
-            Créer l'OT
-          </ion-button>
-        </ion-toolbar>
-      </form>
-      </ion-item>
-      </ion-accordion>
-      <ion-accordion>
-        <ion-item slot="header">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="primary">
+        Outillage
+        <ion-card-subtitle color="secondary">
+          Créer ou choisir
+        </ion-card-subtitle>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-create-tool (onCreatedTool)="onCreatedTool($event)" />
+    </ion-card-content>
+  
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="primary">
           <ion-label>
           Descritpion
         </ion-label>
-        </ion-item>
-        <ion-item slot="content">
-      <form [formGroup]="newToolRequestForm">
-        <ion-item-group>
+      </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="specSboForm">
           <!-- <ion-item>
             <ion-label>Programme avion</ion-label>
             <ion-select formControlName="aircraftProgram" multiple="true" placeholder="Sélectionner le programme avion">
@@ -59,44 +33,35 @@
               </ion-select-option>
             </ion-select>
           </ion-item> -->
+        <ion-item>
+          <ion-input labelPlacement="floating" type="date" display-format="DD.MM.YYYY HH:mm" formControlName="dateBesoin">
+            <div slot="label">Date de besoin<ion-text color="danger"> *</ion-text></div>
+          </ion-input>
+          </ion-item>
           <ion-item>
-            <ion-label>Date
-              <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <ion-datetime display-format="DD.MM.YYYY HH:mm" formControlName="dateBesoin"></ion-datetime>
-                    </ion-item>
-          </ion-item-group>
-          <ion-item-group formGroupName="typeData">
-          <ion-item>
-            <ion-label>Titre
-              <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <ion-input required formControlName="title"></ion-input>
+            <ion-input labelPlacement="floating" formControlName="title">
+              <div slot="label">Titre de la demande<ion-text color="danger"> *</ion-text></div>
+            </ion-input>
           </ion-item>
           <ion-item>
             <ion-label>Description
               <ion-text color="danger">*</ion-text>
             </ion-label>
             <div class="NgxEditor__Wrapper">
-                            <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-                            <ngx-editor [editor]="editor" formControlName="description"
-                              [placeholder]="'Taper la description ici'"></ngx-editor>
-                            </div>
+              <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+              <ngx-editor labelPlacement="floating" [editor]="editor" formControlName="description"
+                [placeholder]="'Taper la description ici'"></ngx-editor>
+              </div>
           </ion-item>
-        </ion-item-group>
       </form>
-      </ion-item>
-      </ion-accordion>
-      </ion-accordion-group>
+    </ion-card-content>
+    </ion-card>
+
   <!-- <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo> -->
-  <div>
-    {{newToolRequestForm.value | json}}
-  </div>
 </ion-content>
 <ion-footer>
   <ion-toolbar color="light">
-    <ion-button [disabled]="newToolRequestForm.invalid" (click)="onCreateToolRequest()" slot=end expand="block"
-      color=primary>
+    <ion-button [disabled]="specSboForm.invalid" (click)="onCreateToolRequest()" slot=end expand="block" color=primary>
       Créer la demande
     </ion-button>
   </ion-toolbar>

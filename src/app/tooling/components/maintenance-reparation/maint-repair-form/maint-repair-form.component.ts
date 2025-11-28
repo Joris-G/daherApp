@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
-import { MaintenanceItem } from 'src/app/_interfaces/tooling/tool-request-types';
+import { MaintenanceItem } from 'src/app/tooling/tool-request-types';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ToolInputComponent } from '../../tool-input/tool-input.component';

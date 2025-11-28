@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { User } from 'src/app/_interfaces/user';
 import { OutillNoRefSAP, Tool } from './tool';
@@ -10,9 +9,9 @@ import { OutillNoRefSAP, Tool } from './tool';
 // ============================================================================
 
 export enum RequestType {
-  SBO = 'sbo',
-  MAINTENANCE = 'maintenance',
-  CONTROLE = 'controle'
+  SBO = 'SBO',
+  MAINTENANCE = 'MAINTENANCE',
+  CONTROLE = 'CONTROLE'
 }
 
 export enum RequestStatus {
@@ -41,10 +40,10 @@ export enum MoyenMesure {
 // ============================================================================
 // TOOL REQUEST (Demande principale)
 // ============================================================================
-export class ToolRequest {
+export interface ToolRequestBase {
   id: number;
   type: RequestType;
-  typeData: SpecCtrl | SpecMaintRep | SpecSBO;
+  // typeData: SpecCtrl | SpecMaintRep | SpecSBO;
   demandeur: User;
   bloquantProd: boolean;
   createdAt: Date;
@@ -59,32 +58,35 @@ export class ToolRequest {
   userReal?: User;
   toolingNote?: string;
 }
-export type ToolRequestCreation = Omit<ToolRequest, 
-'id'|'createdAt'|'demandeur'|'groupeAffectation'| 
-'affectation'|'dateAffectation'|'datePlanif'|'statut'|
- 'dateReal'| 'userReal'|'toolingNote'>
 
-// Type pour les formulaires (sans les champs auto-générés)
-export interface ToolRequestFormValue {
+export interface ToolRequestStorage {
+  id: number;
+  type: RequestType;
+
+  demandeurId: number;
+  toolReference: number | string;
+
+
   bloquantProd: boolean;
+  createdAt: Date;
   dateBesoin: Date;
-  tool: Tool | OutillNoRefSAP;
-  groupeAffectation: GroupeAffectation;
-  affectation: string[];
-  dateAffectation: Date;
-  datePlanif: Date;
   statut: RequestStatus;
-  dateReal: Date;
-  userReal: User;
-  toolingNote: string;
-  typeData: FormGroup;
+
+
+  groupeAffectationId?: number;
+  affectation?: string[];
+  dateAffectation?: Date;
+  datePlanif?: Date;
+  dateReal?: Date;
+  userRealId?: number;
+  toolingNote?: string;
 }
 
 // ============================================================================
 // SPÉCIFICATIONS CONTRÔLE
 // ============================================================================
-export interface SpecCtrl {
-  id: number;
+export interface SpecCtrlRequest extends ToolRequestBase {
+  type: RequestType.CONTROLE;
   description: string;
   image?: string;
   fichier?: string;
@@ -100,63 +102,45 @@ export interface SpecCtrl {
   visaControleur?: string;
   interventionDate?: Date;
 }
-export type SpecCtrlCreation = Omit<SpecCtrl, 
+export type SpecCtrlCreation = Omit<SpecCtrlRequest,
 'id'>
 
-export interface SpecCtrlFormValue {
-  refPlan: string;
-  indPlan: string;
-  cheminCAO: string;
+export interface SpecCtrlStorage {
+  id: number;
+  toolRequestId: number; // 👈 Clé étrangère vers la ToolRequest
   description: string;
-  detailsControle: string;
-  tolerances: string;
-  dispoOut: Date;
+  refPlan?: string;
+  image?: string;
+  fichier?: string;
+  indPlan?: string;
+  cheminCAO?: string;
+  detailsControle?: string;
+  tolerances?: string;
+  dispoOut?: Date;
   typeRapport?: TypeRapport;
   moyenMesure?: MoyenMesure;
   infosComplementaire?: string;
   visaControleur?: string;
-  immobilisationOutillage: boolean;
+  interventionDate?: Date;
 }
 
 // ============================================================================
 // SPÉCIFICATIONS MAINTENANCE
 // ============================================================================
-export interface SpecMaintRep {
-  id?: number;
+export interface SpecMaintRepRequest extends ToolRequestBase {
+  type: RequestType.MAINTENANCE;
   outillage?: Tool;
   outillNoRefSAP: OutillNoRefSAP
   itemActionCorrective: MaintenanceItem[];
   // equipement: string;
-  // OT?: Tool;
   // equipement?: string;
-  // dateBesoin: Date;
   // respo?: string[];
   rep?: string[];
-  createdAt?: Date;
-  modifiedAt?: Date;
-  userCreat?: User;
-  userModif?: User;
   userValideur?: User;
   image?: string;
   fichier?: string;
   sigle?: string;
   dateValid?: Date;
-  demandeur?: User;
-
-  // constructor() {
-  //   this.itemActionCorrective = [new MaintenanceItem(1)];
-  // }
-
-  // addMaintenanceItem(): number {
-  //   const rep = this.itemActionCorrective.length + 1;
-  //   const maintenanceItem: MaintenanceItem = new MaintenanceItem(rep);
-  //   return this.itemActionCorrective.push(maintenanceItem);
-  // }
-
-  // removeMaintenanceItem(rep: number) {
-  //   const index = rep - 1;
-  //   delete this.itemActionCorrective[index];
-  // }
 }
 
 export interface MaintenanceItem {
@@ -168,33 +152,27 @@ export interface MaintenanceItem {
   delaiAction: Date;
   userReal?: string;
   dateReal?: Date;
-  // constructor(rep: number) {
-  //   this.rep = rep;
-  //   // this.delaiAction = new Date();
-  // }
 }
-export interface SpecMaintenanceFormValue {
-  image?: string;
-  fichier?: string;
-  sigle?: string;
-  userValideur?: number;
-  dateValid?: Date;
-  itemActionCorrective: MaintenanceItem[];
-}
+
 
 // ============================================================================
 // SPÉCIFICATIONS SBO (Nouvelle demande outillage)
 // ============================================================================
-export interface SpecSBO {
-  id: number;
+export interface SpecSBORequest extends ToolRequestBase {
+  // idSpecSBO?: number;
   title: string;
   description: string;
   aircraftProgram?: string;
 }
-export type SpecSBOCreation = Omit<SpecSBO, "id" | "aircraftProgram">
+export type SpecSBOCreation = Omit<SpecSBORequest, "id" | "aircraftProgram">
 
-export interface SpecSBOFormValue {
+
+export interface SpecSBOStorage {
+  id: number;
+  toolRequestId: number; // 👈 Clé étrangère vers la ToolRequest
   title: string;
   description: string;
-  aircraftProgram: string;
+  aircraftProgram?: string;
 }
+
+export type ToolRequest = SpecCtrlRequest | SpecMaintRepRequest | SpecSBORequest;

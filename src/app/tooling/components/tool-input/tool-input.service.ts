@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { share } from 'rxjs/operators';
-import { Tool } from 'src/app/_interfaces/tooling/tool';
+import { Tool } from 'src/app/tooling/tool';
 
 @Injectable({ providedIn: "root" })
 export class ToolInputService implements OnInit {

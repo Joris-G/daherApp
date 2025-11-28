@@ -1,0 +1,27 @@
+<form [formGroup]="newToolForm">
+        <!-- Numéro d'OT -->
+        <ion-item>
+          <ion-input labelPlacement="floating" formControlName="sapToolNumber" type="text" placeholder="ex. OT095999">
+            <div slot="label">Numéro d'OT SAP<ion-text color="danger"> *</ion-text></div>
+          </ion-input>
+          </ion-item>
+        <!-- Numéro identification -->
+        <ion-item>
+          <ion-input labelPlacement="floating" formControlName="identification" type="text"
+            placeholder="ex. 19900Z01-T700P5522000123">
+            <div slot="label">Numéro d'identification<ion-text color="danger"> *</ion-text></div>
+          </ion-input>
+          </ion-item>
+        <!--Désignation -->
+        <ion-item>
+          <ion-input labelPlacement="floating" formControlName="designation" type="text">
+            <div slot="label">Désignation<ion-text color="danger"> *</ion-text></div>
+          </ion-input>
+          </ion-item>
+
+        <ion-toolbar>
+          <ion-button slot=end (click)="onCreateTool()" expand="block" color=primary>
+            Créer l'OT
+          </ion-button>
+        </ion-toolbar>
+      </form>

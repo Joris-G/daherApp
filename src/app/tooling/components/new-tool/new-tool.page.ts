@@ -1,11 +1,11 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { JsonPipe, NgFor } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonAccordion, IonAccordionGroup, IonButton, IonContent, IonDatetime, IonFooter, IonInput, IonItem, IonItemGroup, IonLabel, IonSelect, IonSelectOption, IonText, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonFooter, IonInput, IonItem, IonText, IonToolbar, IonLabel, IonItemGroup } from '@ionic/angular/standalone';
 import { Editor, NgxEditorModule } from 'ngx-editor';
-import { RequestType, ToolRequestCreation } from 'src/app/_interfaces/tooling/tool-request-types';
+import { RequestType, SpecSBOCreation } from 'src/app/tooling/tool-request-types';
 import { ToolService } from 'src/app/tooling/services/tool.service';
-import { Tool, ToolCreation } from 'src/app/_interfaces/tooling/tool';
+import { Tool } from 'src/app/tooling/tool';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
 import { Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
@@ -13,6 +13,7 @@ import { SboComponent } from '../sbo/sbo.component';
 import { AuthStore } from 'src/app/shared/services/users/auth.store';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
+import { CreateToolComponent } from '../create-tool/create-tool.component';
 
 const MENU_ITEMS = [
   {
@@ -32,24 +33,26 @@ const MENU_ITEMS = [
     templateUrl: './new-tool.page.html',
     styleUrls: ['./new-tool.page.scss'],
     standalone: true,
-    imports: [
-      IonItem,
-      IonAccordion,
+  imports: [IonItemGroup, IonLabel,
+    ReactiveFormsModule,
+    NgxEditorModule,
+    JsonPipe,
       IonContent,
-      IonAccordionGroup,
-      IonItemGroup,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonCardContent,
+    IonItem,
+    IonText,
+    IonInput,
       IonLabel,
-      IonText,
-      IonFooter, IonToolbar, IonInput,
-      IonButton,
-      IonDatetime,
-      IonSelect,
-      IonSelectOption,
-        ReactiveFormsModule,
+    IonFooter,
+    IonToolbar,
+    IonButton,
         NgFor,
-        SboComponent,
-      NgxEditorModule,
-      JsonPipe
+    SboComponent,
+    CreateToolComponent
 
     ],
 })
@@ -61,7 +64,6 @@ export class NewToolPage implements OnInit {
   private readonly authStore: AuthStore = inject(AuthStore);
   private readonly formBuilderService = inject(ToolRequestFormBuilder);
   private readonly programService = inject(ProgramsService);
-  private readonly toolService = inject(ToolService);
   private readonly toolRequestService = inject(ToolRequestService);
   private readonly router = inject(Router);
 
@@ -78,17 +80,15 @@ export class NewToolPage implements OnInit {
   };
 
   // Formulaires typés
-  public newToolForm: FormGroup;
-  public newToolRequestForm: FormGroup;
-  private specSboForm!: FormGroup;
+
+  // public newToolRequestForm: FormGroup;
+  protected specSboForm: FormGroup;
 
 
   // Données
   programs = signal<ProgrammeAvion[]>([]);
-  createdTool = signal<Tool | null>(null);
-
+  createdTool = signal<Tool>(null);
   // États de chargement
-  isCreatingTool = signal(false);
   isCreatingRequest = signal(false);
 
   // Enum pour le template
@@ -113,23 +113,22 @@ export class NewToolPage implements OnInit {
   // ============================================================================
 
   private initializeForms(): void {
-    // Formulaire pour créer un nouvel outil
-    this.newToolForm = this.formBuilderService.createNewToolForm();
+
 
     // Formulaire pour les spécifications SBO
     this.specSboForm = this.formBuilderService.createSpecSBOForm();
 
     // Formulaire pour la demande d'outillage
-    this.newToolRequestForm = this.formBuilderService.createToolRequestForm({
-      typeData: this.specSboForm,
-    });
+    // this.newToolRequestForm = this.formBuilderService.createToolRequestForm({
+    //   typeData: this.specSboForm,
+    // });
 
 
 
     // Synchroniser dateBesoin entre les deux formulaires
-    this.specSboForm.get('dateBesoin')?.valueChanges.subscribe(date => {
-      this.newToolRequestForm.get('dateBesoin')?.setValue(date, { emitEvent: false });
-    });
+    // this.specSboForm.get('dateBesoin')?.valueChanges.subscribe(date => {
+    //   // this.newToolRequestForm.get('dateBesoin')?.setValue(date, { emitEvent: false });
+    // });
   }
 
 
@@ -153,37 +152,7 @@ export class NewToolPage implements OnInit {
   // ACTIONS
   // ============================================================================
 
-  /**
-   * Créer un nouvel outil en base de données
-   */
-  onCreateTool(): void {
-    if (this.newToolForm.invalid) {
-      this.newToolForm.markAllAsTouched();
-      return;
-    }
 
-    this.isCreatingTool.set(true);
-
-    const toolData: ToolCreation = this.newToolForm.value;
-
-    this.toolService.createTool(toolData).subscribe({
-      next: (tool) => {
-        console.log('Outil créé:', tool);
-        this.createdTool.set(tool);
-        this.isCreatingTool.set(false);
-
-    // Afficher un message de succès
-    // this.toastService.showSuccess('Outil créé avec succès');
-      },
-      error: (error) => {
-        console.error('Erreur lors de la création de l\'outil:', error);
-        this.isCreatingTool.set(false);
-
-        // Afficher un message d'erreur
-        // this.toastService.showError('Erreur lors de la création de l\'outil');
-      }
-    });
-  }
 
   /**
  * Créer une demande d'outillage complète
@@ -195,8 +164,8 @@ export class NewToolPage implements OnInit {
       return;
     }
 
-    if (this.newToolRequestForm.invalid || this.specSboForm.invalid) {
-      this.newToolRequestForm.markAllAsTouched();
+    if (this.specSboForm.invalid) {
+    // this.newToolRequestForm.markAllAsTouched();
       this.specSboForm.markAllAsTouched();
       return;
     }
@@ -204,12 +173,14 @@ export class NewToolPage implements OnInit {
     this.isCreatingRequest.set(true);
 
   // Construire l'objet ToolRequest
-    const toolRequest: ToolRequestCreation = {
+    const toolRequest: SpecSBOCreation = {
+
       type: RequestType.SBO,
-      bloquantProd: this.newToolRequestForm.value.bloquantProd,
-      dateBesoin: this.newToolRequestForm.value.dateBesoin,
+
+      bloquantProd: this.specSboForm.value.bloquantProd,
+      dateBesoin: this.specSboForm.value.dateBesoin,
       tool: this.createdTool(),
-      typeData: this.specSboForm.value
+      ...this.specSboForm.value
     };
 
     // Soumettre la demande
@@ -237,31 +208,29 @@ export class NewToolPage implements OnInit {
     });
   }
 
+  onCreatedTool(tool: Tool) {
+    this.createdTool.set(tool);
+  }
   /**
   * Réinitialiser tous les formulaires
   */
   private resetForms(): void {
-    this.newToolForm.reset();
-    this.newToolRequestForm.reset({
-      type: RequestType.SBO,
-      bloquantProd: false
-    });
     this.specSboForm.reset();
-    this.createdTool.set(null);
+    // this.createdTool.set(null);
   }
 
   // ============================================================================
   // GETTERS POUR LE TEMPLATE
   // ============================================================================
 
-  get canCreateTool(): boolean {
-    return this.newToolForm.valid && !this.isCreatingTool();
-  }
+  // get canCreateTool(): boolean {
+  //   return this.newToolForm.valid && !this.isCreatingTool();
+  // }
 
   get canCreateRequest(): boolean {
     return (
       this.createdTool() !== null &&
-      this.newToolRequestForm.valid &&
+      // this.newToolRequestForm.valid &&
       this.specSboForm.valid &&
       !this.isCreatingRequest()
     );

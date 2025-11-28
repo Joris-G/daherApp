@@ -1,4 +1,4 @@
-import { Tool } from "src/app/_interfaces/tooling/tool";
+import { Tool } from "src/app/tooling/tool";
 
 export const mockTools: Tool[] = [
   {

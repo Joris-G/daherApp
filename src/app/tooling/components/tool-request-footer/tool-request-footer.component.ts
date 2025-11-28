@@ -6,7 +6,7 @@ import { PdfService } from 'src/app/shared/services/divers/pdf.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor } from '@angular/common';
-import { RequestStatus } from 'src/app/_interfaces/tooling/tool-request-types';
+import { RequestStatus } from 'src/app/tooling/tool-request-types';
 
 @Component({
     selector: 'app-tool-request-footer',

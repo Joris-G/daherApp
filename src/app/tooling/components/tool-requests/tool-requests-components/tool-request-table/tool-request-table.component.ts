@@ -3,13 +3,13 @@ import { MatSort } from '@angular/material/sort';
 import { trigger, state, style } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { NavController, IonicModule } from '@ionic/angular';
-import { RequestType, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
+import { RequestType, ToolRequest } from 'src/app/tooling/tool-request-types';
 import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { DatePipe } from '@angular/common';
 import { HeaderRowDirective } from '../../../../../shared/directives/header-row.directive';
 import { DataRowDirective } from '../../../../../shared/directives/data-row.directive';
-import { Tool, OutillNoRefSAP } from 'src/app/_interfaces/tooling/tool';
+import { Tool, OutillNoRefSAP } from 'src/app/tooling/tool';
 
 
 @Component({

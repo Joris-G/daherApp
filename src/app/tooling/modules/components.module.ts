@@ -17,7 +17,7 @@ import { ToolListPage } from '../components/tool-list/tool-list.page';
 import { ToolRequestFooterComponent } from '../components/tool-request-footer/tool-request-footer.component';
 import { ToolRequestMenuComponent } from '../components/tool-request-menu/tool-request-menu.component';
 import { ToolRequestsPage } from '../components/tool-requests/tool-requests.page';
-import { ToolingPage } from '../pages/tooling.page';
+import { ToolingPage } from '../tooling.page';
 import { ToolRequestFiltersComponent } from
   '../components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.component';
 import { ToolRequestTableComponent } from

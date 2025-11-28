@@ -2,7 +2,7 @@ import { Component, inject, Signal } from '@angular/core';
 import { ToolRequestFiltersComponent } from './tool-requests-components/tool-request-filters/tool-request-filters.component';
 import { ToolRequestTableComponent } from './tool-requests-components/tool-request-table/tool-request-table.component';
 import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
+import { ToolRequest } from 'src/app/tooling/tool-request-types';
 import { AsyncPipe } from '@angular/common';
 import { ToolRequestFilterService } from './tool-requests-components/tool-request-filters/tool-request-filters.service';
 

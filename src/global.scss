@@ -27,40 +27,40 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
-.simple-alert {
-  .alert-head {
-    .alert-title {
-    }
-    .alert-sub-title {
-    }
-  }
-  .alert-message {
-  }
-  .alert-button-group {
-  }
-}
+// .simple-alert {
+//   .alert-head {
+//     .alert-title {
+//     }
+//     .alert-sub-title {
+//     }
+//   }
+//   .alert-message {
+//   }
+//   .alert-button-group {
+//   }
+// }
 
-ion-modal.fullscreen {
-  --width: 100%;
-  --height: 100%;
-  --border-radius: 0;
-}
+// ion-modal.fullscreen {
+//   --width: 100%;
+//   --height: 100%;
+//   --border-radius: 0;
+// }
 
-ion-modal.modal-adjusted{
- // height: fit-content;
-  // --height: auto;
-}
+// ion-modal.modal-adjusted{
+//  // height: fit-content;
+//   // --height: auto;
+// }
 
-ion-item[ng-reflect-button]{
-  --background-hover: var(--ion-color-secondary);
-  --background-hover-opacity: 0.8;
+// ion-item[ng-reflect-button]{
+//   --background-hover: var(--ion-color-secondary);
+//   --background-hover-opacity: 0.8;
 
-}
+// }
 
-ion-item[ng-reflect-button=false]{
-  --background-focused: var(--ion-color-secondary);
-  --background-focused-opacity: 0.8;
-}
-[slot="helper"]{
-  font-size: 14px;
-}
+// ion-item[ng-reflect-button=false]{
+//   --background-focused: var(--ion-color-secondary);
+//   --background-focused-opacity: 0.8;
+// }
+// [slot="helper"]{
+//   font-size: 14px;
+// }

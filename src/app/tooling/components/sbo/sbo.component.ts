@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
-import { SpecSBO } from 'src/app/_interfaces/tooling/tool-request-types';
+import { SpecSBORequest } from 'src/app/tooling/tool-request-types';
 
 @Component({
     selector: 'app-sbo',
@@ -11,7 +11,7 @@ import { SpecSBO } from 'src/app/_interfaces/tooling/tool-request-types';
     imports: [IonicModule, DatePipe],
 })
 export class SboComponent implements OnInit {
-  @Input() spec: SpecSBO;
+  @Input() spec: SpecSBORequest;
   @Input() tool: any;
   constructor() { }
 

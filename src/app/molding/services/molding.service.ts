@@ -9,7 +9,7 @@ import { KitService } from './kit.service';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { CoreService } from './core.service';
-import { Tool } from 'src/app/_interfaces/tooling/tool';
+import { Tool } from 'src/app/tooling/tool';
 import { OtherMaterialsService } from './other-materials.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';

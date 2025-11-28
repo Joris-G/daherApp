@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { NavController, IonicModule } from '@ionic/angular';
-import { RequestStatus, SpecMaintRep, ToolRequest }
-  from 'src/app/_interfaces/tooling/tool-request-types';
+import { RequestStatus, SpecMaintRepRequest, ToolRequest }
+  from 'src/app/tooling/tool-request-types';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { catchError, switchMap, tap } from 'rxjs/operators';
@@ -52,7 +52,7 @@ export class MaintenanceReparationPage {
 
   // Données chargées
   toolRequest = signal<ToolRequest | null>(null);
-  maintenance = signal<SpecMaintRep | null>(null);
+  maintenance = signal<SpecMaintRepRequest>(null);
   requestState = signal<RequestState | null>(null);
 
   // États de chargement/soumission
@@ -140,11 +140,11 @@ export class MaintenanceReparationPage {
    * Initialise les formulaires pour la création
    */
   private initializeFormsForCreation(): void {
-    this.toolRequestForm = this.formBuilder.createToolRequestForm({
-      bloquantProd: false,
-    });
+    // this.toolRequestForm = this.formBuilder.createToolRequestForm({
+    //   bloquantProd: false,
+    // });
 
-    this.maintenanceForm = this.formBuilder.createSpecMaintenanceForm();
+    // this.maintenanceForm = this.formBuilder.createSpecMaintenanceForm();
   }
 
   /**
@@ -152,28 +152,27 @@ export class MaintenanceReparationPage {
    */
   private initializeFormsForEdition(
     toolRequest: ToolRequest,
-    maintenance: SpecMaintRep
-  ): void {
-    // Formulaire ToolRequest
-    this.toolRequestForm = this.formBuilder.createToolRequestForm({
-      // type: toolRequest.type,
-      bloquantProd: toolRequest.bloquantProd,
-      dateBesoin: toolRequest.dateBesoin,
-      // groupeAffectation: toolRequest.groupeAffectation?.id,
-      toolingNote: toolRequest.toolingNote,
-    });
+    maintenance: SpecMaintRepRequest) {
+    // // Formulaire ToolRequest
+    // this.toolRequestForm = this.formBuilder.createToolRequestForm({
+    //   // type: toolRequest.type,
+    //   bloquantProd: toolRequest.bloquantProd,
+    //   dateBesoin: toolRequest.dateBesoin,
+    //   // groupeAffectation: toolRequest.groupeAffectation?.id,
+    //   toolingNote: toolRequest.toolingNote,
+    // });
 
-    // Formulaire Maintenance avec les items
-    this.maintenanceForm = this.formBuilder.createSpecMaintenanceForm({
-      sigle: maintenance.sigle,
-      dateValid: maintenance.dateValid,
-      userValideur: maintenance.userValideur?.id,
-      itemActionCorrective: maintenance.itemActionCorrective,
-    });
+    // // Formulaire Maintenance avec les items
+    // this.maintenanceForm = this.formBuilder.createMaintenanceItemForm(1,{
+    //   sigle: maintenance.sigle,
+    //   dateValid: maintenance.dateValid,
+    //   userValideur: maintenance.userValideur?.id,
+    //   itemActionCorrective: maintenance.itemActionCorrective,
+    // });
 
-    // Mettre à jour les objets en signal
-    this.toolRequest.set(toolRequest);
-    this.maintenance.set(maintenance);
+    // // Mettre à jour les objets en signal
+    // this.toolRequest.set(toolRequest);
+    // this.maintenance.set(maintenance);
   }
 
   // ============================================================================
@@ -230,7 +229,7 @@ export class MaintenanceReparationPage {
     this.errorMessage.set(null);
 
     // Construire l'objet SpecMaintenance
-    const maintenanceData: SpecMaintRep = this.buildMaintenanceFromForm();
+    const maintenanceData: SpecMaintRepRequest = this.buildMaintenanceFromForm();
 
     this.maintenanceService.createMaintenanceRequest(maintenanceData)
       .pipe(
@@ -279,7 +278,7 @@ export class MaintenanceReparationPage {
     };
 
     // 2. Mettre à jour la Maintenance
-    const maintenanceData: SpecMaintRep = {
+    const maintenanceData: SpecMaintRepRequest = {
       ...this.maintenance(),
       ...this.buildMaintenanceFromForm(),
     };
@@ -358,18 +357,18 @@ export class MaintenanceReparationPage {
   /**
    * Construit l'objet SpecMaintenance depuis les formulaires
    */
-  private buildMaintenanceFromForm(): SpecMaintRep {
+  private buildMaintenanceFromForm(): SpecMaintRepRequest {
     const maintenanceFormValue = this.maintenanceForm.getRawValue();
-
-    return {
-      outillage: maintenanceFormValue.outillage,
-      outillNoRefSAP: maintenanceFormValue.outillNoRefSAP,
-      itemActionCorrective: maintenanceFormValue.itemActionCorrective,
-      sigle: maintenanceFormValue.sigle,
-      dateValid: maintenanceFormValue.dateValid,
-      userValideur: maintenanceFormValue.userValideur,
-      rep: maintenanceFormValue.rep,
-    };
+    return null;
+    // return {
+    //   outillage: maintenanceFormValue.outillage,
+    //   outillNoRefSAP: maintenanceFormValue.outillNoRefSAP,
+    //   itemActionCorrective: maintenanceFormValue.itemActionCorrective,
+    //   sigle: maintenanceFormValue.sigle,
+    //   dateValid: maintenanceFormValue.dateValid,
+    //   userValideur: maintenanceFormValue.userValideur,
+    //   rep: maintenanceFormValue.rep,
+    // };
   }
 
   /**

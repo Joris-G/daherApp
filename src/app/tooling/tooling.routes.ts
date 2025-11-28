@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { ToolingPage } from "./pages/tooling.page";
+import { ToolingPage } from "./tooling.page";
 import { NewToolPage } from "./components/new-tool/new-tool.page";
 import { ToolRequestsPage } from "./components/tool-requests/tool-requests.page";
 import { RoleGuard } from "../shared/services/users/role.guard";

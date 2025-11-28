@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { OutillNoRefSAP } from 'src/app/_interfaces/tooling/tool';
-import { MaintenanceItem, RequestType, SpecCtrlFormValue, SpecMaintenanceFormValue, SpecSBOFormValue, ToolRequestCreation, ToolRequestFormValue } from 'src/app/_interfaces/tooling/tool-request-types';
+import { OutillNoRefSAP } from 'src/app/tooling/tool';
+import { MaintenanceItem, SpecCtrlCreation, SpecSBOCreation } from 'src/app/tooling/tool-request-types';
 
 // ============================================================================
 // TYPES POUR TYPED FORMS
@@ -22,16 +22,15 @@ export class ToolRequestFormBuilder {
   // TOOL REQUEST PRINCIPAL
   // ==========================================================================
 
-  createToolRequestForm(initialValue?: Partial<ToolRequestFormValue>): FormGroup {
-    return this.fb.group({
-      tool:[initialValue.tool ?? null, Validators.required],
-      bloquantProd: [initialValue?.bloquantProd ?? false, Validators.required],
-      dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
-      groupeAffectation: [initialValue?.groupeAffectation ?? null],
-      toolingNote: [initialValue?.toolingNote ?? ''],
-      typeData: initialValue?.typeData ?? null,
-    });
-  }
+  // createToolRequestForm(initialValue?: Partial<SpecSBOCreation>): FormGroup {
+  //   return this.fb.group({
+  //     tool:[initialValue.tool ?? null, Validators.required],
+  //     bloquantProd: [initialValue?.bloquantProd ?? false, Validators.required],
+  //     dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
+  //     groupeAffectation: [initialValue?.groupeAffectation ?? null],
+  //     toolingNote: [initialValue?.toolingNote ?? ''],
+  //   });
+  // }
 
   // ==========================================================================
   // OUTILLAGE SANS REF SAP
@@ -49,7 +48,7 @@ export class ToolRequestFormBuilder {
   // SPÉCIFICATIONS CONTRÔLE
   // ==========================================================================
 
-  createSpecCtrlForm(initialValue?: Partial<SpecCtrlFormValue>): FormGroup {
+  createSpecCtrlForm(initialValue?: Partial<SpecCtrlCreation>): FormGroup {
     return this.fb.group({
       // Informations plan
       refPlan: [initialValue?.refPlan ?? '', Validators.required],
@@ -73,7 +72,7 @@ export class ToolRequestFormBuilder {
       visaControleur: [initialValue?.visaControleur ?? ''],
 
       // Options
-      immobilisationOutillage: [initialValue?.immobilisationOutillage ?? false]
+      // immobilisationOutillage: [initialValue?.immobilisationOutillage ?? false]
     });
   }
 
@@ -97,24 +96,24 @@ export class ToolRequestFormBuilder {
   // SPÉCIFICATIONS MAINTENANCE (avec FormArray)
   // ==========================================================================
 
-  createSpecMaintenanceForm(initialValue?: Partial<SpecMaintenanceFormValue>): FormGroup {
-    const itemsArray = this.fb.array(
-      initialValue?.itemActionCorrective?.length
-        ? initialValue.itemActionCorrective.map((item, index) => 
-            this.createMaintenanceItemForm(index + 1, item)
-          )
-        : [this.createMaintenanceItemForm(1)]
-    );
+  // createSpecMaintenanceForm(initialValue?: Partial<SpecMaintenance>): FormGroup {
+  //   const itemsArray = this.fb.array(
+  //     initialValue?.itemActionCorrective?.length
+  //       ? initialValue.itemActionCorrective.map((item, index) => 
+  //           this.createMaintenanceItemForm(index + 1, item)
+  //         )
+  //       : [this.createMaintenanceItemForm(1)]
+  //   );
 
-    return this.fb.group({
-      image: [initialValue?.image ?? ''],
-      fichier: [initialValue?.fichier ?? ''],
-      sigle: [initialValue?.sigle ?? ''],
-      userValideur: [initialValue?.userValideur ?? null],
-      dateValid: [initialValue?.dateValid ?? null],
-      itemActionCorrective: itemsArray
-    });
-  }
+  //   return this.fb.group({
+  //     image: [initialValue?.image ?? ''],
+  //     fichier: [initialValue?.fichier ?? ''],
+  //     sigle: [initialValue?.sigle ?? ''],
+  //     userValideur: [initialValue?.userValideur ?? null],
+  //     dateValid: [initialValue?.dateValid ?? null],
+  //     itemActionCorrective: itemsArray
+  //   });
+  // }
 
   // Ajouter un item de maintenance
   addMaintenanceItem(form: FormGroup): void {
@@ -139,10 +138,11 @@ export class ToolRequestFormBuilder {
   // SPÉCIFICATIONS SBO (Nouvelle demande outillage)
   // ==========================================================================
 
-  createSpecSBOForm(initialValue?: Partial<SpecSBOFormValue>): FormGroup {
+  createSpecSBOForm(initialValue?: Partial<SpecSBOCreation>): FormGroup {
     return this.fb.group({
       title: [initialValue?.title ?? '', Validators.required],
       description: [initialValue?.description ?? '', Validators.required],
+      dateBesoin:['', Validators.required]
       // aircraftProgram: [initialValue?.aircraftProgram ?? '', Validators.required]
     });
   }
@@ -163,13 +163,13 @@ export class ToolRequestFormBuilder {
   // FORMULAIRE COMPLET NEW TOOL REQUEST (combiné)
   // ==========================================================================
 
-  createNewToolRequestForm(): FormGroup {
-    return this.fb.group({
-      tool: this.createNewToolForm(),
-      toolRequest: this.createToolRequestForm(),
-      specSbo: this.createSpecSBOForm()
-    });
-  }
+  // createNewToolRequestForm(): FormGroup {
+  //   return this.fb.group({
+  //     tool: this.createNewToolForm(),
+  //     toolRequest: this.createToolRequestForm(),
+  //     specSbo: this.createSpecSBOForm()
+  //   });
+  // }
 }
 
 // ============================================================================

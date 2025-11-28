@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UploadFileService } from 'src/app/shared/services/upload-file.service';
-import { MaintenanceItem } from 'src/app/_interfaces/tooling/tool-request-types';
+import { MaintenanceItem } from 'src/app/tooling/tool-request-types';
 import { IonicModule } from '@ionic/angular';
 import { NgIf } from '@angular/common';
 import { MaintenanceItemFormComponent } from '../maintenance-item-form/maintenance-item-form.component';

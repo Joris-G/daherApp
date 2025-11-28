@@ -4,7 +4,7 @@ import { IonSelect, IonicModule } from '@ionic/angular';
 import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
 import { NgFor } from '@angular/common';
 import { ToolRequestFilterService } from './tool-request-filters.service';
-import { ToolRequestFilter } from 'src/app/_interfaces/tooling/tool-request-filters';
+import { ToolRequestFilter } from 'src/app/tooling/tool-request-filters';
 
 @Component({
     selector: 'app-tool-request-filters',

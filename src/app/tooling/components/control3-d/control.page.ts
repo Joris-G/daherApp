@@ -6,7 +6,7 @@ import { RequestState, ToolRequestManager } from '../../services/tool-request-ma
 import { Control3DFormComponent } from './control3-dform/control3-dform.component';
 import { ToolRequestFooterComponent } from '../tool-request-footer/tool-request-footer.component';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter } from '@ionic/angular/standalone';
-import { RequestStatus, ToolRequest, ToolRequestCreation } from 'src/app/_interfaces/tooling/tool-request-types';
+import { RequestStatus, SpecCtrlCreation, ToolRequest } from 'src/app/tooling/tool-request-types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToolRequestService } from '../../services/tool-request.service';
 import { ActivatedRoute } from '@angular/router';
@@ -86,7 +86,7 @@ export class Control3DPage {
   // ============================================================================
   // HANDLERS D'ÉVÉNEMENTS
   // ============================================================================
-  protected onSubmit(toolRequest: ToolRequestCreation) {
+  protected onSubmit(toolRequest: SpecCtrlCreation) {
     this.loaderService.startLoading('Création de la demande');
 
     this.toolRequestService.createToolRequest(toolRequest)

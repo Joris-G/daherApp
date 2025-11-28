@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { RequestService } from 'src/app/shared/services/request.service';
 import { Molding } from 'src/app/_interfaces/molding/molding';
-import { Tool } from 'src/app/_interfaces/tooling/tool';
+import { Tool } from 'src/app/tooling/tool';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

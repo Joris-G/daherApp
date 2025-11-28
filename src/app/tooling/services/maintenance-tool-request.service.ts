@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
-import { MaintenanceItem, SpecMaintRep, ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
+import { MaintenanceItem, SpecMaintRepRequest, ToolRequest } from 'src/app/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
 import { catchError, concatMap, finalize, map, switchMap, tap } from 'rxjs/operators';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
@@ -15,7 +15,7 @@ interface MaintenanceItemResponse extends MaintenanceItem {
     id: number;
 }
 
-interface MaintenanceResponse extends SpecMaintRep {
+interface MaintenanceResponse extends SpecMaintRepRequest {
     id: number;
 }
 
@@ -48,7 +48,7 @@ export class MaintenanceToolRequestService {
      * 2. Crée la demande de maintenance avec les références des items
      */
     createMaintenanceRequest(
-        maintenanceSpec: SpecMaintRep
+        maintenanceSpec: SpecMaintRepRequest
     ): Observable<MaintenanceResponse> {
         this.loaderService.startLoading('Création de la demande de maintenance...');
 
@@ -83,7 +83,7 @@ export class MaintenanceToolRequestService {
      * 2. Met à jour la demande de maintenance
      */
     updateMaintenanceRequest(
-        maintenanceSpec: SpecMaintRep
+        maintenanceSpec: SpecMaintRepRequest
     ): Observable<MaintenanceResponse> {
         if (!maintenanceSpec.id) {
             return throwError(() => new Error('ID de maintenance manquant pour la mise à jour'));
@@ -121,17 +121,17 @@ export class MaintenanceToolRequestService {
      */
     loadMaintenanceData(toolRequestId: string): Observable<{
         toolRequest: ToolRequest;
-        specMaintenance: SpecMaintRep;
+        specMaintenance: SpecMaintRepRequest;
     }> {
         this.loaderService.startLoading('Chargement de la demande de maintenance...');
 
         return this.toolReqService.getToolRequest(toolRequestId).pipe(
             concatMap((toolRequest) => {
-                if (!toolRequest.typeData.id) {
+                if (!toolRequest.id) {
                     return throwError(() => new Error('Aucune maintenance associée à cette demande'));
                 }
 
-                return this.getMaintenance(toolRequest.typeData.id).pipe(
+                return this.getMaintenance(toolRequest.id).pipe(
                     map((specMaintenance) => ({
                         toolRequest,
                         specMaintenance
@@ -152,7 +152,7 @@ export class MaintenanceToolRequestService {
     /**
      * Charge uniquement les données de maintenance (sans la ToolRequest)
      */
-    getMaintenance(maintenanceId: number): Observable<SpecMaintRep> {
+    getMaintenance(maintenanceId: number): Observable<SpecMaintRepRequest> {
         if (!maintenanceId) {
             return of(this.createEmptyMaintenance());
         }
@@ -269,7 +269,7 @@ export class MaintenanceToolRequestService {
      * Construit le payload pour l'API de maintenance
      */
     private buildMaintenancePayload(
-        maintenanceSpec: SpecMaintRep,
+        maintenanceSpec: SpecMaintRepRequest,
         items: MaintenanceItemResponse[]
     ): any {
         return {
@@ -281,10 +281,10 @@ export class MaintenanceToolRequestService {
                     ? maintenanceSpec.outillage
                     : `/api/tools/${maintenanceSpec.outillage.id}`)
                 : null,
-            userCreat: maintenanceSpec.userCreat
-                ? (typeof maintenanceSpec.userCreat === 'string'
-                    ? maintenanceSpec.userCreat
-                    : `/api/users/${maintenanceSpec.userCreat.id}`)
+            demandeur: maintenanceSpec.demandeur
+                ? (typeof maintenanceSpec.demandeur === 'string'
+                    ? maintenanceSpec.demandeur
+                    : `/api/users/${maintenanceSpec.demandeur.id}`)
                 : null,
         };
     }
@@ -313,16 +313,17 @@ export class MaintenanceToolRequestService {
     /**
      * Crée un objet de maintenance vide
      */
-    private createEmptyMaintenance(): SpecMaintRep {
-        return {
-            itemActionCorrective: [],
-            rep: [],
-            outillNoRefSAP: {
-                description: '',
-                identification: '',
-                localisation: ''
-            }
-        };
+    private createEmptyMaintenance(): SpecMaintRepRequest {
+        return null;
+    // return {
+    //     itemActionCorrective: [],
+    //     rep: [],
+    //     outillNoRefSAP: {
+    //         description: '',
+    //         identification: '',
+    //         localisation: ''
+    //     }
+    // };
     }
 
     /**

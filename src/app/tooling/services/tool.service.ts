@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Tool, ToolCreation } from 'src/app/_interfaces/tooling/tool';
+import { Tool, ToolCreation } from 'src/app/tooling/tool';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

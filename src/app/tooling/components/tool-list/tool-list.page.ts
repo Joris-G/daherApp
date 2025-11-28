@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
+import { ToolRequest } from 'src/app/tooling/tool-request-types';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { IonicModule } from '@ionic/angular';

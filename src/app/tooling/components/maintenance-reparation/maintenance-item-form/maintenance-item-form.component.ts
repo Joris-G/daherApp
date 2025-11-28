@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, IonicModule } from '@ionic/angular';
-import { MaintenanceItem } from 'src/app/_interfaces/tooling/tool-request-types';
+import { MaintenanceItem } from 'src/app/tooling/tool-request-types';
 import { NgIf, DatePipe } from '@angular/common';
 
 @Component({

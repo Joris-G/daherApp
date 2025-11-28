@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { share } from 'rxjs/operators';
-import { ToolRequest } from 'src/app/_interfaces/tooling/tool-request-types';
+import { ToolRequest } from 'src/app/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 

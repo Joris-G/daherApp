@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Tool } from 'src/app/_interfaces/tooling/tool';
+import { Tool } from 'src/app/tooling/tool';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { ToolInputService } from './tool-input.service';
 import { IonicModule } from '@ionic/angular';

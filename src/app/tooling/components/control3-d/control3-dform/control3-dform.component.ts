@@ -3,7 +3,7 @@ import { Component, computed, effect, inject, input, output, signal } from '@ang
 import { NgIf, NgFor, DatePipe, KeyValuePipe } from '@angular/common';
 import { EditorComponent } from '@tinymce/tinymce-angular';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
-import { MoyenMesure, RequestStatus, ToolRequest, ToolRequestCreation, TypeRapport } from 'src/app/_interfaces/tooling/tool-request-types';
+import { MoyenMesure, RequestStatus, SpecCtrlCreation, ToolRequest, TypeRapport } from 'src/app/tooling/tool-request-types';
 import { ToolInputComponent } from '../../tool-input/tool-input.component';
 import { IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonCardTitle, IonText, IonIcon, IonModal, IonContent, IonSelectOption, IonNote, IonInput, IonTextarea, IonSelect, IonToggle, IonDatetime } from '@ionic/angular/standalone';
 
@@ -46,7 +46,7 @@ export class Control3DFormComponent {
   // ============================================================================
   // OUTPUTS (Signals modernes)
   // ============================================================================
-  readonly submit = output<ToolRequestCreation>();
+  readonly submit = output<SpecCtrlCreation>();
   readonly update = output<Partial<ToolRequest>>();
   readonly statusChange = output<RequestStatus>();
 
@@ -119,15 +119,12 @@ export class Control3DFormComponent {
     effect(() => {
       console.log("hello from effect ctrl3D");
       const toolReq = this.toolRequest();
-      const ctrlReq = toolReq.typeData;
 
       if (toolReq) {
         this.toolRequestForm.patchValue(toolReq, { emitEvent: false });
+        this.controlForm.patchValue(toolReq, { emitEvent: false });
       }
 
-      if (ctrlReq) {
-        this.controlForm.patchValue(ctrlReq, { emitEvent: false });
-      }
     });
 
     // Surveiller la validité du formulaire
@@ -151,7 +148,7 @@ export class Control3DFormComponent {
 
   protected handleSubmit() {
     if (this.controlForm.valid) {
-      const data: ToolRequest = {
+      const data: SpecCtrlCreation = {
         ...this.toolRequestForm.value,
         typeData: this.controlForm.value
       };
