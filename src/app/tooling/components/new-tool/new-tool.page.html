@@ -11,7 +11,7 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <app-create-tool (onCreatedTool)="onCreatedTool($event)" />
+      <app-create-tool />
     </ion-card-content>
   
   </ion-card>
@@ -61,7 +61,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar color="light">
-    <ion-button [disabled]="specSboForm.invalid" (click)="onCreateToolRequest()" slot=end expand="block" color=primary>
+    <ion-button [disabled]="!canCreateRequest" (click)="onCreateToolRequest()" slot=end expand="block" color=primary>
       Créer la demande
     </ion-button>
   </ion-toolbar>

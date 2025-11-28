@@ -20,7 +20,8 @@
           </ion-item>
 
         <ion-toolbar>
-          <ion-button slot=end (click)="onCreateTool()" expand="block" color=primary>
+          <ion-button slot=end (click)="onCreateTool()" expand="block" color=primary
+            [disabled]="newToolForm.invalid || store.isCreatingTool()">
             Créer l'OT
           </ion-button>
         </ion-toolbar>

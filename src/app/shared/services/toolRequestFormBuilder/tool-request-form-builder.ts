@@ -8,9 +8,8 @@ import { MaintenanceItem, SpecCtrlCreation, SpecSBOCreation } from 'src/app/tool
 // ============================================================================
 
 // Type helper pour créer des FormGroups typés
-type TypedFormGroup<T> = FormGroup<{
-  [K in keyof T]: FormControl<T[K]>;
-}>;
+type TypedFormGroup<T> = FormGroup<{ [K in keyof T]: FormControl<T[K]>; }>;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -138,6 +137,11 @@ export class ToolRequestFormBuilder {
   // SPÉCIFICATIONS SBO (Nouvelle demande outillage)
   // ==========================================================================
 
+  /**
+     * Crée le FormGroup pour les spécifications SBO d'une demande.
+     * @param initialValue - Valeurs initiales optionnelles.
+     * @returns Le FormGroup typé pour les spécifications SBO.
+     */
   createSpecSBOForm(initialValue?: Partial<SpecSBOCreation>): FormGroup {
     return this.fb.group({
       title: [initialValue?.title ?? '', Validators.required],
@@ -146,11 +150,15 @@ export class ToolRequestFormBuilder {
       // aircraftProgram: [initialValue?.aircraftProgram ?? '', Validators.required]
     });
   }
-
   // ==========================================================================
   // NOUVEAU TOOL (création d'outillage)
   // ==========================================================================
 
+  /**
+     * Crée le FormGroup pour les données de création d'un nouvel outil (ToolCreation).
+     * @param initialValue - Valeurs initiales optionnelles.
+     * @returns Le FormGroup pour la création d'outil.
+     */
   createNewToolForm(initialValue?: { sapToolNumber?: string; identification?: string; designation?: string }): FormGroup {
     return this.fb.group({
       sapToolNumber: [initialValue?.sapToolNumber ?? '', Validators.required],
