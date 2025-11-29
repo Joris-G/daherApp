@@ -181,7 +181,17 @@ export const handlers = [
 
 
   http.get('/api/tools/request', async ({ request }) => {
-    return HttpResponse.json(mockToolRequests, { status: 201 });
+    const allRequests: ToolRequest[] = mockToolRequests.map((request: ToolRequestStorage) => {
+      const newRequest: ToolRequest = {
+        ...request,
+        demandeur: mockUsers[request.demandeurId - 1],
+        title: "",
+        description: "",
+        tool: mockTools[0]
+      };
+      return newRequest;
+    })
+    return HttpResponse.json(allRequests, { status: 201 });
   }),
 
 

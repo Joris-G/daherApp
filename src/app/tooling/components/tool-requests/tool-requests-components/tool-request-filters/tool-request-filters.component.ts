@@ -1,9 +1,6 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { IonSelect, IonicModule } from '@ionic/angular';
-
-import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
 import { NgFor } from '@angular/common';
-import { ToolRequestFilterService } from './tool-request-filters.service';
 import { ToolRequestFilter } from 'src/app/tooling/tool-request-filters';
 
 @Component({

@@ -4,7 +4,6 @@ import { trigger, state, style } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { NavController, IonicModule } from '@ionic/angular';
 import { RequestType, ToolRequest } from 'src/app/tooling/tool-request-types';
-import { ToolRequestsService } from '../../tool-requests-data/tool-requests.service';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { DatePipe } from '@angular/common';
 import { HeaderRowDirective } from '../../../../../shared/directives/header-row.directive';
@@ -25,7 +24,7 @@ import { Tool, OutillNoRefSAP } from 'src/app/tooling/tool';
             })),
         ])
     ],
-    standalone: true,
+  standalone: true,
   imports: [IonicModule, HeaderRowDirective, DataRowDirective, DatePipe]
 })
 export class ToolRequestTableComponent implements OnInit {
@@ -46,16 +45,15 @@ export class ToolRequestTableComponent implements OnInit {
   RequestType = RequestType
 
   @ViewChild(MatSort) sort: MatSort;
-  public newToolRequestsList$: Observable<ToolRequest[]>;
+  // public newToolRequestsList$: Observable<ToolRequest[]>;
   public displayedRequestColumns: string[] = ['statut', 'id', 'tool', 'createdAt', 'userCreat', 'needDate', 'buttons'];
   public isAdmin = false;
 
   constructor(
     private navCtrl: NavController,
     private authGuard: RoleGuard,
-    private toolRequestsService: ToolRequestsService
   ) {
-    this.newToolRequestsList$ = this.toolRequestsService.filtersList.asObservable();
+    // this.newToolRequestsList$ = this.toolRequestsService.filtersList.asObservable();
   }
 
   openRequestClick(requestToOpen: ToolRequest) {

@@ -2,13 +2,18 @@ import { computed, inject, Injectable, signal, Signal } from "@angular/core";
 import { filterSelectObjects, ToolRequestFilter } from "src/app/tooling/tool-request-filters";
 import { ToolRequest } from "src/app/tooling/tool-request-types";
 import { ToolRequestService } from "src/app/tooling/services/tool-request.service";
+import { ToolRequestListStore } from "src/app/tooling/stores/tool-request-list.store";
 
 @Injectable({ providedIn: "root" })
+  /**
+   * Service de gestion des filtres appliqués à la liste des demandes d'outillage.
+   */
 export class ToolRequestFilterService {
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
-  private readonly toolRequestService = inject(ToolRequestService);
+  private readonly toolRequestListStore = inject(ToolRequestListStore);
+  // private readonly toolRequestService = inject(ToolRequestService);
 
   ////////////////////////////////////////////////////
   //PROPRIETES
@@ -53,7 +58,7 @@ export class ToolRequestFilterService {
   });
 
   public readonly filteredToolRequestList: Signal<ToolRequest[]> = computed(() => {
-    const allRequests = this.toolRequestService.toolRequestList();
+    const allRequests = this.toolRequestListStore.toolRequestList();
     const activeFilters = this.selectedFilters();
 
     if (Object.keys(activeFilters).length === 0) {

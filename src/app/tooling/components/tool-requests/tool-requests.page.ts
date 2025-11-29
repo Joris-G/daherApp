@@ -3,8 +3,9 @@ import { ToolRequestFiltersComponent } from './tool-requests-components/tool-req
 import { ToolRequestTableComponent } from './tool-requests-components/tool-request-table/tool-request-table.component';
 import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { ToolRequest } from 'src/app/tooling/tool-request-types';
-import { AsyncPipe } from '@angular/common';
 import { ToolRequestFilterService } from './tool-requests-components/tool-request-filters/tool-request-filters.service';
+import { ToolRequestService } from '../../services/tool-request.service';
+import { ToolRequestListStore } from '../../stores/tool-request-list.store';
 
 @Component({
     templateUrl: './tool-requests.page.html',
@@ -23,28 +24,30 @@ import { ToolRequestFilterService } from './tool-requests-components/tool-reques
     ToolRequestTableComponent,
     ],
 })
-
-/* TODO créer un observable pour écouter tout mouvement de demandes
-* => l'ordinateur qui affiche les datas stats ou listes des demandes seront màj automatiquement
-*/
+  /**
+   * Page d'affichage et de filtrage de la liste des demandes d'outillage.
+   * Utilise ToolRequestListStore pour la gestion des données de la liste.
+   */
 export class ToolRequestsPage {
   // ============================================================================
   // INJECTION DE DÉPENDANCES
   // ============================================================================
   protected readonly toolRequestFilterService: ToolRequestFilterService = inject(ToolRequestFilterService);
-
+  private readonly toolRequestListStore: ToolRequestListStore = inject(ToolRequestListStore);
   // ============================================================================
   // PROPRIÉTÉS
   // ============================================================================
+  /** Liste des demandes filtrées affichées dans le tableau. */
   protected readonly filteredToolRequestList: Signal<ToolRequest[]> = this.toolRequestFilterService.filteredToolRequestList;
+  /** Liste des filtres disponibles. */
   protected readonly toolRequestFilters = this.toolRequestFilterService.filters;
+  /** État de chargement de la liste. */
+  protected readonly isLoadingList = this.toolRequestListStore.isLoadingList; // Utilisation du Store
 
   public isAdmin = false;
 
-  constructor(
-    // private tableDataService: ToolRequestTableDataSourceService,
-  ) {
-    console.log("hello toolRequestPage");
+  ionViewWillEnter() {
+    this.reloadRequestList();
   }
 
   /**
@@ -61,8 +64,8 @@ export class ToolRequestsPage {
     }
   }
 
-  reloadClick() {
-    // this.tableDataService.refreshDatas();
+  reloadRequestList() {
+    this.toolRequestListStore.loadToolRequests();
   }
   nextClick() {
     // this.toolRequestsService.getNextPage();
