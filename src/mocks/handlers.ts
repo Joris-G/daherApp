@@ -97,9 +97,10 @@ export const handlers = [
 
   // POST - Créer un outillage
   http.post('/api/tools', async ({ request }) => {
+    const newToolId = mockTools.length + 1;
     const newTool = await request.json() as ToolCreation;
     const tool: Tool = {
-      id: mockTools.length + 1,
+      id: newToolId,
       ...newTool
     };
     mockTools.push(tool);
@@ -112,7 +113,7 @@ export const handlers = [
     const newToolRequestId = mockToolRequests.length + 1;
     const loggedInUserId = 1;
     const newToolRequestData = await request.json() as SpecCtrlCreation | SpecSBOCreation | SpecMaintRepRequest;
-    const toolRef = (newToolRequestData.tool as Tool).id || (newToolRequestData.tool as OutillNoRefSAP).identification || 'N/A';
+    const toolRef = (newToolRequestData.tool as Tool).id;
 
     const masterRequest: ToolRequestStorage = {
       id: newToolRequestId,
@@ -123,9 +124,10 @@ export const handlers = [
       bloquantProd: newToolRequestData.bloquantProd,
       dateBesoin: newToolRequestData.dateBesoin,
       // tool: newToolRequestData.tool,
-      toolReference: toolRef,
+      toolId: toolRef,
     };
     mockToolRequests.push(masterRequest);
+
     switch (masterRequest.type) {
       case RequestType.CONTROLE:
         const newSpecCtrlId = mockSpecCtrl.length + 1
@@ -187,7 +189,7 @@ export const handlers = [
         demandeur: mockUsers[request.demandeurId - 1],
         title: "",
         description: "",
-        tool: mockTools[0]
+        tool: mockTools[request.toolId - 1]
       };
       return newRequest;
     })
@@ -214,13 +216,8 @@ export const handlers = [
       return new HttpResponse(null, { status: 500 });
     }
 
-    let tool: Tool | OutillNoRefSAP | undefined;
-    if (typeof masterRequest.toolReference === 'number') {
-      tool = mockTools.find(t => t.id === masterRequest.toolReference);
-    } else {
-      // Simuler la résolution de l'objet OutillNoRefSAP (ou créer un mock basé sur la référence string)
-      // tool = { designation: masterRequest.toolReference, description: `Outillage sans Ref SAP : ${masterRequest.toolReference}` };
-    }
+    const tool: Tool | OutillNoRefSAP | undefined = mockTools.find(t => t.id === masterRequest.toolId);
+
     const resolvedBaseRequest = {
       ...masterRequest,
       demandeur: demandeur, // <-- L'objet User complet
@@ -228,7 +225,7 @@ export const handlers = [
     };
     // Supprimer les IDs qui ne font plus partie de l'objet final (ToolRequest)
     delete resolvedBaseRequest.demandeurId;
-    delete resolvedBaseRequest.toolReference;
+    delete resolvedBaseRequest.toolId;
 
     // 2. Trouver et joindre les détails
     // Note: Vous devez inclure le type SpecMaintRepStorage dans l'union `detailData`

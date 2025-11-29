@@ -64,7 +64,8 @@ export interface ToolRequestStorage {
   type: RequestType;
 
   demandeurId: number;
-  toolReference: number | string;
+  toolId: number;
+  // toolReference: number | string;
 
 
   bloquantProd: boolean;

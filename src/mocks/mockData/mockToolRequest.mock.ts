@@ -1,5 +1,6 @@
 import { RequestStatus, RequestType, ToolRequestStorage } from "src/app/tooling/tool-request-types";
 import { mockUsers } from "./mockUser.mock";
+import { mockTools } from "./mockTools.mock";
 
 export const mockToolRequests: ToolRequestStorage[] = [
   {
@@ -9,7 +10,7 @@ export const mockToolRequests: ToolRequestStorage[] = [
     dateBesoin: new Date(2025, 11, 25),
     demandeurId: mockUsers[0].id,
     statut: RequestStatus.SUBMITTED,
-    toolReference: "",
+    toolId: mockTools[0].id,
     type: RequestType.SBO
   }
 ]
