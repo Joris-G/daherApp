@@ -1,18 +1,18 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonFooter, IonInput, IonItem, IonText, IonToolbar, IonLabel } from '@ionic/angular/standalone';
 import { Editor, NgxEditorModule } from 'ngx-editor';
-import { RequestType, SpecSBOCreation } from 'src/app/tooling/tool-request-types';
+import { RequestType, SpecSBOCreation, SpecSBOUpdate, ToolRequest } from 'src/app/tooling/tool-request-types';
 import { Tool } from 'src/app/tooling/tool';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
 import { SboComponent } from '../sbo/sbo.component';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
 import { CreateToolComponent } from '../create-tool/create-tool.component';
 import { ToolRequestStore } from '../../stores/tool-request.store';
-import { take } from 'rxjs';
+import { filter, take } from 'rxjs';
 
 const MENU_ITEMS = [
   {
@@ -67,9 +67,16 @@ export class NewToolPage implements OnInit {
   private readonly programService = inject(ProgramsService);
   private readonly router = inject(Router);
   protected readonly store = inject(ToolRequestStore);
+  private readonly activatedRoute = inject(ActivatedRoute);
   // ============================================================================
   // PROPRIÉTÉS
   // ============================================================================
+  /** ID de la demande en cours de modification (null en mode création). */
+  private requestId: string | null = null; // 👈 Nouveau
+
+  /** Indique si la page est en mode édition. */
+  protected isEditMode = signal<boolean>(false); // 👈 Nouveau
+
 
   /** Configuration de la page */
   public page = {
@@ -92,6 +99,22 @@ export class NewToolPage implements OnInit {
   public editor: Editor;
 
   // ============================================================================
+  // CONSTRUCTEUR (Nouveau Contexte pour l'Effect)
+  // ============================================================================
+  constructor() {
+    // L'effect() doit être appelé ici, dans le constructeur,
+    // car c'est un contexte d'injection valide.
+
+    /** 2. Écouter les changements du Store pour préremplir le formulaire (Mode Édition) */
+    effect(() => {
+      const toolRequest = this.store.currentToolRequest();
+      // On vérifie le mode édition pour ne pas remplir le formulaire en mode création
+      if (toolRequest && this.isEditMode()) {
+        this.fillForm(toolRequest);
+      }
+    });
+  }
+  // ============================================================================
   // LIFECYCLE
   // ============================================================================
 
@@ -102,6 +125,28 @@ export class NewToolPage implements OnInit {
     this.initializeForms();
     this.loadPrograms();
     this.editor = new Editor();
+
+    // 1. Lire les paramètres de la route
+    this.activatedRoute.params.pipe(
+      filter(params => !!params['idToolRequest']), // S'assurer que l'ID existe
+      take(1)
+    ).subscribe(params => {
+      this.requestId = params['idToolRequest'];
+      if (this.requestId) {
+        this.isEditMode.set(true);
+        this.page.pageTitle = `Modification de la demande ${this.requestId}`;
+        this.loadToolRequestForEdit(this.requestId);
+      }
+    });
+
+    // // 2. Écouter les changements du Store pour préremplir le formulaire
+    // effect(() => {
+    //   const toolRequest = this.store.currentToolRequest()
+    //   if (toolRequest && this.isEditMode()) {
+    //     this.fillForm(toolRequest);
+    //   }
+    // });
+
   }
 
   /**
@@ -121,6 +166,33 @@ export class NewToolPage implements OnInit {
     this.specSboForm = this.formBuilderService.createSpecSBOForm();
   }
 
+  // ============================================================================
+  // CHARGEMENT DES DONNÉES EN MODE ÉDITION
+  // ============================================================================
+
+  /**
+   * Charge la demande existante via le Store et déclenche le préremplissage.
+   * @param id - L'ID de la demande à charger.
+   */
+  private loadToolRequestForEdit(id: string): void {
+    this.store.loadToolRequest(id);
+  }
+
+  /**
+   * Préremplit le formulaire avec les données de la demande.
+   * @param request - La demande d'outillage.
+   */
+  private fillForm(request: ToolRequest): void {
+    // NOTE: S'assurer que le FormBuilder gère les champs de ToolRequest pour le setValue
+    this.specSboForm.patchValue({
+      // Les champs de SpecSBOCreation dans votre formulaire
+      // program: request.,
+      type: request.type,
+      comment: request.toolingNote,
+      // ... autres champs SBO ...
+    });
+    // L'outil est mis à jour dans le store: store.createdTool est initialisé
+  }
 
   // ============================================================================
   // CHARGEMENT DES DONNÉES
@@ -146,21 +218,27 @@ export class NewToolPage implements OnInit {
   // ============================================================================
 
   /**
+     * Gère la soumission du formulaire : Création ou Mise à jour.
+     */
+  protected onSubmit(): void {
+    if (this.isEditMode()) {
+      this.onUpdateToolRequest();
+    } else {
+      this.onCreateToolRequest();
+    }
+  }
+
+  /**
  * Créer une demande d'outillage complète
  */
   onCreateToolRequest() {
     const createdTool: Tool = this.store.createdTool();
     // Validation
-    if (!createdTool) {
+    if (!createdTool || this.specSboForm.invalid) {
       console.error('Aucun outil créé');
-      return;
-    }
-
-    if (this.specSboForm.invalid) {
       this.specSboForm.markAllAsTouched();
       return;
     }
-
 
     // Construire l'objet ToolRequest
     const toolRequest: SpecSBOCreation = {
@@ -185,6 +263,35 @@ export class NewToolPage implements OnInit {
     this.router.navigate(['/tool-requests']); // Redirection après succès (simplifié ici)
   }
 
+
+  /**
+     * Met à jour une demande d'outillage complète
+     */
+  onUpdateToolRequest(): void {
+    const currentRequest = this.store.currentToolRequest();
+    if (!currentRequest || this.specSboForm.invalid) {
+      this.specSboForm.markAllAsTouched();
+      return;
+    }
+
+    // L'ID de la requête et l'ID de l'outil sont nécessaires pour la mise à jour
+    const requestToUpdate: SpecSBOUpdate = {
+      id: currentRequest.id,
+      // Assumer que l'outil ne change pas pour une SBO, ou qu'il est géré par la logique enfant
+      toolId: currentRequest.tool.id,
+      // Les valeurs du formulaire
+      ...this.specSboForm.value,
+      // L'API attend peut-être un type
+      type: RequestType.SBO,
+
+      // La logique de votre API pour l'UPDATE pourrait nécessiter plus de champs
+    };
+
+    this.store.updateToolRequest(requestToUpdate);
+
+    // Redirection après succès (simplifié, devrait être géré par effect)
+    this.router.navigate(['/tool-requests']);
+  }
   // NOTE: onCreatedTool n'est plus nécessaire car le composant enfant ne l'émet plus.
   // La page peut optionnellement utiliser store.setCreatedTool(tool) si elle gère un sélecteur d'outil existant.
 
@@ -204,7 +311,17 @@ export class NewToolPage implements OnInit {
     );
   }
 
-
+  /**
+     * Indique si la mise à jour de la demande est possible.
+     */
+  get canUpdateRequest(): boolean {
+    // Vérifier si nous sommes en mode édition et que les formulaires sont valides
+    return (
+      this.isEditMode() &&
+      this.specSboForm.valid &&
+      !this.store.isUpdatingRequest()
+    );
+  }
 
     // Soumettre la demande
   //   this.toolRequestService.createToolRequest(toolRequest).subscribe({

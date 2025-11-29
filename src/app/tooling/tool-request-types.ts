@@ -48,7 +48,9 @@ export interface ToolRequestBase {
   bloquantProd: boolean;
   createdAt: Date;
   dateBesoin: Date;
-  tool: Tool | OutillNoRefSAP;
+  //TODO Outillage NO REF
+  // tool: Tool | OutillNoRefSAP;
+  tool: Tool;
   groupeAffectation?: GroupeAffectation;
   affectation?: string[];
   dateAffectation?: Date;
@@ -103,8 +105,12 @@ export interface SpecCtrlRequest extends ToolRequestBase {
   visaControleur?: string;
   interventionDate?: Date;
 }
+
 export type SpecCtrlCreation = Omit<SpecCtrlRequest,
-'id'>
+  'id'>;
+
+export type SpecCtrlUpdate = Omit<SpecCtrlRequest,
+  'id'>;
 
 export interface SpecCtrlStorage {
   id: number;
@@ -165,8 +171,8 @@ export interface SpecSBORequest extends ToolRequestBase {
   description: string;
   aircraftProgram?: string;
 }
-export type SpecSBOCreation = Omit<SpecSBORequest, "id" | "aircraftProgram">
-
+export type SpecSBOCreation = Omit<SpecSBORequest, "id" | "aircraftProgram">;
+export type SpecSBOUpdate = Omit<SpecSBORequest, "id" | "aircraftProgram">;
 
 export interface SpecSBOStorage {
   id: number;

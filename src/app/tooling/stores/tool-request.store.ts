@@ -1,7 +1,7 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { finalize, tap } from 'rxjs';
 import { ToolRequestService } from '../services/tool-request.service';
-import { SpecSBOCreation } from '../tool-request-types';
+import { SpecSBOCreation, SpecSBOUpdate, ToolRequest } from '../tool-request-types';
 import { Tool, ToolCreation } from '../tool';
 import { ToolService } from '../services/tool.service';
 
@@ -15,14 +15,17 @@ export interface ToolRequestState {
   isCreatingRequest: boolean;
   createdTool: Tool | null;
   error: string | null;
+  currentToolRequest: ToolRequest | null; // 👈 Demande en cours de modification
+  isLoadingRequest: boolean; // 👈 Chargement de la demande existante
+  isUpdatingRequest: boolean; // 👈 Mise à jour de la demande
 }
 
 @Injectable({
   providedIn: 'root',
 })
 /**
- * Store pour la gestion de l'état et des actions liées à la création de demandes d'outillage (SBO).
- * Il gère la création de l'outil associé et la soumission de la demande en utilisant les Signals natifs d'Angular.
+ * Store pour la gestion de l'état et des actions liées à la création et à la modification 
+ * de demandes d'outillage (SBO).
  */
 export class ToolRequestStore {
   // ============================================================================
@@ -39,6 +42,9 @@ export class ToolRequestStore {
     isCreatingRequest: false,
     createdTool: null,
     error: null,
+    currentToolRequest: null,
+    isLoadingRequest: false,
+    isUpdatingRequest: false,
   });
 
   // ============================================================================
@@ -56,6 +62,15 @@ export class ToolRequestStore {
 
   /** Message d'erreur s'il y a eu un problème dans une des étapes. */
   public readonly error = computed(() => this.state().error);
+
+  /** La demande en cours d'édition. */
+  public readonly currentToolRequest = computed(() => this.state().currentToolRequest); // 👈 Nouveau
+
+  /** Indique si une demande existante est en cours de chargement (pour l'édition). */
+  public readonly isLoadingRequest = computed(() => this.state().isLoadingRequest); // 👈 Nouveau
+
+  /** Indique si la demande est en cours de mise à jour. */
+  public readonly isUpdatingRequest = computed(() => this.state().isUpdatingRequest); // 👈 Nouveau
 
   // ============================================================================
   // MUTATIONS (Méthodes Publiques d'Action)
@@ -105,6 +120,57 @@ export class ToolRequestStore {
   }
   
   /**
+     * Charge une demande existante par son ID pour l'édition.
+     * @param requestId - L'ID de la demande.
+     */
+  public loadToolRequest(requestId: string): void {
+    this.updateState({ isLoadingRequest: true, error: null, currentToolRequest: null });
+
+    this.toolRequestService.getToolRequest(requestId).pipe(
+      finalize(() => this.updateState({ isLoadingRequest: false }))
+    ).subscribe({
+      next: (request) => {
+        if (request) {
+          this.updateState({ currentToolRequest: request, createdTool: request.tool });
+        } else {
+          this.updateState({ error: `Demande avec ID ${requestId} non trouvée.` });
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement de la demande:', error);
+        this.updateState({ error: 'Erreur lors du chargement de la demande.' });
+      },
+    });
+  }
+  /**
+     * Met à jour une demande d'outillage SBO existante.
+     * @param requestToUpdate - Les données de mise à jour.
+     */
+  public updateToolRequest(requestToUpdate: SpecSBOUpdate): void {
+    const currentId = this.currentToolRequest()?.id;
+    if (!currentId) {
+      this.updateState({ error: 'ID de demande manquant pour la mise à jour.' });
+      return;
+    }
+
+    this.updateState({ isUpdatingRequest: true, error: null });
+
+    this.toolRequestService.updateToolRequest(requestToUpdate).pipe(
+      finalize(() => this.updateState({ isUpdatingRequest: false }))
+    ).subscribe({
+      next: () => {
+        console.log(`Demande ${currentId} mise à jour avec succès`);
+        this.resetCreationState();
+        // Optionnel: Recharger la liste des demandes ici via ToolRequestListStore si vous l'avez
+      },
+      error: (error) => {
+        console.error('Erreur lors de la mise à jour de la demande:', error);
+        this.updateState({ error: 'Erreur lors de la mise à jour de la demande.' });
+      },
+    });
+  }
+
+  /**
    * Définit l'outil créé manuellement (utilisé par le composant si nécessaire).
    * @param tool - L'outil créé ou null.
    */
@@ -116,7 +182,14 @@ export class ToolRequestStore {
    * Réinitialise l'état de création de l'outil et de la requête.
    */
   public resetCreationState(): void {
-    this.updateState({ createdTool: null, isCreatingTool: false, isCreatingRequest: false, error: null });
+    this.updateState({
+      createdTool: null,
+      isCreatingTool: false,
+      isCreatingRequest: false,
+      currentToolRequest: null,
+      isUpdatingRequest: false,
+      error: null
+    });
   }
 
   // ============================================================================
