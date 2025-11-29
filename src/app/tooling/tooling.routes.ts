@@ -15,6 +15,7 @@ export const TOOLING_ROUTES: Routes = [
     component: ToolingPage,
     children: [
       { path: 'new-tool', component: NewToolPage },
+      { path: 'new-tool/:id', component: NewToolPage },
       { path: 'requests', component: ToolRequestsPage },
       {
         path: 'list',

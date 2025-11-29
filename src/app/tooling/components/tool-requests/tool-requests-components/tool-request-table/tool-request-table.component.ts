@@ -1,14 +1,14 @@
-import { Component, input, InputSignal, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, input, InputSignal, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { trigger, state, style } from '@angular/animations';
-import { Observable } from 'rxjs';
-import { NavController, IonicModule } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { RequestType, ToolRequest } from 'src/app/tooling/tool-request-types';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { DatePipe } from '@angular/common';
 import { HeaderRowDirective } from '../../../../../shared/directives/header-row.directive';
 import { DataRowDirective } from '../../../../../shared/directives/data-row.directive';
 import { Tool, OutillNoRefSAP } from 'src/app/tooling/tool';
+import { IonCol, IonGrid, IonLabel, IonRow } from '@ionic/angular/standalone';
 
 
 @Component({
@@ -25,16 +25,21 @@ import { Tool, OutillNoRefSAP } from 'src/app/tooling/tool';
         ])
     ],
   standalone: true,
-  imports: [IonicModule, HeaderRowDirective, DataRowDirective, DatePipe]
+  imports: [
+    HeaderRowDirective,
+    DataRowDirective,
+    DatePipe,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonLabel
+  ]
 })
 export class ToolRequestTableComponent implements OnInit {
-  hasSapToolNumber(tool: Tool | OutillNoRefSAP): tool is Tool {
-    return "sapToolNumber" in tool;
-  }
   ////////////////////////////////////////////////////////////////
   // INJECTION DE DEPENDANCES
   ////////////////////////////////////////////////////////////////
-
+  private readonly _navCtrl: NavController = inject(NavController);
 
   ////////////////////////////////////////////////////////////////
   //INPUTS
@@ -50,15 +55,23 @@ export class ToolRequestTableComponent implements OnInit {
   public isAdmin = false;
 
   constructor(
-    private navCtrl: NavController,
+
     private authGuard: RoleGuard,
   ) {
     // this.newToolRequestsList$ = this.toolRequestsService.filtersList.asObservable();
   }
 
   openRequestClick(requestToOpen: ToolRequest) {
-    if (requestToOpen.type === RequestType.CONTROLE) { this.navCtrl.navigateForward('tooling/3d/' + requestToOpen.id); }
-    if (requestToOpen.type === RequestType.MAINTENANCE) { this.navCtrl.navigateForward('tooling/repair/' + requestToOpen.id); }
+    console.log(requestToOpen);
+    const requestType: RequestType = requestToOpen.type;
+    const rootUrl = this.getRootUrlByType(requestType);
+    this._navCtrl.navigateForward(rootUrl + requestToOpen.id)
+  }
+
+  private getRootUrlByType(type: RequestType): string {
+    if (type === RequestType.SBO) { return '/tooling/new-tool/' }
+    if (type === RequestType.CONTROLE) { return '/tooling/3d/' }
+    if (type === RequestType.MAINTENANCE) { return '/tooling/repair/' }
   }
 
   ngOnInit() {
@@ -70,16 +83,6 @@ export class ToolRequestTableComponent implements OnInit {
   }
 
 
-  // TODO créer une directive plus propre plutot que ce code cela permettre d'enlever
-  // les IF du template pour choisir entre maintenance et controle
-  openControlClick(request: ToolRequest) {
-    this.navCtrl.navigateForward('tooling/3D-tool/' + request.id);
-  }
-
-  openMaintenanceClick(request: ToolRequest) {
-    this.navCtrl.navigateForward('tooling/repair-tool/' + request.id);
-  }
-
   removeRequestClick(request: ToolRequest) {
     // this.toolRequestService.removeRequest(request)
     //   .then(() => {
@@ -87,9 +90,12 @@ export class ToolRequestTableComponent implements OnInit {
     //   });
   }
 
+  hasSapToolNumber(tool: Tool | OutillNoRefSAP): tool is Tool {
+    return "sapToolNumber" in tool;
+  }
 
   // TODO Créer une directive pour la bordure
-  getBorder(request: ToolRequest | string): string {
+  protected getBorder(request: ToolRequest | string): string {
     if (this.getType(request) === 'controle') {
       return 'solid 2px lawngreen';
     } else if (this.getType(request) === 'maintenance') {
