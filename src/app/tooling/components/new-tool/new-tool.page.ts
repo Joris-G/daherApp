@@ -1,18 +1,19 @@
 import { Component, effect, inject, OnInit, signal } from '@angular/core';
-import { NgFor } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonFooter, IonInput, IonItem, IonText, IonToolbar, IonLabel } from '@ionic/angular/standalone';
-import { Editor, NgxEditorModule } from 'ngx-editor';
-import { RequestType, SpecSBOCreation, SpecSBOUpdate, ToolRequest } from 'src/app/tooling/tool-request-types';
-import { Tool } from 'src/app/tooling/tool';
+import { IonButton, IonContent, IonFooter, IonToolbar } from '@ionic/angular/standalone';
+import { NgxEditorModule } from 'ngx-editor';
+import { RequestType, SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/tooling/tool-request-types';
+import { Tool, ToolCreation } from 'src/app/tooling/tool';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
 import { SboComponent } from '../sbo/sbo.component';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
-import { CreateToolComponent } from '../create-tool/create-tool.component';
+import { ToolFormComponent } from '../create-tool/tool-form.component';
 import { ToolRequestStore } from '../../stores/tool-request.store';
 import { filter, take } from 'rxjs';
+import { SboFormComponent } from '../sbo-form/sbo-form.component';
+import { CardComponent } from 'src/app/shared/components/card/card.component';
 
 const MENU_ITEMS = [
   {
@@ -33,25 +34,16 @@ const MENU_ITEMS = [
   styleUrls: ['./new-tool.page.scss'],
   standalone: true,
   imports: [
-    IonLabel,
+    SboFormComponent,
+    CardComponent,
     ReactiveFormsModule,
     NgxEditorModule,
     IonContent,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonCardContent,
-    IonItem,
-    IonText,
-    IonInput,
-    IonLabel,
     IonFooter,
     IonToolbar,
     IonButton,
-    NgFor,
+    ToolFormComponent,
     SboComponent,
-    CreateToolComponent
 
   ],
 })
@@ -77,6 +69,10 @@ export class NewToolPage implements OnInit {
   /** Indique si la page est en mode édition. */
   protected isEditMode = signal<boolean>(false); // 👈 Nouveau
 
+  /** Formulaire pour les spécifications SBO. */
+  protected specSboForm: FormGroup; // 👈 Reste ici
+  /** Formulaire pour l'outil. */
+  protected toolForm: FormGroup; // 👈 Reste ici (si non géré par le store)
 
   /** Configuration de la page */
   public page = {
@@ -87,31 +83,26 @@ export class NewToolPage implements OnInit {
   };
 
 
-  /** Formulaire pour les spécifications SBO. */
-  protected specSboForm: FormGroup;
-
   /** Liste des programmes avion */
   programs = signal<ProgrammeAvion[]>([]);
 
   /** Enum pour le template */
   readonly RequestType = RequestType;
-  /** Éditeur de texte riche */
-  public editor: Editor;
+
 
   // ============================================================================
-  // CONSTRUCTEUR (Nouveau Contexte pour l'Effect)
+  // CONSTRUCTEUR
   // ============================================================================
   constructor() {
-    // L'effect() doit être appelé ici, dans le constructeur,
-    // car c'est un contexte d'injection valide.
-
-    /** 2. Écouter les changements du Store pour préremplir le formulaire (Mode Édition) */
     effect(() => {
-      const toolRequest = this.store.currentToolRequest();
+      const toolRequest = this.store.currentToolRequest() as SpecSBORequest;
       // On vérifie le mode édition pour ne pas remplir le formulaire en mode création
       if (toolRequest && this.isEditMode()) {
         this.fillForm(toolRequest);
       }
+    });
+    effect(() => {
+
     });
   }
   // ============================================================================
@@ -124,36 +115,23 @@ export class NewToolPage implements OnInit {
   ngOnInit(): void {
     this.initializeForms();
     this.loadPrograms();
-    this.editor = new Editor();
+
 
     // 1. Lire les paramètres de la route
     this.activatedRoute.params.pipe(
-      filter(params => !!params['idToolRequest']), // S'assurer que l'ID existe
+      filter(params => !!params['id']), // S'assurer que l'ID existe
       take(1)
     ).subscribe(params => {
-      this.requestId = params['idToolRequest'];
+      this.requestId = params['id'];
+      console.log(this.requestId);
       if (this.requestId) {
         this.isEditMode.set(true);
         this.page.pageTitle = `Modification de la demande ${this.requestId}`;
         this.loadToolRequestForEdit(this.requestId);
+
       }
     });
 
-    // // 2. Écouter les changements du Store pour préremplir le formulaire
-    // effect(() => {
-    //   const toolRequest = this.store.currentToolRequest()
-    //   if (toolRequest && this.isEditMode()) {
-    //     this.fillForm(toolRequest);
-    //   }
-    // });
-
-  }
-
-  /**
-     * Destruction du composant.
-     */
-  ngOnDestroy(): void {
-    this.editor.destroy();
   }
   // ============================================================================
   // INITIALISATION DES FORMULAIRES
@@ -164,6 +142,7 @@ export class NewToolPage implements OnInit {
    */
   private initializeForms(): void {
     this.specSboForm = this.formBuilderService.createSpecSBOForm();
+    this.toolForm = this.formBuilderService.createNewToolForm();
   }
 
   // ============================================================================
@@ -175,6 +154,7 @@ export class NewToolPage implements OnInit {
    * @param id - L'ID de la demande à charger.
    */
   private loadToolRequestForEdit(id: string): void {
+    console.log("load ToolRequest for Edit");
     this.store.loadToolRequest(id);
   }
 
@@ -182,15 +162,22 @@ export class NewToolPage implements OnInit {
    * Préremplit le formulaire avec les données de la demande.
    * @param request - La demande d'outillage.
    */
-  private fillForm(request: ToolRequest): void {
-    // NOTE: S'assurer que le FormBuilder gère les champs de ToolRequest pour le setValue
+  private fillForm(request: SpecSBORequest): void {
+
     this.specSboForm.patchValue({
-      // Les champs de SpecSBOCreation dans votre formulaire
-      // program: request.,
+      title: request.title,
+      description: request.description,
+      dateBesoin: request.dateBesoin,
       type: request.type,
-      comment: request.toolingNote,
-      // ... autres champs SBO ...
+      toolingNote: request.toolingNote,
+      tool: request.tool
     });
+    this.toolForm.patchValue({
+      sapToolNumber: request.tool.sapToolNumber,
+      identification: request.tool.identification,
+      designation: request.tool.designation
+
+    })
     // L'outil est mis à jour dans le store: store.createdTool est initialisé
   }
 
@@ -221,6 +208,12 @@ export class NewToolPage implements OnInit {
      * Gère la soumission du formulaire : Création ou Mise à jour.
      */
   protected onSubmit(): void {
+    if (this.toolForm.invalid || this.specSboForm.invalid) {
+      this.toolForm.markAllAsTouched();
+      this.specSboForm.markAllAsTouched();
+      return;
+    }
+    console.log("onSubmit in page");
     if (this.isEditMode()) {
       this.onUpdateToolRequest();
     } else {
@@ -231,43 +224,27 @@ export class NewToolPage implements OnInit {
   /**
  * Créer une demande d'outillage complète
  */
-  onCreateToolRequest() {
-    const createdTool: Tool = this.store.createdTool();
+  private onCreateToolRequest() {
+    console.log("onCreateToolRequest in page");
     // Validation
-    if (!createdTool || this.specSboForm.invalid) {
-      console.error('Aucun outil créé');
-      this.specSboForm.markAllAsTouched();
-      return;
-    }
-
-    // Construire l'objet ToolRequest
+    // if (this.toolForm.invalid || this.specSboForm.invalid) {
+    //   this.specSboForm.markAllAsTouched();
+    //   this.toolForm.markAllAsTouched();
+    //   return;
+    // }
+    const toolData: ToolCreation = this.toolForm.value;
     const toolRequest: SpecSBOCreation = {
       ...this.specSboForm.value,
       type: RequestType.SBO,
-      tool: createdTool,
     };
-
-    // Soumettre la demande via le Store
-    this.store.createToolRequest(toolRequest);
-
-    // Après l'appel au store, on peut gérer la redirection.
-    // Pour cet exemple, nous allons attendre la fin de la soumission.
-    // Idéalement, on utiliserait un effect pour réagir au changement du store.
-    // Si la création est réussie, le store.createdTool est remis à null.
-    // On peut utiliser un simple setTimeout pour simuler la redirection post-succès pour cet exemple:
-    // (Dans un cas réel, utiliser un effect ou un observable pour surveiller le succès)
-
-    // La redirection sera gérée après succès par un mécanisme approprié, ici, on simule l'attente:
-    this.specSboForm.reset();
-    this.store.setCreatedTool(null); // Réinitialiser l'outil créé
-    this.router.navigate(['/tool-requests']); // Redirection après succès (simplifié ici)
+    this.store.createToolRequest(toolRequest, toolData);
   }
 
 
   /**
      * Met à jour une demande d'outillage complète
      */
-  onUpdateToolRequest(): void {
+  private onUpdateToolRequest(): void {
     const currentRequest = this.store.currentToolRequest();
     if (!currentRequest || this.specSboForm.invalid) {
       this.specSboForm.markAllAsTouched();
@@ -292,6 +269,7 @@ export class NewToolPage implements OnInit {
     // Redirection après succès (simplifié, devrait être géré par effect)
     this.router.navigate(['/tool-requests']);
   }
+
   // NOTE: onCreatedTool n'est plus nécessaire car le composant enfant ne l'émet plus.
   // La page peut optionnellement utiliser store.setCreatedTool(tool) si elle gère un sélecteur d'outil existant.
 
@@ -305,7 +283,7 @@ export class NewToolPage implements OnInit {
   get canCreateRequest(): boolean {
     // Utilisation de l'état du Store pour vérifier l'outil et l'état de création
     return (
-      this.store.createdTool() !== null &&
+      this.store.selectedTool() !== null &&
       this.specSboForm.valid &&
       !this.store.isCreatingRequest()
     );
@@ -348,10 +326,6 @@ export class NewToolPage implements OnInit {
   //   });
   // }
 
-  // onCreatedTool(tool: Tool) {
-  //   this.createdTool.set(tool);
-  // }
-
 
   /**
   * Réinitialiser tous les formulaires
@@ -361,20 +335,5 @@ export class NewToolPage implements OnInit {
     // this.createdTool.set(null);
   }
 
-  // ============================================================================
-  // GETTERS POUR LE TEMPLATE
-  // ============================================================================
 
-  // get canCreateTool(): boolean {
-  //   return this.newToolForm.valid && !this.isCreatingTool();
-  // }
-
-  // get canCreateRequest(): boolean {
-  //   return (
-  //     this.createdTool() !== null &&
-  //     // this.newToolRequestForm.valid &&
-  //     this.specSboForm.valid &&
-  //     !this.isCreatingRequest()
-  //   );
-  // }
 }

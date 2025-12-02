@@ -1,0 +1,30 @@
+<form [formGroup]="specSboForm()">
+          <!-- <ion-item>
+            <ion-label>Programme avion</ion-label>
+            <ion-select formControlName="aircraftProgram" multiple="true" placeholder="Sélectionner le programme avion">
+              <ion-select-option *ngFor="let program of programs()" [value]="program.id">
+                {{program.designation}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item> -->
+        <ion-item>
+          <ion-input labelPlacement="floating" type="date" display-format="DD.MM.YYYY HH:mm" formControlName="dateBesoin">
+            <div slot="label">Date de besoin<ion-text color="danger"> *</ion-text></div>
+          </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input labelPlacement="floating" formControlName="title">
+              <div slot="label">Titre de la demande<ion-text color="danger"> *</ion-text></div>
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Description
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <div class="NgxEditor__Wrapper">
+              <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+              <ngx-editor labelPlacement="floating" [editor]="editor" formControlName="description"
+                [placeholder]="'Taper la description ici'"></ngx-editor>
+              </div>
+          </ion-item>
+      </form>

@@ -5,8 +5,8 @@ import { mockTools } from "./mockTools.mock";
 export const mockSpecSBO: SpecSBOStorage[] = [
     {
         id:1,
-        description:"",
-        title:"",
+      description: "description test",
+      title: "titre test",
         toolRequestId: 1,
 
     },

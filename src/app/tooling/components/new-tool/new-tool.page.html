@@ -1,67 +1,19 @@
 <!-- <app-shared-user-header [page]="page"></app-shared-user-header> -->
 
 <ion-content color=light>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title color="primary">
-        Outillage
-        <ion-card-subtitle color="secondary">
-          Créer ou choisir
-        </ion-card-subtitle>
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <app-create-tool />
-    </ion-card-content>
-  
-  </ion-card>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title color="primary">
-          <ion-label>
-          Descritpion
-        </ion-label>
-      </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <form [formGroup]="specSboForm">
-          <!-- <ion-item>
-            <ion-label>Programme avion</ion-label>
-            <ion-select formControlName="aircraftProgram" multiple="true" placeholder="Sélectionner le programme avion">
-              <ion-select-option *ngFor="let program of programs()" [value]="program.id">
-                {{program.designation}}
-              </ion-select-option>
-            </ion-select>
-          </ion-item> -->
-        <ion-item>
-          <ion-input labelPlacement="floating" type="date" display-format="DD.MM.YYYY HH:mm" formControlName="dateBesoin">
-            <div slot="label">Date de besoin<ion-text color="danger"> *</ion-text></div>
-          </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input labelPlacement="floating" formControlName="title">
-              <div slot="label">Titre de la demande<ion-text color="danger"> *</ion-text></div>
-            </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Description
-              <ion-text color="danger">*</ion-text>
-            </ion-label>
-            <div class="NgxEditor__Wrapper">
-              <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-              <ngx-editor labelPlacement="floating" [editor]="editor" formControlName="description"
-                [placeholder]="'Taper la description ici'"></ngx-editor>
-              </div>
-          </ion-item>
-      </form>
-    </ion-card-content>
-    </ion-card>
+  <app-card>
+    <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
+  </app-card>
+  <app-card>
+    <app-sbo-form [isEditMode]="isEditMode()" [specSboForm]="specSboForm" />
+  </app-card>
 
   <!-- <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo> -->
 </ion-content>
 <ion-footer>
   <ion-toolbar color="light">
-    <ion-button [disabled]="!canCreateRequest" (click)="onCreateToolRequest()" slot=end expand="block" color=primary>
+    <ion-button [disabled]="toolForm.invalid || specSboForm.invalid" (click)="onSubmit()" slot=end expand="block"
+      color=primary>
       Créer la demande
     </ion-button>
   </ion-toolbar>

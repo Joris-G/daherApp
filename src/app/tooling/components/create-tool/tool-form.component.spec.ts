@@ -1,24 +1,24 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { LoginFormComponent } from './login-form.component';
+import { ToolFormComponent } from './tool-form.component';
 
-describe('LoginFormComponent', () => {
-  let component: LoginFormComponent;
-  let fixture: ComponentFixture<LoginFormComponent>;
+describe('ToolFormComponent', () => {
+  let component: ToolFormComponent;
+  let fixture: ComponentFixture<ToolFormComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [IonicModule.forRoot(), LoginFormComponent]
-}).compileComponents();
+      declarations: [ToolFormComponent],
+      imports: [IonicModule.forRoot()]
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(LoginFormComponent);
+    fixture = TestBed.createComponent(ToolFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
 
   it('should create', () => {
-
     expect(component).toBeTruthy();
   });
 });

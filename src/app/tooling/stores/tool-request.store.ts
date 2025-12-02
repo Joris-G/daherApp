@@ -1,5 +1,5 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
-import { finalize, tap } from 'rxjs';
+import { finalize, switchMap, tap } from 'rxjs';
 import { ToolRequestService } from '../services/tool-request.service';
 import { SpecSBOCreation, SpecSBOUpdate, ToolRequest } from '../tool-request-types';
 import { Tool, ToolCreation } from '../tool';
@@ -13,7 +13,7 @@ import { ToolService } from '../services/tool.service';
 export interface ToolRequestState {
   isCreatingTool: boolean;
   isCreatingRequest: boolean;
-  createdTool: Tool | null;
+  selectedTool: Tool | null;
   error: string | null;
   currentToolRequest: ToolRequest | null; // 👈 Demande en cours de modification
   isLoadingRequest: boolean; // 👈 Chargement de la demande existante
@@ -40,7 +40,7 @@ export class ToolRequestStore {
   private readonly state = signal<ToolRequestState>({
     isCreatingTool: false,
     isCreatingRequest: false,
-    createdTool: null,
+    selectedTool: null,
     error: null,
     currentToolRequest: null,
     isLoadingRequest: false,
@@ -58,7 +58,7 @@ export class ToolRequestStore {
   public readonly isCreatingRequest = computed(() => this.state().isCreatingRequest);
 
   /** L'outil qui a été créé et est lié à la demande. */
-  public readonly createdTool = computed(() => this.state().createdTool);
+  public readonly selectedTool = computed(() => this.state().selectedTool);
 
   /** Message d'erreur s'il y a eu un problème dans une des étapes. */
   public readonly error = computed(() => this.state().error);
@@ -71,6 +71,7 @@ export class ToolRequestStore {
 
   /** Indique si la demande est en cours de mise à jour. */
   public readonly isUpdatingRequest = computed(() => this.state().isUpdatingRequest); // 👈 Nouveau
+
 
   // ============================================================================
   // MUTATIONS (Méthodes Publiques d'Action)
@@ -86,7 +87,7 @@ export class ToolRequestStore {
 
     this.toolService.createTool(toolData).pipe(
       tap((tool) => {
-        this.updateState({ createdTool: tool });
+        this.updateState({ selectedTool: tool });
       }),
       finalize(() => this.updateState({ isCreatingTool: false }))
     ).subscribe({
@@ -101,10 +102,18 @@ export class ToolRequestStore {
    * Soumet la demande d'outillage SBO.
    * @param toolRequest - Les données de la demande d'outillage.
    */
-  public createToolRequest(toolRequest: SpecSBOCreation): void {
+  public createToolRequest(toolRequest: SpecSBOCreation, toolData: ToolCreation): void {
+    console.log("createToolRequest in store");
     this.updateState({ isCreatingRequest: true, error: null });
+    const createToolObs = this.toolService.createTool(toolData);
+    const createToolRequestObs = createToolObs.pipe(
+      switchMap((createdTool: Tool) => {
+        toolRequest.tool = createdTool;
+        return this.toolRequestService.createToolRequest(toolRequest)
+      })
+    );
 
-    this.toolRequestService.createToolRequest(toolRequest).pipe(
+    createToolRequestObs.pipe(
       finalize(() => this.updateState({ isCreatingRequest: false }))
     ).subscribe({
       next: () => {
@@ -124,6 +133,7 @@ export class ToolRequestStore {
      * @param requestId - L'ID de la demande.
      */
   public loadToolRequest(requestId: string): void {
+    console.log("loadToolRequest");
     this.updateState({ isLoadingRequest: true, error: null, currentToolRequest: null });
 
     this.toolRequestService.getToolRequest(requestId).pipe(
@@ -131,7 +141,8 @@ export class ToolRequestStore {
     ).subscribe({
       next: (request) => {
         if (request) {
-          this.updateState({ currentToolRequest: request, createdTool: request.tool });
+          console.log("update State in loadToolRequest");
+          this.updateState({ currentToolRequest: request, selectedTool: request.tool });
         } else {
           this.updateState({ error: `Demande avec ID ${requestId} non trouvée.` });
         }
@@ -175,7 +186,7 @@ export class ToolRequestStore {
    * @param tool - L'outil créé ou null.
    */
   public setCreatedTool(tool: Tool | null): void {
-      this.updateState({ createdTool: tool });
+    this.updateState({ selectedTool: tool });
   }
 
   /**
@@ -183,7 +194,7 @@ export class ToolRequestStore {
    */
   public resetCreationState(): void {
     this.updateState({
-      createdTool: null,
+      selectedTool: null,
       isCreatingTool: false,
       isCreatingRequest: false,
       currentToolRequest: null,

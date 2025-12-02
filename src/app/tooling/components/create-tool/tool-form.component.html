@@ -1,4 +1,4 @@
-<form [formGroup]="newToolForm">
+<form [formGroup]="toolForm()">
         <!-- Numéro d'OT -->
         <ion-item>
           <ion-input labelPlacement="floating" formControlName="sapToolNumber" type="text" placeholder="ex. OT095999">
@@ -18,11 +18,4 @@
             <div slot="label">Désignation<ion-text color="danger"> *</ion-text></div>
           </ion-input>
           </ion-item>
-
-        <ion-toolbar>
-          <ion-button slot=end (click)="onCreateTool()" expand="block" color=primary
-            [disabled]="newToolForm.invalid || store.isCreatingTool()">
-            Créer l'OT
-          </ion-button>
-        </ion-toolbar>
       </form>
