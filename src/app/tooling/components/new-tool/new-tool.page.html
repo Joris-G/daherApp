@@ -1,10 +1,10 @@
 <!-- <app-shared-user-header [page]="page"></app-shared-user-header> -->
 
 <ion-content color=light>
-  <app-card>
+  <app-card [titles]="{title:'Outillage', subtitle:'Créer ou choisir'}">
     <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
   </app-card>
-  <app-card>
+  <app-card [titles]="{title:'Demande'}">
     <app-sbo-form [isEditMode]="isEditMode()" [specSboForm]="specSboForm" />
   </app-card>
 

@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/angular/standalone';
+
+interface CardTitles {
+  title: string;
+  subtitle?: string;
+}
 
 @Component({
   selector: 'app-card',
@@ -15,7 +20,7 @@ import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle }
   ]
 })
 export class CardComponent  implements OnInit {
-
+  public titles = input<CardTitles>();
   constructor() { }
 
   ngOnInit() {}
