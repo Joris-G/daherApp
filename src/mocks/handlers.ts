@@ -268,8 +268,8 @@ export const handlers = [
     const updateDto: SpecSBOUpdate = await request.json() as SpecSBOUpdate;
 
     const masterRequestIndex = mockToolRequests.findIndex(req => req.id === toolRequestId);
-
-    if (!masterRequestIndex) {
+    console.log(masterRequestIndex);
+    if (masterRequestIndex === -1) {
       return new HttpResponse(null, { status: 404 });
     }
 
@@ -279,6 +279,7 @@ export const handlers = [
     const updatedMasterData = {
       ...masterRequest,
       title: updateDto.title,
+      description: updateDto.description,
       dateBesoin: updateDto.dateBesoin,
       // ... ajoutez d'autres champs maîtres communs si nécessaire (ex: statut, etc.)
     };

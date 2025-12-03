@@ -64,17 +64,13 @@ export interface ToolRequestBase {
 export interface ToolRequestStorage {
   id: number;
   type: RequestType;
-
   demandeurId: number;
   toolId: number;
   // toolReference: number | string;
-
-
   bloquantProd: boolean;
   createdAt: Date;
   dateBesoin: Date;
   statut: RequestStatus;
-
 
   groupeAffectationId?: number;
   affectation?: string[];

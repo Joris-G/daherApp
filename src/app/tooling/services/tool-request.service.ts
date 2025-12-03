@@ -57,8 +57,13 @@ export class ToolRequestService {
      * @returns Un Observable de la réponse de l'API.
      */
   updateToolRequest(toolRequestToUpdate: Partial<ToolRequest>) {
-    return this.http.patch(`${environment.toolApi}demandes/${toolRequestToUpdate.id}`, toolRequestToUpdate)
+    return this.http.patch(`api/tools/request/${toolRequestToUpdate.id}`, toolRequestToUpdate)
       .pipe(
+        catchError((error) => {
+          // Lancer l'erreur pour que le Store la capture
+          console.error('Erreur lors de la mise à jour de la demande:', error);
+          throw error;
+        }),
         tap(() => {
           // NOTE: Le rafraîchissement doit être déclenché par le Store appelant
         })
