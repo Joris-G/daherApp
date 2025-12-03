@@ -163,11 +163,11 @@ export class NewToolPage implements OnInit {
    * @param request - La demande d'outillage.
    */
   private fillForm(request: SpecSBORequest): void {
-
+    const formattedDateBesoin = request.dateBesoin.toString().split('T')[0];
     this.specSboForm.patchValue({
       title: request.title,
       description: request.description,
-      dateBesoin: request.dateBesoin,
+      dateBesoin: formattedDateBesoin,
       type: request.type,
       toolingNote: request.toolingNote,
       tool: request.tool

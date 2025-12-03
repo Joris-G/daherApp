@@ -142,6 +142,7 @@ export class ToolRequestStore {
       next: (request) => {
         if (request) {
           console.log("update State in loadToolRequest");
+          console.log(request);
           this.updateState({ currentToolRequest: request, selectedTool: request.tool });
         } else {
           this.updateState({ error: `Demande avec ID ${requestId} non trouvée.` });
