@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { RequestType, SpecCtrlCreation, SpecSBOCreation, ToolRequest }
+import { RequestType, SpecCtrlCreation, SpecSBOCreation, ToolRequest, ToolRequestCreation }
   from 'src/app/tooling/tool-request-types';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
@@ -46,7 +46,7 @@ export class ToolRequestService {
      * @param toolRequestToCreate - Les données de la demande.
      * @returns Un Observable de la demande créée.
      */
-  createToolRequest(toolRequestToCreate: SpecSBOCreation | SpecCtrlCreation): Observable<ToolRequest> {
+  createToolRequest(toolRequestToCreate: ToolRequestCreation): Observable<ToolRequest> {
     return this.http.post<ToolRequest>(`api/tools/request`, toolRequestToCreate);
   }
 

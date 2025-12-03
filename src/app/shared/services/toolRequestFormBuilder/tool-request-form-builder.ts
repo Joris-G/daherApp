@@ -143,7 +143,6 @@ export class ToolRequestFormBuilder {
      * @returns Le FormGroup typé pour les spécifications SBO.
      */
   createSpecSBOForm(initialValue?: Partial<SpecSBOCreation>): FormGroup {
-    // const formattedDateBesoin = initialValue?.dateBesoin.split('T')[0];
     return this.fb.group({
       title: [initialValue?.title ?? '', Validators.required],
       description: [initialValue?.description ?? '', Validators.required],

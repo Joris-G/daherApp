@@ -1,6 +1,6 @@
 import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonButton, IonContent, IonFooter, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonFooter, IonToolbar, IonTitle, IonHeader } from '@ionic/angular/standalone';
 import { NgxEditorModule } from 'ngx-editor';
 import { RequestType, SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/tooling/tool-request-types';
 import { Tool, ToolCreation } from 'src/app/tooling/tool';
@@ -14,26 +14,27 @@ import { ToolRequestStore } from '../../stores/tool-request.store';
 import { filter, take } from 'rxjs';
 import { SboFormComponent } from '../sbo-form/sbo-form.component';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
+import { SharedUserHeaderComponent } from 'src/app/shared/components/shared-user-header/shared-user-header.component';
 
-const MENU_ITEMS = [
-  {
-    title: 'Nouvelle demande outillage',
-    path: 'new-tool',
-    type: 'button',
-  },
-  {
-    title: 'Liste des demandes outillages',
-    path: '/tool-requests',
-    type: 'button',
-  }
-];
+// const MENU_ITEMS = [
+//   {
+//     title: 'Nouvelle demande outillage',
+//     path: 'new-tool',
+//     type: 'button',
+//   },
+//   {
+//     title: 'Liste des demandes outillages',
+//     path: '/tool-requests',
+//     type: 'button',
+//   }
+// ];
 
 @Component({
   selector: 'app-new-tool',
   templateUrl: './new-tool.page.html',
   styleUrls: ['./new-tool.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonHeader, IonTitle, 
     SboFormComponent,
     CardComponent,
     ReactiveFormsModule,
@@ -44,7 +45,6 @@ const MENU_ITEMS = [
     IonButton,
     ToolFormComponent,
     SboComponent,
-
   ],
 })
   /**
@@ -64,21 +64,21 @@ export class NewToolPage implements OnInit {
   // PROPRIÉTÉS
   // ============================================================================
   /** ID de la demande en cours de modification (null en mode création). */
-  private requestId: string | null = null; // 👈 Nouveau
+  private requestId: string | null = null;
 
   /** Indique si la page est en mode édition. */
-  protected isEditMode = signal<boolean>(false); // 👈 Nouveau
+  protected isEditMode = signal<boolean>(false);
 
   /** Formulaire pour les spécifications SBO. */
-  protected specSboForm: FormGroup; // 👈 Reste ici
+  protected specSboForm: FormGroup; 
   /** Formulaire pour l'outil. */
-  protected toolForm: FormGroup; // 👈 Reste ici (si non géré par le store)
+  protected toolForm: FormGroup; 
 
   /** Configuration de la page */
   public page = {
     pageTitle: 'Création d\'une demande',
     menuTitle: 'Menu outillage',
-    menuItems: MENU_ITEMS,
+    // menuItems: MENU_ITEMS,
     contentId: 'tooling-content'
   };
 
@@ -100,9 +100,6 @@ export class NewToolPage implements OnInit {
       if (toolRequest && this.isEditMode()) {
         this.fillForm(toolRequest);
       }
-    });
-    effect(() => {
-
     });
   }
   // ============================================================================
@@ -126,7 +123,7 @@ export class NewToolPage implements OnInit {
       console.log(this.requestId);
       if (this.requestId) {
         this.isEditMode.set(true);
-        this.page.pageTitle = `Modification de la demande ${this.requestId}`;
+        // this.page.pageTitle = `Modification de la demande ${this.requestId}`;
         this.loadToolRequestForEdit(this.requestId);
 
       }

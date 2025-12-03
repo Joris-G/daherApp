@@ -1,5 +1,11 @@
-<!-- <app-shared-user-header [page]="page"></app-shared-user-header> -->
-
+<!-- ******************************* -->
+<!-- **********   HEADER   *********** -->
+<!-- ******************************* -->
+<ion-header>
+  <ion-toolbar color=dark no-padding>
+    <ion-title>Test</ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content color=light>
   <app-card [titles]="{title:'Outillage', subtitle:'Créer ou choisir'}">
     <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />

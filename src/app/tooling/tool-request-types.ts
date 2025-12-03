@@ -177,5 +177,5 @@ export interface SpecSBOStorage {
   description: string;
   aircraftProgram?: string;
 }
-
+export type ToolRequestCreation = SpecCtrlCreation | SpecSBOCreation
 export type ToolRequest = SpecCtrlRequest | SpecMaintRepRequest | SpecSBORequest;

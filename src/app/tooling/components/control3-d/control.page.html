@@ -3,7 +3,7 @@
 <!-- ******************************* -->
 <ion-header>
   <ion-toolbar color=dark no-padding>
-    <ion-title>{{pageTitle()}}</ion-title>
+    <ion-title>Remplacer par un signal pour gérer le titre de la page</ion-title>
   </ion-toolbar>
 </ion-header>
 <!-- ******************************* -->
@@ -11,22 +11,20 @@
 <!-- ******************************* -->
 <ion-content color=light>
   <!-- TODO Revoir la mise en page scroll partie droite -->
-  <div class="content-container">
-    <div class="control-form">
-
-      <!-- **********   FORM   *********** -->
-      <app-control3-dform [toolRequest]="toolRequest()" [requestState]="requestState()" (submit)="onSubmit($event)"
-        (update)="onUpdate($event)" (statusChange)="onStatusChange($event)" />
-    </div>
-    <!-- <div class="print-preview">
+  <app-card [titles]="{title:'Outillage', subtitle:'Créer ou choisir'}">
+    <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
+  </app-card>
+  <app-card [titles]="{title:'Controle 3D', subtitle:'description'}">
+    <app-control3-dform [specCtrlForm]="controlForm" />
+  </app-card>
+  <!-- <div class="print-preview">
       <app-controleddd [toolRequest]="toolRequest"></app-controleddd>
     </div> -->
-  </div>
 </ion-content>
 <!-- ******************************* -->
 <!-- **********   FOOTER   *********** -->
 <!-- ******************************* -->
-<ion-footer>
+<!-- <ion-footer>
   <app-tool-request-footer [canManage]="requestState().canManage" [canUpdate]="requestState().canUpdate"
     (evStatusChange)="onStatusChange($event)" (evSubmit)="onSubmit($event)" (evUpdate)="onUpdate($event)" />
-</ion-footer>
+</ion-footer> -->

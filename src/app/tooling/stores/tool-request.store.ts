@@ -1,7 +1,7 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { finalize, switchMap, tap } from 'rxjs';
 import { ToolRequestService } from '../services/tool-request.service';
-import { SpecSBOCreation, SpecSBOUpdate, ToolRequest } from '../tool-request-types';
+import { SpecCtrlUpdate, SpecSBOCreation, SpecSBOUpdate, ToolRequest, ToolRequestCreation } from '../tool-request-types';
 import { Tool, ToolCreation } from '../tool';
 import { ToolService } from '../services/tool.service';
 
@@ -102,7 +102,7 @@ export class ToolRequestStore {
    * Soumet la demande d'outillage SBO.
    * @param toolRequest - Les données de la demande d'outillage.
    */
-  public createToolRequest(toolRequest: SpecSBOCreation, toolData: ToolCreation): void {
+  public createToolRequest(toolRequest: ToolRequestCreation, toolData: ToolCreation): void {
     console.log("createToolRequest in store");
     this.updateState({ isCreatingRequest: true, error: null });
     const createToolObs = this.toolService.createTool(toolData);
@@ -158,7 +158,7 @@ export class ToolRequestStore {
      * Met à jour une demande d'outillage SBO existante.
      * @param requestToUpdate - Les données de mise à jour.
      */
-  public updateToolRequest(requestToUpdate: SpecSBOUpdate): void {
+  public updateToolRequest(requestToUpdate: SpecSBOUpdate | SpecCtrlUpdate): void {
     const currentId = this.currentToolRequest()?.id;
     if (!currentId) {
       this.updateState({ error: 'ID de demande manquant pour la mise à jour.' });

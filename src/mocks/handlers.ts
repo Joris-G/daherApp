@@ -113,6 +113,7 @@ export const handlers = [
     const newToolRequestId = mockToolRequests.length + 1;
     const loggedInUserId = 1;
     const newToolRequestData = await request.json() as SpecCtrlCreation | SpecSBOCreation | SpecMaintRepRequest;
+    console.log(newToolRequestData);
     const toolRef = (newToolRequestData.tool as Tool).id;
 
     const masterRequest: ToolRequestStorage = {
@@ -162,13 +163,13 @@ export const handlers = [
 
       case RequestType.SBO:
         const newSpecSBOId = mockSpecSBO.length + 1
-        const specSBOData = newToolRequestData as SpecSBORequest;
+        const specSBOData = newToolRequestData as SpecSBOCreation;
         const newSpecSBOEntry: SpecSBOStorage = {
           id: newSpecSBOId,
           toolRequestId: newToolRequestId,
           title: specSBOData.title,
           description: specSBOData.description,
-          aircraftProgram: specSBOData.aircraftProgram
+          // aircraftProgram: specSBOData.aircraftProgram
         };
         mockSpecSBO.push(newSpecSBOEntry);
         break;

@@ -127,6 +127,7 @@ export class ToolService {
   createTool(toolToCreate: ToolCreation) {
     const tool: any = toolToCreate;
     tool.sapToolNumber = parseInt(toolToCreate.sapToolNumber.substring(2), 10);
+    console.log(tool);
     return this.http.post<Tool>(`api/tools`, tool);
   }
 }

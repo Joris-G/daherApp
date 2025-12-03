@@ -22,7 +22,7 @@ export class SboFormComponent implements OnInit {
   public specSboForm=input.required<FormGroup>();
   
   /** Indique si la page est en mode édition. */
-  isEditMode = input<boolean>(true); // 👈 Nouveau
+  isEditMode = input<boolean>(true); 
 
 
   /** Éditeur de texte riche */
@@ -32,8 +32,6 @@ export class SboFormComponent implements OnInit {
   // ============================================================================
   // LIFECYCLE
   // ============================================================================
-  constructor() { }
-
   ngOnInit() {
     this.editor = new Editor();
   }
