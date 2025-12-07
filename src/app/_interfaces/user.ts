@@ -2,6 +2,7 @@ import { IDivision } from './division';
 import { GroupeAffectation } from './groupe-affectation';
 import { Poste } from './poste';
 import { ProgrammeAvion } from './programme-avion';
+import { RoleList } from './roles';
 import { IService } from './service';
 import { IUsine } from './usine';
 
@@ -14,7 +15,7 @@ export class User {
   isActive?: boolean;
   lastCon?: Date;
   mail?: string;
-  roles?: string[];
+  roles?: RoleList;
   poste?: Poste;
   service?: IService;
   password?: string;
@@ -32,7 +33,7 @@ export class User {
       matricule: 123456,
       nom,
       prenom,
-      roles: ['ROLE_ADMIN']
+      roles: ['ADMIN']
     }
   }
 }
@@ -46,7 +47,7 @@ export interface UserIri {
   isActive?: boolean;
   lastCon?: Date;
   mail?: string;
-  roles?: string[];
+  roles?: RoleList;
   poste?: string;
   service?: string;
   password?: string;
@@ -57,4 +58,13 @@ export interface UserIri {
   site?: string;
   groupeAffectations?: string[];
   apiToken?: string;
+}
+
+export interface UsersState{
+       isCreatingUser: boolean,
+        error: string | null,
+        loggedUser: User | null,
+        selectedUser:User | null,
+        isLoadingUser: boolean,
+        isUpdatingUser: boolean,
 }

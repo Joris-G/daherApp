@@ -2,22 +2,29 @@ import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/shared/services/users/auth.service';
 import { User } from 'src/app/_interfaces/user';
+import { RoleList } from 'src/app/_interfaces/roles';
+
+interface ReRouteRole{
+  roles:RoleList,
+  route: string
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginRedirectionService {
-  private reRouteOpts = [
+  //TODO sécuriser les roles possibles
+  private reRouteOpts:ReRouteRole[] = [
     {
-      roles: ['ROLE_MOULEUR', '	ROLE_RESP_MOULAGE', 'ROLE_CE_MOULAGE'],
+      roles: ['MOULEUR', '	RESP_MOULAGE', 'CE_MOULAGE'],
       route: 'molding'
     },
     {
-      roles: ['ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL', 'ROLE_OUTILLEUR'],
+      roles: ['RESP_OUTIL', 'CE_OUTIL', 'OUTILLEUR'],
       route: 'tooling'
     },
     {
-      roles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_METHODES'],
+      roles: ['ADMIN', 'USER', 'METHODES'],
       route: 'home'
     },
   ];

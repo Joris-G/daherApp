@@ -1,32 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Poste } from 'src/app/_interfaces/poste';
-import { environment } from 'src/environments/environment';
-import { RequestService } from '../request.service';
-
-const ROLES = [
-  'ROLE_USER',
-  'ROLE_ADMIN'
-];
+import { Role } from 'src/app/_interfaces/roles';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService {
+private readonly http = inject(HttpClient);
 
-  constructor(
-    private requestService: RequestService
-  ) { }
-
-  getRoles(): Observable<Poste[]> {
-    return this.requestService.createGetRequest(`${environment.usineApi}postes`);
-  }
-
-  getIri(poste: Poste | string): string {
-    if (typeof (poste) == 'string') {
-      return poste;
-    } else {
-      return `/api/postes/${poste.id}`;
-    }
+  getRoles(): Observable<Role[]> {
+    return this.http.get<Role[]>(`api/roles`);
   }
 }

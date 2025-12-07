@@ -8,7 +8,7 @@ export const ADMIN_ROUTES: Routes = [
   {
     path: '',
     canActivate: [RoleGuard],
-    data: { expectedRole: ['ROLE_ADMIN'] },
+    data: { expectedRole: ['ADMIN'] },
     children: [
           { path: 'home', component: AdminPage },
       { path: 'users', component: AdminUserPage },

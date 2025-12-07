@@ -13,16 +13,8 @@ import { DataRowDirective } from '../../../../shared/directives/data-row.directi
 import { BorderColorDirective } from '../../../../shared/directives/border-color.directive';
 
 
-const usersRole = {
-  'ROLE_USER': 'Utilisateur',
-  'ROLE_METHODES': 'Préparateur',
-  'ROLE_CE_OUTIL': 'Chef d\'équipe outillage',
-  'ROLE_MOULEUR': 'Mouleur',
-  'ROLE_ADMIN': 'Administrateur'
 
-};
 
-const getRole = (role: string): string => usersRole[role];
 @Component({
     selector: 'app-admin-user-table',
     templateUrl: './admin-user-table.component.html',
@@ -39,6 +31,7 @@ const getRole = (role: string): string => usersRole[role];
     ],
 })
 export class AdminUserTableComponent implements OnInit {
+  //TODO il faut que ça vienne du store
   public users$: Observable<User[]>;
   constructor(
     private userService: UsersService,
@@ -49,19 +42,7 @@ export class AdminUserTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.users$ = this.userService.getUsers()
-      .pipe(
-        map(users => users
-          .map(user => {
-            user.roles = user.roles
-              .map(role => {
-                const newRole = getRole(role);
-                if (newRole) { return newRole; }
-                return role;
-              });
-            return user;
-          }))
-      );
+    this.users$ = this.userService.getUsers();
   }
 
   async onSelectUser(selectedUser: User) {
