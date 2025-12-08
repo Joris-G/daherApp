@@ -4,7 +4,7 @@ import {
   Title,
   __decorate,
   environment
-} from "./chunk-BEQVXJQK.js";
+} from "./chunk-WPS4UCEJ.js";
 
 // src/app/shared/services/title.service.ts
 var TitleService = class TitleService2 {
@@ -35,4 +35,4 @@ TitleService = __decorate([
 export {
   TitleService
 };
-//# sourceMappingURL=chunk-FHAETXHK.js.map
+//# sourceMappingURL=chunk-YUGWAZZW.js.map

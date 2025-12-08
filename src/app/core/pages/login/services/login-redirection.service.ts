@@ -16,7 +16,7 @@ export class LoginRedirectionService {
   //TODO sécuriser les roles possibles
   private reRouteOpts:ReRouteRole[] = [
     {
-      roles: ['MOULEUR', '	RESP_MOULAGE', 'CE_MOULAGE'],
+      roles: ['MOULEUR', 'RESP_MOULAGE', 'CE_MOULAGE'],
       route: 'molding'
     },
     {

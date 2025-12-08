@@ -1,9 +1,9 @@
-// src/app/_interfaces/tooling/tool-request-types.ts
+// src/app/tooling/tool-request-types.ts
 var RequestType;
 (function(RequestType2) {
-  RequestType2["SBO"] = "sbo";
-  RequestType2["MAINTENANCE"] = "maintenance";
-  RequestType2["CONTROLE"] = "controle";
+  RequestType2["SBO"] = "SBO";
+  RequestType2["MAINTENANCE"] = "MAINTENANCE";
+  RequestType2["CONTROLE"] = "CONTROLE";
 })(RequestType || (RequestType = {}));
 var RequestStatus;
 (function(RequestStatus2) {
@@ -27,30 +27,11 @@ var MoyenMesure;
   MoyenMesure2["LASER"] = "Laser";
   MoyenMesure2["LASER_TPROBE"] = "laser + TProbe";
 })(MoyenMesure || (MoyenMesure = {}));
-var ToolRequest = class {
-  id;
-  type;
-  typeData;
-  demandeur;
-  bloquantProd;
-  createdAt;
-  dateBesoin;
-  outillage;
-  groupeAffectation;
-  affectation;
-  dateAffectation;
-  datePlanif;
-  statut;
-  dateReal;
-  userReal;
-  toolingNote;
-};
 
 export {
   RequestType,
   RequestStatus,
   TypeRapport,
-  MoyenMesure,
-  ToolRequest
+  MoyenMesure
 };
-//# sourceMappingURL=chunk-WS32T5JK.js.map
+//# sourceMappingURL=chunk-HG2UKUY7.js.map

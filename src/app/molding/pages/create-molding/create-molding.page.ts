@@ -65,7 +65,7 @@ export class CreateMoldingPage implements OnInit {
 
       }
     });
-    this.isAdmin = this.roleGuard.isRole(['ROLE_ADMIN']);
+    this.isAdmin = this.roleGuard.isRole(['ADMIN']);
   }
 
   /**

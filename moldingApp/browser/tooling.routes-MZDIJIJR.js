@@ -2,7 +2,7 @@ import {
   DataRowDirective,
   HeaderRowDirective,
   auto_default
-} from "./chunk-4SM47LUF.js";
+} from "./chunk-2U7DKXJL.js";
 import {
   AnimationCurves,
   AnimationDurations,
@@ -23,26 +23,24 @@ import {
   MatTableDataSource,
   SPACE,
   SelectionModel
-} from "./chunk-LYGF4RF7.js";
+} from "./chunk-GLSVIF4F.js";
 import {
   RoleGuard,
   ToolService
-} from "./chunk-H3Z2WW5W.js";
+} from "./chunk-VHWORMKT.js";
 import {
   MoyenMesure,
   RequestType,
-  ToolRequest,
   TypeRapport
-} from "./chunk-WS32T5JK.js";
+} from "./chunk-HG2UKUY7.js";
 import {
   EditorComponent,
-  IonAccordion,
-  IonAccordionGroup,
   IonBadge,
   IonButton,
   IonCard,
   IonCardContent,
   IonCardHeader,
+  IonCardSubtitle,
   IonCardTitle,
   IonCol,
   IonContent,
@@ -79,14 +77,14 @@ import {
   style,
   transition,
   trigger
-} from "./chunk-BHBJXH5H.js";
+} from "./chunk-LX7AFX5C.js";
 import {
   ProgramsService,
   UsersService
-} from "./chunk-WEPZBWS4.js";
+} from "./chunk-Q6GQR4TR.js";
 import {
   TitleService
-} from "./chunk-FHAETXHK.js";
+} from "./chunk-YUGWAZZW.js";
 import {
   ActivatedRoute,
   AlertController,
@@ -94,7 +92,6 @@ import {
   ApplicationRef,
   AsyncPipe,
   AuthStore,
-  BehaviorSubject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   CheckboxControlValueAccessor,
@@ -102,7 +99,6 @@ import {
   Component,
   DatePipe,
   DefaultValueAccessor,
-  DestroyRef,
   Directive,
   DomSanitizer,
   EMPTY,
@@ -123,7 +119,6 @@ import {
   Injector,
   Input,
   IonicModule,
-  JsonPipe,
   KeyValuePipe,
   LoadingService,
   NG_VALUE_ACCESSOR,
@@ -136,7 +131,6 @@ import {
   NgModule,
   NgStyle,
   NgTemplateOutlet,
-  Observable,
   Optional,
   Output,
   Pipe,
@@ -152,7 +146,6 @@ import {
   ViewChild,
   ViewEncapsulation$1,
   __decorate,
-  assertInInjectionContext,
   asyncScheduler,
   booleanAttribute,
   catchError,
@@ -162,6 +155,7 @@ import {
   createComponent,
   effect,
   environment,
+  filter,
   finalize,
   forkJoin,
   forwardRef,
@@ -176,6 +170,7 @@ import {
   share,
   signal,
   switchMap,
+  take,
   takeUntil,
   tap,
   throttleTime,
@@ -189,7 +184,7 @@ import {
   ɵɵngDeclareInjector,
   ɵɵngDeclareNgModule,
   ɵɵngDeclarePipe
-} from "./chunk-BEQVXJQK.js";
+} from "./chunk-WPS4UCEJ.js";
 import "./chunk-RBMTPJHM.js";
 import "./chunk-H7W7X3R4.js";
 import "./chunk-TDOPS5CM.js";
@@ -228,11 +223,11 @@ import {
   __spreadValues
 } from "./chunk-B3DYXOBH.js";
 
-// angular:jit:template:file:src\app\tooling\pages\tooling.page.html
+// angular:jit:template:file:src\app\tooling\tooling.page.html
 var tooling_page_default = '<app-shared-user-header title="OUTILLAGE"></app-shared-user-header>\r\n<ion-content color=medium>\r\n  <app-tool-request-menu></app-tool-request-menu>\r\n  <ion-router-outlet id="tooling-content"></ion-router-outlet>\r\n  </ion-content>';
 
-// angular:jit:style:file:src\app\tooling\pages\tooling.page.scss
-var tooling_page_default2 = "/* src/app/tooling/pages/tooling.page.scss */\n/*# sourceMappingURL=tooling.page.css.map */\n";
+// angular:jit:style:file:src\app\tooling\tooling.page.scss
+var tooling_page_default2 = "/* src/app/tooling/tooling.page.scss */\n/*# sourceMappingURL=tooling.page.css.map */\n";
 
 // angular:jit:template:file:src\app\tooling\components\tool-request-menu\tool-request-menu.component.html
 var tool_request_menu_component_default = `<ion-menu menuId="main-menu" open=true #menuTool side="start" type="push" contentId="tooling-content">\r
@@ -369,7 +364,7 @@ ToolRequestMenuComponent = __decorate([
   })
 ], ToolRequestMenuComponent);
 
-// src/app/tooling/pages/tooling.page.ts
+// src/app/tooling/tooling.page.ts
 var ToolingPage = class ToolingPage2 {
   titleService = inject(TitleService);
   ionViewWillEnter() {
@@ -392,111 +387,32 @@ ToolingPage = __decorate([
 ], ToolingPage);
 
 // angular:jit:template:file:src\app\tooling\components\new-tool\new-tool.page.html
-var new_tool_page_default = `<!-- <app-shared-user-header [page]="page"></app-shared-user-header> -->\r
-\r
+var new_tool_page_default = `<!-- ******************************* -->\r
+<!-- **********   HEADER   *********** -->\r
+<!-- ******************************* -->\r
+<ion-header>\r
+  <ion-toolbar color=dark no-padding>\r
+    <ion-title>Test</ion-title>\r
+  </ion-toolbar>\r
+</ion-header>\r
 <ion-content color=light>\r
-  <ion-accordion-group [multiple]="true">\r
-    <ion-accordion color>\r
-      <ion-item slot="header">\r
-        <ion-label>\r
-          D\xE9finition\r
-        </ion-label>\r
-        <ion-text>\r
-          Cr\xE9er ou s\xE9lectionner l'outillage\r
-        </ion-text>\r
-        </ion-item>\r
-        <ion-item slot="content">\r
-      <form [formGroup]="newToolForm">\r
-        <ion-item-group>\r
-          <ion-item>\r
-            <ion-label position="floating">Num\xE9ro d'OT SAP\r
-              <ion-text color="danger">*</ion-text>\r
-            </ion-label>\r
-            <ion-input required formControlName="sapToolNumber" type="text" placeholder="ex. OT095999"></ion-input>\r
-          </ion-item>\r
-          <ion-item>\r
-            <ion-label position="floating">Num\xE9ro d'identification\r
-              <ion-text color="danger">*</ion-text>\r
-            </ion-label>\r
-            <ion-input required formControlName="identification" type="text" placeholder="ex. 19900Z01-T700P5522000123">\r
-            </ion-input>\r
-          </ion-item>\r
-          <ion-item>\r
-            <ion-label position="floating">D\xE9signation\r
-              <ion-text color="danger">*</ion-text>\r
-            </ion-label>\r
-            <ion-input required formControlName="designation" type="text"></ion-input>\r
-          </ion-item>\r
-        </ion-item-group>\r
-        <ion-toolbar>\r
-          <ion-button slot=end (click)="onCreateTool()" expand="block" color=primary>\r
-            Cr\xE9er l'OT\r
-          </ion-button>\r
-        </ion-toolbar>\r
-      </form>\r
-      </ion-item>\r
-      </ion-accordion>\r
-      <ion-accordion>\r
-        <ion-item slot="header">\r
-          <ion-label>\r
-          Descritpion\r
-        </ion-label>\r
-        </ion-item>\r
-        <ion-item slot="content">\r
-      <form [formGroup]="newToolRequestForm">\r
-        <ion-item-group>\r
-          <ion-item>\r
-            <ion-label>Programme avion</ion-label>\r
-            <ion-select formControlName="aircraftProgram" multiple="true" placeholder="S\xE9lectionner le programme avion">\r
-              <ion-select-option *ngFor="let program of programs()" [value]="program.id">\r
-                {{program.designation}}\r
-              </ion-select-option>\r
-            </ion-select>\r
-          </ion-item>\r
-          </ion-item-group>\r
-          <ion-item-group formGroupName="typeData">\r
-          <ion-item>\r
-            <ion-label>Titre\r
-              <ion-text color="danger">*</ion-text>\r
-            </ion-label>\r
-            <ion-input required formControlName="title"></ion-input>\r
-          </ion-item>\r
-          <ion-item>\r
-            <ion-label>Description\r
-              <ion-text color="danger">*</ion-text>\r
-            </ion-label>\r
-            <div class="NgxEditor__Wrapper">\r
-                            <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>\r
-                            <ngx-editor [editor]="editor" formControlName="description"\r
-                              [placeholder]="'Taper la description ici'"></ngx-editor>\r
-                            </div>\r
-          </ion-item>\r
+  <app-card [titles]="{title:'Outillage', subtitle:'Cr\xE9er ou choisir'}">\r
+    <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />\r
+  </app-card>\r
+  <app-card [titles]="{title:'Demande'}">\r
+    <app-sbo-form [isEditMode]="isEditMode()" [specSboForm]="specSboForm" />\r
+  </app-card>\r
 \r
-          <ion-item>\r
-            <ion-label>Date\r
-              <ion-text color="danger">*</ion-text>\r
-            </ion-label>\r
-            <ion-datetime display-format="DD.MM.YYYY HH:mm" formControlName="dateBesoin"></ion-datetime>\r
-          </ion-item>\r
-        </ion-item-group>\r
-      </form>\r
-      </ion-item>\r
-      </ion-accordion>\r
-      </ion-accordion-group>\r
   <!-- <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo> -->\r
-  <div>\r
-    {{newToolRequestForm.value | json}}\r
-  </div>\r
 </ion-content>\r
 <ion-footer>\r
   <ion-toolbar color="light">\r
-    <ion-button [disabled]="newToolRequestForm.invalid" (click)="onCreateToolRequest()" slot=end expand="block"\r
+    <ion-button [disabled]="toolForm.invalid || specSboForm.invalid" (click)="onSubmit()" slot=end expand="block"\r
       color=primary>\r
       Cr\xE9er la demande\r
     </ion-button>\r
   </ion-toolbar>\r
-</ion-footer>\r
-`;
+</ion-footer>`;
 
 // angular:jit:style:file:src\app\tooling\components\new-tool\new-tool.page.scss
 var new_tool_page_default2 = "/* src/app/tooling/components/new-tool/new-tool.page.scss */\n/*# sourceMappingURL=new-tool.page.css.map */\n";
@@ -10156,9 +10072,9 @@ var DOMObserver = class {
   }
   stop() {
     if (this.observer) {
-      let take = this.observer.takeRecords();
-      if (take.length) {
-        for (let i = 0; i < take.length; i++) this.queue.push(take[i]);
+      let take2 = this.observer.takeRecords();
+      if (take2.length) {
+        for (let i = 0; i < take2.length; i++) this.queue.push(take2[i]);
         window.setTimeout(() => this.flush(), 20);
       }
       this.observer.disconnect();
@@ -18817,96 +18733,6 @@ var Editor = class {
   }
 };
 
-// src/app/tooling/services/tool-request.service.ts
-var ToolRequestService = class ToolRequestService2 {
-  ////////////////////////////////////////////////////
-  //INJECTION DEPENDANCES
-  ////////////////////////////////////////////////////
-  http = inject(HttpClient);
-  loaderService = inject(LoadingService);
-  ////////////////////////////////////////////////////
-  //PROPRIETES
-  ////////////////////////////////////////////////////
-  toolRequestList = signal([]);
-  constructor() {
-    console.log("hello toolRequestService");
-    this.initializeToolRequests();
-  }
-  /**
-     * Initialise les toolRequests au chargement du service
-     */
-  initializeToolRequests() {
-    this.getToolRequests().subscribe({
-      next: (requests) => {
-        this.toolRequestList.set(requests);
-        console.log("ToolRequests initialis\xE9es:", requests);
-      },
-      error: (error) => {
-        console.error("Erreur lors de l'initialisation des toolRequests:", error);
-        this.toolRequestList.set([]);
-      }
-    });
-  }
-  /**
-    * Méthode publique pour recharger les toolRequests si nécessaire
-    */
-  refreshToolRequests() {
-    this.initializeToolRequests();
-  }
-  // initToolRequest(): void {
-  //   const requestType: string = this.getToolRequestType();
-  //   const id = this.activatedRoute.snapshot.paramMap.get('id');
-  //   switch (requestType) {
-  //     case "3D-tool":
-  //       this.toolRequest$ = this.ctrlRequestService.getControlData(id)
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-  //       this.page.title = 'Modification demande de contrôle 3D : ID ' + this.toolRequestForm.value.id;
-  updateToolRequest(toolRequestToUpdate) {
-    return this.http.patch(`${environment.toolApi}demandes/${toolRequestToUpdate.id}`, toolRequestToUpdate).pipe(tap(() => {
-      this.refreshToolRequests();
-    }));
-  }
-  getType(request) {
-    if (typeof request === "string") {
-      return request;
-    }
-    if (request.type === RequestType.CONTROLE) {
-      return "controle";
-    } else if (request.type === RequestType.MAINTENANCE) {
-      return "maintenance";
-    }
-  }
-  createToolRequest(toolRequestToCreate) {
-    return this.http.post(`api/tools/request`, toolRequestToCreate);
-  }
-  getToolRequest(id) {
-    console.log("get ToolRequest ", id);
-    return !id ? of(new ToolRequest()) : this.http.get(`api/tools/request/${id}`);
-  }
-  getToolRequests() {
-    this.loaderService.startLoading("Chargement des demandes");
-    return this.http.get(`api/tools/request`).pipe(share(), catchError((error) => {
-      console.error("Erreur lors du chargement des demandes:", error);
-      return of([]);
-    }), finalize(() => this.loaderService.stopLoading()));
-  }
-  removeRequest(request) {
-    return this.http.delete(`demandes/${request.id}`).pipe(tap(() => {
-      this.refreshToolRequests();
-    }));
-  }
-  static ctorParameters = () => [];
-};
-ToolRequestService = __decorate([
-  Injectable({
-    providedIn: "root"
-  })
-], ToolRequestService);
-
 // angular:jit:template:file:src\app\tooling\components\sbo\sbo.component.html
 var sbo_component_default = `<div class="header">\r
     <ion-grid fixed>\r
@@ -19031,17 +18857,15 @@ var ToolRequestFormBuilder = class ToolRequestFormBuilder2 {
   // ==========================================================================
   // TOOL REQUEST PRINCIPAL
   // ==========================================================================
-  createToolRequestForm(initialValue) {
-    return this.fb.group({
-      type: [initialValue?.type ?? RequestType.SBO, Validators.required],
-      bloquantProd: [initialValue?.bloquantProd ?? false, Validators.required],
-      // dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
-      aircraftProgram: [initialValue?.aircraftProgram ?? ""],
-      groupeAffectation: [initialValue?.groupeAffectation ?? null],
-      toolingNote: [initialValue?.toolingNote ?? ""],
-      typeData: initialValue?.typeData ?? null
-    });
-  }
+  // createToolRequestForm(initialValue?: Partial<SpecSBOCreation>): FormGroup {
+  //   return this.fb.group({
+  //     tool:[initialValue.tool ?? null, Validators.required],
+  //     bloquantProd: [initialValue?.bloquantProd ?? false, Validators.required],
+  //     dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
+  //     groupeAffectation: [initialValue?.groupeAffectation ?? null],
+  //     toolingNote: [initialValue?.toolingNote ?? ''],
+  //   });
+  // }
   // ==========================================================================
   // OUTILLAGE SANS REF SAP
   // ==========================================================================
@@ -19066,21 +18890,15 @@ var ToolRequestFormBuilder = class ToolRequestFormBuilder2 {
       detailsControle: [initialValue?.detailsControle ?? ""],
       tolerances: [initialValue?.tolerances ?? ""],
       // Dates
-      dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
       dispoOut: [initialValue?.dispoOut ?? null],
       // Type de contrôle
       typeRapport: [initialValue?.typeRapport ?? null],
       moyenMesure: [initialValue?.moyenMesure ?? null],
       // Informations complémentaires
       infosComplementaire: [initialValue?.infosComplementaire ?? ""],
-      ligneBudgetaire: [initialValue?.ligneBudgetaire ?? "", Validators.required],
-      visaControleur: [initialValue?.visaControleur ?? ""],
-      // Outillage
-      outillage: [initialValue?.outillage ?? null],
-      outillNoRefSAP: this.createOutillNoRefSAPForm(initialValue?.outillNoRefSAP),
+      visaControleur: [initialValue?.visaControleur ?? ""]
       // Options
-      bloquantProd: [initialValue?.bloquantProd ?? false],
-      immobilisationOutillage: [initialValue?.immobilisationOutillage ?? false]
+      // immobilisationOutillage: [initialValue?.immobilisationOutillage ?? false]
     });
   }
   // ==========================================================================
@@ -19100,20 +18918,23 @@ var ToolRequestFormBuilder = class ToolRequestFormBuilder2 {
   // ==========================================================================
   // SPÉCIFICATIONS MAINTENANCE (avec FormArray)
   // ==========================================================================
-  createSpecMaintenanceForm(initialValue) {
-    const itemsArray = this.fb.array(initialValue?.itemActionCorrective?.length ? initialValue.itemActionCorrective.map((item, index) => this.createMaintenanceItemForm(index + 1, item)) : [this.createMaintenanceItemForm(1)]);
-    return this.fb.group({
-      outillage: [initialValue?.outillage ?? null],
-      outillNoRefSAP: this.createOutillNoRefSAPForm(initialValue?.outillNoRefSAP),
-      dateBesoin: [initialValue?.dateBesoin ?? null],
-      image: [initialValue?.image ?? ""],
-      fichier: [initialValue?.fichier ?? ""],
-      sigle: [initialValue?.sigle ?? ""],
-      userValideur: [initialValue?.userValideur ?? null],
-      dateValid: [initialValue?.dateValid ?? null],
-      itemActionCorrective: itemsArray
-    });
-  }
+  // createSpecMaintenanceForm(initialValue?: Partial<SpecMaintenance>): FormGroup {
+  //   const itemsArray = this.fb.array(
+  //     initialValue?.itemActionCorrective?.length
+  //       ? initialValue.itemActionCorrective.map((item, index) => 
+  //           this.createMaintenanceItemForm(index + 1, item)
+  //         )
+  //       : [this.createMaintenanceItemForm(1)]
+  //   );
+  //   return this.fb.group({
+  //     image: [initialValue?.image ?? ''],
+  //     fichier: [initialValue?.fichier ?? ''],
+  //     sigle: [initialValue?.sigle ?? ''],
+  //     userValideur: [initialValue?.userValideur ?? null],
+  //     dateValid: [initialValue?.dateValid ?? null],
+  //     itemActionCorrective: itemsArray
+  //   });
+  // }
   // Ajouter un item de maintenance
   addMaintenanceItem(form) {
     const itemsArray = form.get("itemActionCorrective");
@@ -19133,32 +18954,32 @@ var ToolRequestFormBuilder = class ToolRequestFormBuilder2 {
   // ==========================================================================
   // SPÉCIFICATIONS SBO (Nouvelle demande outillage)
   // ==========================================================================
+  /**
+     * Crée le FormGroup pour les spécifications SBO d'une demande.
+     * @param initialValue - Valeurs initiales optionnelles.
+     * @returns Le FormGroup typé pour les spécifications SBO.
+     */
   createSpecSBOForm(initialValue) {
     return this.fb.group({
       title: [initialValue?.title ?? "", Validators.required],
       description: [initialValue?.description ?? "", Validators.required],
-      dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required]
+      dateBesoin: [initialValue?.dateBesoin ?? "", Validators.required]
       // aircraftProgram: [initialValue?.aircraftProgram ?? '', Validators.required]
     });
   }
   // ==========================================================================
   // NOUVEAU TOOL (création d'outillage)
   // ==========================================================================
+  /**
+     * Crée le FormGroup pour les données de création d'un nouvel outil (ToolCreation).
+     * @param initialValue - Valeurs initiales optionnelles.
+     * @returns Le FormGroup pour la création d'outil.
+     */
   createNewToolForm(initialValue) {
     return this.fb.group({
       sapToolNumber: [initialValue?.sapToolNumber ?? "", Validators.required],
       identification: [initialValue?.identification ?? "", Validators.required],
       designation: [initialValue?.designation ?? "", Validators.required]
-    });
-  }
-  // ==========================================================================
-  // FORMULAIRE COMPLET NEW TOOL REQUEST (combiné)
-  // ==========================================================================
-  createNewToolRequestForm() {
-    return this.fb.group({
-      tool: this.createNewToolForm(),
-      toolRequest: this.createToolRequestForm(),
-      specSbo: this.createSpecSBOForm()
     });
   }
 };
@@ -19168,81 +18989,537 @@ ToolRequestFormBuilder = __decorate([
   })
 ], ToolRequestFormBuilder);
 
-// src/app/tooling/components/new-tool/new-tool.page.ts
-var MENU_ITEMS = [
-  {
-    title: "Nouvelle demande outillage",
-    path: "new-tool",
-    type: "button"
-  },
-  {
-    title: "Liste des demandes outillages",
-    path: "/tool-requests",
-    type: "button"
+// angular:jit:template:file:src\app\tooling\components\create-tool\tool-form.component.html
+var tool_form_component_default = `<form [formGroup]="toolForm()">\r
+        <!-- Num\xE9ro d'OT -->\r
+        <ion-item>\r
+          <ion-input labelPlacement="floating" formControlName="sapToolNumber" type="text" placeholder="ex. OT095999">\r
+            <div slot="label">Num\xE9ro d'OT SAP<ion-text color="danger"> *</ion-text></div>\r
+          </ion-input>\r
+          </ion-item>\r
+        <!-- Num\xE9ro identification -->\r
+        <ion-item>\r
+          <ion-input labelPlacement="floating" formControlName="identification" type="text"\r
+            placeholder="ex. 19900Z01-T700P5522000123">\r
+            <div slot="label">Num\xE9ro d'identification<ion-text color="danger"> *</ion-text></div>\r
+          </ion-input>\r
+          </ion-item>\r
+        <!--D\xE9signation -->\r
+        <ion-item>\r
+          <ion-input labelPlacement="floating" formControlName="designation" type="text">\r
+            <div slot="label">D\xE9signation<ion-text color="danger"> *</ion-text></div>\r
+          </ion-input>\r
+          </ion-item>\r
+      </form>`;
+
+// angular:jit:style:file:src\app\tooling\components\create-tool\tool-form.component.scss
+var tool_form_component_default2 = "/* src/app/tooling/components/create-tool/tool-form.component.scss */\n/*# sourceMappingURL=tool-form.component.css.map */\n";
+
+// src/app/tooling/components/create-tool/tool-form.component.ts
+var ToolFormComponent = class ToolFormComponent2 {
+  toolForm = input.required();
+  isEditMode = input(true);
+  ////////////////////////////////////////////////////
+  //METHODES PRIVEES
+  //////////////////////////////////////////////////// 
+  /**
+  * Réinitialiser tous les formulaires
+  */
+  resetForms() {
+    this.toolForm().reset();
   }
-];
-var NewToolPage = class NewToolPage2 {
+  static propDecorators = {
+    toolForm: [{ type: Input, args: [{ isSignal: true, alias: "toolForm", required: true, transform: void 0 }] }],
+    isEditMode: [{ type: Input, args: [{ isSignal: true, alias: "isEditMode", required: false, transform: void 0 }] }]
+  };
+};
+ToolFormComponent = __decorate([
+  Component({
+    selector: "app-tool-form",
+    template: tool_form_component_default,
+    standalone: true,
+    imports: [
+      ReactiveFormsModule,
+      IonItem,
+      IonText,
+      IonInput,
+      IonToolbar,
+      IonButton
+    ],
+    styles: [tool_form_component_default2]
+  })
+  /**
+   * Composant responsable de la saisie des informations pour la création d'un nouvel outil.
+   * Déclenche l'action de création via le ToolRequestStore.
+   */
+], ToolFormComponent);
+
+// src/app/tooling/services/tool-request.service.ts
+var ToolRequestService = class ToolRequestService2 {
+  ////////////////////////////////////////////////////
+  //INJECTION DEPENDANCES
+  ////////////////////////////////////////////////////
+  http = inject(HttpClient);
+  // ============================================================================
+  // MÉTHODES DE COMMUNICATION API
+  // ============================================================================
+  /**
+    * Obtient la liste des demandes d'outillage.
+    * @returns Un Observable de la liste des demandes.
+    */
+  getToolRequests() {
+    return this.http.get(`api/tools/request`).pipe(
+      // On retire take/share/finalize/catchError ici, car c'est le Store qui gère le cycle de vie de l'abonnement
+      catchError((error) => {
+        console.error("Erreur lors du chargement des demandes:", error);
+        throw error;
+      })
+    );
+  }
+  /**
+     * Crée une nouvelle demande d'outillage.
+     * @param toolRequestToCreate - Les données de la demande.
+     * @returns Un Observable de la demande créée.
+     */
+  createToolRequest(toolRequestToCreate) {
+    return this.http.post(`api/tools/request`, toolRequestToCreate);
+  }
+  /**
+     * Met à jour une demande d'outillage.
+     * @param toolRequestToUpdate - La demande à mettre à jour.
+     * @returns Un Observable de la réponse de l'API.
+     */
+  updateToolRequest(toolRequestToUpdate) {
+    return this.http.patch(`api/tools/request/${toolRequestToUpdate.id}`, toolRequestToUpdate).pipe(catchError((error) => {
+      console.error("Erreur lors de la mise \xE0 jour de la demande:", error);
+      throw error;
+    }), tap(() => {
+    }));
+  }
+  /**
+     * Supprime une demande d'outillage.
+     * @param request - La demande à supprimer.
+     * @returns Un Observable de la réponse de l'API.
+     */
+  removeRequest(request) {
+    return this.http.delete(`demandes/${request.id}`).pipe(tap(() => {
+    }));
+  }
+  getType(request) {
+    if (typeof request === "string") {
+      return request;
+    }
+    if (request.type === RequestType.CONTROLE) {
+      return "controle";
+    } else if (request.type === RequestType.MAINTENANCE) {
+      return "maintenance";
+    }
+  }
+  getToolRequest(id) {
+    console.log("get ToolRequest ", id);
+    return this.http.get(`api/tools/request/${id}`);
+  }
+};
+ToolRequestService = __decorate([
+  Injectable({
+    providedIn: "root"
+  })
+  /**
+   * Service de communication avec l'API pour les demandes d'outillage (ToolRequest).
+   * Ne gère plus l'état local (listes/signals).
+   */
+], ToolRequestService);
+
+// src/app/tooling/stores/tool-request.store.ts
+var ToolRequestStore = class ToolRequestStore2 {
   // ============================================================================
   // INJECTION DE DÉPENDANCES
   // ============================================================================
-  authStore = inject(AuthStore);
-  formBuilderService = inject(ToolRequestFormBuilder);
-  programService = inject(ProgramsService);
   toolService = inject(ToolService);
   toolRequestService = inject(ToolRequestService);
-  router = inject(Router);
   // ============================================================================
-  // PROPRIÉTÉS
+  // ÉTAT INTERNE (Signals Privés Modifiables)
   // ============================================================================
-  // Configuration de la page
-  page = {
-    pageTitle: "Cr\xE9ation d'une demande",
-    menuTitle: "Menu outillage",
-    menuItems: MENU_ITEMS,
-    contentId: "tooling-content"
-  };
-  // Formulaires typés
-  newToolForm;
-  newToolRequestForm;
-  specSboForm;
-  // Données
-  programs = signal([]);
-  createdTool = signal(null);
-  // États de chargement
-  isCreatingTool = signal(false);
-  isCreatingRequest = signal(false);
-  // Enum pour le template
-  RequestType = RequestType;
+  state = signal({
+    isCreatingTool: false,
+    isCreatingRequest: false,
+    selectedTool: null,
+    error: null,
+    currentToolRequest: null,
+    isLoadingRequest: false,
+    isUpdatingRequest: false
+  });
+  // ============================================================================
+  // SÉLECTEURS (Signals en Lecture Seule)
+  // ============================================================================
+  /** Indique si un outil est en cours de création. */
+  isCreatingTool = computed(() => this.state().isCreatingTool);
+  /** Indique si la demande est en cours de soumission. */
+  isCreatingRequest = computed(() => this.state().isCreatingRequest);
+  /** L'outil qui a été créé et est lié à la demande. */
+  selectedTool = computed(() => this.state().selectedTool);
+  /** Message d'erreur s'il y a eu un problème dans une des étapes. */
+  error = computed(() => this.state().error);
+  /** La demande en cours d'édition. */
+  currentToolRequest = computed(() => this.state().currentToolRequest);
+  // 👈 Nouveau
+  /** Indique si une demande existante est en cours de chargement (pour l'édition). */
+  isLoadingRequest = computed(() => this.state().isLoadingRequest);
+  // 👈 Nouveau
+  /** Indique si la demande est en cours de mise à jour. */
+  isUpdatingRequest = computed(() => this.state().isUpdatingRequest);
+  // 👈 Nouveau
+  // ============================================================================
+  // MUTATIONS (Méthodes Publiques d'Action)
+  // ============================================================================
+  /**
+   * Crée un nouvel outil en base de données.
+   * Met à jour l'état `createdTool` en cas de succès.
+   * @param toolData - Les données de création de l'outil.
+   */
+  createTool(toolData) {
+    this.updateState({ isCreatingTool: true, error: null });
+    this.toolService.createTool(toolData).pipe(tap((tool) => {
+      this.updateState({ selectedTool: tool });
+    }), finalize(() => this.updateState({ isCreatingTool: false }))).subscribe({
+      error: (error) => {
+        console.error("Erreur lors de la cr\xE9ation de l'outil:", error);
+        this.updateState({ error: "Erreur lors de la cr\xE9ation de l'outil." });
+      }
+    });
+  }
+  /**
+   * Soumet la demande d'outillage SBO.
+   * @param toolRequest - Les données de la demande d'outillage.
+   */
+  createToolRequest(toolRequest, toolData) {
+    console.log("createToolRequest in store");
+    this.updateState({ isCreatingRequest: true, error: null });
+    const createToolObs = this.toolService.createTool(toolData);
+    const createToolRequestObs = createToolObs.pipe(switchMap((createdTool) => {
+      toolRequest.tool = createdTool;
+      return this.toolRequestService.createToolRequest(toolRequest);
+    }));
+    createToolRequestObs.pipe(finalize(() => this.updateState({ isCreatingRequest: false }))).subscribe({
+      next: () => {
+        console.log("Demande cr\xE9\xE9e avec succ\xE8s");
+        this.resetCreationState();
+      },
+      error: (error) => {
+        console.error("Erreur lors de la cr\xE9ation de la demande:", error);
+        this.updateState({ error: "Erreur lors de la cr\xE9ation de la demande." });
+      }
+    });
+  }
+  /**
+     * Charge une demande existante par son ID pour l'édition.
+     * @param requestId - L'ID de la demande.
+     */
+  loadToolRequest(requestId) {
+    console.log("loadToolRequest");
+    this.updateState({ isLoadingRequest: true, error: null, currentToolRequest: null });
+    this.toolRequestService.getToolRequest(requestId).pipe(finalize(() => this.updateState({ isLoadingRequest: false }))).subscribe({
+      next: (request) => {
+        if (request) {
+          console.log("update State in loadToolRequest");
+          console.log(request);
+          this.updateState({ currentToolRequest: request, selectedTool: request.tool });
+        } else {
+          this.updateState({ error: `Demande avec ID ${requestId} non trouv\xE9e.` });
+        }
+      },
+      error: (error) => {
+        console.error("Erreur lors du chargement de la demande:", error);
+        this.updateState({ error: "Erreur lors du chargement de la demande." });
+      }
+    });
+  }
+  /**
+     * Met à jour une demande d'outillage SBO existante.
+     * @param requestToUpdate - Les données de mise à jour.
+     */
+  updateToolRequest(requestToUpdate) {
+    const currentId = this.currentToolRequest()?.id;
+    if (!currentId) {
+      this.updateState({ error: "ID de demande manquant pour la mise \xE0 jour." });
+      return;
+    }
+    this.updateState({ isUpdatingRequest: true, error: null });
+    this.toolRequestService.updateToolRequest(requestToUpdate).pipe(finalize(() => this.updateState({ isUpdatingRequest: false }))).subscribe({
+      next: () => {
+        console.log(`Demande ${currentId} mise \xE0 jour avec succ\xE8s`);
+        this.resetCreationState();
+      },
+      error: (error) => {
+        console.error("Erreur lors de la mise \xE0 jour de la demande:", error);
+        this.updateState({ error: "Erreur lors de la mise \xE0 jour de la demande." });
+      }
+    });
+  }
+  /**
+   * Définit l'outil créé manuellement (utilisé par le composant si nécessaire).
+   * @param tool - L'outil créé ou null.
+   */
+  setCreatedTool(tool) {
+    this.updateState({ selectedTool: tool });
+  }
+  /**
+   * Réinitialise l'état de création de l'outil et de la requête.
+   */
+  resetCreationState() {
+    this.updateState({
+      selectedTool: null,
+      isCreatingTool: false,
+      isCreatingRequest: false,
+      currentToolRequest: null,
+      isUpdatingRequest: false,
+      error: null
+    });
+  }
+  // ============================================================================
+  // MÉTHODE INTERNE DE GESTION D'ÉTAT (Simule patchState)
+  // ============================================================================
+  /**
+   * Met à jour une partie de l'état interne de manière immuable.
+   * @param newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
+   */
+  updateState(newState) {
+    this.state.update((current) => __spreadValues(__spreadValues({}, current), newState));
+  }
+};
+ToolRequestStore = __decorate([
+  Injectable({
+    providedIn: "root"
+  })
+  /**
+   * Store pour la gestion de l'état et des actions liées à la création et à la modification
+   * de demandes d'outillage (SBO).
+   */
+], ToolRequestStore);
+
+// angular:jit:template:file:src\app\tooling\components\sbo-form\sbo-form.component.html
+var sbo_form_component_default = `<form [formGroup]="specSboForm()">\r
+          <!-- <ion-item>\r
+            <ion-label>Programme avion</ion-label>\r
+            <ion-select formControlName="aircraftProgram" multiple="true" placeholder="S\xE9lectionner le programme avion">\r
+              <ion-select-option *ngFor="let program of programs()" [value]="program.id">\r
+                {{program.designation}}\r
+              </ion-select-option>\r
+            </ion-select>\r
+          </ion-item> -->\r
+        <ion-item>\r
+          <ion-input labelPlacement="floating" type="date" display-format="DD-MM-YYYY" formControlName="dateBesoin">\r
+            <div slot="label">Date de besoin<ion-text color="danger"> *</ion-text></div>\r
+          </ion-input>\r
+          </ion-item>\r
+          <ion-item>\r
+            <ion-input labelPlacement="floating" formControlName="title">\r
+              <div slot="label">Titre de la demande<ion-text color="danger"> *</ion-text></div>\r
+            </ion-input>\r
+          </ion-item>\r
+          <ion-item>\r
+            <ion-label>Description\r
+              <ion-text color="danger">*</ion-text>\r
+            </ion-label>\r
+            <div class="NgxEditor__Wrapper">\r
+              <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>\r
+              <ngx-editor labelPlacement="floating" [editor]="editor" formControlName="description"\r
+                [placeholder]="'Taper la description ici'"></ngx-editor>\r
+              </div>\r
+          </ion-item>\r
+      </form>`;
+
+// angular:jit:style:file:src\app\tooling\components\sbo-form\sbo-form.component.scss
+var sbo_form_component_default2 = "/* src/app/tooling/components/sbo-form/sbo-form.component.scss */\n/*# sourceMappingURL=sbo-form.component.css.map */\n";
+
+// src/app/tooling/components/sbo-form/sbo-form.component.ts
+var SboFormComponent = class SboFormComponent2 {
+  specSboForm = input.required();
+  isEditMode = input(true);
+  /** Éditeur de texte riche */
   editor;
-  // public html: '';
-  // private newTool: Tool;
   // ============================================================================
   // LIFECYCLE
   // ============================================================================
   ngOnInit() {
+    this.editor = new Editor();
+  }
+  /**
+     * Destruction du composant.
+     */
+  ngOnDestroy() {
+    this.editor.destroy();
+  }
+  static propDecorators = {
+    specSboForm: [{ type: Input, args: [{ isSignal: true, alias: "specSboForm", required: true, transform: void 0 }] }],
+    isEditMode: [{ type: Input, args: [{ isSignal: true, alias: "isEditMode", required: false, transform: void 0 }] }]
+  };
+};
+SboFormComponent = __decorate([
+  Component({
+    selector: "app-sbo-form",
+    template: sbo_form_component_default,
+    standalone: true,
+    imports: [
+      ReactiveFormsModule,
+      IonInput,
+      IonItem,
+      IonText,
+      IonLabel,
+      NgxEditorModule
+    ],
+    styles: [sbo_form_component_default2]
+  })
+], SboFormComponent);
+
+// angular:jit:template:file:src\app\shared\components\card\card.component.html
+var card_component_default = '<ion-card>\r\n    <ion-card-header>\r\n      <ion-card-title color="primary">\r\n        {{titles().title}}\r\n        <ion-card-subtitle color="secondary">\r\n          {{titles().subtitle}}\r\n        </ion-card-subtitle>\r\n      </ion-card-title>\r\n    </ion-card-header>\r\n    <ion-card-content>\r\n      <ng-content></ng-content>\r\n    </ion-card-content>\r\n  \r\n  </ion-card>';
+
+// angular:jit:style:file:src\app\shared\components\card\card.component.scss
+var card_component_default2 = "/* src/app/shared/components/card/card.component.scss */\n/*# sourceMappingURL=card.component.css.map */\n";
+
+// src/app/shared/components/card/card.component.ts
+var CardComponent = class CardComponent2 {
+  titles = input();
+  constructor() {
+  }
+  ngOnInit() {
+  }
+  static ctorParameters = () => [];
+  static propDecorators = {
+    titles: [{ type: Input, args: [{ isSignal: true, alias: "titles", required: false, transform: void 0 }] }]
+  };
+};
+CardComponent = __decorate([
+  Component({
+    selector: "app-card",
+    template: card_component_default,
+    standalone: true,
+    imports: [
+      IonCard,
+      IonCardHeader,
+      IonCardTitle,
+      IonCardSubtitle,
+      IonCardContent
+    ],
+    styles: [card_component_default2]
+  })
+], CardComponent);
+
+// src/app/tooling/components/new-tool/new-tool.page.ts
+var NewToolPage = class NewToolPage2 {
+  // ============================================================================
+  // INJECTION DE DÉPENDANCES
+  // ============================================================================
+  formBuilderService = inject(ToolRequestFormBuilder);
+  programService = inject(ProgramsService);
+  router = inject(Router);
+  store = inject(ToolRequestStore);
+  activatedRoute = inject(ActivatedRoute);
+  // ============================================================================
+  // PROPRIÉTÉS
+  // ============================================================================
+  /** ID de la demande en cours de modification (null en mode création). */
+  requestId = null;
+  /** Indique si la page est en mode édition. */
+  isEditMode = signal(false);
+  /** Formulaire pour les spécifications SBO. */
+  specSboForm;
+  /** Formulaire pour l'outil. */
+  toolForm;
+  /** Configuration de la page */
+  page = {
+    pageTitle: "Cr\xE9ation d'une demande",
+    menuTitle: "Menu outillage",
+    // menuItems: MENU_ITEMS,
+    contentId: "tooling-content"
+  };
+  /** Liste des programmes avion */
+  programs = signal([]);
+  /** Enum pour le template */
+  RequestType = RequestType;
+  // ============================================================================
+  // CONSTRUCTEUR
+  // ============================================================================
+  constructor() {
+    effect(() => {
+      const toolRequest = this.store.currentToolRequest();
+      if (toolRequest && this.isEditMode()) {
+        this.fillForm(toolRequest);
+      }
+    });
+  }
+  // ============================================================================
+  // LIFECYCLE
+  // ============================================================================
+  /**
+   * Initialisation du composant.
+   */
+  ngOnInit() {
     this.initializeForms();
     this.loadPrograms();
-    this.editor = new Editor();
+    this.activatedRoute.params.pipe(
+      filter((params) => !!params["id"]),
+      // S'assurer que l'ID existe
+      take(1)
+    ).subscribe((params) => {
+      this.requestId = params["id"];
+      console.log(this.requestId);
+      if (this.requestId) {
+        this.isEditMode.set(true);
+        this.loadToolRequestForEdit(this.requestId);
+      }
+    });
   }
   // ============================================================================
   // INITIALISATION DES FORMULAIRES
   // ============================================================================
+  /**
+   * Initialise les FormGroup nécessaires à la page.
+   */
   initializeForms() {
-    this.newToolForm = this.formBuilderService.createNewToolForm();
     this.specSboForm = this.formBuilderService.createSpecSBOForm();
-    this.newToolRequestForm = this.formBuilderService.createToolRequestForm({
-      type: RequestType.SBO,
-      typeData: this.specSboForm
+    this.toolForm = this.formBuilderService.createNewToolForm();
+  }
+  // ============================================================================
+  // CHARGEMENT DES DONNÉES EN MODE ÉDITION
+  // ============================================================================
+  /**
+   * Charge la demande existante via le Store et déclenche le préremplissage.
+   * @param id - L'ID de la demande à charger.
+   */
+  loadToolRequestForEdit(id) {
+    console.log("load ToolRequest for Edit");
+    this.store.loadToolRequest(id);
+  }
+  /**
+   * Préremplit le formulaire avec les données de la demande.
+   * @param request - La demande d'outillage.
+   */
+  fillForm(request) {
+    const formattedDateBesoin = request.dateBesoin.toString().split("T")[0];
+    this.specSboForm.patchValue({
+      title: request.title,
+      description: request.description,
+      dateBesoin: formattedDateBesoin,
+      type: request.type,
+      toolingNote: request.toolingNote,
+      tool: request.tool
     });
-    this.specSboForm.get("dateBesoin")?.valueChanges.subscribe((date) => {
-      this.newToolRequestForm.get("dateBesoin")?.setValue(date, { emitEvent: false });
+    this.toolForm.patchValue({
+      sapToolNumber: request.tool.sapToolNumber,
+      identification: request.tool.identification,
+      designation: request.tool.designation
     });
   }
   // ============================================================================
   // CHARGEMENT DES DONNÉES
   // ============================================================================
+  /**
+   * Charge la liste des programmes avion.
+   */
   loadPrograms() {
-    this.programService.getPrograms().subscribe({
+    this.programService.getPrograms().pipe(take(1)).subscribe({
       next: (programList) => {
         this.programs.set(programList);
       },
@@ -19255,85 +19532,97 @@ var NewToolPage = class NewToolPage2 {
   // ACTIONS
   // ============================================================================
   /**
-   * Créer un nouvel outil en base de données
-   */
-  onCreateTool() {
-    if (this.newToolForm.invalid) {
-      this.newToolForm.markAllAsTouched();
+     * Gère la soumission du formulaire : Création ou Mise à jour.
+     */
+  onSubmit() {
+    if (this.toolForm.invalid || this.specSboForm.invalid) {
+      this.toolForm.markAllAsTouched();
+      this.specSboForm.markAllAsTouched();
       return;
     }
-    this.isCreatingTool.set(true);
-    const toolData = this.newToolForm.value;
-    this.toolService.createTool(toolData).subscribe({
-      next: (tool) => {
-        console.log("Outil cr\xE9\xE9:", tool);
-        this.createdTool.set(tool);
-        this.isCreatingTool.set(false);
-      },
-      error: (error) => {
-        console.error("Erreur lors de la cr\xE9ation de l'outil:", error);
-        this.isCreatingTool.set(false);
-      }
-    });
+    console.log("onSubmit in page");
+    if (this.isEditMode()) {
+      this.onUpdateToolRequest();
+    } else {
+      this.onCreateToolRequest();
+    }
   }
   /**
   * Créer une demande d'outillage complète
   */
   onCreateToolRequest() {
-    if (!this.createdTool()) {
-      console.error("Aucun outil cr\xE9\xE9");
-      return;
-    }
-    if (this.newToolRequestForm.invalid || this.specSboForm.invalid) {
-      this.newToolRequestForm.markAllAsTouched();
+    console.log("onCreateToolRequest in page");
+    const toolData = this.toolForm.value;
+    const toolRequest = __spreadProps(__spreadValues({}, this.specSboForm.value), {
+      type: RequestType.SBO
+    });
+    this.store.createToolRequest(toolRequest, toolData);
+  }
+  /**
+     * Met à jour une demande d'outillage complète
+     */
+  onUpdateToolRequest() {
+    const currentRequest = this.store.currentToolRequest();
+    if (!currentRequest || this.specSboForm.invalid) {
       this.specSboForm.markAllAsTouched();
       return;
     }
-    this.isCreatingRequest.set(true);
-    const toolRequest = {
-      type: RequestType.SBO,
-      createdAt: /* @__PURE__ */ new Date(),
-      bloquantProd: this.newToolRequestForm.value.bloquantProd,
-      dateBesoin: this.newToolRequestForm.value.dateBesoin,
-      demandeur: this.authStore.user(),
-      outillage: this.createdTool(),
-      toolingNote: this.newToolRequestForm.value.toolingNote,
-      typeData: this.specSboForm.value
-    };
-    this.toolRequestService.createToolRequest(toolRequest).subscribe({
-      next: () => {
-        console.log("Demande cr\xE9\xE9e avec succ\xE8s");
-        this.isCreatingRequest.set(false);
-        this.resetForms();
-        this.router.navigate(["/tool-requests"]);
-      },
-      error: (error) => {
-        console.error("Erreur lors de la cr\xE9ation de la demande:", error);
-        this.isCreatingRequest.set(false);
-      }
+    const requestToUpdate = __spreadProps(__spreadValues({
+      id: currentRequest.id,
+      // Assumer que l'outil ne change pas pour une SBO, ou qu'il est géré par la logique enfant
+      toolId: currentRequest.tool.id
+    }, this.specSboForm.value), {
+      // L'API attend peut-être un type
+      type: RequestType.SBO
+      // La logique de votre API pour l'UPDATE pourrait nécessiter plus de champs
     });
+    this.store.updateToolRequest(requestToUpdate);
+    this.router.navigate(["/tool-requests"]);
   }
+  // NOTE: onCreatedTool n'est plus nécessaire car le composant enfant ne l'émet plus.
+  // La page peut optionnellement utiliser store.setCreatedTool(tool) si elle gère un sélecteur d'outil existant.
+  // ============================================================================
+  // GETTERS POUR LE TEMPLATE (Mode déclaratif)
+  // ============================================================================
+  /**
+   * Indique si la création de la demande est possible.
+   */
+  get canCreateRequest() {
+    return this.store.selectedTool() !== null && this.specSboForm.valid && !this.store.isCreatingRequest();
+  }
+  /**
+     * Indique si la mise à jour de la demande est possible.
+     */
+  get canUpdateRequest() {
+    return this.isEditMode() && this.specSboForm.valid && !this.store.isUpdatingRequest();
+  }
+  // Soumettre la demande
+  //   this.toolRequestService.createToolRequest(toolRequest).subscribe({
+  //     next: () => {
+  //       console.log('Demande créée avec succès');
+  //       this.isCreatingRequest.set(false);
+  //       // Réinitialiser les formulaires
+  //       this.resetForms();
+  //       // Afficher un message de succès
+  //       // this.toastService.showSuccess('Demande créée avec succès');
+  //       // Rediriger vers la liste
+  //       this.router.navigate(['/tool-requests']);
+  //     },
+  //     error: (error) => {
+  //       console.error('Erreur lors de la création de la demande:', error);
+  //       this.isCreatingRequest.set(false);
+  //       // Afficher un message d'erreur
+  //       // this.toastService.showError('Erreur lors de la création de la demande');
+  //     }
+  //   });
+  // }
   /**
   * Réinitialiser tous les formulaires
   */
   resetForms() {
-    this.newToolForm.reset();
-    this.newToolRequestForm.reset({
-      type: RequestType.SBO,
-      bloquantProd: false
-    });
     this.specSboForm.reset();
-    this.createdTool.set(null);
   }
-  // ============================================================================
-  // GETTERS POUR LE TEMPLATE
-  // ============================================================================
-  get canCreateTool() {
-    return this.newToolForm.valid && !this.isCreatingTool();
-  }
-  get canCreateRequest() {
-    return this.createdTool() !== null && this.newToolRequestForm.valid && this.specSboForm.valid && !this.isCreatingRequest();
-  }
+  static ctorParameters = () => [];
 };
 NewToolPage = __decorate([
   Component({
@@ -19341,32 +19630,29 @@ NewToolPage = __decorate([
     template: new_tool_page_default,
     standalone: true,
     imports: [
-      IonItem,
-      IonAccordion,
+      IonHeader,
+      IonTitle,
+      SboFormComponent,
+      CardComponent,
+      ReactiveFormsModule,
+      NgxEditorModule,
       IonContent,
-      IonAccordionGroup,
-      IonItemGroup,
-      IonLabel,
-      IonText,
       IonFooter,
       IonToolbar,
-      IonInput,
       IonButton,
-      IonDatetime,
-      IonSelect,
-      IonSelectOption,
-      ReactiveFormsModule,
-      NgForOf,
-      SboComponent,
-      NgxEditorModule,
-      JsonPipe
+      ToolFormComponent,
+      SboComponent
     ],
     styles: [new_tool_page_default2]
   })
+  /**
+   * Page de création d'une nouvelle demande d'outillage (SBO).
+   * Elle orchestre la création de l'outil et la soumission de la demande via le ToolRequestStore.
+   */
 ], NewToolPage);
 
 // angular:jit:template:file:src\app\tooling\components\tool-requests\tool-requests.page.html
-var tool_requests_page_default = '<ion-header>\r\n  <ion-toolbar color=dark>\r\n    <ion-title>Liste des demandes</ion-title>\r\n    <ion-button color=secondary slot=end (click)="nextClick()" expand="block" fill="outline">\r\n      Charger plus de demandes\r\n    </ion-button>\r\n    <ion-button color=secondary slot=end (click)="reloadClick()">\r\n      <ion-icon slot="start" name="refresh-circle-outline"></ion-icon>\r\n      Recharger\r\n    </ion-button>\r\n  </ion-toolbar>\r\n\r\n</ion-header>\r\n<ion-content [fullscreen]="false" id="tool-request-content">\r\n\r\n<ng-container>\r\n    <!-- <app-table [datas]="toolRequests"></app-table> -->\r\n    <ion-grid class="ion-no-padding">\r\n      <ion-row>\r\n        <ion-col size="4">\r\n          <app-tool-request-filters [toolRequestFilters]="toolRequestFilters()"\r\n            (onFilterChange)="filterChange($event)"></app-tool-request-filters>\r\n        </ion-col>\r\n        <ion-col size="8">\r\n          <app-tool-request-table [toolRequestList]="filteredToolRequestList()"></app-tool-request-table>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n  </ng-container>\r\n</ion-content>';
+var tool_requests_page_default = '<ion-header>\r\n  <ion-toolbar color=dark>\r\n    <ion-title>Liste des demandes</ion-title>\r\n    <ion-button color=secondary slot=end (click)="nextClick()" expand="block" fill="outline">\r\n      Charger plus de demandes\r\n    </ion-button>\r\n    <ion-button color=secondary slot=end (click)="reloadRequestList()" [disabled]="isLoadingList()">\r\n      <ion-icon slot="start" name="refresh-circle-outline"></ion-icon>\r\n      Recharger\r\n    </ion-button>\r\n  </ion-toolbar>\r\n\r\n</ion-header>\r\n<ion-content [fullscreen]="false" id="tool-request-content">\r\n\r\n<ng-container>\r\n    <!-- <app-table [datas]="toolRequests"></app-table> -->\r\n    <ion-grid class="ion-no-padding">\r\n      <ion-row>\r\n        <ion-col size="4">\r\n          <app-tool-request-filters [toolRequestFilters]="toolRequestFilters()"\r\n            (onFilterChange)="filterChange($event)"></app-tool-request-filters>\r\n        </ion-col>\r\n        <ion-col size="8">\r\n          <app-tool-request-table [toolRequestList]="filteredToolRequestList()"></app-tool-request-table>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n  </ng-container>\r\n</ion-content>';
 
 // angular:jit:style:file:src\app\tooling\components\tool-requests\tool-requests.page.scss
 var tool_requests_page_default2 = "/* src/app/tooling/components/tool-requests/tool-requests.page.scss */\nion-grid {\n  height: 100%;\n}\nion-grid ion-row {\n  height: 100%;\n}\nion-grid ion-row ion-col:first-child {\n  border-right: 2px solid var(--ion-color-medium);\n}\n/*# sourceMappingURL=tool-requests.page.css.map */\n";
@@ -19413,8 +19699,8 @@ var ToolRequestFiltersComponent = class ToolRequestFiltersComponent2 {
   ////////////////////////////////////////////////////
   activeFilters = [];
   resetFiltersClick() {
-    this.activeFilters.forEach((filter) => {
-      filter.value = null;
+    this.activeFilters.forEach((filter2) => {
+      filter2.value = null;
     });
     this.activeFilters = [];
     this.onFilterChange.emit({ columnProp: "reset", selectedValues: [] });
@@ -19426,13 +19712,13 @@ var ToolRequestFiltersComponent = class ToolRequestFiltersComponent2 {
     * @param event
     * @memberof ToolRequestsPage
     */
-  filterChange(filter, event) {
+  filterChange(filter2, event) {
     const selectedValues = event.detail.value;
     if (event.target && !this.activeFilters.includes(event.target)) {
       this.activeFilters.push(event.target);
     }
     this.onFilterChange.emit({
-      columnProp: filter.columnProp,
+      columnProp: filter2.columnProp,
       selectedValues: Array.isArray(selectedValues) ? selectedValues : [selectedValues]
     });
   }
@@ -19452,7 +19738,7 @@ ToolRequestFiltersComponent = __decorate([
 ], ToolRequestFiltersComponent);
 
 // angular:jit:template:file:src\app\tooling\components\tool-requests\tool-requests-components\tool-request-table\tool-request-table.component.html
-var tool_request_table_component_default = '<ng-container>\r\n  <ion-menu-toggle menu="tool-request-menu">\r\n    <ion-button>Click to open the menu</ion-button>\r\n  </ion-menu-toggle>\r\n  <ion-grid [fixed]="false">\r\n    <ion-row appHeaderRow>\r\n      <ion-col size="1"></ion-col>\r\n      <ion-col size="2">Statut</ion-col>\r\n      <ion-col size="8">Outillage</ion-col>\r\n      <ion-col size="4">Date de la demande</ion-col>\r\n      <ion-col size="3">Demandeur</ion-col>\r\n      <!-- <ion-col size="3" sort="">Date de besoin</ion-col> -->\r\n    </ion-row>\r\n    @for (toolRequest of toolRequestList(); track $index) {\r\n    <ion-row appDataRow [isUrgent]="toolRequest.bloquantProd" (click)="openRequestClick(toolRequest)">\r\n      <ion-col size="1">\r\n          <div class="circle" [style.border]="getBorder(toolRequest)">\r\n            {{toolRequest.id}}\r\n          </div>\r\n          </ion-col>\r\n        <ion-col size="2">{{ toolRequest.statut }}</ion-col>\r\n        <ion-col size="8">\r\n        <ion-label>OT{{toolRequest.outillage.sapToolNumber}} -\r\n          {{toolRequest.outillage.designation}}</ion-label>\r\n        </ion-col>\r\n        <ion-col size="4"> {{toolRequest.createdAt | date :"EE dd MMM yyyy":"local" }}</ion-col>\r\n        <ion-col size="3" (click)="userClick()">\r\n          <ion-label>{{toolRequest.demandeur.nom}}</ion-label>\r\n          </ion-col>\r\n          <!-- <ion-col size="3"> -->\r\n          <!-- <ion-label *ngIf="request.controle"> {{request.controle.dateBesoin| date :"dd MMMM yyyy":"local"}}</ion-label>\r\n                            <ion-label *ngIf="request.maintenance"> {{request.maintenance.dateBesoin| date :"dd MMMM yyyy":"local"}}\r\n                            </ion-label> -->\r\n          <!-- </ion-col> -->\r\n          </ion-row>\r\n    }\r\n  </ion-grid>\r\n</ng-container>';
+var tool_request_table_component_default = '<ng-container>\r\n  <!-- <ion-menu-toggle menu="tool-request-menu">\r\n    <ion-button>Click to open the menu</ion-button>\r\n  </ion-menu-toggle> -->\r\n  <ion-grid [fixed]="false">\r\n    <ion-row appHeaderRow>\r\n      <ion-col size="1"></ion-col>\r\n      <ion-col size="2">Statut</ion-col>\r\n      <ion-col size="8">Outillage</ion-col>\r\n      <ion-col size="4">Date de la demande</ion-col>\r\n      <ion-col size="3">Demandeur</ion-col>\r\n      <!-- <ion-col size="3" sort="">Date de besoin</ion-col> -->\r\n    </ion-row>\r\n    @for (toolRequest of toolRequestList(); track $index) {\r\n    <ion-row appDataRow [isUrgent]="toolRequest.bloquantProd" (click)="openRequestClick(toolRequest)">\r\n      <ion-col size="1">\r\n          <div class="circle" [style.border]="getBorder(toolRequest)">\r\n            {{toolRequest.id}}\r\n          </div>\r\n          </ion-col>\r\n        <ion-col size="2">{{ toolRequest.statut }}</ion-col>\r\n        <ion-col size="8">\r\n          @if(hasSapToolNumber(toolRequest.tool)){\r\n          <ion-label>OT{{toolRequest.tool.sapToolNumber}} -\r\n            {{toolRequest.tool.designation}}</ion-label>\r\n          }\r\n          </ion-col>\r\n        <ion-col size="4"> {{toolRequest.createdAt | date :"EE dd MMM yyyy":"local" }}</ion-col>\r\n        <ion-col size="3" (click)="userClick()">\r\n          <ion-label>{{toolRequest.demandeur.nom}}</ion-label>\r\n          </ion-col>\r\n          <!-- <ion-col size="3"> -->\r\n          <!-- <ion-label *ngIf="request.controle"> {{request.controle.dateBesoin| date :"dd MMMM yyyy":"local"}}</ion-label>\r\n                            <ion-label *ngIf="request.maintenance"> {{request.maintenance.dateBesoin| date :"dd MMMM yyyy":"local"}}\r\n                            </ion-label> -->\r\n          <!-- </ion-col> -->\r\n          </ion-row>\r\n    }\r\n  </ion-grid>\r\n</ng-container>';
 
 // angular:jit:style:file:src\app\tooling\components\tool-requests\tool-requests-components\tool-request-table\tool-request-table.component.scss
 var tool_request_table_component_default2 = "/* src/app/tooling/components/tool-requests/tool-requests-components/tool-request-table/tool-request-table.component.scss */\n:host {\n  height: 100%;\n  overflow: hidden;\n}\nion-grid {\n  --ion-grid-columns: 18;\n}\nion-grid ion-row > ion-col {\n  padding: 10px 0;\n}\nion-grid ion-row > ion-col:first-child {\n  justify-content: center !important;\n}\n.circle {\n  height: 40px;\n  width: 40px;\n  border-radius: 50%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n/*# sourceMappingURL=tool-request-table.component.css.map */\n";
@@ -20189,73 +20475,38 @@ var MatSortModule = class _MatSortModule {
   }]
 });
 
-// src/app/tooling/components/tool-requests/tool-requests-data/tool-requests.service.ts
-var ToolRequestsService = class ToolRequestsService2 {
+// src/app/tooling/components/tool-requests/tool-requests-components/tool-request-table/tool-request-table.component.ts
+var ToolRequestTableComponent = class ToolRequestTableComponent2 {
+  authGuard;
   ////////////////////////////////////////////////////////////////
   // INJECTION DE DEPENDANCES
   ////////////////////////////////////////////////////////////////
-  http = inject(HttpClient);
-  requestsAreLoading;
-  filtersList = new Subject();
-  allToolRequests = new BehaviorSubject([]);
-  filters = new BehaviorSubject([]);
-  toolRequestsList = [];
-  pageCounter = new BehaviorSubject(1);
-  constructor() {
-  }
-  getAllToolRequests() {
-    return this.http.get(`${environment.toolApi}demandes`).pipe(share());
-  }
-  getToolRequests(page = 1, itemsPerPage = 25) {
-    return this.http.get(`api/tools/request`, { params: { page, itemsPerPage } }).pipe(share());
-  }
-  getNextPage() {
-    let currentPage = this.pageCounter.getValue();
-    this.pageCounter.next(currentPage + 1);
-  }
-  addFilter(filterToAdd) {
-    const previousFilters = this.filters.getValue();
-    const duplicateFilterIndex = previousFilters.findIndex((filterToTest) => filterToTest.data === filterToAdd.data);
-    if (duplicateFilterIndex !== -1) {
-      previousFilters[duplicateFilterIndex] = filterToAdd;
-    } else {
-      previousFilters.push(filterToAdd);
-    }
-    this.filters.next(previousFilters);
-  }
-  resetFilters() {
-    this.filters.next([]);
-  }
-  static ctorParameters = () => [];
-};
-ToolRequestsService = __decorate([
-  Injectable({ providedIn: "root" })
-], ToolRequestsService);
-
-// src/app/tooling/components/tool-requests/tool-requests-components/tool-request-table/tool-request-table.component.ts
-var ToolRequestTableComponent = class ToolRequestTableComponent2 {
-  navCtrl;
-  authGuard;
-  toolRequestsService;
+  _navCtrl = inject(NavController);
   toolRequestList = input([]);
   //TYPE
   RequestType = RequestType;
   sort;
-  newToolRequestsList$;
+  // public newToolRequestsList$: Observable<ToolRequest[]>;
   displayedRequestColumns = ["statut", "id", "tool", "createdAt", "userCreat", "needDate", "buttons"];
   isAdmin = false;
-  constructor(navCtrl, authGuard, toolRequestsService) {
-    this.navCtrl = navCtrl;
+  constructor(authGuard) {
     this.authGuard = authGuard;
-    this.toolRequestsService = toolRequestsService;
-    this.newToolRequestsList$ = this.toolRequestsService.filtersList.asObservable();
   }
   openRequestClick(requestToOpen) {
-    if (requestToOpen.type === RequestType.CONTROLE) {
-      this.navCtrl.navigateForward("tooling/3d/" + requestToOpen.id);
+    console.log(requestToOpen);
+    const requestType = requestToOpen.type;
+    const rootUrl = this.getRootUrlByType(requestType);
+    this._navCtrl.navigateForward(rootUrl + requestToOpen.id);
+  }
+  getRootUrlByType(type) {
+    if (type === RequestType.SBO) {
+      return "/tooling/new-tool/";
     }
-    if (requestToOpen.type === RequestType.MAINTENANCE) {
-      this.navCtrl.navigateForward("tooling/repair/" + requestToOpen.id);
+    if (type === RequestType.CONTROLE) {
+      return "/tooling/3d/";
+    }
+    if (type === RequestType.MAINTENANCE) {
+      return "/tooling/repair/";
     }
   }
   ngOnInit() {
@@ -20263,15 +20514,10 @@ var ToolRequestTableComponent = class ToolRequestTableComponent2 {
   }
   userClick() {
   }
-  // TODO créer une directive plus propre plutot que ce code cela permettre d'enlever
-  // les IF du template pour choisir entre maintenance et controle
-  openControlClick(request) {
-    this.navCtrl.navigateForward("tooling/3D-tool/" + request.id);
-  }
-  openMaintenanceClick(request) {
-    this.navCtrl.navigateForward("tooling/repair-tool/" + request.id);
-  }
   removeRequestClick(request) {
+  }
+  hasSapToolNumber(tool) {
+    return "sapToolNumber" in tool;
   }
   // TODO Créer une directive pour la bordure
   getBorder(request) {
@@ -20292,9 +20538,7 @@ var ToolRequestTableComponent = class ToolRequestTableComponent2 {
     }
   }
   static ctorParameters = () => [
-    { type: NavController },
-    { type: RoleGuard },
-    { type: ToolRequestsService }
+    { type: RoleGuard }
   ];
   static propDecorators = {
     toolRequestList: [{ type: Input, args: [{ isSignal: true, alias: "toolRequestList", required: false, transform: void 0 }] }],
@@ -20315,12 +20559,20 @@ ToolRequestTableComponent = __decorate([
       ])
     ],
     standalone: true,
-    imports: [IonicModule, HeaderRowDirective, DataRowDirective, DatePipe],
+    imports: [
+      HeaderRowDirective,
+      DataRowDirective,
+      DatePipe,
+      IonGrid,
+      IonRow,
+      IonCol,
+      IonLabel
+    ],
     styles: [tool_request_table_component_default2]
   })
 ], ToolRequestTableComponent);
 
-// src/app/_interfaces/tooling/tool-request-filters.ts
+// src/app/tooling/tool-request-filters.ts
 var filterSelectObjects = [
   {
     name: "Statut",
@@ -20339,17 +20591,99 @@ var filterSelectObjects = [
   },
   {
     name: "Outillage",
-    columnProp: "outillage",
+    columnProp: "tool",
     options: []
   }
 ];
+
+// src/app/tooling/stores/tool-request-list.store.ts
+var ToolRequestListStore = class ToolRequestListStore2 {
+  // ============================================================================
+  // INJECTION DE DÉPENDANCES
+  // ============================================================================
+  toolRequestService = inject(ToolRequestService);
+  loaderService = inject(LoadingService);
+  // Injecter le loader ici, car il est lié à l'API
+  // ============================================================================
+  // ÉTAT INTERNE (Signals Privés Modifiables)
+  // ============================================================================
+  state = signal({
+    toolRequestList: [],
+    isLoadingList: false,
+    error: null
+  });
+  // ============================================================================
+  // SÉLECTEURS (Signals en Lecture Seule)
+  // ============================================================================
+  /** Liste complète des demandes d'outillage. */
+  toolRequestList = computed(() => this.state().toolRequestList);
+  /** Indique si la liste est en cours de chargement. */
+  isLoadingList = computed(() => this.state().isLoadingList);
+  /** Message d'erreur lié au chargement de la liste. */
+  error = computed(() => this.state().error);
+  // ============================================================================
+  // LIFECYCLE / INITIALISATION
+  // ============================================================================
+  constructor() {
+    console.log("ToolRequestListStore initialized");
+  }
+  // ============================================================================
+  // MUTATIONS (Méthodes Publiques d'Action)
+  // ============================================================================
+  /**
+   * Charge la liste complète des demandes d'outillage depuis l'API.
+   * Met à jour l'état du Store.
+   */
+  loadToolRequests() {
+    this.updateState({ isLoadingList: true, error: null });
+    this.loaderService.startLoading("Chargement des demandes");
+    this.toolRequestService.getToolRequests().pipe(
+      // take(1),
+      finalize(() => {
+        this.updateState({ isLoadingList: false });
+        this.loaderService.stopLoading();
+      })
+    ).subscribe({
+      next: (requests) => {
+        this.updateState({ toolRequestList: requests });
+      },
+      error: (error) => {
+        console.error("Erreur lors du chargement des demandes:", error);
+        this.updateState({
+          toolRequestList: [],
+          error: "Erreur lors du chargement des demandes."
+        });
+      }
+    });
+  }
+  // ============================================================================
+  // MÉTHODE INTERNE DE GESTION D'ÉTAT
+  // ============================================================================
+  /**
+   * Met à jour une partie de l'état interne de manière immuable.
+   * @param newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
+   */
+  updateState(newState) {
+    this.state.update((current) => __spreadValues(__spreadValues({}, current), newState));
+  }
+  static ctorParameters = () => [];
+};
+ToolRequestListStore = __decorate([
+  Injectable({
+    providedIn: "root"
+  })
+  /**
+   * Store pour la gestion de l'état (liste, chargement, erreur) des demandes d'outillage.
+   */
+], ToolRequestListStore);
 
 // src/app/tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.service.ts
 var ToolRequestFilterService = class ToolRequestFilterService2 {
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
-  toolRequestService = inject(ToolRequestService);
+  toolRequestListStore = inject(ToolRequestListStore);
+  // private readonly toolRequestService = inject(ToolRequestService);
   ////////////////////////////////////////////////////
   //PROPRIETES
   ////////////////////////////////////////////////////
@@ -20357,19 +20691,19 @@ var ToolRequestFilterService = class ToolRequestFilterService2 {
   filters = computed(() => {
     const filteredList = this.filteredToolRequestList();
     const activeFilters = this.selectedFilters();
-    return this._filters.map((filter) => {
-      const updatedFilter = __spreadProps(__spreadValues({}, filter), {
+    return this._filters.map((filter2) => {
+      const updatedFilter = __spreadProps(__spreadValues({}, filter2), {
         options: []
       });
       const uniqueOptions = /* @__PURE__ */ new Set();
       filteredList.forEach((toolRequest) => {
-        const compareElement = this.getCompareElement(filter.columnProp, toolRequest);
+        const compareElement = this.getCompareElement(filter2.columnProp, toolRequest);
         if (compareElement) {
           uniqueOptions.add(compareElement);
         }
       });
       updatedFilter.options = Array.from(uniqueOptions).sort();
-      const currentSelection = activeFilters[filter.columnProp];
+      const currentSelection = activeFilters[filter2.columnProp];
       if (currentSelection) {
         currentSelection.forEach((selectedValue) => {
           if (!uniqueOptions.has(selectedValue)) {
@@ -20382,7 +20716,7 @@ var ToolRequestFilterService = class ToolRequestFilterService2 {
     });
   });
   filteredToolRequestList = computed(() => {
-    const allRequests = this.toolRequestService.toolRequestList();
+    const allRequests = this.toolRequestListStore.toolRequestList();
     const activeFilters = this.selectedFilters();
     if (Object.keys(activeFilters).length === 0) {
       return allRequests;
@@ -20423,8 +20757,8 @@ var ToolRequestFilterService = class ToolRequestFilterService2 {
   // MÉTHODE PRIVÉE
   // ============================================================================
   getCompareElement(filterProp, toolRequest) {
-    if (filterProp === "outillage") {
-      return toolRequest.outillage.sapToolNumber;
+    if (filterProp === "tool") {
+      return toolRequest.tool.identification;
     }
     if (filterProp === "demandeur") {
       return toolRequest.demandeur.nom;
@@ -20435,6 +20769,9 @@ var ToolRequestFilterService = class ToolRequestFilterService2 {
 };
 ToolRequestFilterService = __decorate([
   Injectable({ providedIn: "root" })
+  /**
+   * Service de gestion des filtres appliqués à la liste des demandes d'outillage.
+   */
 ], ToolRequestFilterService);
 
 // src/app/tooling/components/tool-requests/tool-requests.page.ts
@@ -20443,14 +20780,20 @@ var ToolRequestsPage = class ToolRequestsPage2 {
   // INJECTION DE DÉPENDANCES
   // ============================================================================
   toolRequestFilterService = inject(ToolRequestFilterService);
+  toolRequestListStore = inject(ToolRequestListStore);
   // ============================================================================
   // PROPRIÉTÉS
   // ============================================================================
+  /** Liste des demandes filtrées affichées dans le tableau. */
   filteredToolRequestList = this.toolRequestFilterService.filteredToolRequestList;
+  /** Liste des filtres disponibles. */
   toolRequestFilters = this.toolRequestFilterService.filters;
+  /** État de chargement de la liste. */
+  isLoadingList = this.toolRequestListStore.isLoadingList;
+  // Utilisation du Store
   isAdmin = false;
-  constructor() {
-    console.log("hello toolRequestPage");
+  ionViewWillEnter() {
+    this.reloadRequestList();
   }
   /**
      * Gère les changements de filtres venant du composant enfant
@@ -20462,11 +20805,11 @@ var ToolRequestsPage = class ToolRequestsPage2 {
       this.toolRequestFilterService.updateFilter(event.columnProp, event.selectedValues);
     }
   }
-  reloadClick() {
+  reloadRequestList() {
+    this.toolRequestListStore.loadToolRequests();
   }
   nextClick() {
   }
-  static ctorParameters = () => [];
 };
 ToolRequestsPage = __decorate([
   Component({
@@ -20487,9 +20830,10 @@ ToolRequestsPage = __decorate([
     ],
     styles: [tool_requests_page_default2]
   })
-  /* TODO créer un observable pour écouter tout mouvement de demandes
-  * => l'ordinateur qui affiche les datas stats ou listes des demandes seront màj automatiquement
-  */
+  /**
+   * Page d'affichage et de filtrage de la liste des demandes d'outillage.
+   * Utilise ToolRequestListStore pour la gestion des données de la liste.
+   */
 ], ToolRequestsPage);
 
 // angular:jit:template:file:src\app\tooling\components\tool-list\tool-list.page.html
@@ -20597,10 +20941,10 @@ var MaintenanceToolRequestService = class MaintenanceToolRequestService2 {
   loadMaintenanceData(toolRequestId) {
     this.loaderService.startLoading("Chargement de la demande de maintenance...");
     return this.toolReqService.getToolRequest(toolRequestId).pipe(concatMap((toolRequest) => {
-      if (!toolRequest.typeData.id) {
+      if (!toolRequest.id) {
         return throwError(() => new Error("Aucune maintenance associ\xE9e \xE0 cette demande"));
       }
-      return this.getMaintenance(toolRequest.typeData.id).pipe(map((specMaintenance) => ({
+      return this.getMaintenance(toolRequest.id).pipe(map((specMaintenance) => ({
         toolRequest,
         specMaintenance
       })));
@@ -20688,7 +21032,7 @@ var MaintenanceToolRequestService = class MaintenanceToolRequestService2 {
       itemActionCorrective: items.map((item) => `/api/maintenance_items/${item.id}`),
       // Convertir les références d'objets en IRIs si nécessaire
       outillage: maintenanceSpec.outillage ? typeof maintenanceSpec.outillage === "string" ? maintenanceSpec.outillage : `/api/tools/${maintenanceSpec.outillage.id}` : null,
-      userCreat: maintenanceSpec.userCreat ? typeof maintenanceSpec.userCreat === "string" ? maintenanceSpec.userCreat : `/api/users/${maintenanceSpec.userCreat.id}` : null
+      demandeur: maintenanceSpec.demandeur ? typeof maintenanceSpec.demandeur === "string" ? maintenanceSpec.demandeur : `/api/users/${maintenanceSpec.demandeur.id}` : null
     });
   }
   /**
@@ -20710,15 +21054,7 @@ var MaintenanceToolRequestService = class MaintenanceToolRequestService2 {
    * Crée un objet de maintenance vide
    */
   createEmptyMaintenance() {
-    return {
-      itemActionCorrective: [],
-      rep: [],
-      outillNoRefSAP: {
-        description: "",
-        identification: "",
-        localisation: ""
-      }
-    };
+    return null;
   }
   /**
    * Convertit les items de maintenance en IRIs
@@ -20732,11 +21068,6 @@ MaintenanceToolRequestService = __decorate([
 ], MaintenanceToolRequestService);
 
 // src/app/tooling/services/tool-request-manager.service.ts
-var RequestState = class {
-  canUpdate = false;
-  canManage = false;
-  canEdit = false;
-};
 var ToolRequestManager = class ToolRequestManager2 {
   roleGuard;
   getStatus(statut) {
@@ -20893,7 +21224,6 @@ var tool_input_component_default = `<ion-item>\r
     <ion-label>Programme avion</ion-label>\r
     <ion-input type="text" disabled="true" [value]="tool.programme.designation"></ion-input>\r
   </ion-item>\r
-\r
 </ng-container>`;
 
 // angular:jit:style:file:src\app\tooling\components\tool-input\tool-input.component.scss
@@ -21550,32 +21880,11 @@ var MaintenanceReparationPage = class MaintenanceReparationPage2 {
    * Initialise les formulaires pour la création
    */
   initializeFormsForCreation() {
-    this.toolRequestForm = this.formBuilder.createToolRequestForm({
-      bloquantProd: false
-    });
-    this.maintenanceForm = this.formBuilder.createSpecMaintenanceForm();
   }
   /**
    * Initialise les formulaires avec des données existantes (édition)
    */
   initializeFormsForEdition(toolRequest, maintenance) {
-    this.toolRequestForm = this.formBuilder.createToolRequestForm({
-      type: toolRequest.type,
-      bloquantProd: toolRequest.bloquantProd,
-      dateBesoin: toolRequest.dateBesoin,
-      groupeAffectation: toolRequest.groupeAffectation?.id,
-      toolingNote: toolRequest.toolingNote
-    });
-    this.maintenanceForm = this.formBuilder.createSpecMaintenanceForm({
-      outillage: maintenance.outillage?.id,
-      outillNoRefSAP: maintenance.outillNoRefSAP,
-      sigle: maintenance.sigle,
-      dateValid: maintenance.dateValid,
-      userValideur: maintenance.userValideur?.id,
-      itemActionCorrective: maintenance.itemActionCorrective
-    });
-    this.toolRequest.set(toolRequest);
-    this.maintenance.set(maintenance);
   }
   // ============================================================================
   // CHARGEMENT DES DONNÉES
@@ -21690,15 +21999,7 @@ var MaintenanceReparationPage = class MaintenanceReparationPage2 {
    */
   buildMaintenanceFromForm() {
     const maintenanceFormValue = this.maintenanceForm.getRawValue();
-    return {
-      outillage: maintenanceFormValue.outillage,
-      outillNoRefSAP: maintenanceFormValue.outillNoRefSAP,
-      itemActionCorrective: maintenanceFormValue.itemActionCorrective,
-      sigle: maintenanceFormValue.sigle,
-      dateValid: maintenanceFormValue.dateValid,
-      userValideur: maintenanceFormValue.userValideur,
-      rep: maintenanceFormValue.rep
-    };
+    return null;
   }
   /**
    * Formatte une date pour l'affichage
@@ -21725,58 +22026,49 @@ MaintenanceReparationPage = __decorate([
 ], MaintenanceReparationPage);
 
 // angular:jit:template:file:src\app\tooling\components\control3-d\control.page.html
-var control_page_default = '<!-- ******************************* -->\r\n<!-- **********   HEADER   *********** -->\r\n<!-- ******************************* -->\r\n<ion-header>\r\n  <ion-toolbar color=dark no-padding>\r\n    <ion-title>{{pageTitle()}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<!-- ******************************* -->\r\n<!-- **********   CONTENT   *********** -->\r\n<!-- ******************************* -->\r\n<ion-content color=light>\r\n  <!-- TODO Revoir la mise en page scroll partie droite -->\r\n  <div class="content-container">\r\n    <div class="control-form">\r\n\r\n      <!-- **********   FORM   *********** -->\r\n      <app-control3-dform [toolRequest]="toolRequest()" [requestState]="requestState()" (submit)="onSubmit($event)"\r\n        (update)="onUpdate($event)" (statusChange)="onStatusChange($event)" />\r\n    </div>\r\n    <!-- <div class="print-preview">\r\n      <app-controleddd [toolRequest]="toolRequest"></app-controleddd>\r\n    </div> -->\r\n  </div>\r\n</ion-content>\r\n<!-- ******************************* -->\r\n<!-- **********   FOOTER   *********** -->\r\n<!-- ******************************* -->\r\n<ion-footer>\r\n  <app-tool-request-footer [canManage]="requestState().canManage" [canUpdate]="requestState().canUpdate"\r\n    (evStatusChange)="onStatusChange($event)" (evSubmit)="onSubmit($event)" (evUpdate)="onUpdate($event)" />\r\n</ion-footer>';
+var control_page_default = `<!-- ******************************* -->\r
+<!-- **********   HEADER   *********** -->\r
+<!-- ******************************* -->\r
+<ion-header>\r
+  <ion-toolbar color=dark no-padding>\r
+    <ion-title>Remplacer par un signal pour g\xE9rer le titre de la page</ion-title>\r
+  </ion-toolbar>\r
+</ion-header>\r
+<!-- ******************************* -->\r
+<!-- **********   CONTENT   *********** -->\r
+<!-- ******************************* -->\r
+<ion-content color=light>\r
+  <!-- TODO Revoir la mise en page scroll partie droite -->\r
+  <app-card [titles]="{title:'Outillage', subtitle:'Cr\xE9er ou choisir'}">\r
+    <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />\r
+  </app-card>\r
+  <app-card [titles]="{title:'Controle 3D', subtitle:'description'}">\r
+    <app-control3-dform [specCtrlForm]="controlForm" />\r
+  </app-card>\r
+  <!-- <div class="print-preview">\r
+      <app-controleddd [toolRequest]="toolRequest"></app-controleddd>\r
+    </div> -->\r
+</ion-content>\r
+<!-- ******************************* -->\r
+<!-- **********   FOOTER   *********** -->\r
+<!-- ******************************* -->\r
+<!-- <ion-footer>\r
+  <app-tool-request-footer [canManage]="requestState().canManage" [canUpdate]="requestState().canUpdate"\r
+    (evStatusChange)="onStatusChange($event)" (evSubmit)="onSubmit($event)" (evUpdate)="onUpdate($event)" />\r
+</ion-footer> -->`;
 
 // angular:jit:style:file:src\app\tooling\components\control3-d\control.page.scss
 var control_page_default2 = "/* src/app/tooling/components/control3-d/control.page.scss */\n.main-form {\n  height: 100%;\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: space-around;\n}\n.main-form .left-side {\n  max-width: 30%;\n}\n.main-form > * {\n  width: auto;\n  height: auto;\n}\n.flex-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n}\n.print-preview {\n  overflow-y: auto;\n}\n.vertical {\n  display: flex;\n  flex-direction: column;\n}\n.vertical *[contentEditable=true]:focus,\n.vertical *[contentEditable=true]:hover {\n  outline: 2px solid #1976d2;\n}\n/*# sourceMappingURL=control.page.css.map */\n";
 
 // angular:jit:template:file:src\app\tooling\components\control3-d\control3-dform\control3-dform.component.html
-var control3_dform_component_default = `<form class="main-form" [formGroup]="controlForm">\r
+var control3_dform_component_default = `<form class="main-form" [formGroup]="specCtrlForm()">\r
   <ion-grid>\r
     <ion-row>\r
       <ion-col size="6">\r
 \r
         <!-- ******************************* -->\r
-        <!-- *******   L'OUTILLAGE   ******* -->\r
+        <!-- *******   COMPLEMENT    ******* -->\r
         <!-- ******************************* -->\r
-        <ion-card>\r
-          <ion-card-header color=light>\r
-            <ion-card-title class="ion-text-uppercase">L'outillage</ion-card-title>\r
-          </ion-card-header>\r
-          <ion-card-content>\r
-\r
-            <!-- ******************************* -->\r
-            <!-- **********   TOOL   *********** -->\r
-            <!-- ******************************* -->\r
-            <ion-list lines="none">\r
-              <ion-list-header>\r
-                <ion-label>Avec n\xB0OT</ion-label>\r
-              </ion-list-header>\r
-              <app-tool-input formControlName="outillage">\r
-              </app-tool-input>\r
-              <ng-container *ngIf="!controlForm.controls.outillage.value" formGroupName="outillNoRefSAP">\r
-                <ion-list-header>\r
-                  <ion-label>Sans n\xB0OT</ion-label>\r
-                </ion-list-header>\r
-                <ion-item>\r
-                  <ion-label>Programme avion</ion-label>\r
-                  <ion-input formControlName="identification" type="text" placeholder="Renseigner le programme">\r
-                  </ion-input>\r
-                </ion-item>\r
-                <ion-item>\r
-                  <ion-label>Description outillage (texte libre)</ion-label>\r
-                  <ion-input formControlName="description" type="text" placeholder="Description de l'outillage">\r
-                  </ion-input>\r
-                </ion-item>\r
-                <ion-item>\r
-                  <ion-label>Localisation (texte libre)</ion-label>\r
-                  <ion-input formControlName="localisation" type="text" placeholder="Description de l'outillage">\r
-                  </ion-input>\r
-                </ion-item>\r
-              </ng-container>\r
-            </ion-list>\r
-          </ion-card-content>\r
-        </ion-card>\r
         <ion-card>\r
           <ion-card-header color=light>\r
             <ion-card-title class="ion-text-uppercase">Compl\xE9ment</ion-card-title>\r
@@ -21794,7 +22086,7 @@ var control3_dform_component_default = `<form class="main-form" [formGroup]="con
             <ion-item button id="open-modal">\r
               <ion-label>Date de mise \xE0 disposition au service outillage</ion-label>\r
               <ion-text slot="end">\r
-                {{controlForm.value.dispoOut | date:"dd/MM/yyyy"}}</ion-text>\r
+                {{specCtrlForm().value.dispoOut | date:"dd/MM/yyyy"}}</ion-text>\r
 \r
               <ion-icon slot=end icon="calendar-outline"></ion-icon>\r
               <ion-modal trigger="open-modal">\r
@@ -21802,7 +22094,7 @@ var control3_dform_component_default = `<form class="main-form" [formGroup]="con
                   <ion-content>\r
                     <ion-datetime #dispoOut presentation="date" formControlName="dispoOut"\r
                       display-format="EEEE DD.MMMM.YYYY"\r
-                      (ionChange)="controlForm.value.dispoOut= dispoOut.value">\r
+                      (ionChange)="specCtrlForm().value.dispoOut= dispoOut.value">\r
                       <div slot="title">Date de mise \xE0 disposition au service outillage</div>\r
                     </ion-datetime>\r
                   </ion-content>\r
@@ -21822,10 +22114,9 @@ var control3_dform_component_default = `<form class="main-form" [formGroup]="con
 \r
 \r
               <ion-item>\r
-                <ion-label position="floating">R\xE9f\xE9rence pi\xE8ce\r
-                  <ion-text color="danger">*</ion-text>\r
-                </ion-label>\r
-                <ion-input required #refPlan formControlName="refPlan" type="text" placeholder="indiquer n\xB0 de plan">\r
+                <ion-input labelPlacement="floating" required #refPlan formControlName="refPlan" type="text"\r
+                  placeholder="indiquer n\xB0 de plan">\r
+                  <div slot="label">R\xE9f\xE9rence pi\xE8ce<ion-text color="danger"> *</ion-text></div>\r
                 </ion-input>\r
               </ion-item>\r
 \r
@@ -21835,11 +22126,9 @@ var control3_dform_component_default = `<form class="main-form" [formGroup]="con
 \r
 \r
               <ion-item>\r
-                <ion-label position="floating">Indice plan\r
-                  <ion-text color="danger">*</ion-text>\r
-                </ion-label>\r
-                <ion-input required #indPlan formControlName="indPlan" type="text"\r
+                <ion-input labelPlacement="floating" required #indPlan formControlName="indPlan" type="text"\r
                   placeholder="indiquer l 'indice du plan">\r
+                  <div slot="label">Indice plan<ion-text color="danger"> *</ion-text></div>\r
                 </ion-input>\r
               </ion-item>\r
             </div>\r
@@ -21851,10 +22140,8 @@ var control3_dform_component_default = `<form class="main-form" [formGroup]="con
 \r
 \r
             <ion-item>\r
-              <ion-label position="floating">Format du mod\xE8le 3D fourni si n\xE9cessaire\r
-                <!-- <ion-text color="danger">*</ion-text> -->\r
-              </ion-label>\r
-              <ion-input #caoPath formControlName="cheminCAO" type="text"\r
+              <ion-input labelPlacement="floating" label="Format du mod\xE8le 3D fourni si n\xE9cessaire" #caoPath\r
+                formControlName="cheminCAO" type="text"\r
                 placeholder="Fournir CAO et / ou chemin d\u2019acc\xE8s">\r
               </ion-input>\r
             </ion-item>\r
@@ -21878,7 +22165,7 @@ var control3_dform_component_default = `<form class="main-form" [formGroup]="con
             <ion-label>Date butoir demand\xE9e</ion-label>\r
             <ion-icon slot=end icon="calendar-outline"></ion-icon>\r
             <ion-text slot="end">\r
-              {{controlForm.value.dateBesoin | date:"dd/MM/yyyy"}}</ion-text>\r
+              {{specCtrlForm().value.dateBesoin | date:"dd/MM/yyyy"}}</ion-text>\r
             <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->\r
             <ion-modal trigger="open-date-butoir">\r
               <ng-template>\r
@@ -21899,11 +22186,10 @@ var control3_dform_component_default = `<form class="main-form" [formGroup]="con
 \r
 \r
           <ion-item>\r
-            <ion-label>Oi ou Eotp\r
-              <ion-text color="danger">*</ion-text>\r
-            </ion-label>\r
-            <ion-input #ligneBudgetaire required formControlName="ligneBudgetaire" type="text"\r
-              placeholder="Indiquez le n\xB0 pour imputation"></ion-input>\r
+            <ion-input labelPlacement="floating" #ligneBudgetaire required formControlName="ligneBudgetaire" type="text"\r
+              placeholder="Indiquez le n\xB0 pour imputation">\r
+              <div slot="label">Oi ou Eotp<ion-text color="danger"> *</ion-text></div>\r
+            </ion-input>\r
           </ion-item>\r
 \r
           <!-- ******************************* -->\r
@@ -22013,8 +22299,9 @@ var control3_dform_component_default = `<form class="main-form" [formGroup]="con
             <ion-card-title class="ion-text-uppercase">La Mesure</ion-card-title>\r
           </ion-card-header>\r
           <ion-item>\r
-            <ion-label position="stacked">Dur\xE9e d'immobilisation estim\xE9e de l'outillage</ion-label>\r
-            <ion-input type="number" formControlName="immobilisationOutillage"></ion-input>\r
+            <!-- <ion-label position="stacked"></ion-label> -->\r
+            <ion-input label="Dur\xE9e d'immobilisation estim\xE9e de l'outillage" labelPlacement="stacked" type="number"\r
+              formControlName="immobilisationOutillage" />\r
             <ion-note slot="end">en jours</ion-note>\r
           </ion-item>\r
 \r
@@ -22023,7 +22310,7 @@ var control3_dform_component_default = `<form class="main-form" [formGroup]="con
             <ion-label>Date d'intervention</ion-label>\r
             <ion-icon slot=end icon="calendar-outline"></ion-icon>\r
             <ion-text slot="end">\r
-              {{controlForm.value.interventionDate | date:"dd/MM/yyyy"}}</ion-text>\r
+              {{specCtrlForm().value.interventionDate | date:"dd/MM/yyyy"}}</ion-text>\r
             <!-- TODO intervention -->\r
             <!-- <ion-text slot="end " *ngIf="toolRequest?.controle?.interventionDate">\r
           {{toolRequest?.controle?.interventionDate | date:"dd/MM/yyyy"}}</ion-text> -->\r
@@ -22076,123 +22363,42 @@ var control3_dform_component_default2 = '/* src/app/tooling/components/control3-
 
 // src/app/tooling/components/control3-d/control3-dform/control3-dform.component.ts
 var Control3DFormComponent = class Control3DFormComponent2 {
+  specCtrlForm = input.required();
+  isEditMode = input(true);
+  /** Éditeur de texte riche */
+  editor;
   // ============================================================================
-  // INJECTION DEPENDANCES
+  // LIFECYCLE
   // ============================================================================
-  fb = inject(FormBuilder);
-  toolRequest = input(null);
+  ngOnInit() {
+    this.editor = new Editor();
+  }
+  /**
+     * Destruction du composant.
+     */
+  ngOnDestroy() {
+    this.editor.destroy();
+  }
   requestState = input({
     canManage: false,
     canUpdate: false,
     canEdit: false
   });
-  submit = output();
-  update = output();
-  statusChange = output();
-  // ============================================================================
-  // PROPRIETES
-  // ============================================================================
+  // // ============================================================================
+  // // OUTPUTS (Signals modernes)
+  // // ============================================================================
+  // readonly submit = output<SpecCtrlCreation>();
+  // readonly update = output<Partial<ToolRequest>>();
+  // readonly statusChange = output<RequestStatus>();
+  // // ============================================================================
+  // // PROPRIETES
+  // // ============================================================================
   moyenMesure = MoyenMesure;
   typeRapport = TypeRapport;
-  // Formulaires
-  toolRequestForm;
-  controlForm;
-  outillNoRefSAPForm;
-  // État du formulaire
-  isEditMode = computed(() => !!this.toolRequest()?.id);
-  formValid = signal(false);
-  // Configuration TinyMCE
-  editorConfig = {
-    plugins: "lists link image table wordcount",
-    toolbar: "bold italic underline strikethrough forecolor fontsize styles | alignleft aligncenter alignright alignjustify | bullist numlist | h1 h2 h3",
-    menubar: false,
-    statusbar: false,
-    object_resizing: true,
-    height: 150,
-    inline: false
-  };
-  // ============================================================================
-  // CONSTRUCTOR
-  // ============================================================================
-  constructor() {
-    this.outillNoRefSAPForm = this.fb.group({
-      identification: [""],
-      description: [""],
-      localisation: [""]
-    });
-    this.toolRequestForm = this.fb.group({
-      id: [null],
-      statut: [""]
-      // Ajouter les autres champs nécessaires
-    });
-    this.controlForm = this.fb.group({
-      id: [null],
-      outillage: [null],
-      outillNoRefSAP: [this.outillNoRefSAPForm],
-      bloquantProd: [false],
-      dispoOut: [null],
-      refPlan: ["", Validators.required],
-      indPlan: ["", Validators.required],
-      cheminCAO: [""],
-      dateBesoin: [null],
-      ligneBudgetaire: ["", Validators.required],
-      typeRapport: [""],
-      description: ["", Validators.required],
-      detailsControle: ["", Validators.required],
-      tolerances: ["", Validators.required],
-      immobilisationOutillage: [null],
-      interventionDate: [null],
-      infosComplementaire: [""],
-      moyenMesure: [""],
-      visaControleur: [""]
-    });
-    effect(() => {
-      console.log("hello from effect ctrl3D");
-      const toolReq = this.toolRequest();
-      const ctrlReq = toolReq.typeData;
-      if (toolReq) {
-        this.toolRequestForm.patchValue(toolReq, { emitEvent: false });
-      }
-      if (ctrlReq) {
-        this.controlForm.patchValue(ctrlReq, { emitEvent: false });
-      }
-    });
-    effect(() => {
-      this.formValid.set(this.controlForm.valid && this.toolRequestForm.valid);
-    });
-  }
-  // ============================================================================
-  // MÉTHODES PUBLIQUES
-  // ============================================================================
-  onToolSelected(tool) {
-    this.controlForm.patchValue({ outillage: tool });
-  }
-  formatDate(dateValue) {
-    return new Date(dateValue);
-  }
-  handleSubmit() {
-    if (this.controlForm.valid) {
-      const data = __spreadProps(__spreadValues({}, this.toolRequestForm.value), {
-        typeData: this.controlForm.value
-      });
-      if (this.isEditMode()) {
-        this.update.emit(data);
-      } else {
-        this.submit.emit(data);
-      }
-    }
-  }
-  handleStatusChange(newStatus) {
-    this.statusChange.emit(newStatus);
-    this.toolRequestForm.patchValue({ statut: newStatus });
-  }
-  static ctorParameters = () => [];
   static propDecorators = {
-    toolRequest: [{ type: Input, args: [{ isSignal: true, alias: "toolRequest", required: false, transform: void 0 }] }],
-    requestState: [{ type: Input, args: [{ isSignal: true, alias: "requestState", required: false, transform: void 0 }] }],
-    submit: [{ type: Output, args: ["submit"] }],
-    update: [{ type: Output, args: ["update"] }],
-    statusChange: [{ type: Output, args: ["statusChange"] }]
+    specCtrlForm: [{ type: Input, args: [{ isSignal: true, alias: "specCtrlForm", required: true, transform: void 0 }] }],
+    isEditMode: [{ type: Input, args: [{ isSignal: true, alias: "isEditMode", required: false, transform: void 0 }] }],
+    requestState: [{ type: Input, args: [{ isSignal: true, alias: "requestState", required: false, transform: void 0 }] }]
   };
 };
 Control3DFormComponent = __decorate([
@@ -22235,40 +22441,44 @@ Control3DFormComponent = __decorate([
   })
 ], Control3DFormComponent);
 
-// node_modules/@angular/core/fesm2022/rxjs-interop.mjs
-function takeUntilDestroyed(destroyRef) {
-  if (!destroyRef) {
-    assertInInjectionContext(takeUntilDestroyed);
-    destroyRef = inject(DestroyRef);
-  }
-  const destroyed$ = new Observable((observer) => {
-    const unregisterFn = destroyRef.onDestroy(observer.next.bind(observer));
-    return unregisterFn;
-  });
-  return (source) => {
-    return source.pipe(takeUntil(destroyed$));
-  };
-}
-
 // src/app/tooling/components/control3-d/control.page.ts
 var Control3DPage = class Control3DPage2 {
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
+  formBuilderService = inject(ToolRequestFormBuilder);
+  programService = inject(ProgramsService);
+  router = inject(Router);
+  store = inject(ToolRequestStore);
   toolRequestService = inject(ToolRequestService);
   toolRequestManager = inject(ToolRequestManager);
   loaderService = inject(LoadingService);
   alertService = inject(AlertService);
   navCtrl = inject(NavController);
-  route = inject(ActivatedRoute);
+  activatedRoute = inject(ActivatedRoute);
+  // ============================================================================
+  // PROPRIÉTÉS
+  // ============================================================================
+  /** ID de la demande en cours de modification (null en mode création). */
+  requestId = null;
+  /** Indique si la page est en mode édition. */
+  isEditMode = signal(false);
+  /** Formulaire pour les spécifications SBO. */
+  controlForm;
+  /** Formulaire pour l'outil. */
+  toolForm;
+  /** Liste des programmes avion */
+  programs = signal([]);
+  /** Enum pour le template */
+  RequestType = RequestType;
   // ============================================================================
   // SIGNALS (État réactif)
   // ============================================================================
-  toolRequest = signal(null);
-  // protected readonly controlRequest = signal<ControlRequest | null>(null);
-  requestState = signal(new RequestState());
-  pageTitle = signal("Nouvelle demande de contr\xF4le 3D");
-  toolRequestId;
+  // protected readonly toolRequest = signal<ToolRequest | null>(null);
+  // // protected readonly controlRequest = signal<ControlRequest | null>(null);
+  // protected readonly requestState = signal<RequestState>(new RequestState());
+  // protected readonly pageTitle = signal('Nouvelle demande de contrôle 3D');
+  // readonly toolRequestId: string;
   // controlForm: FormGroup
   // toolRequestForm: FormGroup
   // outillNoRefSAPForm: FormGroup;
@@ -22276,55 +22486,120 @@ var Control3DPage = class Control3DPage2 {
   // LIFECYCLE HOOKS
   // ============================================================================
   constructor() {
-    this.toolRequestId = this.route.snapshot.paramMap.get("id");
     effect(() => {
-      const tool = this.toolRequest();
-      if (tool?.id) {
-        this.pageTitle.set(`Modification demande de contr\xF4le 3D : ID ${tool.id}`);
+      const toolRequest = this.store.currentToolRequest();
+      if (toolRequest && this.isEditMode()) {
+        this.fillForm(toolRequest);
       }
     });
   }
-  ionViewCanEnter() {
-    this.toolRequestService.getToolRequest(this.toolRequestId).pipe(takeUntilDestroyed()).subscribe({
-      next: (toolRequest) => {
-        this.toolRequest.set(toolRequest);
-        this.requestState.set(this.toolRequestManager.getStatus(toolRequest.statut));
-      },
-      error: (error) => this.handleError("Chargement de la demande", error)
+  /**
+     * Initialisation du composant.
+     */
+  ngOnInit() {
+    this.initializeForms();
+    this.loadPrograms();
+    this.activatedRoute.params.pipe(
+      filter((params) => !!params["id"]),
+      // S'assurer que l'ID existe
+      take(1)
+    ).subscribe((params) => {
+      this.requestId = params["id"];
+      console.log(this.requestId);
+      if (this.requestId) {
+        this.isEditMode.set(true);
+        this.loadToolRequestForEdit(this.requestId);
+      }
     });
   }
+  // ============================================================================
+  // INITIALISATION DES FORMULAIRES
+  // ============================================================================
+  /**
+   * Initialise les FormGroup nécessaires à la page.
+   */
+  initializeForms() {
+    this.controlForm = this.formBuilderService.createSpecCtrlForm();
+    this.toolForm = this.formBuilderService.createNewToolForm();
+  }
+  // ============================================================================
+  // CHARGEMENT DES DONNÉES
+  // ============================================================================
+  /**
+   * Charge la liste des programmes avion.
+   */
+  loadPrograms() {
+    this.programService.getPrograms().pipe(take(1)).subscribe({
+      next: (programList) => {
+        this.programs.set(programList);
+      },
+      error: (error) => {
+        console.error("Erreur lors du chargement des programmes:", error);
+      }
+    });
+  }
+  // ionViewCanEnter() {
+  //   this.toolRequestService.getToolRequest(this.requestId)
+  //     .pipe(
+  //       takeUntilDestroyed()
+  //     )
+  //     .subscribe({
+  //       next: (toolRequest) => {
+  //         this.toolRequest.set(toolRequest);
+  //         this.requestState.set(
+  //           this.toolRequestManager.getStatus(toolRequest.statut)
+  //         );
+  //       },
+  //       error: (error) => this.handleError('Chargement de la demande', error)
+  //     });
+  // }
   // ============================================================================
   // HANDLERS D'ÉVÉNEMENTS
   // ============================================================================
   onSubmit(toolRequest) {
-    this.loaderService.startLoading("Cr\xE9ation de la demande");
-    this.toolRequestService.createToolRequest(toolRequest).subscribe({
-      next: () => {
-        this.alertService.simpleAlert("Succ\xE8s", "Cr\xE9ation d'une demande", "La demande a bien \xE9t\xE9 cr\xE9\xE9e. Vous allez \xEAtre redirig\xE9 vers la liste des demandes").then(() => {
-          this.navCtrl.navigateRoot("tooling/tool-request-list");
-        });
-      },
-      error: (error) => this.handleError("Cr\xE9ation de la demande", error),
-      complete: () => this.loaderService.stopLoading()
-    });
-  }
-  onUpdate(toolRequest) {
-    this.loaderService.startLoading("Mise \xE0 jour de la demande");
-    this.toolRequestService.updateToolRequest(toolRequest).subscribe({
-      next: () => {
-        this.alertService.simpleAlert("Succ\xE8s", "Mise \xE0 jour d'une demande", "La demande a bien \xE9t\xE9 modifi\xE9e. Vous allez \xEAtre redirig\xE9 vers la liste des demandes").then(() => {
-          this.navCtrl.navigateRoot("tooling/tool-request-list");
-        });
-      },
-      error: (error) => this.handleError("Mise \xE0 jour de la demande", error),
-      complete: () => this.loaderService.stopLoading()
-    });
-  }
-  onStatusChange(newStatus) {
-    const currentToolRequest = this.toolRequest();
-    if (currentToolRequest) {
-      this.toolRequest.set(__spreadProps(__spreadValues({}, currentToolRequest), { statut: newStatus }));
+    if (this.toolForm.invalid || this.controlForm.invalid) {
+      this.toolForm.markAllAsTouched();
+      this.controlForm.markAllAsTouched();
+      return;
     }
+    console.log("onSubmit in page");
+    if (this.isEditMode()) {
+      this.onUpdateToolRequest();
+    } else {
+      this.onCreateToolRequest();
+    }
+  }
+  /**
+  * Créer une demande d'outillage complète
+  */
+  onCreateToolRequest() {
+    console.log("onCreateToolRequest in page");
+    const toolData = this.toolForm.value;
+    const toolRequest = __spreadProps(__spreadValues({}, this.controlForm.value), {
+      type: RequestType.SBO
+    });
+    this.store.createToolRequest(toolRequest, toolData);
+  }
+  /**
+     * Met à jour une demande d'outillage complète
+     */
+  onUpdateToolRequest() {
+    const currentRequest = this.store.currentToolRequest();
+    if (!currentRequest || this.controlForm.invalid) {
+      this.controlForm.markAllAsTouched();
+      return;
+    }
+    const requestToUpdate = __spreadProps(__spreadValues({
+      id: currentRequest.id,
+      // Assumer que l'outil ne change pas pour une SBO, ou qu'il est géré par la logique enfant
+      toolId: currentRequest.tool.id
+    }, this.controlForm.value), {
+      // L'API attend peut-être un type
+      type: RequestType.SBO
+      // La logique de votre API pour l'UPDATE pourrait nécessiter plus de champs
+    });
+    this.store.updateToolRequest(requestToUpdate);
+    this.router.navigate(["/tool-requests"]);
   }
   // ============================================================================
   // MÉTHODES PRIVÉES
@@ -22334,6 +22609,36 @@ var Control3DPage = class Control3DPage2 {
     this.alertService.simpleAlert("Erreur", operation, "Une erreur est survenue. Veuillez v\xE9rifier les donn\xE9es et r\xE9essayer.");
     this.loaderService.stopLoading();
   }
+  // ============================================================================
+  // CHARGEMENT DES DONNÉES EN MODE ÉDITION
+  // ============================================================================
+  /**
+   * Charge la demande existante via le Store et déclenche le préremplissage.
+   * @param id - L'ID de la demande à charger.
+   */
+  loadToolRequestForEdit(id) {
+    console.log("load ToolRequest for Edit");
+    this.store.loadToolRequest(id);
+  }
+  /**
+     * Préremplit le formulaire avec les données de la demande.
+     * @param request - La demande d'outillage.
+     */
+  fillForm(request) {
+    const formattedDateBesoin = request.dateBesoin.toString().split("T")[0];
+    this.controlForm.patchValue({
+      description: request.description,
+      dateBesoin: formattedDateBesoin,
+      type: request.type,
+      toolingNote: request.toolingNote,
+      tool: request.tool
+    });
+    this.toolForm.patchValue({
+      sapToolNumber: request.tool.sapToolNumber,
+      identification: request.tool.identification,
+      designation: request.tool.designation
+    });
+  }
   static ctorParameters = () => [];
 };
 Control3DPage = __decorate([
@@ -22342,6 +22647,8 @@ Control3DPage = __decorate([
     template: control_page_default,
     standalone: true,
     imports: [
+      CardComponent,
+      ToolFormComponent,
       Control3DFormComponent,
       ToolRequestFooterComponent,
       IonHeader,
@@ -22700,6 +23007,7 @@ var TOOLING_ROUTES = [
     component: ToolingPage,
     children: [
       { path: "new-tool", component: NewToolPage },
+      { path: "new-tool/:id", component: NewToolPage },
       { path: "requests", component: ToolRequestsPage },
       {
         path: "list",
@@ -22729,13 +23037,4 @@ var TOOLING_ROUTES = [
 export {
   TOOLING_ROUTES
 };
-/*! Bundled license information:
-
-@angular/core/fesm2022/rxjs-interop.mjs:
-  (**
-   * @license Angular v18.2.14
-   * (c) 2010-2024 Google LLC. https://angular.io/
-   * License: MIT
-   *)
-*/
-//# sourceMappingURL=tooling.routes-2YFG3MKL.js.map
+//# sourceMappingURL=tooling.routes-MZDIJIJR.js.map

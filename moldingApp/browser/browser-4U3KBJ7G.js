@@ -1,7 +1,7 @@
 import {
   RequestStatus,
   RequestType
-} from "./chunk-WS32T5JK.js";
+} from "./chunk-HG2UKUY7.js";
 import {
   __async,
   __spreadProps,
@@ -19864,146 +19864,175 @@ var mockToolRequests = [
   {
     id: 1,
     bloquantProd: false,
-    type: RequestType.SBO,
     createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[0],
-    outillage: mockTools[0],
-    statut: RequestStatus.SUBMITTED
+    dateBesoin: new Date(2025, 11, 25),
+    demandeurId: mockUsers[0].id,
+    statut: RequestStatus.SUBMITTED,
+    toolId: mockTools[0].id,
+    type: RequestType.SBO
+  }
+];
+
+// src/mocks/mockData/mockSpecCtrl.mock.ts
+var mockSpecCtrl = [
+  {
+    id: 1,
+    description: "ddsqdqs",
+    toolRequestId: 1
   },
   {
     id: 2,
-    bloquantProd: true,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[1],
-    outillage: mockTools[2],
-    statut: RequestStatus.IN_PROGRESS
+    description: "ddsqdqs",
+    toolRequestId: 2
   },
   {
     id: 3,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[2],
-    outillage: mockTools[2],
-    statut: RequestStatus.DRAFT
+    description: "ddsqdqs",
+    toolRequestId: 3
   },
   {
     id: 4,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[3],
-    outillage: mockTools[0],
-    statut: RequestStatus.COMPLETED
+    description: "ddsqdqs",
+    toolRequestId: 4
   },
   {
     id: 5,
-    bloquantProd: true,
-    type: RequestType.CONTROLE,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[0],
-    outillage: mockTools[1],
-    statut: RequestStatus.IN_PROGRESS
+    description: "ddsqdqs",
+    toolRequestId: 5
   },
   {
     id: 6,
-    bloquantProd: true,
-    type: RequestType.CONTROLE,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[0],
-    outillage: mockTools[5],
-    statut: RequestStatus.RETURNED
+    description: "ddsqdqs",
+    toolRequestId: 6
   },
   {
     id: 7,
-    bloquantProd: false,
-    type: RequestType.MAINTENANCE,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[1],
-    outillage: mockTools[4],
-    statut: RequestStatus.IN_PROGRESS
+    description: "ddsqdqs",
+    toolRequestId: 7
+  }
+];
+
+// src/mocks/mockData/mockSBO.mock.ts
+var mockSpecSBO = [
+  {
+    id: 1,
+    description: "description test",
+    title: "titre test",
+    toolRequestId: 1
+  },
+  {
+    id: 2,
+    description: "",
+    title: "",
+    toolRequestId: 2
+  },
+  {
+    id: 3,
+    description: "",
+    title: "",
+    toolRequestId: 3
+  },
+  {
+    id: 4,
+    description: "",
+    title: "",
+    toolRequestId: 4
+  },
+  {
+    id: 5,
+    description: "",
+    title: "",
+    toolRequestId: 5
+  },
+  {
+    id: 6,
+    description: "",
+    title: "",
+    toolRequestId: 6
+  },
+  {
+    id: 7,
+    description: "",
+    title: "",
+    toolRequestId: 7
   },
   {
     id: 8,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[1],
-    outillage: mockTools[3],
-    statut: RequestStatus.IN_PROGRESS
+    description: "",
+    title: "",
+    toolRequestId: 8
   },
   {
     id: 9,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[0],
-    outillage: mockTools[2],
-    statut: RequestStatus.IN_PROGRESS
+    description: "",
+    title: "",
+    toolRequestId: 9
   },
   {
     id: 10,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[3],
-    outillage: mockTools[1],
-    statut: RequestStatus.IN_PROGRESS
+    description: "",
+    title: "",
+    toolRequestId: 10
   },
   {
     id: 11,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[3],
-    outillage: mockTools[0],
-    statut: RequestStatus.IN_PROGRESS
+    description: "",
+    title: "",
+    toolRequestId: 11
   },
   {
     id: 12,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[3],
-    outillage: mockTools[1],
-    statut: RequestStatus.IN_PROGRESS
+    description: "",
+    title: "",
+    toolRequestId: 12
   },
   {
     id: 13,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[2],
-    outillage: mockTools[2],
-    statut: RequestStatus.IN_PROGRESS
+    description: "",
+    title: "",
+    toolRequestId: 13
   },
   {
     id: 14,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[2],
-    outillage: mockTools[3],
-    statut: RequestStatus.IN_PROGRESS
+    description: "",
+    title: "",
+    toolRequestId: 14
   },
   {
     id: 15,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[1],
-    outillage: mockTools[4],
-    statut: RequestStatus.IN_PROGRESS
+    description: "",
+    title: "",
+    toolRequestId: 15
   },
   {
     id: 16,
-    bloquantProd: false,
-    type: RequestType.SBO,
-    createdAt: /* @__PURE__ */ new Date(),
-    demandeur: mockUsers[2],
-    outillage: mockTools[5],
-    statut: RequestStatus.IN_PROGRESS
+    description: "",
+    title: "",
+    toolRequestId: 16
+  },
+  {
+    id: 17,
+    description: "",
+    title: "",
+    toolRequestId: 17
+  },
+  {
+    id: 18,
+    description: "",
+    title: "",
+    toolRequestId: 18
+  },
+  {
+    id: 19,
+    description: "",
+    title: "",
+    toolRequestId: 19
+  },
+  {
+    id: 20,
+    description: "",
+    title: "",
+    toolRequestId: 20
   }
 ];
 
@@ -20013,15 +20042,6 @@ var mockProgrammesAvion = [
   { client: "AIRBUS", designation: "MLGD-1000", id: 2 },
   { client: "AIRBUS", designation: "A330", id: 3 },
   { client: "GULFSTREAM", designation: "G600 ELEVATOR", id: 4 }
-];
-var mockSBO = [
-  {
-    id: 1,
-    title: "Titre Test",
-    description: "Description Test",
-    aircraftProgram: "1",
-    dateBesoin: /* @__PURE__ */ new Date()
-  }
 ];
 var handlers = [
   // GET - Liste des utilisateurs
@@ -20084,41 +20104,177 @@ var handlers = [
   }),
   // POST - Créer un outillage
   http.post("/api/tools", (_0) => __async(void 0, [_0], function* ({ request }) {
+    const newToolId = mockTools.length + 1;
     const newTool = yield request.json();
     const tool = __spreadValues({
-      id: mockTools.length + 1
+      id: newToolId
     }, newTool);
     mockTools.push(tool);
     return HttpResponse.json(tool, { status: 201 });
   })),
   // POST - Créer une request
   http.post("/api/tools/request", (_0) => __async(void 0, [_0], function* ({ request }) {
-    const newToolRequest = yield request.json();
-    const toolRequest = __spreadValues({
-      id: mockToolRequests.length + 1
-    }, newToolRequest);
-    mockToolRequests.push(toolRequest);
-    console.log(mockToolRequests, RequestType.SBO);
-    switch (toolRequest.type) {
+    const newToolRequestId = mockToolRequests.length + 1;
+    const loggedInUserId = 1;
+    const newToolRequestData = yield request.json();
+    console.log(newToolRequestData);
+    const toolRef = newToolRequestData.tool.id;
+    const masterRequest = {
+      id: newToolRequestId,
+      type: newToolRequestData.type,
+      demandeurId: loggedInUserId,
+      // Remplacer par l'utilisateur connecté
+      createdAt: /* @__PURE__ */ new Date(),
+      statut: RequestStatus.SUBMITTED,
+      bloquantProd: newToolRequestData.bloquantProd,
+      dateBesoin: newToolRequestData.dateBesoin,
+      // tool: newToolRequestData.tool,
+      toolId: toolRef
+    };
+    mockToolRequests.push(masterRequest);
+    switch (masterRequest.type) {
+      case RequestType.CONTROLE:
+        const newSpecCtrlId = mockSpecCtrl.length + 1;
+        const specCtrlData = newToolRequestData;
+        const newSpecCtrlEntry = {
+          id: newSpecCtrlId,
+          toolRequestId: newToolRequestId,
+          // On omet les champs déjà dans la table Maître
+          description: specCtrlData.description,
+          refPlan: specCtrlData.refPlan,
+          image: specCtrlData.image,
+          fichier: specCtrlData.fichier,
+          indPlan: specCtrlData.indPlan,
+          cheminCAO: specCtrlData.cheminCAO,
+          detailsControle: specCtrlData.detailsControle,
+          tolerances: specCtrlData.tolerances,
+          dispoOut: specCtrlData.dispoOut,
+          typeRapport: specCtrlData.typeRapport,
+          moyenMesure: specCtrlData.moyenMesure,
+          infosComplementaire: specCtrlData.infosComplementaire,
+          visaControleur: specCtrlData.visaControleur,
+          interventionDate: specCtrlData.interventionDate
+        };
+        mockSpecCtrl.push(newSpecCtrlEntry);
+        break;
+      case RequestType.MAINTENANCE:
+        break;
       case RequestType.SBO:
-        const newSpecSBO = newToolRequest.typeData;
-        const newSBO = __spreadValues({
-          id: mockSBO.length + 1
-        }, newSpecSBO);
-        mockSBO.push(newSBO);
+        const newSpecSBOId = mockSpecSBO.length + 1;
+        const specSBOData = newToolRequestData;
+        const newSpecSBOEntry = {
+          id: newSpecSBOId,
+          toolRequestId: newToolRequestId,
+          title: specSBOData.title,
+          description: specSBOData.description
+          // aircraftProgram: specSBOData.aircraftProgram
+        };
+        mockSpecSBO.push(newSpecSBOEntry);
+        break;
+    }
+    return HttpResponse.json(masterRequest, { status: 201 });
+  })),
+  http.get("/api/tools/request", (_0) => __async(void 0, [_0], function* ({ request }) {
+    const allRequests = mockToolRequests.map((request2) => {
+      const newRequest = __spreadProps(__spreadValues({}, request2), {
+        demandeur: mockUsers[request2.demandeurId - 1],
+        title: "",
+        description: "",
+        tool: mockTools[request2.toolId - 1]
+      });
+      return newRequest;
+    });
+    return HttpResponse.json(allRequests, { status: 201 });
+  })),
+  http.get("/api/tools/request/:id", (_0) => __async(void 0, [_0], function* ({ request, params }) {
+    const { id } = params;
+    const toolRequestId = Number(id);
+    const masterRequest = mockToolRequests.find((req) => req.id === toolRequestId);
+    if (!masterRequest) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    const demandeur = mockUsers.find((u) => u.id === masterRequest.demandeurId);
+    if (!demandeur) {
+      return new HttpResponse(null, { status: 500 });
+    }
+    const tool = mockTools.find((t) => t.id === masterRequest.toolId);
+    const resolvedBaseRequest = __spreadProps(__spreadValues({}, masterRequest), {
+      demandeur,
+      // <-- L'objet User complet
+      tool
+      // <-- L'objet Tool ou OutillNoRefSAP complet
+    });
+    delete resolvedBaseRequest.demandeurId;
+    delete resolvedBaseRequest.toolId;
+    let detailData;
+    switch (masterRequest.type) {
+      case RequestType.CONTROLE:
+        detailData = mockSpecCtrl.find((s) => s.toolRequestId === toolRequestId) || {};
+        break;
+      case RequestType.MAINTENANCE:
+        break;
+      case RequestType.SBO:
+        detailData = mockSpecSBO.find((s) => s.toolRequestId === toolRequestId) || {};
+        break;
+      default:
+        detailData = {};
+    }
+    if (detailData && "toolRequestId" in detailData) {
+      delete detailData.toolRequestId;
+    }
+    const fullRequest = __spreadValues(__spreadValues({}, resolvedBaseRequest), detailData);
+    return HttpResponse.json(fullRequest);
+  })),
+  http.patch("/api/tools/request/:id", (_0) => __async(void 0, [_0], function* ({ request, params }) {
+    const { id } = params;
+    const toolRequestId = Number(id);
+    const updateDto = yield request.json();
+    const masterRequestIndex = mockToolRequests.findIndex((req) => req.id === toolRequestId);
+    console.log(masterRequestIndex);
+    if (masterRequestIndex === -1) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    const masterRequest = mockToolRequests[masterRequestIndex];
+    const originalType = masterRequest.type;
+    const updatedMasterData = __spreadProps(__spreadValues({}, masterRequest), {
+      title: updateDto.title,
+      description: updateDto.description,
+      dateBesoin: updateDto.dateBesoin
+      // ... ajoutez d'autres champs maîtres communs si nécessaire (ex: statut, etc.)
+    });
+    mockToolRequests[masterRequestIndex] = updatedMasterData;
+    let updatedDetailData;
+    let detailDataIndex;
+    switch (originalType) {
+      case RequestType.SBO:
+        detailDataIndex = mockSpecSBO.findIndex((s) => s.toolRequestId === toolRequestId);
+        if (detailDataIndex !== -1) {
+          const specSboData = mockSpecSBO[detailDataIndex];
+          updatedDetailData = __spreadProps(__spreadValues({}, specSboData), {
+            description: updateDto.description,
+            toolingNote: updateDto.toolingNote
+            // ... ajoutez d'autres champs spécifiques SBO si nécessaire
+          });
+          mockSpecSBO[detailDataIndex] = updatedDetailData;
+        }
+        break;
+      case RequestType.CONTROLE:
         break;
       default:
         break;
     }
-    console.log(mockSBO);
-    return HttpResponse.json(toolRequest, { status: 201 });
-  })),
-  http.get("/api/tools/request", (_0) => __async(void 0, [_0], function* ({ request }) {
-    return HttpResponse.json(mockToolRequests, { status: 201 });
-  })),
-  http.get("/api/tools/request/:id", (_0) => __async(void 0, [_0], function* ({ request, params }) {
-    const { id } = params;
-    return HttpResponse.json(mockToolRequests[+id - 1], { status: 201 });
+    const demandeur = mockUsers.find((u) => u.id === updatedMasterData.demandeurId);
+    const tool = mockTools.find((t) => t.id === updatedMasterData.toolId);
+    if (!demandeur || !tool) {
+      return new HttpResponse(null, { status: 500 });
+    }
+    const fullUpdatedRequest = __spreadValues(__spreadProps(__spreadValues({}, updatedMasterData), {
+      demandeur,
+      tool
+    }), updatedDetailData || {});
+    delete fullUpdatedRequest.demandeurId;
+    delete fullUpdatedRequest.toolId;
+    return HttpResponse.json(fullUpdatedRequest);
   })),
   // // POST - Créer une demande outillage SBO
   // http.post('api/tools/request/SBO', async ({ request }) => {
@@ -20214,4 +20370,4 @@ msw/lib/shims/statuses.mjs:
      *)
   *)
 */
-//# sourceMappingURL=browser-PA7M3EXV.js.map
+//# sourceMappingURL=browser-4U3KBJ7G.js.map

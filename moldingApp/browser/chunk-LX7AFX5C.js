@@ -1,9 +1,9 @@
 import {
   UserSheetComponent
-} from "./chunk-WEPZBWS4.js";
+} from "./chunk-Q6GQR4TR.js";
 import {
   TitleService
-} from "./chunk-FHAETXHK.js";
+} from "./chunk-YUGWAZZW.js";
 import {
   ANIMATION_MODULE_TYPE,
   APP_INITIALIZER,
@@ -125,7 +125,7 @@ import {
   ɵɵngDeclareInjectable,
   ɵɵngDeclareInjector,
   ɵɵngDeclareNgModule
-} from "./chunk-BEQVXJQK.js";
+} from "./chunk-WPS4UCEJ.js";
 import {
   ION_CONTENT_CLASS_SELECTOR,
   ION_CONTENT_ELEMENT_SELECTOR,
@@ -37470,7 +37470,10 @@ var package_default = {
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     cypress: "^12.17.4",
-    eslint: "^8.56.0",
+    eslint: "^8.57.1",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsdoc": "^61.4.1",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
     "jasmine-core": "~4.6.0",
     "jasmine-spec-reporter": "~7.0.0",
     "json-server": "^0.17.4",
@@ -38106,14 +38109,13 @@ var \u0275PRE_STYLE = "!";
 export {
   IonRouterOutlet2 as IonRouterOutlet,
   IonModal2 as IonModal,
-  IonAccordion,
-  IonAccordionGroup,
   IonApp,
   IonBadge,
   IonButton,
   IonCard,
   IonCardContent,
   IonCardHeader,
+  IonCardSubtitle,
   IonCardTitle,
   IonCol,
   IonContent,
@@ -38811,4 +38813,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-BHBJXH5H.js.map
+//# sourceMappingURL=chunk-LX7AFX5C.js.map

@@ -10,7 +10,7 @@ import {
   environment,
   inject,
   map
-} from "./chunk-BEQVXJQK.js";
+} from "./chunk-WPS4UCEJ.js";
 
 // src/app/shared/services/users/role.guard.ts
 var RoleGuard = class RoleGuard2 {
@@ -136,6 +136,7 @@ var ToolService = class ToolService2 {
   createTool(toolToCreate) {
     const tool = toolToCreate;
     tool.sapToolNumber = parseInt(toolToCreate.sapToolNumber.substring(2), 10);
+    console.log(tool);
     return this.http.post(`api/tools`, tool);
   }
   static ctorParameters = () => [
@@ -154,4 +155,4 @@ export {
   RoleGuard,
   ToolService
 };
-//# sourceMappingURL=chunk-H3Z2WW5W.js.map
+//# sourceMappingURL=chunk-VHWORMKT.js.map

@@ -73,9 +73,9 @@ export class ToolRequestTableComponent implements OnInit {
     if (type === RequestType.CONTROLE) { return '/tooling/3d/' }
     if (type === RequestType.MAINTENANCE) { return '/tooling/repair/' }
   }
-
+  //TODO changer la phylosophie. Créer une class ou un élément plus simple pour attribuer un role à la page ou action.
   ngOnInit() {
-    this.isAdmin = this.authGuard.isRole(['ROLE_ADMIN']);
+    this.isAdmin = this.authGuard.isRole(['ADMIN']);
   }
 
   userClick() {

@@ -133,6 +133,6 @@ export class RegisterFormComponent implements OnInit {
   }
 
   private isValidationRequired(user: User) {
-    return user.roles.includes('ROLE_CE_MOULAGE') || user.roles.includes('ROLE_CE_OUTILLAGE');
+    return user.roles.includes('CE_MOULAGE') || user.roles.includes('CE_OUTIL');
   }
 }

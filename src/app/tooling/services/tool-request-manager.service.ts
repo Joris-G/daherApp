@@ -14,7 +14,7 @@ export class RequestState {
 export class ToolRequestManager {
   getStatus(statut: string): RequestState {
     const isNouvelle = statut === 'NOUVELLE';
-    const isManager = this.roleGuard.isRole(['ROLE_RESP_OUTIL', 'ROLE_ADMIN']);
+    const isManager = this.roleGuard.isRole(['RESP_OUTIL', 'ADMIN']);
 
     return (isNouvelle) ? {
       canUpdate: true,

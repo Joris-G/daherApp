@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { AlertService } from '../divers/alert.service';
 import { AuthStore } from './auth.store';
+import { RoleList } from 'src/app/_interfaces/roles';
 
 export const canActivateAuth: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => {
   return inject(AuthGuard).canActivate(route)
@@ -47,7 +48,7 @@ class AuthGuard {
 
 
 
-  private isRole(expectedRoles: string[]): boolean {
+  private isRole(expectedRoles: RoleList): boolean {
     // console.log(expectedRoles);
     if (this.authStore.user) {
       return expectedRoles.some((expectedRole => this.authStore.user().roles.includes(expectedRole)));

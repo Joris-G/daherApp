@@ -30,8 +30,8 @@ export class AuthService {
   //TODO Demander à ia de faire une revue pour trouver une autre astuce pour le demo mode. Peut être un mock api avec le même entry point pour moker si démo.
   login(credentials: Credentials): Observable<AuthUser> {
     return this.http.post<AuthUser | any>(
-        `${environment.usineApi}login`,
-      { matricule: credentials.userName, password: credentials.password }
+      `api/login`,
+      { matricule: credentials.username, password: credentials.password }
     )
       .pipe(
         catchError((resp) =>

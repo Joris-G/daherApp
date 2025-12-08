@@ -1,7 +1,7 @@
 {
   "name": "moldingApp",
-  "version": "1.6.2",
-  "author": "DAHER by Joris GRANGIER",
+  "version": "1.6.3",
+  "author": "Joris GRANGIER",
   "homepage": "",
   "scripts": {
     "ng": "ng",

@@ -36,8 +36,8 @@ export class LoginPage implements OnInit {
 
   constructor(){
     effect(()=>{
-      const loggedUser: User = this.usersStore.loggedUser();
-      if(loggedUser){
+      const isLogged: boolean = this.authStore.isAuthenticated();
+      if (isLogged) {
         //TODO ReRoute user
         this.router.navigate(['/home']);
         // TODO this.updateService.showUpdates();

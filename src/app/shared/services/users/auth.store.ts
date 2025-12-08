@@ -25,10 +25,10 @@ export class AuthStore {
   // Computed signals (valeurs dérivées)
   isAuthenticated = computed(() => !!this._user() && !!this._token());
   userRole = computed(() => this._user()?.roles ?? 'guest');
-  isAdmin = computed(() => this.userRole().includes('admin'));
+  isAdmin = computed(() => this.userRole().includes('ADMIN'));
 
   constructor() {
-    this.loadFromStorage();
+    // this.loadFromStorage();
   }
 
   // Actions pour modifier l'état
@@ -37,9 +37,10 @@ export class AuthStore {
     this._error.set(null);
     try {
       const response = await firstValueFrom<AuthUser>(this.authService.login(credentials));
-      
+      console.log(response);
       this._user.set(response.user);
       this._token.set(response.token);
+
       
       // Persistance
       localStorage.setItem('auth_token', response.token);
@@ -80,8 +81,9 @@ export class AuthStore {
   private loadFromStorage() {
     const token = localStorage.getItem('auth_token');
     const userStr = localStorage.getItem('auth_user');
-    
+    console.log(token, userStr);
     if (token && userStr) {
+      console.log("hello");
       this._token.set(token);
       this._user.set(JSON.parse(userStr));
     }

@@ -11,6 +11,7 @@ import { SiteService } from 'src/app/shared/services/users/site.service';
 import { UniteService } from 'src/app/shared/services/users/unite.service';
 import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { Role } from 'src/app/_interfaces/roles';
 
 @Component({
     selector: 'app-role-form',
@@ -29,7 +30,7 @@ export class RoleFormComponent implements OnInit {
   @Input('formGroup')
   registerForm: FormGroup;
 
-  datas$: Observable<[IUsine[], IDivision[], IService[], Poste[]]>
+  datas$: Observable<[IUsine[], IDivision[], IService[], Role[]]>
   constructor(
     private serviceService: SericesService,
     private siteService: SiteService,

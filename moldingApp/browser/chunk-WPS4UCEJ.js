@@ -61868,12 +61868,10 @@ export {
   ViewEncapsulation$1,
   makeEnvironmentProviders,
   EnvironmentInjector,
-  assertInInjectionContext,
   FactoryTarget,
   Attribute2 as Attribute,
   Injectable,
   Injector,
-  DestroyRef,
   EventEmitter,
   NgZone,
   output,
@@ -62181,4 +62179,4 @@ export {
    * (C) Ionic http://ionicframework.com - MIT License
    *)
 */
-//# sourceMappingURL=chunk-BEQVXJQK.js.map
+//# sourceMappingURL=chunk-WPS4UCEJ.js.map

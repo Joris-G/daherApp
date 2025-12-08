@@ -14,16 +14,7 @@ import { catchError, finalize, map } from 'rxjs/operators';
 import { LoadingService } from '../divers/loading.service';
 import { HttpClient } from '@angular/common/http';
 
-const JORIS: User = {
-  id: 1,
-  username: 'j.grangier',
-  mail: 'j.grangier@daher.com',
-  matricule: 204292,
-  nom: 'GRANGIER',
-  prenom: 'JORIS',
-  roles: ['COMPAGNON'],
 
-};
 
 @Injectable({
   providedIn: 'root'
@@ -109,7 +100,7 @@ export class UsersService {
       matricule: user.matricule,
       nom: user.nom,
       prenom: user.prenom,
-      poste: this.roleService.getIri(user.poste),
+      poste: '',
       service: this.serviceService.getIri(user.service),
       programmeAvion: user.programmeAvion.map((progAvion: ProgrammeAvion) => this.programService.getIri(progAvion)),
       unite: this.uniteService.getIri(user.unite),

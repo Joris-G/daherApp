@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { AlertService } from '../divers/alert.service';
 import { AuthStore } from './auth.store';
+import { Role, RoleList } from 'src/app/_interfaces/roles';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class RoleGuard  {
     );
   }
 
-  isRole(expectedRoles: string[]): boolean {
+  isRole(expectedRoles: RoleList): boolean {
     // console.log(expectedRoles);
     if (this.authStore.user()) {
       return expectedRoles.some((expectedRole => this.authStore.user().roles.includes(expectedRole)));

@@ -19,16 +19,16 @@ import {
   sequence,
   style,
   ɵPRE_STYLE
-} from "./chunk-BHBJXH5H.js";
+} from "./chunk-LX7AFX5C.js";
 import {
   RoleService,
   SericesService,
   UniteService,
   UsersService
-} from "./chunk-WEPZBWS4.js";
+} from "./chunk-Q6GQR4TR.js";
 import {
   TitleService
-} from "./chunk-FHAETXHK.js";
+} from "./chunk-YUGWAZZW.js";
 import {
   ANIMATION_MODULE_TYPE,
   AlertService,
@@ -82,7 +82,7 @@ import {
   ɵɵngDeclareInjectable,
   ɵɵngDeclareInjector,
   ɵɵngDeclareNgModule
-} from "./chunk-BEQVXJQK.js";
+} from "./chunk-WPS4UCEJ.js";
 import "./chunk-RBMTPJHM.js";
 import "./chunk-H7W7X3R4.js";
 import "./chunk-TDOPS5CM.js";
@@ -5101,15 +5101,15 @@ var routes = [
       { path: "home", component: HomePage },
       {
         path: "admin",
-        loadChildren: () => import("./admin.routes-CKYQVNB3.js").then((m) => m.ADMIN_ROUTES)
+        loadChildren: () => import("./admin.routes-DRFNGX2U.js").then((m) => m.ADMIN_ROUTES)
       },
       {
         path: "molding",
-        loadChildren: () => import("./molding.routes-K2EUY4EP.js").then((m) => m.MOLDING_ROUTES)
+        loadChildren: () => import("./molding.routes-KVYWIAMV.js").then((m) => m.MOLDING_ROUTES)
       },
       {
         path: "tooling",
-        loadChildren: () => import("./tooling.routes-2YFG3MKL.js").then((m) => m.TOOLING_ROUTES)
+        loadChildren: () => import("./tooling.routes-MZDIJIJR.js").then((m) => m.TOOLING_ROUTES)
       }
     ]
   },
@@ -5142,7 +5142,7 @@ var appConfig = {
 function enableMocking() {
   return __async(this, null, function* () {
     if (!environment.production) {
-      const { worker } = yield import("./browser-PA7M3EXV.js");
+      const { worker } = yield import("./browser-4U3KBJ7G.js");
       return worker.start({
         onUnhandledRequest: "warn",
         serviceWorker: {

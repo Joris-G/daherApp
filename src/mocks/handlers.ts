@@ -8,6 +8,7 @@ import { mockTools } from './mockData/mockTools.mock';
 import { mockUsers } from './mockData/mockUser.mock';
 import { mockSpecCtrl } from './mockData/mockSpecCtrl.mock';
 import { mockSpecSBO } from './mockData/mockSBO.mock';
+import { Credentials } from 'src/app/shared/services/users/credentials.interface';
 
 
 // Données mockées
@@ -76,6 +77,16 @@ export const handlers = [
     mockUsers.splice(userIndex, 1);
     return new HttpResponse(null, { status: 204 });
   }),
+
+  // POST - Connection
+  http.post('/api/login', async ({ request }) => {
+    const userCredentials = await request.json() as Credentials;
+    const userIndex = mockUsers.findIndex((val: User) => val.username === userCredentials.username);
+    if (userIndex < 0) { return HttpResponse.json(null, { status: 404 }); }
+    const user = mockUsers[userIndex - 1];
+    return HttpResponse.json({ user, token: 'esfgrdhgsthtrfh' }, { status: 201 });
+  }),
+
 
   // GET - Liste des produits avec pagination
   http.get('/usine-api-dev/public/index.php/api/programme_avions', ({ request }) => {

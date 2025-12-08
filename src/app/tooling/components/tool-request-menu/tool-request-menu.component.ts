@@ -46,7 +46,7 @@ export class ToolRequestMenuComponent implements OnInit {
     //   });
   }
   buildManagerPage() {
-    this.isManager = (this.roleGuard.isRole(['ROLE_ADMIN', 'ROLE_RESP_OUTIL', 'ROLE_CE_OUTIL']) && this.authStore.user().isActive);
+    this.isManager = (this.roleGuard.isRole(['ADMIN', 'RESP_OUTIL', 'CE_OUTIL']) && this.authStore.user().isActive);
     if (this.isManager) { this.loadIndicators(); };
   }
 
