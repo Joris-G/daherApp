@@ -1,9 +1,9 @@
-import { Component, inject, isDevMode, OnInit, output } from '@angular/core';
+import { Component, inject, isDevMode, output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { RouterLink } from '@angular/router';
 import { Credentials } from 'src/app/shared/services/users/credentials.interface';
-import { IonButton, IonItem, IonLabel, IonNote, IonText, IonInput, IonButtons, IonIcon, IonItemGroup } from '@ionic/angular/standalone';
+import { IonButton, IonItem, IonText, IonInput, IonButtons, IonIcon } from '@ionic/angular/standalone';
 
 
 
@@ -12,13 +12,11 @@ import { IonButton, IonItem, IonLabel, IonNote, IonText, IonInput, IonButtons, I
     templateUrl: './login-form.component.html',
     styleUrls: ['./login-form.component.scss'],
     standalone: true,
-  imports: [IonItemGroup,
+  imports: [
     ReactiveFormsModule,
         RouterLink,
     IonItem,
-    IonLabel,
     IonText,
-    IonNote,
     IonInput,
     IonButton,
     IonButtons,
@@ -26,17 +24,18 @@ import { IonButton, IonItem, IonLabel, IonNote, IonText, IonInput, IonButtons, I
 
     ],
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent {
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
   protected loginForm: FormGroup;
   public onSubmit = output<Credentials>();
+  constructor() {
 
-  ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
+
 
   ionViewWillEnter(): void {
     this.loginForm.reset();

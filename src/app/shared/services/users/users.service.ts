@@ -1,7 +1,7 @@
 import { inject, Injectable, isDevMode } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
-import { User, UserIri } from 'src/app/_interfaces/user';
+import { User, UserCreate, UserUpdate } from 'src/app/_interfaces/user';
 import { environment } from 'src/environments/environment';
 import { ProgramsService } from '../programs/programs.service';
 import { RequestService } from '../request.service';
@@ -61,7 +61,7 @@ export class UsersService {
    * @return retourne un Observable<User>
    * @memberof UsersService
    */
-  registerUser(userObj: UserIri): Observable<User> {
+  registerUser(userObj: UserCreate): Observable<User> {
     this.loadingService.startLoading(`Patienter pendant la création de l'utilisateur`);
     return this.http.post<User>(environment.usineApi + 'users', userObj)
       .pipe(
@@ -95,20 +95,12 @@ export class UsersService {
   }
 
   updateUser(user: User): Observable<User> {
-    const userToUpdate: UserIri = {
-      password: user.password,
-      matricule: user.matricule,
-      nom: user.nom,
-      prenom: user.prenom,
-      poste: '',
-      service: this.serviceService.getIri(user.service),
-      programmeAvion: user.programmeAvion.map((progAvion: ProgrammeAvion) => this.programService.getIri(progAvion)),
-      unite: this.uniteService.getIri(user.unite),
-      site: this.usineService.getIri(user.site),
-      tel: user.tel
+    const userToUpdate: UserUpdate = {
+      ...user
     };
     return this.http.patch<User>(`${environment.usineApi}users/${user.id}`, userToUpdate);
   }
+
   addUserToGroup(user: User) {
     // Crée un tableau d'observables pour toutes les requêtes
     const groupRequests = user.groupeAffected.map(group =>

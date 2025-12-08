@@ -1,10 +1,7 @@
-<form [formGroup]="registerForm">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title color=primary>Role dans l'application</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list *ngIf="datas$ | async as data; else loading" formGroupName="roleForm">
+<form [formGroup]="roleForm()">
+  <app-card [titles]="{title: 'Role dans l\'application', subtitle: 'string'}">
+    @if(datas$ | async; as data){
+    <ion-list>
         <ion-item>
           <ion-label color=primary>Site
             <ion-text color="danger">*</ion-text>
@@ -43,15 +40,22 @@
             <ion-text color="danger">*</ion-text>
           </ion-label>
           <ion-select formControlName="poste" placeholder="Sélectionner un poste">
-            <ion-select-option *ngFor="let role of data[3]" [value]="role.id">
-              {{role.libelle}}
+            @for( role of data[3]; track role){
+            
+            <ion-select-option [value]="role">
+              {{role}}
             </ion-select-option>
+            }
           </ion-select>
         </ion-item>
       </ion-list>
-      <ng-template #loading>
+}
+@else {
+  <ng-template #loading>
         <ion-progress-bar type="indeterminate"></ion-progress-bar>
       </ng-template>
-    </ion-card-content>
-  </ion-card>
+}
+
+
+</app-card>
 </form>

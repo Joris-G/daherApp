@@ -39,7 +39,7 @@ class AuthGuard {
         this.router.navigate(['home']);
       }
       return (
-        this.authStore.isAuthenticated() && isRole && this.authStore.user().isActive
+        this.authStore.isAuthenticated() && isRole 
       );
     }
 

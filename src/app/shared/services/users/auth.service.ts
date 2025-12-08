@@ -32,11 +32,7 @@ export class AuthService {
     return this.http.post<AuthUser | any>(
       `api/login`,
       { matricule: credentials.username, password: credentials.password }
-    )
-      .pipe(
-        catchError((resp) =>
-          isDevMode ? of({ token: 'string', user: User.getFakeUser() }) : resp)
-      );
+    );
     // }
     // this.loadingService.stopLoading();
     // auth$.subscribe({

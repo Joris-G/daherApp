@@ -1,24 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { NgIf } from '@angular/common';
+import { Component, input } from '@angular/core';
+import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
+import { CardComponent } from 'src/app/shared/components/card/card.component';
+import { IonRow, IonGrid, IonInput, IonCol, IonLabel, IonItem, IonText, IonNote } from "@ionic/angular/standalone";
+
 
 @Component({
     selector: 'app-identity-form',
     templateUrl: './identity-form.component.html',
     styleUrls: ['./identity-form.component.scss'],
     standalone: true,
-    imports: [
-        ReactiveFormsModule,
-        IonicModule,
-        NgIf,
+  imports: [IonNote, IonLabel, IonGrid, IonRow, IonCol, IonInput, IonItem, IonText, IonNote,
+    ReactiveFormsModule,
+    CardComponent
     ],
 })
-export class IdentityFormComponent implements OnInit {
-  @Input('formGroup')
-  registerForm: FormGroup;
-  constructor() { }
-
-  ngOnInit() { }
-
+export class IdentityFormComponent {
+  identityForm = input<AbstractControl>();
 }

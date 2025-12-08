@@ -88,7 +88,8 @@ export class ManageTeamPage implements OnInit {
 
   addGroupToUser(selectOpt: GroupeAffectation[], user: User) {
     user.groupeAffected = selectOpt;
-    user.isUpdated = true;
+    // TODO update state user
+    // user.isUpdated = true;
   }
 
 
