@@ -10,6 +10,8 @@ import { User } from 'src/app/_interfaces/user';
 import { AuthStore } from 'src/app/shared/services/users/auth.store';
 import { Credentials } from 'src/app/shared/services/users/credentials.interface';
 import { Router } from '@angular/router';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +35,8 @@ export class LoginPage implements OnInit {
   public version: string = packageJson.version;
   private readonly noticeService: NoticeService = inject(NoticeService);
   private readonly titleService: TitleService = inject(TitleService);
+  private readonly loadingService: LoadingService = inject(LoadingService);
+  private readonly alertService: AlertService = inject(AlertService);
 
   constructor(){
     effect(()=>{
@@ -41,6 +45,19 @@ export class LoginPage implements OnInit {
         //TODO ReRoute user
         this.router.navigate(['/home']);
         // TODO this.updateService.showUpdates();
+      }
+
+      const isLoading: boolean = this.authStore.loading();
+      if (isLoading) {
+        this.loadingService.startLoading("Connexion en cours ... ");
+      } else {
+        this.loadingService.stopLoading();
+      }
+
+      const error: string = this.authStore.error();
+      if (error) {
+        this.loadingService.stopLoading();
+        this.alertService.presentToast(error, 'danger');
       }
     })
   }

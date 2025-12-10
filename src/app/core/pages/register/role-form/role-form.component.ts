@@ -1,14 +1,14 @@
-import { Component, input, OnInit } from '@angular/core';
-import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, input } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Observable, zip } from 'rxjs';
-import { IDivision } from 'src/app/_interfaces/division';
-import { IService } from 'src/app/_interfaces/service';
-import { IUsine } from 'src/app/_interfaces/usine';
+import { Division } from 'src/app/_interfaces/division';
+import { Service } from 'src/app/_interfaces/service';
+import { Usine } from 'src/app/_interfaces/usine';
 import { RoleService } from 'src/app/shared/services/users/role.service';
 import { SericesService } from 'src/app/shared/services/users/serices.service';
 import { SiteService } from 'src/app/shared/services/users/site.service';
 import { UniteService } from 'src/app/shared/services/users/unite.service';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Role } from 'src/app/_interfaces/roles';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { IonItem, IonLabel, IonProgressBar, IonSelect, IonSelectOption, IonText, IonList } from '@ionic/angular/standalone';
@@ -23,16 +23,17 @@ import { IonItem, IonLabel, IonProgressBar, IonSelect, IonSelectOption, IonText,
         ReactiveFormsModule,
     CardComponent,
         AsyncPipe,
+    JsonPipe,
     IonItem,
     IonLabel,
     IonText,
     IonSelect, IonSelectOption, IonProgressBar
     ],
 })
-export class RoleFormComponent implements OnInit {
-  public roleForm = input<AbstractControl>();
+export class RoleFormComponent {
+  public roleForm = input.required<FormGroup>();
 
-  datas$: Observable<[IUsine[], IDivision[], IService[], Role[]]>
+  datas$: Observable<[Usine[], Division[], Service[], Role[]]>
 
   constructor(
     private serviceService: SericesService,
@@ -43,10 +44,6 @@ export class RoleFormComponent implements OnInit {
     this.getDatas();
   }
 
-
-  ngOnInit() {
-    // this.getDatas();
-  }
   private getDatas() {
     const services$ = this.serviceService.getServices();
     const roles$ = this.roleService.getRoles();

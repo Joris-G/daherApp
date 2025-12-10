@@ -19,17 +19,17 @@ export class RegisterFormBuilder {
     }
     private initIdentityForm(): FormGroup {
         return this.formBuilder.group({
-            lastName: ['', Validators.required],
-            firstName: ['', Validators.required],
-            password: ['', Validators.required],
-            confirmPassword: ['', [Validators.required, matchValues('password')]],
-            matricule: ['', Validators.required],
-            telephone: ['', Validators.required],
+            lastName: ['Grangier', Validators.required],
+            firstName: ['Joris', Validators.required],
+            password: ['Azerty123', Validators.required],
+            confirmPassword: ['Azerty123', [Validators.required, matchValues('password')]],
+            matricule: ['123', Validators.required],
+            telephone: ['123', Validators.required],
         });
     }
 
     public initRegisterForm(): FormGroup {
-        return this.formBuilder.group({
+        return this.formBuilder.nonNullable.group({
             role: this.initRoleForm(),
             identity: this.initIdentityForm(),
         });

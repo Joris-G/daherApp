@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { LoginRedirectionService } from 'src/app/core/pages/login/services/login-redirection.service';
 import { User } from 'src/app/_interfaces/user';
-import { environment } from 'src/environments/environment';
 import { AlertService } from '../divers/alert.service';
 import { LoadingService } from '../divers/loading.service';
 import { Credentials } from './credentials.interface';
-import { tap, map, Observable, catchError, of } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { AuthUser } from './auth.interface';
 
 @Injectable({
@@ -29,9 +28,9 @@ export class AuthService {
 
   //TODO Demander à ia de faire une revue pour trouver une autre astuce pour le demo mode. Peut être un mock api avec le même entry point pour moker si démo.
   login(credentials: Credentials): Observable<AuthUser> {
-    return this.http.post<AuthUser | any>(
-      `api/login`,
-      { matricule: credentials.username, password: credentials.password }
+    return this.http.post<AuthUser | any>(`api/login`, credentials)
+      .pipe(
+        delay(2000)
     );
     // }
     // this.loadingService.stopLoading();
@@ -55,7 +54,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.post(`${environment.usineApi}logout`, {})
+    return this.http.post(`api/usineApi/logout`, {})
     // .pipe(
     //   map(() => {
     //     this.isAuth = false;
@@ -66,6 +65,6 @@ export class AuthService {
   }
 
   getAuthUser() {
-    return this.http.get<User>(`${environment.usineApi}me`)
+    return this.http.get<User>(`api/usineApi/me`)
   }
 }

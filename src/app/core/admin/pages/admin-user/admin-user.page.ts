@@ -6,7 +6,7 @@ import Chart from 'chart.js/auto';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { SericesService } from 'src/app/shared/services/users/serices.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
-import { IService } from 'src/app/_interfaces/service';
+import { Service } from 'src/app/_interfaces/service';
 import { User } from 'src/app/_interfaces/user';
 import { IonicModule } from '@ionic/angular';
 import { AdminUserTableComponent } from '../../components/admin-user-table/admin-user-table.component';
@@ -45,8 +45,8 @@ export class AdminUserPage implements OnInit {
     this.users = [];
     this.loadingService.startLoading();
     this.serviceService.getServices()
-      .subscribe((services: IService[]) => {
-        services.forEach((service: IService) => {
+      .subscribe((services: Service[]) => {
+        services.forEach((service: Service) => {
           service.users.forEach((user: User) => this.users.push(user));
         });
         // this.userDataSource.data = this.users;

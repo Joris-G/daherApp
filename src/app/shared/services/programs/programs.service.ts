@@ -11,7 +11,7 @@ export class ProgramsService {
   private readonly http: HttpClient = inject(HttpClient);
 
   getPrograms(): Observable<ProgrammeAvion[]> {
-    return this.http.get<ProgrammeAvion[]>(`${environment.usineApi}programme_avions`)
+    return this.http.get<ProgrammeAvion[]>(`api/programme_avions`)
       .pipe(
         map((resp: any) => resp.data)
       );

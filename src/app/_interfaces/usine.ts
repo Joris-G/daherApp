@@ -1,8 +1,16 @@
-import { IDivision } from './division';
+import { Division } from './division';
 
-export interface IUsine {
-  id?: number;
+export interface Usine {
+  id: number;
   nom: string;
-  divisions: IDivision[];
+  divisions: Division[];
 }
 
+export interface UsineStorage {
+  id: number;
+  nom: string;
+}
+
+export type UsineCreation = Omit<Usine, 'id'> & {
+  divisionIds?: number[];
+};;

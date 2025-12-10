@@ -45,7 +45,7 @@ export class RequestService {
 
   createPostRequest(url: string, body?: any, full = false): Observable<any> {
     return this.http.post<HttpResponse<any>>(
-      environment.apiServer + url,
+      "api/" + url,
       body,
       {
         headers: this.httpHeaders
@@ -57,7 +57,7 @@ export class RequestService {
 
   createPutRequest(url: string, body: any): Observable<any> {
     return this.http.put<HttpResponse<any>>(
-      environment.apiServer + url, body,
+      "api/" + url, body,
       {
         headers: this.httpHeaders
       })
@@ -68,7 +68,7 @@ export class RequestService {
 
   createPatchRequest(url: string, body: any): Observable<any> {
     return this.http.patch<any>(
-      environment.apiServer + url, body, {
+      "api/" + url, body, {
       headers: this.patchHttpHeaders
     })
       .pipe(
@@ -78,7 +78,7 @@ export class RequestService {
 
   createGetRequest(url: string, params?: any): Observable<any> {
     return this.http.get<HttpResponse<any>>(
-      environment.apiServer + url, { headers: this.httpHeaders, params })
+      "api/" + url, { headers: this.httpHeaders, params })
       .pipe(
         map(stateMap)
       );
@@ -86,7 +86,7 @@ export class RequestService {
 
   createDeleteRequest(url: string): Observable<any> {
     return this.http.delete(
-      environment.apiServer + url, { headers: this.httpHeaders });
+      "api/" + url, { headers: this.httpHeaders });
   }
 }
 

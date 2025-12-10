@@ -1,17 +1,11 @@
-import { User } from './user';
-
-export interface IDivision {
+export interface Division {
   id?: number;
   nom: string;
-  entreprise?: string;
-  users: User[];
 
 }
+export type DivisionCreation = Omit<Division, 'id'>
 
 export interface DivisionIri {
   id?: number;
   nom: string;
-  entreprise?: string;
-  users: string[];
-
 }

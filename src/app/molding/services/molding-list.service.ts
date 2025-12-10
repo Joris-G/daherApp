@@ -49,7 +49,7 @@ export class MoldingListService {
    * @memberof MoldingListService
    */
   getMoldings(page = 1, itemsPerPage = 5): Observable<Molding[]> {
-    return this.requestService.createGetRequest(`${environment.moldingApi}moldings?page=${page}&itemsPerPage=${itemsPerPage}`)
+    return this.requestService.createGetRequest(`api/moldings?page=${page}&itemsPerPage=${itemsPerPage}`)
       .pipe(
         // expand(response => response.next ? this.requestService.createGetRequest(response.next) : EMPTY),
         // reduce((acc, current) => acc.concat(current.results), []),
@@ -98,7 +98,7 @@ export class MoldingListService {
 
   private isUserFilter(molding: Molding): boolean {
     if (this.moldingsFilters.username.length <= 0) { return true; }
-    return this.moldingsFilters.username.some(testUsername => (molding.userCreat.username.includes(testUsername)));
+    return this.moldingsFilters.username.some(testUsername => (molding.userCreat.mail.includes(testUsername)));
   }
 }
 

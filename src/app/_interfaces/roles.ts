@@ -9,6 +9,8 @@ export type Role =
   | 'RESP_MOULAGE'
   | 'OUTILLEUR';
 
+export type RoleCreation = string;
+
 export type RoleList = Role[];
 
 export const ROLE_LABELS: Record<Role, string> = {

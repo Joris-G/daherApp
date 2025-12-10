@@ -41,15 +41,15 @@ export class LoginFormComponent {
     this.loginForm.reset();
     if (isDevMode()) {
       this.loginForm.setValue({
-        username: environment.username,
-        password: environment.password
+        username: '',
+        password: ''
       });
     }
   }
 
   submit() {
-    const username = this.loginForm.get('username').value.replace(/^0+/, '');
-    const password = this.loginForm.get('password').value || username;
-    this.onSubmit.emit({ username, password });
+    const email = this.loginForm.get('username').value.replace(/^0+/, '');
+    const password = this.loginForm.get('password').value || email;
+    this.onSubmit.emit({ email, password });
   }
 }

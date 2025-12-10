@@ -3,7 +3,7 @@
     <ion-grid fixed class="ion-align-items-center ion-justify-content-center">
         <ion-row>
           <ion-col size="12">
-            <ion-label>Identité</ion-label>
+            <ion-text>Identité</ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -12,10 +12,9 @@
           <!-- **************************** -->
           <ion-col size="6">
             <ion-item>
-              <ion-label color=primary position="floating">Nom
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input formControlName="lastName" type="text"></ion-input>
+              <ion-input labelPlacement="floating" formControlName="lastName" type="text">
+                <div slot="label">Nom<ion-text color="danger">*</ion-text></div>
+              </ion-input>
             </ion-item>
           </ion-col>
           <!-- **************************** -->
@@ -23,10 +22,9 @@
           <!-- **************************** -->
           <ion-col size="6">
             <ion-item>
-              <ion-label color=primary position="floating">Prénom
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input formControlName="firstName" type="text"></ion-input>
+              <ion-input labelPlacement="floating" formControlName="firstName" type="text">
+                <div slot="label">Prénom<ion-text color="danger">*</ion-text></div>
+              </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -38,13 +36,11 @@
             <!-- TODO Voir avec le state pour savoir si l'utilisateur créé est un utilisateur sans mot de passe -->
             <!-- <ion-item *ngIf="identityForm().controls.poste.value !==4"> -->
             <ion-item>
-              <ion-label color=primary position="floating">Mot de passe
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="password" formControlName="password"
-                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)^[a-zA-Z\d]{6,12}$"></ion-input>
-              <ion-note slot="helper">Le mot de passe doit faire entre 6 et 12 caractères. Il doit au moins contenir une
-                majuscule, une minuscule et un chiffre</ion-note>
+              <ion-input labelPlacement="floating" type="password" formControlName="password"
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)^[a-zA-Z\d]{6,12}$" helperText="Le mot de passe doit faire entre 6 et 12 caractères. Il doit au moins contenir une
+                                                                        majuscule, une minuscule et un chiffre">
+                <div slot="label">Mot de passe<ion-text color="danger">*</ion-text></div>
+              </ion-input>
             </ion-item>
             <!-- **************************** -->
             <!-- ****  CTRL MOT DE PASSE  *** -->
@@ -52,10 +48,9 @@
             <!-- TODO Voir avec le state pour savoir si l'utilisateur créé est un utilisateur sans mot de passe -->
             <!-- <ion-item *ngIf="identityForm().controls.poste.value !==4"> -->
             <ion-item>
-              <ion-label color=primary position="floating">Répéter mot de passe
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input formControlName="confirmPassword" type="password"></ion-input>
+              <ion-input labelPlacement="floating" formControlName="confirmPassword" type="password">
+                <div slot="label">Répéter mot de passe<ion-text color="danger">*</ion-text></div>
+              </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -65,10 +60,9 @@
           <!-- **************************** -->
           <ion-col size="6">
             <ion-item>
-              <ion-label color=primary position="floating">Matricule
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input formControlName="matricule" type="text"></ion-input>
+              <ion-input labelPlacement="floating" formControlName="matricule" type="text">
+                <div slot="label">Matricule<ion-text color="danger">*</ion-text></div>
+              </ion-input>
             </ion-item>
           </ion-col>
           <!-- **************************** -->
@@ -76,10 +70,7 @@
           <!-- **************************** -->
           <ion-col size="6">
             <ion-item>
-              <ion-label color=primary position="floating">Téléphone
-                <!-- <ion-text color="danger">*</ion-text> -->
-              </ion-label>
-              <ion-input formControlName="telephone" type="text"></ion-input>
+              <ion-input label="Téléphone" labelPlacement="floating" formControlName="telephone" type="text"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>

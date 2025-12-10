@@ -10,7 +10,7 @@ import { SericesService } from './serices.service';
 import { UniteService } from './unite.service';
 import { UsineService } from './usine.service';
 import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, finalize, map } from 'rxjs/operators';
+import { catchError, delay, finalize, map } from 'rxjs/operators';
 import { LoadingService } from '../divers/loading.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -41,7 +41,7 @@ export class UsersService {
    * @return retourne une Promise<User>
    * @memberof UsersService
    */
-  getUserById(idUser: string): Observable<User> { return this.http.get<User>(environment.usineApi + `users/${idUser}`) }
+  getUserById(idUser: string): Observable<User> { return this.http.get<User>(`api/users/${idUser}`) }
 
 
   /**
@@ -51,7 +51,7 @@ export class UsersService {
    * @return retourne une Promise<User[]>
    * @memberof UsersService
    */
-  getUsers(filters?: any): Observable<User[]> { return this.http.get<User[]>(`${environment.usineApi}users`, { params: filters }) }
+  getUsers(filters?: any): Observable<User[]> { return this.http.get<User[]>(`api/usineApi/users`, { params: filters }) }
 
 
   /**
@@ -62,11 +62,10 @@ export class UsersService {
    * @memberof UsersService
    */
   registerUser(userObj: UserCreate): Observable<User> {
-    this.loadingService.startLoading(`Patienter pendant la création de l'utilisateur`);
-    return this.http.post<User>(environment.usineApi + 'users', userObj)
+    return this.http.post<User>(`api/users`, userObj)
       .pipe(
-        finalize(() => this.loadingService.stopLoading())
-      );
+      delay(2000)
+    );
   }
 
 
@@ -87,25 +86,25 @@ export class UsersService {
   }
 
   getGroups(): Observable<GroupeAffectation[]> {
-    return this.http.get<GroupeAffectation[]>(`${environment.usineApi}groupe_affectations`);
+    return this.http.get<GroupeAffectation[]>(`api/usineApi/groupe_affectations`);
   }
 
   createGroup(groupObj: GroupeAffectation): Observable<GroupeAffectation> {
-    return this.http.post<GroupeAffectation>(`${environment.usineApi}groupe_affectations`, groupObj);
+    return this.http.post<GroupeAffectation>(`api/usineApi/groupe_affectations`, groupObj);
   }
 
   updateUser(user: User): Observable<User> {
     const userToUpdate: UserUpdate = {
       ...user
     };
-    return this.http.patch<User>(`${environment.usineApi}users/${user.id}`, userToUpdate);
+    return this.http.patch<User>(`api/usineApi/users/${user.id}`, userToUpdate);
   }
 
   addUserToGroup(user: User) {
     // Crée un tableau d'observables pour toutes les requêtes
     const groupRequests = user.groupeAffected.map(group =>
       this.http.patch<GroupeAffectation>(
-        `${environment.usineApi}groupe_affectations/${group.id}/addUsers`,
+        `api/usineApi/groupe_affectations/${group.id}/addUsers`,
         { population: group.population }
     ).pipe(
       catchError(error => {
@@ -129,15 +128,15 @@ export class UsersService {
     if (isDevMode()) {
       return of();
     }
-    return this.http.get<User[]>(`${environment.usineApi}services/${serviceId}`);
+    return this.http.get<User[]>(`api/usineApi/services/${serviceId}`);
   }
 
   deleteUser(userId: number) {
-    return this.http.delete(`${environment.usineApi}users/${userId}`);
+    return this.http.delete(`api/usineApi/users/${userId}`);
   }
 
   confirmUser(userId: number, status: boolean): Observable<User> {
-    return this.http.patch<User>(`${environment.usineApi}users/${userId}`, { isActive: status });
+    return this.http.patch<User>(`api/usineApi/users/${userId}`, { isActive: status });
   }
 
 }

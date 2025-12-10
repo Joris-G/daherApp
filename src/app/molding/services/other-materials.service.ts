@@ -11,7 +11,7 @@ export class OtherMaterialsService {
   constructor(private requestService: RequestService) { }
 
   addOne(mat: AdditionalMaterial) {
-    return this.requestService.createPostRequest(`${environment.moldingApi}additional_materials`, mat);
+    return this.requestService.createPostRequest(`api/additional_materials`, mat);
     // .subscribe(
     //   () => {
     //     console.log('materiau ajouté');

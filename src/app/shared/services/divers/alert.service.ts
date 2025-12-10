@@ -61,13 +61,14 @@ export class AlertService {
     });
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, color: string) {
     const toast = await this.toastController.create({
       message,
-      duration: 1000,
+      duration: 3000,
       position: 'bottom',
       translucent: true,
       animated: true,
+      color
     });
     toast.present();
   }

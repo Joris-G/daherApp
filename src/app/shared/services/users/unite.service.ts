@@ -1,27 +1,25 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IDivision } from 'src/app/_interfaces/division';
+import { Division } from 'src/app/_interfaces/division';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UniteService {
+  private readonly _http: HttpClient = inject(HttpClient);
 
-  constructor(
-    private requestService: RequestService
-  ) { }
-
-  getUnites(): Observable<IDivision[]> {
-    return this.requestService.createGetRequest(`${environment.usineApi}divisions`);
+  getUnites(): Observable<Division[]> {
+    return this._http.get<Division[]>(`api/divisions`);
   }
 
-  getIri(unite: IDivision | string): string {
-    if (typeof (unite) == 'string') {
-      return unite;
-    } else {
-      return `/api/divisions/${unite.id}`;
-    }
-  }
+  // getIri(unite: Division | string): string {
+  //   if (typeof (unite) == 'string') {
+  //     return unite;
+  //   } else {
+  //     return `/api/divisions/${unite.id}`;
+  //   }
+  // }
 }

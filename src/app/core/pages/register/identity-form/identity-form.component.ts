@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
-import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
-import { IonRow, IonGrid, IonInput, IonCol, IonLabel, IonItem, IonText, IonNote } from "@ionic/angular/standalone";
+import { IonRow, IonGrid, IonInput, IonCol, IonItem, IonText } from "@ionic/angular/standalone";
 
 
 @Component({
@@ -9,11 +9,11 @@ import { IonRow, IonGrid, IonInput, IonCol, IonLabel, IonItem, IonText, IonNote 
     templateUrl: './identity-form.component.html',
     styleUrls: ['./identity-form.component.scss'],
     standalone: true,
-  imports: [IonNote, IonLabel, IonGrid, IonRow, IonCol, IonInput, IonItem, IonText, IonNote,
+  imports: [IonGrid, IonRow, IonCol, IonInput, IonItem, IonText, 
     ReactiveFormsModule,
     CardComponent
     ],
 })
 export class IdentityFormComponent {
-  identityForm = input<AbstractControl>();
+  identityForm = input.required<FormGroup>();
 }

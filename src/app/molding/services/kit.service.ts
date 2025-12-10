@@ -15,7 +15,7 @@ export class KitService {
 
   getKitById(id: string) {
     // const kitSubject: Subject<Kit> = new Subject();
-    return this.requestService.createGetRequest(`${environment.moldingApi}datas_kits?page=1&idMM=${id}`)
+    return this.requestService.createGetRequest(`api/datas_kits?page=1&idMM=${id}`)
       .pipe(
         // takeWhile((returnsData) => returnsData.length > 0 ),
         map((returnsData) => {
@@ -75,7 +75,7 @@ export class KitService {
   }
 
   updateKit(kit: Kit) {
-    return this.requestService.createPatchRequest(`${environment.apiServer}/${environment.moldingApi}/datas_kits/${kit.id}`, kit);
+    return this.requestService.createPatchRequest(`api/datas_kits/${kit.id}`, kit);
   }
   // private async wrongKitInputAlert() {
 

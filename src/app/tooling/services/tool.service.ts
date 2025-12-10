@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Tool, ToolCreation } from 'src/app/tooling/tool';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
@@ -65,12 +64,12 @@ export class ToolService {
   }
 
   getToolById(idTool: string) {
-    return this.requestService.createGetRequest(`${environment.toolApi}tools/${idTool}`);
+    return this.requestService.createGetRequest(`api/toolApi/tools/${idTool}`);
   }
 
   getToolByToolNumber(toolNumber: string): Observable<Tool | undefined> {
     return this.requestService
-      .createGetRequest(`${environment.toolApi}tools?sapToolNumber=${toolNumber}`)
+      .createGetRequest(`api/toolApi/tools?sapToolNumber=${toolNumber}`)
       .pipe(
         map((returnsData: any) => {
           if (returnsData.length === 1) {
@@ -88,7 +87,7 @@ export class ToolService {
 
   getToolByIdentification(identification: string) {
     return new Promise((resolve, reject) => {
-      this.requestService.createGetRequest(`${environment.toolApi}tools?identification=${identification}`)
+      this.requestService.createGetRequest(`api/toolApi/tools?identification=${identification}`)
         .subscribe((returnsData: any) => {
           if (returnsData.length === 1) {
             const returnMoldingTool: Tool = returnsData[0];
@@ -110,7 +109,7 @@ export class ToolService {
     return new Promise((resolve, reject) => {
       const httpHeaders = new HttpHeaders()
         .append('content-type', 'application/json');
-      this.http.get(`${environment.apiServer}molding_tools`, { headers: httpHeaders })
+      this.http.get(`api/molding_tools`, { headers: httpHeaders })
         .subscribe((returnsData: any) => {
           resolve(returnsData);
         },

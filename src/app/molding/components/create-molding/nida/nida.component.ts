@@ -37,7 +37,7 @@ export class NidaComponent implements OnInit {
       outillageMoulage: new FormControl()
     }) as AdditionalMaterialForm;
     this.references$ = this.requestService.createGetRequest(
-      `${environment.moldingApi}additional_materials`,
+      `api/additional_materials`,
       {
         outillageMoulage: `api/tools/${this.moldingService.molding.OT.id}`,
         page: '1',

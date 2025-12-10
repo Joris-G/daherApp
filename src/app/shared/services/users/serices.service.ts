@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IService } from 'src/app/_interfaces/service';
+import { Service } from 'src/app/_interfaces/service';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../request.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SericesService {
+  private readonly _http: HttpClient = inject(HttpClient);
 
-  constructor(private requestService: RequestService) { }
-
-  getServices(): Observable<IService[]> {
-    return this.requestService.createGetRequest(`${environment.usineApi}services`);
+  getServices(): Observable<Service[]> {
+    return this._http.get<Service[]>(`api/services`);
 
   }
 
-  getIri(service: IService | string): string {
-    if (typeof (service) == 'string') {
-      return service;
-    } else {
-      return `/api/services/${service.id}`;
-    }
-  }
+  // getIri(service: Service | string): string {
+  //   if (typeof (service) == 'string') {
+  //     return service;
+  //   } else {
+  //     return `/api/services/${service.id}`;
+  //   }
+  // }
 }

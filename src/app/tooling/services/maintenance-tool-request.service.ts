@@ -35,8 +35,8 @@ export class MaintenanceToolRequestService {
     private readonly toolReqService = inject(ToolRequestService);
 
     // URLs API
-    private readonly maintenanceUrl = `${environment.toolApi}maintenances`;
-    private readonly maintenanceItemUrl = `${environment.toolApi}maintenance_items`;
+    private readonly maintenanceUrl = `api/toolApi/maintenances`;
+    private readonly maintenanceItemUrl = `api/toolApi/maintenance_items`;
 
     // ============================================================================
     // CRÉATION DE DEMANDE DE MAINTENANCE

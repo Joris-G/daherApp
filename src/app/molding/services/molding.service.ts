@@ -204,7 +204,7 @@ export class MoldingService {
 	 * @memberof MoldingService
 	 */
 	getMoldingById(id: string): Observable<Molding> {
-		return this.requestService.createGetRequest(`${environment.moldingApi}moldings/${id}`)
+		return this.requestService.createGetRequest(`api/moldings/${id}`)
 			.pipe(
 				map((returnsData: any) => {
 					returnsData.kits = this.moldingServerToMoldingObject(returnsData);
@@ -223,7 +223,7 @@ export class MoldingService {
 			this.updateDates();
 			this.updateMoldings();
 		} else {
-			this.alertService.presentToast('Le kit a déjà été scanné');
+			this.alertService.presentToast('Le kit a déjà été scanné', 'warning');
 			console.error('kit en doublon');
 		}
 	}
@@ -242,7 +242,7 @@ export class MoldingService {
 	 */
 	addTool(responseTool: Tool) {
 		this.molding.OT = responseTool;
-		this.alertService.presentToast('Outillage associé !');
+		this.alertService.presentToast('Outillage associé !', 'success');
 		this.setToolStatus(true);
 		this.updateMoldings();
 	}
@@ -273,7 +273,7 @@ export class MoldingService {
 
 	private postMolding(): Observable<Molding> {
 		const moldingIri = this.toIri();
-		return this.requestService.createPostRequest(`${environment.moldingApi}moldings`, moldingIri, true);
+		return this.requestService.createPostRequest(`api/moldings`, moldingIri, true);
 		// .pipe(
 		//   map((response: any) => {
 		//       response.kits = this.moldingServerToMoldingObject(response);
@@ -291,7 +291,7 @@ export class MoldingService {
 	 */
 	private patchMolding(): Observable<Molding> {
 		const moldingIri = this.toIri();
-		const url = `${environment.moldingApi}moldings/${moldingIri.id}`;
+		const url = `api/moldings/${moldingIri.id}`;
 		return this.requestService.createPatchRequest(url, moldingIri)
 			.pipe(
 				finalize(() => this.loadingService.stopLoading())

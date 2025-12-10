@@ -1,37 +1,38 @@
 <form [formGroup]="roleForm()">
   <app-card [titles]="{title: 'Role dans l\'application', subtitle: 'string'}">
     @if(datas$ | async; as data){
+      <div>
+        {{data | json}}
+      </div>
     <ion-list>
         <ion-item>
-          <ion-label color=primary>Site
-            <ion-text color="danger">*</ion-text>
-          </ion-label>
           <ion-select formControlName="site" placeholder="Selectionner un site">
-            <ion-select-option *ngFor="let site of data[0]" [value]="site.id">
-              {{site.nom}}
-            </ion-select-option>
+            @for(site of data[0]; track site){
+            <ion-select-option [value]="site.id"> {{site.nom}} </ion-select-option>
+            }
+            <div slot="label">Site<ion-text color="danger">*</ion-text></div>
           </ion-select>
         </ion-item>
 
         <ion-item>
-          <ion-label color=primary>Secteur
-            <ion-text color="danger">*</ion-text>
-          </ion-label>
           <ion-select formControlName="unite" placeholder="Selectionner une unité">
-            <ion-select-option *ngFor="let unite of data[1]" [value]="unite.id">
+            @for(unite of data[1]; track unite){
+            <ion-select-option [value]="unite.id">
               {{unite.nom}}
             </ion-select-option>
+            }
+            <div slot="label"> Secteur<ion-text color="danger">*</ion-text></div>
           </ion-select>
         </ion-item>
 
         <ion-item>
-          <ion-label color=primary>Service
-            <ion-text color="danger">*</ion-text>
-          </ion-label>
           <ion-select formControlName="service" placeholder="Sélectionner un service">
-            <ion-select-option *ngFor="let service of data[2]" [value]="service.id">
+            @for(service of data[2]; track service){
+            <ion-select-option [value]="service.id">
               {{service.nom}}
             </ion-select-option>
+            }
+            <div slot="label"> Service<ion-text color="danger">*</ion-text></div>
           </ion-select>
         </ion-item>
 

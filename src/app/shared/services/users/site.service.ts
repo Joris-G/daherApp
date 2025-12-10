@@ -1,18 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IUsine } from 'src/app/_interfaces/usine';
-import { environment } from 'src/environments/environment';
-import { RequestService } from '../request.service';
+import { Usine } from 'src/app/_interfaces/usine';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SiteService {
-  constructor(
-    private requestService: RequestService
-  ) { }
+  private readonly _http: HttpClient = inject(HttpClient);
 
-  getSites(): Observable<IUsine[]> {
-    return this.requestService.createGetRequest(`${environment.usineApi}usines`);
+  getSites(): Observable<Usine[]> {
+    return this._http.get<Usine[]>(`api/usines`);
   }
 }
