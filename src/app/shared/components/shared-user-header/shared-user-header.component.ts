@@ -1,16 +1,13 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { NavController, PopoverController, IonicModule } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { User } from 'src/app/_interfaces/user';
 
 import { environment } from 'src/environments/environment';
 import { UserPopoverComponent } from '../user-popover/user-popover.component';
 import { Observable } from 'rxjs';
-import { LoadingService } from '../../services/divers/loading.service';
 import { TitleService } from '../../services/title.service';
-import { AuthService } from '../../services/users/auth.service';
-import { NgIf } from '@angular/common';
 import { AuthStore } from '../../services/users/auth.store';
-import { IonButton, IonButtons, IonChip, IonHeader, IonIcon, IonImg, IonLabel, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonChip, IonHeader, IonIcon, IonImg, IonLabel, IonMenuButton, IonTitle, IonToolbar, PopoverController } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'app-shared-user-header',
@@ -31,6 +28,11 @@ import { IonButton, IonButtons, IonChip, IonHeader, IonIcon, IonImg, IonLabel, I
   ],
 })
 export class SharedUserHeaderComponent implements OnInit {
+  ////////////////////////////////////////////////////
+  //INJECTION DEPENDANCES
+  ////////////////////////////////////////////////////
+  private readonly popoverCtrl: PopoverController = inject(PopoverController);
+
   @Input()
   public title: string;
   @Input()
@@ -44,9 +46,8 @@ export class SharedUserHeaderComponent implements OnInit {
   private title$: Observable<string>
 
   constructor(
-    private loadingService: LoadingService,
     private navCtrl: NavController,
-    private popoverCtrl: PopoverController,
+
     private titleService: TitleService
 
   ) {

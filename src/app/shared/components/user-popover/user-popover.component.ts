@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ModalController, NavController, IonicModule } from '@ionic/angular';
 import packageJson from 'package.json';
 import { LoadingService } from '../../services/divers/loading.service';
-import { AuthService } from '../../services/users/auth.service';
 import { UserSheetComponent } from '../user-sheet/user-sheet.component';
 import { AuthStore } from '../../services/users/auth.store';
 
