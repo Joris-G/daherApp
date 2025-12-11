@@ -1,9 +1,6 @@
 <form [formGroup]="roleForm()">
   <app-card [titles]="{title: 'Role dans l\'application', subtitle: 'string'}">
     @if(datas$ | async; as data){
-      <div>
-        {{data | json}}
-      </div>
     <ion-list>
         <ion-item>
           <ion-select formControlName="site" placeholder="Selectionner un site">
@@ -37,9 +34,6 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>Poste
-            <ion-text color="danger">*</ion-text>
-          </ion-label>
           <ion-select formControlName="poste" placeholder="Sélectionner un poste">
             @for( role of data[3]; track role){
             
@@ -47,6 +41,7 @@
               {{role}}
             </ion-select-option>
             }
+            <div slot="label">Poste<ion-text color="danger">*</ion-text></div>
           </ion-select>
         </ion-item>
       </ion-list>

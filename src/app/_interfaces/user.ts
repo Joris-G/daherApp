@@ -11,7 +11,7 @@ export class User {
   nom: string;
   prenom: string;
   matricule: number;
-  mail: string;
+  email: string;
   roles: RoleList;
   poste: Poste;
   service: Service;

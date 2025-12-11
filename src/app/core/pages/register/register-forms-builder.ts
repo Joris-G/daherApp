@@ -1,6 +1,5 @@
 import { inject, Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Role } from "src/app/_interfaces/roles";
 import { matchValues } from "./utils/password.validator";
 
 @Injectable({
@@ -21,6 +20,7 @@ export class RegisterFormBuilder {
         return this.formBuilder.group({
             lastName: ['Grangier', Validators.required],
             firstName: ['Joris', Validators.required],
+            email: ['joris.grangier@daher.com', [Validators.required, Validators.email]],
             password: ['Azerty123', Validators.required],
             confirmPassword: ['Azerty123', [Validators.required, matchValues('password')]],
             matricule: ['123', Validators.required],

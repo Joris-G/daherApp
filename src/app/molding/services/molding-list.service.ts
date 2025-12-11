@@ -98,7 +98,7 @@ export class MoldingListService {
 
   private isUserFilter(molding: Molding): boolean {
     if (this.moldingsFilters.username.length <= 0) { return true; }
-    return this.moldingsFilters.username.some(testUsername => (molding.userCreat.mail.includes(testUsername)));
+    return this.moldingsFilters.username.some(testUsername => (molding.userCreat.email.includes(testUsername)));
   }
 }
 
