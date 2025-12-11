@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/shared/services/users/auth.service';
 import { User } from 'src/app/_interfaces/user';
 import { RoleList } from 'src/app/_interfaces/roles';
 
@@ -13,7 +12,13 @@ interface ReRouteRole{
   providedIn: 'root'
 })
 export class LoginRedirectionService {
-  //TODO sécuriser les roles possibles
+  ////////////////////////////////////////////////////
+  //INJECTION DEPENDANCES
+  ////////////////////////////////////////////////////
+  private readonly navControler: NavController = inject(NavController);
+
+
+  //TODO Tester les redirection avec les roles
   private reRouteOpts:ReRouteRole[] = [
     {
       roles: ['MOULEUR', 'RESP_MOULAGE', 'CE_MOULAGE'],
@@ -28,18 +33,15 @@ export class LoginRedirectionService {
       route: 'home'
     },
   ];
-  constructor(
-    private navControler: NavController,
 
-  ) { }
-  // TODO à déplacer dans un service
+
   /**
    * Trouve la route privilégiée de l'utilisateur. Puis navigue vers la route
    *
-   * @private
+   * @public
    * @memberof LoginPage
    */
-  reRouteUser(user: User) {
+  public reRouteUser(user: User) {
     const prefRoute = this.reRouteOpts.find(
       (curRouteOpt) => user.roles.some(
         (role) => curRouteOpt.roles.find(roleOpt => roleOpt === role)));

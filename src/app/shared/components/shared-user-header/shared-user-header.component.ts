@@ -10,13 +10,25 @@ import { TitleService } from '../../services/title.service';
 import { AuthService } from '../../services/users/auth.service';
 import { NgIf } from '@angular/common';
 import { AuthStore } from '../../services/users/auth.store';
+import { IonButton, IonButtons, IonChip, IonHeader, IonIcon, IonImg, IonLabel, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'app-shared-user-header',
     templateUrl: './shared-user-header.component.html',
     styleUrls: ['./shared-user-header.component.scss'],
     standalone: true,
-    imports: [IonicModule, NgIf],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonMenuButton,
+    IonImg,
+    IonTitle,
+    IonLabel,
+    IonChip,
+    IonIcon
+  ],
 })
 export class SharedUserHeaderComponent implements OnInit {
   @Input()

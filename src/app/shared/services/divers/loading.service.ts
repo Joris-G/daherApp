@@ -12,7 +12,7 @@ import { LoadingController } from '@ionic/angular';
 })
 
 export class LoadingService {
-
+  private hasStarted = false;
   /**
    * Creates an instance of LoadingService.
    *
@@ -28,15 +28,17 @@ export class LoadingService {
    * @param message C'est le message que verra l'utilisateur pendant le chargement
    * @memberof LoadingService
    */
-  startLoading(message: string = 'Chargement ...') {
-    this.loadingController.create({
+  async startLoading(message: string = 'Chargement ...') {
+    const loader = await this.loadingController.create({
       spinner: 'lines',
       cssClass: 'app-loader',
       message,
-    })
-      .then((response) => {
-        response.present();
-      });
+    });
+
+    this.hasStarted = true;
+
+    await loader.present();
+
   }
 
 
@@ -46,9 +48,8 @@ export class LoadingService {
    * @memberof LoadingService
    */
   async stopLoading() {
-    // setTimeout(() => {
-      this.loadingController.dismiss();
-    // }, 2000);
-
+    if (!this.hasStarted) return;
+    await this.loadingController.dismiss();
+    this.hasStarted = false;
   }
 }

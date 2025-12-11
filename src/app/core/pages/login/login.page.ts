@@ -12,6 +12,7 @@ import { Credentials } from 'src/app/shared/services/users/credentials.interface
 import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { LoginRedirectionService } from './services/login-redirection.service';
 
 @Component({
   selector: 'app-login',
@@ -37,13 +38,14 @@ export class LoginPage implements OnInit {
   private readonly titleService: TitleService = inject(TitleService);
   private readonly loadingService: LoadingService = inject(LoadingService);
   private readonly alertService: AlertService = inject(AlertService);
+  private readonly loginRedirectionService: LoginRedirectionService = inject(LoginRedirectionService);
 
   constructor(){
     effect(()=>{
       const isLogged: boolean = this.authStore.isAuthenticated();
-      if (isLogged) {
-        //TODO ReRoute user
-        this.router.navigate(['/home']);
+      const curUser: User = this.authStore.user();
+      if (isLogged && curUser) {
+        this.loginRedirectionService.reRouteUser(curUser);
         // TODO this.updateService.showUpdates();
       }
 
