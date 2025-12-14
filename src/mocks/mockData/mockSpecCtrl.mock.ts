@@ -1,6 +1,4 @@
-import { RequestStatus, RequestType, SpecCtrlRequest, SpecCtrlStorage } from "src/app/tooling/tool-request-types";
-import { mockUsers } from "./mockUser.mock";
-import { mockTools } from "./mockTools.mock";
+import { SpecCtrlStorage } from "src/app/tooling/models/controle-3d-request.model";
 
 export const mockSpecCtrl: SpecCtrlStorage[] = [
     {

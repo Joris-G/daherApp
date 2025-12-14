@@ -2,12 +2,10 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
-import { RequestState, ToolRequestManager } from '../../services/tool-request-manager.service';
+import { ToolRequestManager } from '../../services/tool-request-manager.service';
 import { Control3DFormComponent } from './control3-dform/control3-dform.component';
 import { ToolRequestFooterComponent } from '../tool-request-footer/tool-request-footer.component';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter } from '@ionic/angular/standalone';
-import { RequestStatus, RequestType, SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate, ToolRequest } from 'src/app/tooling/tool-request-types';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToolRequestService } from '../../services/tool-request.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
@@ -19,6 +17,7 @@ import { filter, take } from 'rxjs';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { ToolFormComponent } from '../create-tool/tool-form.component';
 import { ToolCreation } from '../../tool';
+import { SpecCtrlRequest, SpecCtrlCreation, SpecCtrlUpdate } from '../../models/controle-3d-request.model';
 
 @Component({
     selector: 'app-control',
@@ -68,8 +67,6 @@ export class Control3DPage {
   /** Liste des programmes avion */
   programs = signal<ProgrammeAvion[]>([]);
 
-  /** Enum pour le template */
-  readonly RequestType = RequestType;
 
   // ============================================================================
   // SIGNALS (État réactif)
@@ -201,7 +198,7 @@ export class Control3DPage {
     const toolData: ToolCreation = this.toolForm.value;
     const toolRequest: SpecCtrlCreation = {
       ...this.controlForm.value,
-      type: RequestType.SBO,
+      type: 'SBO',
     };
     this.store.createToolRequest(toolRequest, toolData);
   }
@@ -225,7 +222,7 @@ export class Control3DPage {
       // Les valeurs du formulaire
       ...this.controlForm.value,
       // L'API attend peut-être un type
-      type: RequestType.SBO,
+      type: 'SBO',
 
       // La logique de votre API pour l'UPDATE pourrait nécessiter plus de champs
     };

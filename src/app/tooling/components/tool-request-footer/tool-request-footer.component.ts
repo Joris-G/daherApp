@@ -4,19 +4,16 @@ import { EventEmitter } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { PdfService } from 'src/app/shared/services/divers/pdf.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
-import { IonicModule } from '@ionic/angular';
-import { NgIf, NgFor } from '@angular/common';
-import { RequestStatus } from 'src/app/tooling/tool-request-types';
+import { RequestStatus } from '../../models/tool-request.model';
+import { IonToolbar, IonItem, IonLabel, IonButton, IonIcon, IonSelect, IonSelectOption } from "@ionic/angular/standalone";
 
 @Component({
     selector: 'app-tool-request-footer',
     templateUrl: './tool-request-footer.component.html',
     styleUrls: ['./tool-request-footer.component.scss'],
     standalone: true,
-    imports: [
-        IonicModule,
-        NgIf,
-        NgFor,
+  imports: [IonIcon, IonButton, IonLabel, IonItem, IonToolbar, IonSelect, IonSelectOption
+
     ],
 })
 export class ToolRequestFooterComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { ToolRequest } from "./tool-request-types";
+import { ToolRequest } from "./models/tool-request.model";
 
 export const filterSelectObjects: ToolRequestFilter[] = [
     {

@@ -2,13 +2,13 @@ import { Component, inject, input, InputSignal, OnInit, ViewChild } from '@angul
 import { MatSort } from '@angular/material/sort';
 import { trigger, state, style } from '@angular/animations';
 import { NavController } from '@ionic/angular';
-import { RequestType, ToolRequest } from 'src/app/tooling/tool-request-types';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { DatePipe } from '@angular/common';
 import { HeaderRowDirective } from '../../../../../shared/directives/header-row.directive';
 import { DataRowDirective } from '../../../../../shared/directives/data-row.directive';
 import { Tool, OutillNoRefSAP } from 'src/app/tooling/tool';
 import { IonCol, IonGrid, IonLabel, IonRow } from '@ionic/angular/standalone';
+import { RequestType, ToolRequest } from 'src/app/tooling/models/tool-request.model';
 
 
 @Component({
@@ -46,9 +46,6 @@ export class ToolRequestTableComponent implements OnInit {
   ////////////////////////////////////////////////////////////////
   public toolRequestList: InputSignal<ToolRequest[]> = input<ToolRequest[]>([]);
 
-  //TYPE
-  RequestType = RequestType
-
   @ViewChild(MatSort) sort: MatSort;
   // public newToolRequestsList$: Observable<ToolRequest[]>;
   public displayedRequestColumns: string[] = ['statut', 'id', 'tool', 'createdAt', 'userCreat', 'needDate', 'buttons'];
@@ -69,9 +66,9 @@ export class ToolRequestTableComponent implements OnInit {
   }
 
   private getRootUrlByType(type: RequestType): string {
-    if (type === RequestType.SBO) { return '/tooling/new-tool/' }
-    if (type === RequestType.CONTROLE) { return '/tooling/3d/' }
-    if (type === RequestType.MAINTENANCE) { return '/tooling/repair/' }
+    if (type === 'SBO') { return '/tooling/new-tool/' }
+    if (type === 'CONTROLE') { return '/tooling/3d/' }
+    if (type === 'MAINTENANCE') { return '/tooling/repair/' }
   }
   //TODO changer la phylosophie. Créer une class ou un élément plus simple pour attribuer un role à la page ou action.
   ngOnInit() {
@@ -105,9 +102,9 @@ export class ToolRequestTableComponent implements OnInit {
 
   private getType(request: ToolRequest | string): string {
     if (typeof (request) === 'string') { return request; }
-    if (request.type === RequestType.CONTROLE) {
+    if (request.type === 'CONTROLE') {
       return 'controle';
-    } else if (request.type === RequestType.MAINTENANCE) {
+    } else if (request.type === 'MAINTENANCE') {
       return 'maintenance';
     }
   }

@@ -1,8 +1,9 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { AlertController, IonicModule } from '@ionic/angular';
-import { MaintenanceItem } from 'src/app/tooling/tool-request-types';
-import { NgIf, DatePipe } from '@angular/common';
+import { AlertController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
+import { MaintenanceItem } from 'src/app/tooling/models/maintenance-and-repair.model';
+import { IonButton, IonButtons, IonContent, IonIcon, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonModal, IonText } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'app-maintenance-item-form',
@@ -10,11 +11,15 @@ import { NgIf, DatePipe } from '@angular/common';
     styleUrls: ['./maintenance-item-form.component.scss'],
     standalone: true,
     imports: [
-        ReactiveFormsModule,
-        IonicModule,
-        NgIf,
-        DatePipe,
-    ],
+      ReactiveFormsModule,
+      DatePipe,
+      IonItem,
+      IonLabel,
+      IonText,
+      IonIcon,
+      IonInput,
+      IonButtons, IonButton, IonModal, IonItemGroup, IonItemDivider, IonContent
+  ],
 })
 export class MaintenanceItemFormComponent {
   uploadImage($event: Event) {

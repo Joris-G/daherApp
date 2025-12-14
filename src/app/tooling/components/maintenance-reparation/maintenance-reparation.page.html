@@ -1,23 +1,19 @@
 <ion-header>
+  <!-- TODO mettre un header component -->
   <ion-toolbar color=dark>
     <ion-title>{{pageTitle()}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="content-container">
     <!-- <form class="main-form" style="display:flex;" [formGroup]=""> -->
-    <div class="left-side">
-      <app-maint-repair-form [(maintForm)]="maintenanceForm" [(toolRequestForm)]="toolRequestForm">
-      </app-maint-repair-form>
-    </div>
+      <app-maint-repair-form [maintForm]="maintenanceForm" />
     <!-- </form> -->
     <!-- <app-spec-maintenance-reparation *ngIf="toolRequest" [toolRequest]="toolRequest"></app-spec-maintenance-reparation> -->
-  </div>
 
 </ion-content>
 <ion-footer>
   <app-tool-request-footer (evStatusChange)="onStatutChange($event)" (evSubmit)="onSubmitCreate()"
     (evUpdate)="onSubmitUpdate()" (evAffectationChange)="onAffectationChange($event.id)"
-    [canManage]="requestState().canManage" [canUpdate]="requestState().canUpdate"></app-tool-request-footer>
+    [canManage]="canManage()" [canUpdate]="canUpdate()"></app-tool-request-footer>
 </ion-footer>

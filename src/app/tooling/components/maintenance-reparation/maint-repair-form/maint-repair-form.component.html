@@ -1,48 +1,45 @@
-<form class="main-form" [formGroup]="maintForm">
+@let _maintForm = maintForm();
+<form class="main-form" [formGroup]="_maintForm">
   <ion-grid>
     <ion-row>
       <ion-col size="6">
         <!-- ******************************* -->
         <!-- *******   L'OUTILLAGE   ******* -->
         <!-- ******************************* -->
-        <ion-card>
-          <ion-card-header color=light>
-            <ion-card-title class="ion-text-uppercase">L'outillage</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-list lines="none">
-              <ion-list-header>
-                <ion-label>Avec n°OT</ion-label>
-              </ion-list-header>
-              <app-tool-input formControlName="outillage">
-              </app-tool-input>
-              <ng-container *ngIf="!maintForm.controls.outillage.value" formGroupName="outillNoRefSAP">
-                <ion-list-header>
-                  <ion-label>Sans n°OT</ion-label>
-                </ion-list-header>
-                <ion-item>
-                  <ion-label>Programme avion</ion-label>
-                  <ion-input formControlName="identification" type="text" placeholder="Renseigner le programme">
-                  </ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label>Description outillage (texte libre)</ion-label>
-                  <ion-input formControlName="description" type="text" placeholder="Description de l'outillage">
-                  </ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label>Localisation (texte libre)</ion-label>
-                  <ion-input formControlName="localisation" type="text" placeholder="Description de l'outillage">
-                  </ion-input>
-                </ion-item>
-              </ng-container>
+        <app-card [titles]="{title:'L\'outillage' }">
+        
+          <ion-list lines="none">
+            <ion-list-header>
+              <ion-label>Avec n°OT</ion-label>
+            </ion-list-header>
+            <app-tool-input formControlName="tool" />
+            <!-- <ng-container *ngIf="!maintForm.controls.outillage.value" formGroupName="tool">
+                                                  <ion-list-header>
+                                                    <ion-label>Sans n°OT</ion-label>
+                                                  </ion-list-header>
+                                                  <ion-item>
+                                                    <ion-label>Programme avion</ion-label>
+                                                    <ion-input formControlName="identification" type="text" placeholder="Renseigner le programme">
+                                                    </ion-input>
+                                                  </ion-item>
+                                                  <ion-item>
+                                                    <ion-label>Description outillage (texte libre)</ion-label>
+                                                    <ion-input formControlName="description" type="text" placeholder="Description de l'outillage">
+                                                    </ion-input>
+                                                  </ion-item>
+                                                  <ion-item>
+                                                    <ion-label>Localisation (texte libre)</ion-label>
+                                                    <ion-input formControlName="localisation" type="text" placeholder="Description de l'outillage">
+                                                    </ion-input>
+                                                  </ion-item>
+            </ng-container> -->
             </ion-list>
             <ion-item>
               <ion-label>Bloquant Prod</ion-label>
               <ion-toggle formControlName="bloquantProd" slot="end"></ion-toggle>
             </ion-item>
-          </ion-card-content>
-        </ion-card>
+        </app-card>
+
         <!-- ************************************ -->
         <!-- ****   LISTE DES MAINTENANCES   **** -->
         <!-- ************************************ -->
@@ -62,14 +59,15 @@
                 <ion-label>Liste des maitenances</ion-label>
               </ion-list-header>
               <!-- TODO Ajouter une directive pour hilight hover -->
-              <ng-container *ngIf="maintForm.controls.itemActionCorrective">
+              @if(_maintForm.controls.itemActionCorrective){
+              @for(maintenanceItem of _maintForm.controls.itemActionCorrective.value.reverse(); track maintenanceItem.rep ){
 
-                <ion-item button lines="full"
-                  *ngFor="let maintenanceItem of maintForm.controls.itemActionCorrective.value.reverse()"
-                  (click)="selectedItem = maintenanceItem">
-                  <ion-label>{{maintenanceItem.rep}}</ion-label>
-                </ion-item>
-              </ng-container>
+  <ion-item button lines="full"
+    (click)="selectedItem = maintenanceItem">
+    <ion-label>{{maintenanceItem.rep}}</ion-label>
+  </ion-item>
+}
+}
             </ion-list>
             <!-- <app-maintenance-item *ngFor="let maintenanceItem of maintRepForm.value.itemActionCorrective?.reverse()"
             [maintenanceItem]="maintenanceItem" (evValidateItem)="onValidateItem($event,maintenanceItem)"
@@ -79,7 +77,7 @@
       </ion-col>
 
       <ion-col size="6">
-        <ng-container *ngIf="selectedItem" class="righSide">
+        @if(selectedItem){
           <!-- ************************************ -->
           <!-- ****   MAINTENANCE ITEM   **** -->
           <!-- ************************************ -->
@@ -89,12 +87,11 @@
               <!-- ****   BOUTONS   **** -->
             </ion-card-header>
             <ion-card-content>
-
-              <app-maintenance-item [maintenanceItem]="selectedItem" (evRemoveItem)="onRemoveItem($event,selectedItem)"
-                [canUpdate]="requestState.canUpdate"></app-maintenance-item>
+              <app-maintenance-item [maintenanceItem]="selectedItem"
+                (evRemoveItem)="onRemoveItem($event,selectedItem)"></app-maintenance-item>
             </ion-card-content>
           </ion-card>
-        </ng-container>
+        }
       </ion-col>
     </ion-row>
   </ion-grid>

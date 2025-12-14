@@ -137,8 +137,10 @@
           <ion-item>
             <ion-label>Types de rapport</ion-label>
             <ion-select required #typeRapportSelect formControlName="typeRapport">
-              <ion-select-option *ngFor="let type of typeRapport| keyvalue" [value]="type.value">{{type.value}}
-              </ion-select-option>
+              @for(type of typeRapport| keyvalue; track $index){
+              
+              <ion-select-option [value]="type.value">{{type.value}}</ion-select-option>
+              }
             </ion-select>
           </ion-item>
         </ion-card>
@@ -231,7 +233,8 @@
         <!-- ******************************* -->
         <!-- *******   LA MESURE   ********* -->
         <!-- ******************************* -->
-        <ion-card *ngIf="requestState">
+        @if(requestState()){
+        <ion-card>
           <ion-card-header color=light>
             <ion-card-title class="ion-text-uppercase">La Mesure</ion-card-title>
           </ion-card-header>
@@ -241,7 +244,7 @@
               formControlName="immobilisationOutillage" />
             <ion-note slot="end">en jours</ion-note>
           </ion-item>
-
+        
           <!-- Datetime in overlay -->
           <ion-item button id="open-date-interv">
             <ion-label>Date d'intervention</ion-label>
@@ -250,7 +253,7 @@
               {{specCtrlForm().value.interventionDate | date:"dd/MM/yyyy"}}</ion-text>
             <!-- TODO intervention -->
             <!-- <ion-text slot="end " *ngIf="toolRequest?.controle?.interventionDate">
-          {{toolRequest?.controle?.interventionDate | date:"dd/MM/yyyy"}}</ion-text> -->
+                    {{toolRequest?.controle?.interventionDate | date:"dd/MM/yyyy"}}</ion-text> -->
             <!-- <ion-button id="open-modal ">Open Datetime Modal</ion-button> -->
             <ion-modal trigger="open-date-interv">
               <ng-template>
@@ -263,33 +266,36 @@
               </ng-template>
             </ion-modal>
           </ion-item>
-
+        
           <div class="vertical">
-
+        
             <ion-item>
               <ion-label>Informations complémentaires
                 <ion-text color="danger">*</ion-text>
               </ion-label>
               <!-- <ion-input #infosComplementaire formControlName="infosComplementaire" type="text"
-            placeholder="Information complémentaire"></ion-input> -->
+                       placeholder="Information complémentaire"></ion-input> -->
             </ion-item>
             <editor #infosComplementaire slot="" formControlName="infosComplementaire" [init]="{
-            plugins: 'lists link image table wordcount',
-            menubar: false,
-            statusbar:false,
-            placeholder:'Information complémentaire',
-            height:150
-          }"></editor>
+                       plugins: 'lists link image table wordcount',
+                       menubar: false,
+                       statusbar:false,
+                       placeholder:'Information complémentaire',
+                       height:150
+                     }"></editor>
           </div>
-
+        
           <ion-item>
             <ion-label>Moyen de mesure</ion-label>
             <ion-select #moyenMesureSelect formControlName="moyenMesure">
-              <ion-select-option *ngFor="let moyen of moyenMesure | keyvalue" [value]="moyen.value">{{moyen.value}}
+              @for(moyen of moyenMesure | keyvalue; track $index){
+              <ion-select-option [value]="moyen.value">{{moyen.value}}
               </ion-select-option>
+              }
             </ion-select>
           </ion-item>
         </ion-card>
+        }
       </ion-col>
     </ion-row>
   </ion-grid>

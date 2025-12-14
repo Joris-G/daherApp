@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { finalize, take } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { ToolRequestService } from '../services/tool-request.service';
-import { ToolRequest } from '../tool-request-types';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { ToolRequest } from '../models/tool-request.model';
 
 /**
  * Interface d'état pour le ToolRequestListStore.

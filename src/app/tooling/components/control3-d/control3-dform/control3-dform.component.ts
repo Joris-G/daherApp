@@ -1,12 +1,13 @@
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
-import { NgIf, NgFor, DatePipe, KeyValuePipe } from '@angular/common';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, input, } from '@angular/core';
+import { DatePipe, KeyValuePipe } from '@angular/common';
 import { EditorComponent } from '@tinymce/tinymce-angular';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
-import { MoyenMesure, RequestStatus, SpecCtrlCreation, ToolRequest, TypeRapport } from 'src/app/tooling/tool-request-types';
 import { ToolInputComponent } from '../../tool-input/tool-input.component';
 import { IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonCardTitle, IonText, IonIcon, IonModal, IonContent, IonSelectOption, IonNote, IonInput, IonTextarea, IonSelect, IonToggle, IonDatetime } from '@ionic/angular/standalone';
 import { Editor } from 'ngx-editor';
+import { RAPPORT_TYPES } from 'src/app/tooling/models/type-rapport.model';
+import { MOYENS_MESURE } from 'src/app/tooling/models/moyen-mesure.model';
 
 @Component({
     selector: 'app-control3-dform',
@@ -17,7 +18,6 @@ import { Editor } from 'ngx-editor';
     IonCardTitle,
     ReactiveFormsModule,
     ToolInputComponent,
-    NgIf, NgFor,
     EditorComponent,
     DatePipe, KeyValuePipe,
     IonGrid, IonRow, IonCol, IonInput,
@@ -75,8 +75,8 @@ export class Control3DFormComponent {
   // // ============================================================================
   // // PROPRIETES
   // // ============================================================================
-  protected readonly moyenMesure = MoyenMesure;
-  protected readonly typeRapport = TypeRapport;
+  protected readonly moyenMesure = MOYENS_MESURE;
+  protected readonly typeRapport = RAPPORT_TYPES;
 
   // // Formulaires
   // protected readonly toolRequestForm: FormGroup;

@@ -1,9 +1,12 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { finalize, switchMap, tap } from 'rxjs';
 import { ToolRequestService } from '../services/tool-request.service';
-import { SpecCtrlUpdate, SpecSBOCreation, SpecSBOUpdate, ToolRequest, ToolRequestCreation } from '../tool-request-types';
+import { SpecSBOUpdate, } from '../models/sbo.model';
 import { Tool, ToolCreation } from '../tool';
 import { ToolService } from '../services/tool.service';
+import { ToolRequest, ToolRequestCreation } from '../models/tool-request.model';
+import { SpecCtrlUpdate } from '../models/controle-3d-request.model';
+import { SpecMaintRepRequestUpdate } from '../models/maintenance-and-repair.model';
 
 /**
  * Interface d'état pour le ToolRequestStore.
@@ -15,9 +18,13 @@ export interface ToolRequestState {
   isCreatingRequest: boolean;
   selectedTool: Tool | null;
   error: string | null;
-  currentToolRequest: ToolRequest | null; // 👈 Demande en cours de modification
-  isLoadingRequest: boolean; // 👈 Chargement de la demande existante
-  isUpdatingRequest: boolean; // 👈 Mise à jour de la demande
+  currentToolRequest: ToolRequest | null;
+  isLoadingRequest: boolean;
+  isUpdatingRequest: boolean;
+  isCreatingSuccess: boolean;
+  canManage: boolean,
+  canUpdate: boolean,
+  canEdit: boolean,
 }
 
 @Injectable({
@@ -45,6 +52,10 @@ export class ToolRequestStore {
     currentToolRequest: null,
     isLoadingRequest: false,
     isUpdatingRequest: false,
+    isCreatingSuccess: false,
+    canEdit: true,
+    canManage: false,
+    canUpdate: false,
   });
 
   // ============================================================================
@@ -56,6 +67,9 @@ export class ToolRequestStore {
 
   /** Indique si la demande est en cours de soumission. */
   public readonly isCreatingRequest = computed(() => this.state().isCreatingRequest);
+
+  /** Indique si la demande est en cours de soumission. */
+  public readonly isCreatingSuccess = computed(() => this.state().isCreatingSuccess);
 
   /** L'outil qui a été créé et est lié à la demande. */
   public readonly selectedTool = computed(() => this.state().selectedTool);
@@ -72,6 +86,9 @@ export class ToolRequestStore {
   /** Indique si la demande est en cours de mise à jour. */
   public readonly isUpdatingRequest = computed(() => this.state().isUpdatingRequest); // 👈 Nouveau
 
+  public readonly canEdit = computed(() => this.state().canEdit);
+  public readonly canManage = computed(() => this.state().canManage);
+  public readonly canUpdate = computed(() => this.state().canUpdate);
 
   // ============================================================================
   // MUTATIONS (Méthodes Publiques d'Action)
@@ -103,21 +120,17 @@ export class ToolRequestStore {
    * @param toolRequest - Les données de la demande d'outillage.
    */
   public createToolRequest(toolRequest: ToolRequestCreation, toolData: ToolCreation): void {
-    console.log("createToolRequest in store");
     this.updateState({ isCreatingRequest: true, error: null });
     const createToolObs = this.toolService.createTool(toolData);
-    const createToolRequestObs = createToolObs.pipe(
+    createToolObs.pipe(
       switchMap((createdTool: Tool) => {
         toolRequest.tool = createdTool;
         return this.toolRequestService.createToolRequest(toolRequest)
-      })
-    );
-
-    createToolRequestObs.pipe(
+      }),
       finalize(() => this.updateState({ isCreatingRequest: false }))
     ).subscribe({
       next: () => {
-        console.log('Demande créée avec succès');
+        this.updateState({ isCreatingSuccess: true })
         // Réinitialiser l'état après succès
         this.resetCreationState();
       },
@@ -133,7 +146,6 @@ export class ToolRequestStore {
      * @param requestId - L'ID de la demande.
      */
   public loadToolRequest(requestId: string): void {
-    console.log("loadToolRequest");
     this.updateState({ isLoadingRequest: true, error: null, currentToolRequest: null });
 
     this.toolRequestService.getToolRequest(requestId).pipe(
@@ -141,8 +153,6 @@ export class ToolRequestStore {
     ).subscribe({
       next: (request) => {
         if (request) {
-          console.log("update State in loadToolRequest");
-          console.log(request);
           this.updateState({ currentToolRequest: request, selectedTool: request.tool });
         } else {
           this.updateState({ error: `Demande avec ID ${requestId} non trouvée.` });
@@ -155,10 +165,10 @@ export class ToolRequestStore {
     });
   }
   /**
-     * Met à jour une demande d'outillage SBO existante.
+     * Met à jour une demande d'outillage existante.
      * @param requestToUpdate - Les données de mise à jour.
      */
-  public updateToolRequest(requestToUpdate: SpecSBOUpdate | SpecCtrlUpdate): void {
+  public updateToolRequest(requestToUpdate: SpecSBOUpdate | SpecCtrlUpdate | SpecMaintRepRequestUpdate): void {
     const currentId = this.currentToolRequest()?.id;
     if (!currentId) {
       this.updateState({ error: 'ID de demande manquant pour la mise à jour.' });

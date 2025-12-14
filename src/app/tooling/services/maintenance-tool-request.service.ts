@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
-import { MaintenanceItem, SpecMaintRepRequest, ToolRequest } from 'src/app/tooling/tool-request-types';
-import { environment } from 'src/environments/environment';
 import { catchError, concatMap, finalize, map, switchMap, tap } from 'rxjs/operators';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { ToolRequestService } from './tool-request.service';
 import { HttpClient } from '@angular/common/http';
+import { MaintenanceItem, SpecMaintRepRequest } from '../models/maintenance-and-repair.model';
+import { ToolRequest } from '../models/tool-request.model';
 
 // ============================================================================
 // INTERFACES POUR LES RÉPONSES API
@@ -276,10 +276,10 @@ export class MaintenanceToolRequestService {
             ...maintenanceSpec,
             itemActionCorrective: items.map((item) => `/api/maintenance_items/${item.id}`),
             // Convertir les références d'objets en IRIs si nécessaire
-            outillage: maintenanceSpec.outillage
-                ? (typeof maintenanceSpec.outillage === 'string'
-                    ? maintenanceSpec.outillage
-                    : `/api/tools/${maintenanceSpec.outillage.id}`)
+            outillage: maintenanceSpec.tool
+                ? (typeof maintenanceSpec.tool === 'string'
+                    ? maintenanceSpec.tool
+                    : `/api/tools/${maintenanceSpec.tool.id}`)
                 : null,
             demandeur: maintenanceSpec.demandeur
                 ? (typeof maintenanceSpec.demandeur === 'string'

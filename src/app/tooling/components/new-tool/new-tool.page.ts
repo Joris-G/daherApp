@@ -1,9 +1,9 @@
 import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonButton, IonContent, IonFooter, IonToolbar, IonTitle, IonHeader } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonFooter, IonToolbar, IonTitle, IonHeader, NavController } from '@ionic/angular/standalone';
 import { NgxEditorModule } from 'ngx-editor';
-import { RequestType, SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/tooling/tool-request-types';
-import { Tool, ToolCreation } from 'src/app/tooling/tool';
+import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/tooling/models/sbo.model';
+import { ToolCreation } from 'src/app/tooling/tool';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
 import { SboComponent } from '../sbo/sbo.component';
@@ -14,7 +14,7 @@ import { ToolRequestStore } from '../../stores/tool-request.store';
 import { filter, take } from 'rxjs';
 import { SboFormComponent } from '../sbo-form/sbo-form.component';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
-import { SharedUserHeaderComponent } from 'src/app/shared/components/shared-user-header/shared-user-header.component';
+import { AlertService } from 'src/app/shared/services/divers/alert.service';
 
 // const MENU_ITEMS = [
 //   {
@@ -57,9 +57,10 @@ export class NewToolPage implements OnInit {
   // ============================================================================
   private readonly formBuilderService = inject(ToolRequestFormBuilder);
   private readonly programService = inject(ProgramsService);
-  private readonly router = inject(Router);
+  private readonly navCtrl = inject(NavController);
   protected readonly store = inject(ToolRequestStore);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly alertService = inject(AlertService);
   // ============================================================================
   // PROPRIÉTÉS
   // ============================================================================
@@ -86,8 +87,6 @@ export class NewToolPage implements OnInit {
   /** Liste des programmes avion */
   programs = signal<ProgrammeAvion[]>([]);
 
-  /** Enum pour le template */
-  readonly RequestType = RequestType;
 
 
   // ============================================================================
@@ -99,6 +98,13 @@ export class NewToolPage implements OnInit {
       // On vérifie le mode édition pour ne pas remplir le formulaire en mode création
       if (toolRequest && this.isEditMode()) {
         this.fillForm(toolRequest);
+      }
+    });
+    effect(async () => {
+      const isCreatingSuccess = this.store.isCreatingSuccess();
+      if (isCreatingSuccess) {
+        await this.alertService.presentToast('Demande créée avec succès', 'success');
+        this.navCtrl.navigateForward(['tooling/requests']);
       }
     });
   }
@@ -167,7 +173,7 @@ export class NewToolPage implements OnInit {
       dateBesoin: formattedDateBesoin,
       type: request.type,
       toolingNote: request.toolingNote,
-      tool: request.tool
+      tool: request.tool.sapToolNumber
     });
     this.toolForm.patchValue({
       sapToolNumber: request.tool.sapToolNumber,
@@ -222,7 +228,6 @@ export class NewToolPage implements OnInit {
  * Créer une demande d'outillage complète
  */
   private onCreateToolRequest() {
-    console.log("onCreateToolRequest in page");
     // Validation
     // if (this.toolForm.invalid || this.specSboForm.invalid) {
     //   this.specSboForm.markAllAsTouched();
@@ -232,7 +237,7 @@ export class NewToolPage implements OnInit {
     const toolData: ToolCreation = this.toolForm.value;
     const toolRequest: SpecSBOCreation = {
       ...this.specSboForm.value,
-      type: RequestType.SBO,
+      type: 'SBO',
     };
     this.store.createToolRequest(toolRequest, toolData);
   }
@@ -256,7 +261,7 @@ export class NewToolPage implements OnInit {
       // Les valeurs du formulaire
       ...this.specSboForm.value,
       // L'API attend peut-être un type
-      type: RequestType.SBO,
+      type: 'SBO',
 
       // La logique de votre API pour l'UPDATE pourrait nécessiter plus de champs
     };
@@ -264,7 +269,7 @@ export class NewToolPage implements OnInit {
     this.store.updateToolRequest(requestToUpdate);
 
     // Redirection après succès (simplifié, devrait être géré par effect)
-    this.router.navigate(['/tool-requests']);
+    this.navCtrl.navigateForward(['/tool-requests']);
   }
 
   // NOTE: onCreatedTool n'est plus nécessaire car le composant enfant ne l'émet plus.

@@ -1,14 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OutillNoRefSAP } from 'src/app/tooling/tool';
-import { MaintenanceItem, SpecCtrlCreation, SpecSBOCreation } from 'src/app/tooling/tool-request-types';
+import { SpecSBOCreation, SpecSBOForm } from 'src/app/tooling/models/sbo.model';
+import { SpecCtrlCreation } from 'src/app/tooling/models/controle-3d-request.model';
+import { MaintenanceItem, SpecMaintRepRequestCreation } from 'src/app/tooling/models/maintenance-and-repair.model';
 
-// ============================================================================
-// TYPES POUR TYPED FORMS
-// ============================================================================
-
-// Type helper pour créer des FormGroups typés
-type TypedFormGroup<T> = FormGroup<{ [K in keyof T]: FormControl<T[K]>; }>;
 
 @Injectable({
   providedIn: 'root',
@@ -95,24 +91,26 @@ export class ToolRequestFormBuilder {
   // SPÉCIFICATIONS MAINTENANCE (avec FormArray)
   // ==========================================================================
 
-  // createSpecMaintenanceForm(initialValue?: Partial<SpecMaintenance>): FormGroup {
-  //   const itemsArray = this.fb.array(
-  //     initialValue?.itemActionCorrective?.length
-  //       ? initialValue.itemActionCorrective.map((item, index) => 
-  //           this.createMaintenanceItemForm(index + 1, item)
-  //         )
-  //       : [this.createMaintenanceItemForm(1)]
-  //   );
+  createSpecMaintenanceForm(initialValue?: Partial<SpecMaintRepRequestCreation>): FormGroup {
+    const itemsArray = this.fb.array(
+      initialValue?.itemActionCorrective?.length
+        ? initialValue.itemActionCorrective.map((item, index) =>
+          this.createMaintenanceItemForm(index + 1, item)
+        )
+        : [this.createMaintenanceItemForm(1)]
+    );
 
-  //   return this.fb.group({
-  //     image: [initialValue?.image ?? ''],
-  //     fichier: [initialValue?.fichier ?? ''],
-  //     sigle: [initialValue?.sigle ?? ''],
-  //     userValideur: [initialValue?.userValideur ?? null],
-  //     dateValid: [initialValue?.dateValid ?? null],
-  //     itemActionCorrective: itemsArray
-  //   });
-  // }
+    return this.fb.group({
+      bloquantProd: [initialValue?.bloquantProd ?? false],
+      tool: [],
+      image: [initialValue?.image ?? ''],
+      fichier: [initialValue?.fichier ?? ''],
+      sigle: [initialValue?.sigle ?? ''],
+      userValideur: [initialValue?.userValideur ?? null],
+      dateValid: [initialValue?.dateValid ?? null],
+      itemActionCorrective: itemsArray
+    });
+  }
 
   // Ajouter un item de maintenance
   addMaintenanceItem(form: FormGroup): void {
@@ -142,11 +140,13 @@ export class ToolRequestFormBuilder {
      * @param initialValue - Valeurs initiales optionnelles.
      * @returns Le FormGroup typé pour les spécifications SBO.
      */
-  createSpecSBOForm(initialValue?: Partial<SpecSBOCreation>): FormGroup {
+  createSpecSBOForm(initialValue?: Partial<SpecSBOCreation>): FormGroup<SpecSBOForm> {
     return this.fb.group({
       title: [initialValue?.title ?? '', Validators.required],
       description: [initialValue?.description ?? '', Validators.required],
-      dateBesoin: [initialValue?.dateBesoin ?? '', Validators.required]
+      dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
+      bloquantProd: [initialValue?.bloquantProd ?? false],
+      tool: [initialValue?.tool ?? null]
       // aircraftProgram: [initialValue?.aircraftProgram ?? '', Validators.required]
     });
   }

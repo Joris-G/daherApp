@@ -1,12 +1,15 @@
 import { http, HttpResponse } from "msw";
 import { User } from "src/app/_interfaces/user";
 import { Tool, OutillNoRefSAP } from "src/app/tooling/tool";
-import { RequestStatus, RequestType, SpecCtrlCreation, SpecCtrlRequest, SpecCtrlStorage, SpecMaintRepRequest, SpecSBOCreation, SpecSBOStorage, SpecSBOUpdate, ToolRequest, ToolRequestStorage } from "src/app/tooling/tool-request-types";
+import { SpecSBOCreation, SpecSBOStorage, SpecSBOUpdate, } from "src/app/tooling/models/sbo.model";
 import { mockSpecSBO } from "../mockData/mockSBO.mock";
 import { mockSpecCtrl } from "../mockData/mockSpecCtrl.mock";
 import { mockToolRequests } from "../mockData/mockToolRequest.mock";
 import { mockTools } from "../mockData/mockTools.mock";
 import { mockUsers } from "../mockData/mockUser.mock";
+import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlStorage } from "src/app/tooling/models/controle-3d-request.model";
+import { SpecMaintRepRequest } from "src/app/tooling/models/maintenance-and-repair.model";
+import { ToolRequestStorage, ToolRequest } from "src/app/tooling/models/tool-request.model";
 
 export const toolRequestHandlers = [
      // POST - Créer une request
@@ -14,7 +17,6 @@ export const toolRequestHandlers = [
     const newToolRequestId = mockToolRequests.length + 1;
     const loggedInUserId = 1;
     const newToolRequestData = await request.json() as SpecCtrlCreation | SpecSBOCreation | SpecMaintRepRequest;
-    console.log(newToolRequestData);
     const toolRef = (newToolRequestData.tool as Tool).id;
 
     const masterRequest: ToolRequestStorage = {
@@ -22,16 +24,17 @@ export const toolRequestHandlers = [
       type: newToolRequestData.type,
       demandeurId: loggedInUserId, // Remplacer par l'utilisateur connecté
       createdAt: new Date(),
-      statut: RequestStatus.SUBMITTED,
+      statut: "Nouvelle",
       bloquantProd: newToolRequestData.bloquantProd,
       dateBesoin: newToolRequestData.dateBesoin,
       // tool: newToolRequestData.tool,
       toolId: toolRef,
     };
+    console.log(masterRequest);
     mockToolRequests.push(masterRequest);
 
     switch (masterRequest.type) {
-      case RequestType.CONTROLE:
+      case "CONTROLE":
         const newSpecCtrlId = mockSpecCtrl.length + 1
         // Créer l'objet SpecCtrl (stockage)
         const specCtrlData = newToolRequestData as SpecCtrlRequest;
@@ -58,11 +61,11 @@ export const toolRequestHandlers = [
 
         break;
 
-      case RequestType.MAINTENANCE:
+      case "MAINTENANCE":
         // ... Mêmes étapes pour SpecMaintRep, en gérant aussi les MaintenanceItems
         break;
 
-      case RequestType.SBO:
+      case "SBO":
         const newSpecSBOId = mockSpecSBO.length + 1
         const specSBOData = newToolRequestData as SpecSBOCreation;
         const newSpecSBOEntry: SpecSBOStorage = {
@@ -77,7 +80,7 @@ export const toolRequestHandlers = [
     }
 
     // mockToolRequests.push(newToolRequestData);
-
+    console.log(mockSpecSBO);
 
     return HttpResponse.json(masterRequest, { status: 201 });
   }),
@@ -86,12 +89,11 @@ export const toolRequestHandlers = [
 
   http.get('/api/tools/request', async ({ request }) => {
     const allRequests: ToolRequest[] = mockToolRequests.map((request: ToolRequestStorage) => {
-
+      const requestSBO = request.type === "SBO" ? mockSpecSBO.find((sbo) => { sbo.toolRequestId === request.id }) : null
       const newRequest: ToolRequest = {
         ...request,
+        ...requestSBO,
         demandeur: mockUsers[request.demandeurId - 1],
-        title: "",
-        description: "",
         tool: mockTools[request.toolId - 1]
       };
       return newRequest;
@@ -135,20 +137,21 @@ export const toolRequestHandlers = [
     let detailData: SpecCtrlStorage | SpecSBOStorage | {}; // {} pour initialiser
 
     switch (masterRequest.type) {
-      case RequestType.CONTROLE:
+      case "CONTROLE":
         detailData = mockSpecCtrl.find(s => s.toolRequestId === toolRequestId) || {};
         break;
-      case RequestType.MAINTENANCE:
+      case "MAINTENANCE":
         // Assurez-vous que mockSpecMaintRep et SpecMaintRepStorage existent
         // detailData = mockSpecMaintRep.find(s => s.toolRequestId === toolRequestId) || {};
         break;
-      case RequestType.SBO:
+      case "SBO":
         detailData = mockSpecSBO.find(s => s.toolRequestId === toolRequestId) || {};
+        console.log(detailData);
         break;
       default:
         detailData = {}; // Par défaut, pas de détails
     }
-
+    console.log(detailData);
     // Si detailData a été trouvé, il contient la clé 'toolRequestId' que nous devons supprimer
     if (detailData && 'toolRequestId' in detailData) {
       delete (detailData as any).toolRequestId;
@@ -159,7 +162,7 @@ export const toolRequestHandlers = [
       ...resolvedBaseRequest, // Contient demandeur: User, tool: Tool
       ...(detailData as any)  // Contient les champs spécifiques (ex: description, refPlan)
     } as ToolRequest; // Le cast est maintenant valide car l'objet correspond aux propriétés attendues
-
+    console.log(fullRequest);
     return HttpResponse.json(fullRequest);
   }),
 
@@ -192,7 +195,7 @@ export const toolRequestHandlers = [
     let detailDataIndex: number;
 
     switch (originalType) {
-      case RequestType.SBO:
+      case "SBO":
         detailDataIndex = mockSpecSBO.findIndex(s => s.toolRequestId === toolRequestId);
         if (detailDataIndex !== -1) {
           const specSboData = mockSpecSBO[detailDataIndex];
@@ -205,7 +208,7 @@ export const toolRequestHandlers = [
           mockSpecSBO[detailDataIndex] = updatedDetailData;
         }
         break;
-      case RequestType.CONTROLE:
+      case "CONTROLE":
         // Logique de mise à jour pour SpecCtrl...
         break;
       // ... autres types

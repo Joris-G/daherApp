@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
-import { SpecSBORequest } from 'src/app/tooling/tool-request-types';
+import { SpecSBORequest } from 'src/app/tooling/models/sbo.model';
 
 @Component({
     selector: 'app-sbo',

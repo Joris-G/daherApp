@@ -34,10 +34,10 @@ export class LoginRedirectionService {
     },
   ];
 
-
+  // TODO prefered route
   /**
    * Trouve la route privilégiée de l'utilisateur. Puis navigue vers la route
-   *
+   * 
    * @public
    * @memberof LoginPage
    */
@@ -46,7 +46,7 @@ export class LoginRedirectionService {
       (curRouteOpt) => user.roles.some(
         (role) => curRouteOpt.roles.find(roleOpt => roleOpt === role)));
     console.log(prefRoute);
-    if (prefRoute !== undefined) {
+    if (prefRoute) {
       this.navControler.navigateRoot(prefRoute.route);
       return;
     }

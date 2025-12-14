@@ -1,19 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
-import { IonicModule } from '@ionic/angular';
-import { NgIf } from '@angular/common';
 import { IndicatorGraphComponent } from '../../../shared/indicators/indicator-graph/indicator-graph.component';
 import { IndicatorNumberComponent } from '../../../shared/indicators/indicator-number/indicator-number.component';
-import { RequestStatus, RequestType } from 'src/app/tooling/tool-request-types';
+import { IonContent } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'app-indicators',
     templateUrl: './indicators.page.html',
     styleUrls: ['./indicators.page.scss'],
     standalone: true,
-    imports: [
-        IonicModule,
-        NgIf,
+  imports: [
+    IonContent,
         IndicatorGraphComponent,
         IndicatorNumberComponent,
     ],

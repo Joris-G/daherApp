@@ -1,6 +1,4 @@
-import { RequestStatus, RequestType, SpecSBOStorage } from "src/app/tooling/tool-request-types";
-import { mockUsers } from "./mockUser.mock";
-import { mockTools } from "./mockTools.mock";
+import { SpecSBOStorage } from "src/app/tooling/models/sbo.model";
 
 export const mockSpecSBO: SpecSBOStorage[] = [
     {
@@ -14,7 +12,7 @@ export const mockSpecSBO: SpecSBOStorage[] = [
         id:2,
         description:"",
         title:"",
-         toolRequestId: 2,
+        toolRequestId: 20,
 
     }
 ,

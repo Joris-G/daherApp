@@ -1,18 +1,19 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { NavController, IonicModule } from '@ionic/angular';
-import { RequestStatus, SpecMaintRepRequest, ToolRequest }
-  from 'src/app/tooling/tool-request-types';
-import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
+import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { MaintenanceToolRequestService } from '../../services/maintenance-tool-request.service';
 import { RequestState, ToolRequestManager } from '../../services/tool-request-manager.service';
 import { EMPTY } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaintRepairFormComponent } from './maint-repair-form/maint-repair-form.component';
 import { ToolRequestFooterComponent } from '../tool-request-footer/tool-request-footer.component';
-import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
 import { FormGroup } from '@angular/forms';
+import { IonContent, IonFooter, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { ToolRequestStore } from '../../stores/tool-request.store';
+import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
+import { RequestStatus, ToolRequest } from '../../models/tool-request.model';
+import { SpecMaintRepRequest } from '../../models/maintenance-and-repair.model';
 
 // ============================================================================
 // TYPE POUR LE MODE DU COMPOSANT
@@ -24,10 +25,14 @@ type ComponentMode = 'create' | 'edit' | 'view';
     templateUrl: './maintenance-reparation.page.html',
     styleUrls: ['./maintenance-reparation.page.scss'],
     standalone: true,
-    imports: [
-        IonicModule,
-        MaintRepairFormComponent,
-        ToolRequestFooterComponent,
+  imports: [
+    MaintRepairFormComponent,
+    ToolRequestFooterComponent,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonFooter
     ],
 })
 export class MaintenanceReparationPage {
@@ -37,12 +42,11 @@ export class MaintenanceReparationPage {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly navCtrl = inject(NavController);
-  private readonly formBuilder = inject(ToolRequestFormBuilder);
   private readonly maintenanceService = inject(MaintenanceToolRequestService);
-  private readonly toolRequestService = inject(ToolRequestService);
+  private readonly toolRequestStore = inject(ToolRequestStore);
   private readonly alertService = inject(AlertService);
   private readonly toolRequestManager = inject(ToolRequestManager);
-
+  private readonly toolRequestFormBuilder = inject(ToolRequestFormBuilder);
   // ============================================================================
   // ÉTAT DU COMPOSANT (SIGNALS)
   // ============================================================================
@@ -68,8 +72,8 @@ export class MaintenanceReparationPage {
   // FORMULAIRES
   // ============================================================================
 
-  toolRequestForm!: FormGroup;
-  maintenanceForm!: FormGroup;
+  // toolRequestForm: FormGroup;
+  maintenanceForm: FormGroup;
 
   // ============================================================================
   // COMPUTED PROPERTIES
@@ -88,26 +92,30 @@ export class MaintenanceReparationPage {
     return `Demande de maintenance : ID ${id}`;
   });
 
-  canEdit = computed(() => {
-    const state = this.requestState();
-    const mode = this.mode();
+  // TODO prendre cet exemple pour le comportement global des requests
+  canEdit = this.toolRequestStore.canEdit;
+  // computed(() => {
+  // const state = this.requestState();
+  // const mode = this.mode();
 
-    // En mode création, toujours éditable
-    if (mode === 'create') return true;
+  // // En mode création, toujours éditable
+  // if (mode === 'create') return true;
 
-    // En mode édition, vérifier le statut
-    return state?.canEdit ?? false;
-  });
+  // // En mode édition, vérifier le statut
+  // return state?.canEdit ?? false;
+  // });
 
-  canManage = computed(() => {
-    const state = this.requestState();
-    return state?.canManage ?? false;
-  });
+  canManage = this.toolRequestStore.canManage;
+  // canManage = computed(() => {
+  //   const state = this.requestState();
+  //   return state?.canManage ?? false;
+  // });
+
+  canUpdate = this.toolRequestStore.canUpdate
 
   canSubmit = computed(() => {
     return (
       !this.isSubmitting() &&
-      this.toolRequestForm?.valid &&
       this.maintenanceForm?.valid
     );
   });
@@ -115,6 +123,11 @@ export class MaintenanceReparationPage {
   // ============================================================================
   // LIFECYCLE
   // ============================================================================
+  constructor() {
+    this.initializeFormsForCreation();
+  }
+
+
 
   ngOnInit(): void {
     // Récupérer l'ID depuis la route (si présent)
@@ -140,11 +153,9 @@ export class MaintenanceReparationPage {
    * Initialise les formulaires pour la création
    */
   private initializeFormsForCreation(): void {
-    // this.toolRequestForm = this.formBuilder.createToolRequestForm({
-    //   bloquantProd: false,
-    // });
-
-    // this.maintenanceForm = this.formBuilder.createSpecMaintenanceForm();
+    this.maintenanceForm = this.toolRequestFormBuilder.createSpecMaintenanceForm({
+      bloquantProd: false,
+    });
   }
 
   /**
@@ -219,7 +230,6 @@ export class MaintenanceReparationPage {
 
   onSubmitCreate(): void {
     if (!this.canSubmit()) {
-      this.toolRequestForm.markAllAsTouched();
       this.maintenanceForm.markAllAsTouched();
       this.errorMessage.set('Veuillez remplir tous les champs obligatoires');
       return;
@@ -262,7 +272,6 @@ export class MaintenanceReparationPage {
 
   onSubmitUpdate(): void {
     if (!this.canSubmit() || !this.toolRequestId) {
-      this.toolRequestForm.markAllAsTouched();
       this.maintenanceForm.markAllAsTouched();
       this.errorMessage.set('Veuillez remplir tous les champs obligatoires');
       return;
@@ -272,10 +281,9 @@ export class MaintenanceReparationPage {
     this.errorMessage.set(null);
 
     // 1. Mettre à jour la ToolRequest
-    const toolRequestData: Partial<ToolRequest> = {
-      ...this.toolRequest(),
-      ...this.toolRequestForm.value,
-    };
+    // const toolRequestData: SpecMaintRepRequestUpdate = {
+    //   ...this.toolRequest(),
+    // };
 
     // 2. Mettre à jour la Maintenance
     const maintenanceData: SpecMaintRepRequest = {
@@ -283,40 +291,41 @@ export class MaintenanceReparationPage {
       ...this.buildMaintenanceFromForm(),
     };
 
-    this.toolRequestService.updateToolRequest(toolRequestData)
-      .pipe(
-        // Puis mettre à jour la maintenance
-        switchMap(() =>
-          this.maintenanceService.updateMaintenanceRequest(maintenanceData)
-        ),
-        tap((response) => {
-          console.log('✅ Demande mise à jour:', response);
-        }),
-        catchError((error) => {
-          console.error('❌ Erreur mise à jour:', error);
-          this.errorMessage.set('Erreur lors de la mise à jour de la demande');
-          this.isSubmitting.set(false);
+    // this.toolRequestStore.updateToolRequest(toolRequestData);
+    // TODO a mettre dans un effect
+    // .pipe(
+    //   // Puis mettre à jour la maintenance
+    //   switchMap(() =>
+    //     this.maintenanceService.updateMaintenanceRequest(maintenanceData)
+    //   ),
+    //   tap((response) => {
+    //     console.log('✅ Demande mise à jour:', response);
+    //   }),
+    //   catchError((error) => {
+    //     console.error('❌ Erreur mise à jour:', error);
+    //     this.errorMessage.set('Erreur lors de la mise à jour de la demande');
+    //     this.isSubmitting.set(false);
 
-          this.alertService.simpleAlert(
-            'Erreur',
-            'Mise à jour d\'une demande',
-            'La demande n\'a pas pu être modifiée. Vérifiez les données'
-          );
+    //     this.alertService.simpleAlert(
+    //       'Erreur',
+    //       'Mise à jour d\'une demande',
+    //       'La demande n\'a pas pu être modifiée. Vérifiez les données'
+    //     );
 
-          return EMPTY;
-        })
-      )
-      .subscribe(() => {
-        this.isSubmitting.set(false);
+    //     return EMPTY;
+    //   })
+    // )
+    // .subscribe(() => {
+    //   this.isSubmitting.set(false);
 
-        this.alertService.simpleAlert(
-          'Succès',
-          'Mise à jour d\'une demande',
-          'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes'
-        ).then(() => {
-          this.navigateToList();
-        });
-      });
+    //   this.alertService.simpleAlert(
+    //     'Succès',
+    //     'Mise à jour d\'une demande',
+    //     'La demande a bien été modifiée. Vous allez être redirigé vers la liste des demandes'
+    //   ).then(() => {
+    //     this.navigateToList();
+    //   });
+    // });
   }
 
   // ============================================================================
@@ -324,11 +333,11 @@ export class MaintenanceReparationPage {
   // ============================================================================
 
   onStatutChange(newStatut: RequestStatus): void {
-    this.toolRequestForm.patchValue({ statut: newStatut });
+    // this.toolRequestForm.patchValue({ statut: newStatut });
   }
 
   onAffectationChange(groupeAffectationId: number): void {
-    this.toolRequestForm.patchValue({ groupeAffectation: groupeAffectationId });
+    // this.toolRequestForm.patchValue({ groupeAffectation: groupeAffectationId });
   }
 
   // ============================================================================

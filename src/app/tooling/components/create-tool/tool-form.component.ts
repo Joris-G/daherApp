@@ -1,10 +1,7 @@
-import { Component, effect, inject, input, OnInit, output, signal } from '@angular/core';
+import { Component, input, } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonButton, IonInput, IonItem, IonText, IonToolbar } from '@ionic/angular/standalone';
-import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
-import { Tool, ToolCreation } from '../../tool';
-import { ToolRequestStore } from '../../stores/tool-request.store';
-import { SpecSBORequest } from '../../tool-request-types';
+import { IonInput, IonItem, IonText, } from '@ionic/angular/standalone';
+
 
 @Component({
   selector: 'app-tool-form',
@@ -16,8 +13,6 @@ import { SpecSBORequest } from '../../tool-request-types';
     IonItem,
     IonText,
     IonInput,
-    IonToolbar,
-    IonButton,
   ]
 })
 /**

@@ -1,11 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { RequestType, SpecCtrlCreation, SpecSBOCreation, ToolRequest, ToolRequestCreation }
-  from 'src/app/tooling/tool-request-types';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
+import { ToolRequest, ToolRequestCreation } from '../models/tool-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -87,9 +85,9 @@ export class ToolRequestService {
 
   getType(request: ToolRequest | string): string {
     if (typeof (request) === 'string') { return request; }
-    if (request.type === RequestType.CONTROLE) {
+    if (request.type === 'CONTROLE') {
       return 'controle';
-    } else if (request.type === RequestType.MAINTENANCE) {
+    } else if (request.type === 'MAINTENANCE') {
       return 'maintenance';
     }
   }
