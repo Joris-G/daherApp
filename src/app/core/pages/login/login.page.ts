@@ -30,57 +30,67 @@ import { LoginRedirectionService } from './services/login-redirection.service';
   ],
 })
 export class LoginPage implements OnInit {
-  private readonly usersStore = inject(UsersStore);
-  private readonly authStore = inject(AuthStore);
-  private readonly router = inject(Router);
-  public version: string = packageJson.version;
-  private readonly noticeService: NoticeService = inject(NoticeService);
   private readonly titleService: TitleService = inject(TitleService);
+  private readonly authStore = inject(AuthStore);
+  private readonly noticeService: NoticeService = inject(NoticeService);
   private readonly loadingService: LoadingService = inject(LoadingService);
   private readonly alertService: AlertService = inject(AlertService);
   private readonly loginRedirectionService: LoginRedirectionService = inject(LoginRedirectionService);
+  public version: string = packageJson.version;
 
   constructor(){
-    effect(()=>{
+
+    /**
+     * @description Effect responsable de la redirection post-connexion.
+     * Déclenché lorsque l'état d'authentification ou l'utilisateur change.
+     */
+    effect(() => {
       const isLogged: boolean = this.authStore.isAuthenticated();
-      const curUser: User = this.authStore.user();
+      const curUser: User | null = this.authStore.user(); // Utiliser User | null pour la sécurité
+
+      // La redirection est un effet secondaire
       if (isLogged && curUser) {
         this.loginRedirectionService.reRouteUser(curUser);
         // TODO this.updateService.showUpdates();
       }
+    });
 
+    /**
+     * @description Effect responsable de l'affichage du loader.
+     * Déclenché lorsque l'état de loading du Store change.
+     */
+    effect(() => {
       const isLoading: boolean = this.authStore.loading();
+
+      // La manipulation du service de loading est un effet secondaire
       if (isLoading) {
         this.loadingService.startLoading("Connexion en cours ... ");
       } else {
         this.loadingService.stopLoading();
       }
+    });
 
-      const error: string = this.authStore.error();
+    /**
+     * @description Effect responsable de l'affichage des erreurs.
+     * Déclenché lorsque le signal d'erreur du Store change.
+     */
+    effect(() => {
+      const error: string | null = this.authStore.error(); // Utiliser string | null
+
+    // L'affichage de l'erreur est un effet secondaire
       if (error) {
-        this.loadingService.stopLoading();
+        this.loadingService.stopLoading(); // S'assurer que le loader est stoppé en cas d'erreur
         this.alertService.presentToast(error, 'danger');
       }
-    })
+    });
   }
 
   showNotice() {
     this.noticeService.presentModal(LoginNoticeComponent);
   }
 
-  ionViewWillEnter(): void {
-    this.titleService.setTitle('Connexion');
-    // this.loginForm.reset();
-    // if (isDevMode()) {
-    //   this.loginForm.setValue({
-    //     userName: environment.username,
-    //     password: environment.password
-    //   });
-    // }
-  }
-
   ngOnInit() {
-
+    this.titleService.setTitle('Connexion');
     // Notification.requestPermission().then((result) => {
     //   if (!('Notification' in window)) {
     //     alert('Ce navigateur ne prend pas en charge la notification de bureau');
@@ -93,7 +103,12 @@ export class LoginPage implements OnInit {
 
   }
 
-  connection(userCredentials: Credentials){
+  /**
+   * @description Gère la soumission des identifiants utilisateur.
+   * 
+   * @param {Credentials} userCredentials - Les identifiants de l'utilisateur.
+   */
+  connection(userCredentials: Credentials) {
     this.authStore.login(userCredentials);
   }
 
