@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { UsersService } from 'src/app/shared/services/users/users.service';
@@ -15,7 +15,7 @@ import { IonHeader, IonMenu, IonTitle, IonToolbar, IonContent, IonList, IonItemD
     standalone: true,
   imports: [IonList, IonMenu, IonContent, RouterLink, NgIf, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup]
 })
-export class ToolRequestMenuComponent implements OnInit {
+export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
@@ -33,8 +33,15 @@ export class ToolRequestMenuComponent implements OnInit {
   public isManager = false;
   public newUsers$: Observable<User[]>;
 
+
+  // *************************************************
+  //  LIFECYCLE HOOKS   ******************************
+  // *************************************************
   ngOnInit(): void {
     this.buildManagerPage();
+  }
+  ngAfterViewInit(): void {
+    this.menu.setOpen(true);
   }
 
 
