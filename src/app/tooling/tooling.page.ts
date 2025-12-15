@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { SharedUserHeaderComponent } from '../shared/components/shared-user-header/shared-user-header.component';
 import { ToolRequestMenuComponent } from './components/tool-request-menu/tool-request-menu.component';
@@ -16,9 +16,9 @@ import { IonContent, IonRouterOutlet } from '@ionic/angular/standalone';
         ToolRequestMenuComponent,
     ],
 })
-export class ToolingPage {
-  private titleService = inject(TitleService);
-  ionViewWillEnter() {
+export class ToolingPage implements OnInit {
+  private readonly titleService = inject(TitleService);
+  ngOnInit(): void {
     this.titleService.setTitle('MODULE OUTILLAGE');
   }
 }
