@@ -126,7 +126,7 @@ export const toolRequestHandlers = [
     const resolvedBaseRequest = {
       ...masterRequest,
       demandeur: demandeur, // <-- L'objet User complet
-      tool: tool,           // <-- L'objet Tool ou OutillNoRefSAP complet
+      tool           // <-- L'objet Tool ou OutillNoRefSAP complet
     };
     // Supprimer les IDs qui ne font plus partie de l'objet final (ToolRequest)
     delete resolvedBaseRequest.demandeurId;

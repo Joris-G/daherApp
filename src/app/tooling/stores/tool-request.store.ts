@@ -1,5 +1,5 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
-import { finalize, switchMap, tap } from 'rxjs';
+import { finalize, switchMap, take, tap } from 'rxjs';
 import { ToolRequestService } from '../services/tool-request.service';
 import { SpecSBOUpdate, } from '../models/sbo.model';
 import { Tool, ToolCreation } from '../tool';
@@ -120,20 +120,19 @@ export class ToolRequestStore {
    * @param toolRequest - Les données de la demande d'outillage.
    */
   public createToolRequest(toolRequest: ToolRequestCreation, toolData: ToolCreation): void {
+    this.resetCreationState();
     this.updateState({ isCreatingRequest: true, error: null });
     const createToolObs = this.toolService.createTool(toolData);
     createToolObs.pipe(
+      take(1),
       switchMap((createdTool: Tool) => {
         toolRequest.tool = createdTool;
         return this.toolRequestService.createToolRequest(toolRequest)
       }),
-      finalize(() => this.updateState({ isCreatingRequest: false }))
+      finalize(() => this.updateState({ isCreatingRequest: false })
+      )
     ).subscribe({
-      next: () => {
-        this.updateState({ isCreatingSuccess: true })
-        // Réinitialiser l'état après succès
-        this.resetCreationState();
-      },
+      next: () => this.updateState({ isCreatingSuccess: true }),
       error: (error) => {
         console.error('Erreur lors de la création de la demande:', error);
         this.updateState({ error: 'Erreur lors de la création de la demande.' });
@@ -186,8 +185,9 @@ export class ToolRequestStore {
         // Optionnel: Recharger la liste des demandes ici via ToolRequestListStore si vous l'avez
       },
       error: (error) => {
+        // TODO préciser les erreurs si le code SAP outillage est déjà connu par ex.
         console.error('Erreur lors de la mise à jour de la demande:', error);
-        this.updateState({ error: 'Erreur lors de la mise à jour de la demande.' });
+        this.updateState({ error: 'Erreur lors de la mise à jour de la demande.', isCreatingSuccess: false });
       },
     });
   }
@@ -207,6 +207,7 @@ export class ToolRequestStore {
     this.updateState({
       selectedTool: null,
       isCreatingTool: false,
+      isCreatingSuccess: false,
       isCreatingRequest: false,
       currentToolRequest: null,
       isUpdatingRequest: false,

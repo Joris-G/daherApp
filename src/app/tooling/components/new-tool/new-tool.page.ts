@@ -1,17 +1,18 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, OnInit, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IonButton, IonContent, IonFooter, IonToolbar, IonTitle, IonHeader, NavController } from '@ionic/angular/standalone';
 import { NgxEditorModule } from 'ngx-editor';
 import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/tooling/models/sbo.model';
 import { ToolCreation } from 'src/app/tooling/tool';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
 import { SboComponent } from '../sbo/sbo.component';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
 import { ToolFormComponent } from '../create-tool/tool-form.component';
 import { ToolRequestStore } from '../../stores/tool-request.store';
-import { filter, take } from 'rxjs';
+import { take } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { SboFormComponent } from '../sbo-form/sbo-form.component';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
@@ -34,7 +35,7 @@ import { AlertService } from 'src/app/shared/services/divers/alert.service';
   templateUrl: './new-tool.page.html',
   styleUrls: ['./new-tool.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonTitle, 
+  imports: [IonHeader, IonTitle,
     SboFormComponent,
     CardComponent,
     ReactiveFormsModule,
@@ -59,21 +60,26 @@ export class NewToolPage implements OnInit {
   private readonly programService = inject(ProgramsService);
   private readonly navCtrl = inject(NavController);
   protected readonly store = inject(ToolRequestStore);
-  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly alertService = inject(AlertService);
+  private readonly activatedRoute = inject(ActivatedRoute);
   // ============================================================================
   // PROPRIÉTÉS
   // ============================================================================
-  /** ID de la demande en cours de modification (null en mode création). */
-  private requestId: string | null = null;
+  private readonly routeParams = toSignal(this.activatedRoute.params);
+  private readonly requestId = computed<string | null>(() => {
+    const params = this.routeParams();
+    return params && params['id'] ? params['id'] : null;
+  });
 
-  /** Indique si la page est en mode édition. */
-  protected isEditMode = signal<boolean>(false);
+  /** * @description Indique si la page est en mode édition. 
+  *
+       */
+  protected readonly isEditMode = computed<boolean>(() => !!this.requestId());
 
   /** Formulaire pour les spécifications SBO. */
-  protected specSboForm: FormGroup; 
+  protected specSboForm: FormGroup;
   /** Formulaire pour l'outil. */
-  protected toolForm: FormGroup; 
+  protected toolForm: FormGroup;
 
   /** Configuration de la page */
   public page = {
@@ -89,6 +95,7 @@ export class NewToolPage implements OnInit {
 
 
 
+
   // ============================================================================
   // CONSTRUCTEUR
   // ============================================================================
@@ -100,13 +107,22 @@ export class NewToolPage implements OnInit {
         this.fillForm(toolRequest);
       }
     });
+
     effect(async () => {
       const isCreatingSuccess = this.store.isCreatingSuccess();
       if (isCreatingSuccess) {
         await this.alertService.presentToast('Demande créée avec succès', 'success');
         this.navCtrl.navigateForward(['tooling/requests']);
+      } else {
+
       }
     });
+
+    effect(async () => {
+      const error = this.store.error();
+      if (error) await this.alertService.presentToast(error, 'danger');
+    })
+
   }
   // ============================================================================
   // LIFECYCLE
@@ -118,23 +134,13 @@ export class NewToolPage implements OnInit {
   ngOnInit(): void {
     this.initializeForms();
     this.loadPrograms();
+    this.store.resetCreationState();
 
-
-    // 1. Lire les paramètres de la route
-    this.activatedRoute.params.pipe(
-      filter(params => !!params['id']), // S'assurer que l'ID existe
-      take(1)
-    ).subscribe(params => {
-      this.requestId = params['id'];
-      console.log(this.requestId);
-      if (this.requestId) {
-        this.isEditMode.set(true);
-        // this.page.pageTitle = `Modification de la demande ${this.requestId}`;
-        this.loadToolRequestForEdit(this.requestId);
-
-      }
-    });
-
+    const id = this.requestId();
+    if (this.isEditMode() && id) {
+      this.store.loadToolRequest(id);
+      this.page.pageTitle = `Modification de la demande ${id}`;
+    }
   }
   // ============================================================================
   // INITIALISATION DES FORMULAIRES
@@ -144,22 +150,13 @@ export class NewToolPage implements OnInit {
    * Initialise les FormGroup nécessaires à la page.
    */
   private initializeForms(): void {
-    this.specSboForm = this.formBuilderService.createSpecSBOForm();
-    this.toolForm = this.formBuilderService.createNewToolForm();
+    this.specSboForm = this.formBuilderService.createSpecSBOForm({ dateBesoin: new Date(2026, 0, 1), description: 'fdezfdfgsd', title: 'edfsdffsdgfg' });
+    this.toolForm = this.formBuilderService.createNewToolForm({ designation: 'dsffsdfsd', identification: 'sdgfdwd', sapToolNumber: '099330' });
   }
 
   // ============================================================================
   // CHARGEMENT DES DONNÉES EN MODE ÉDITION
   // ============================================================================
-
-  /**
-   * Charge la demande existante via le Store et déclenche le préremplissage.
-   * @param id - L'ID de la demande à charger.
-   */
-  private loadToolRequestForEdit(id: string): void {
-    console.log("load ToolRequest for Edit");
-    this.store.loadToolRequest(id);
-  }
 
   /**
    * Préremplit le formulaire avec les données de la demande.
@@ -179,9 +176,7 @@ export class NewToolPage implements OnInit {
       sapToolNumber: request.tool.sapToolNumber,
       identification: request.tool.identification,
       designation: request.tool.designation
-
-    })
-    // L'outil est mis à jour dans le store: store.createdTool est initialisé
+    });
   }
 
   // ============================================================================
@@ -303,7 +298,7 @@ export class NewToolPage implements OnInit {
     );
   }
 
-    // Soumettre la demande
+  // Soumettre la demande
   //   this.toolRequestService.createToolRequest(toolRequest).subscribe({
   //     next: () => {
   //       console.log('Demande créée avec succès');
