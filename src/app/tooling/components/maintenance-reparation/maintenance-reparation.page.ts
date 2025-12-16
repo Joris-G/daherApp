@@ -7,7 +7,7 @@ import { RequestState, ToolRequestManager } from '../../services/tool-request-ma
 import { EMPTY } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaintRepairFormComponent } from './maint-repair-form/maint-repair-form.component';
-import { ToolRequestFooterComponent } from '../tool-request-footer/tool-request-footer.component';
+import { ToolRequestFooterComponent } from '../../../features/tooling/components/tool-request-footer/tool-request-footer.component';
 import { FormGroup } from '@angular/forms';
 import { IonContent, IonFooter, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { ToolRequestStore } from '../../stores/tool-request.store';

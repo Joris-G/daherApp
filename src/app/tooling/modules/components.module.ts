@@ -9,15 +9,15 @@ import { MaintenanceItemComponent } from '../components/maintenance-reparation/m
 import { MaintRepairFormComponent } from '../components/maintenance-reparation/maint-repair-form/maint-repair-form.component';
 import { MaintenanceReparationPage } from '../components/maintenance-reparation/maintenance-reparation.page';
 import { ManageTeamPage } from '../components/manage-team/manage-team.page';
-import { NewToolPage } from '../components/new-tool/new-tool.page';
+import { NewToolPage } from '../../features/tooling/sbo-request/components/new-tool/new-tool.page';
 import { SboComponent } from '../components/sbo/sbo.component';
-import { ToolInputComponent } from '../components/tool-input/tool-input.component';
-import { ToolInputDirective } from '../components/tool-input/tool-input.directive';
+import { ToolInputComponent } from '../../features/tooling/components/tool-input/tool-input.component';
+import { ToolInputDirective } from '../../features/tooling/components/tool-input/tool-input.directive';
 import { ToolListPage } from '../components/tool-list/tool-list.page';
-import { ToolRequestFooterComponent } from '../components/tool-request-footer/tool-request-footer.component';
-import { ToolRequestMenuComponent } from '../components/tool-request-menu/tool-request-menu.component';
-import { ToolRequestsPage } from '../components/tool-requests/tool-requests.page';
-import { ToolingPage } from '../tooling.page';
+import { ToolRequestFooterComponent } from '../../features/tooling/components/tool-request-footer/tool-request-footer.component';
+import { ToolRequestMenuComponent } from '../../features/tooling/components/tool-request-menu/tool-request-menu.component';
+import { ToolRequestsPage } from '../../features/tooling/tool-request-list/components/tool-requests.page';
+import { ToolingPage } from '../../pages/tooling/tooling.page';
 import { ToolRequestFiltersComponent } from
   '../components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.component';
 import { ToolRequestTableComponent } from

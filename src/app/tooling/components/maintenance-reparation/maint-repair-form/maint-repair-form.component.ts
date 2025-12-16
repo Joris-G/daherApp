@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ToolInputComponent } from '../../tool-input/tool-input.component';
+import { ToolInputComponent } from '../../../../features/tooling/components/tool-input/tool-input.component';
 import { MaintenanceItemComponent } from '../maintenance-item/maintenance-item.component';
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonToggle } from '@ionic/angular/standalone';
 import { CardComponent } from "src/app/shared/components/card/card.component";

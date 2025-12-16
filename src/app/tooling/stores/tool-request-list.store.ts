@@ -70,14 +70,13 @@ export class ToolRequestListStore {
   public loadToolRequests(): void {
     // 1. Mise à jour de l'état de chargement
     this.updateState({ isLoadingList: true, error: null });
-    this.loaderService.startLoading('Chargement des demandes');
+
 
     // 2. Appel au service API
     this.toolRequestService.getToolRequests().pipe(
       // take(1),
       finalize(() => {
         this.updateState({ isLoadingList: false });
-        this.loaderService.stopLoading();
       })
     ).subscribe({
       next: (requests) => {

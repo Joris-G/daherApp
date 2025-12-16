@@ -1,6 +1,6 @@
 import { Directive, HostBinding, HostListener } from '@angular/core';
 import { Tool } from 'src/app/tooling/tool';
-import { ToolService } from '../../services/tool.service';
+import { ToolService } from '../../../../tooling/services/tool.service';
 import { ToolInputService } from './tool-input.service';
 
 @Directive({

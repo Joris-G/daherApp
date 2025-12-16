@@ -1,5 +1,5 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
-import { finalize, switchMap, take, tap } from 'rxjs';
+import { delay, finalize, switchMap, take, tap } from 'rxjs';
 import { ToolRequestService } from '../services/tool-request.service';
 import { SpecSBOUpdate, } from '../models/sbo.model';
 import { Tool, ToolCreation } from '../tool';
@@ -122,8 +122,9 @@ export class ToolRequestStore {
   public createToolRequest(toolRequest: ToolRequestCreation, toolData: ToolCreation): void {
     this.resetCreationState();
     this.updateState({ isCreatingRequest: true, error: null });
-    const createToolObs = this.toolService.createTool(toolData);
-    createToolObs.pipe(
+    this.toolService.createTool(toolData)
+      .pipe(
+        delay(2000),
       take(1),
       switchMap((createdTool: Tool) => {
         toolRequest.tool = createdTool;

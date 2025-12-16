@@ -28,7 +28,7 @@ export const routes: Routes = [
       },
       {
         path: 'tooling',
-        loadChildren: () => import('./tooling/tooling.routes')
+        loadChildren: () => import('./features/tooling/tooling.routes')
           .then(m => m.TOOLING_ROUTES)
       },
     ]

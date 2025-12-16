@@ -4,7 +4,7 @@ import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { ToolRequestManager } from '../../services/tool-request-manager.service';
 import { Control3DFormComponent } from './control3-dform/control3-dform.component';
-import { ToolRequestFooterComponent } from '../tool-request-footer/tool-request-footer.component';
+import { ToolRequestFooterComponent } from '../../../features/tooling/components/tool-request-footer/tool-request-footer.component';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter } from '@ionic/angular/standalone';
 import { ToolRequestService } from '../../services/tool-request.service';
 import { ActivatedRoute, Router } from '@angular/router';

@@ -3,7 +3,7 @@ import { Component, input, } from '@angular/core';
 import { DatePipe, KeyValuePipe } from '@angular/common';
 import { EditorComponent } from '@tinymce/tinymce-angular';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
-import { ToolInputComponent } from '../../tool-input/tool-input.component';
+import { ToolInputComponent } from '../../../../features/tooling/components/tool-input/tool-input.component';
 import { IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonCardTitle, IonText, IonIcon, IonModal, IonContent, IonSelectOption, IonNote, IonInput, IonTextarea, IonSelect, IonToggle, IonDatetime } from '@ionic/angular/standalone';
 import { Editor } from 'ngx-editor';
 import { RAPPORT_TYPES } from 'src/app/tooling/models/type-rapport.model';

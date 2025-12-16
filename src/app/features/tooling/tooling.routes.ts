@@ -1,13 +1,13 @@
 import { Routes } from "@angular/router";
-import { ToolingPage } from "./tooling.page";
-import { NewToolPage } from "./components/new-tool/new-tool.page";
-import { ToolRequestsPage } from "./components/tool-requests/tool-requests.page";
-import { RoleGuard } from "../shared/services/users/role.guard";
-import { ToolListPage } from "./components/tool-list/tool-list.page";
-import { MaintenanceReparationPage } from "./components/maintenance-reparation/maintenance-reparation.page";
-import { Control3DPage } from "./components/control3-d/control.page";
-import { ManageTeamPage } from "./components/manage-team/manage-team.page";
-import { IndicatorsPage } from "./components/indicators/indicators.page";
+import { ToolingPage } from "../../pages/tooling/tooling.page";
+import { NewToolPage } from "./sbo-request/components/new-tool/new-tool.page";
+import { ToolRequestsPage } from "./tool-request-list/components/tool-requests.page";
+import { RoleGuard } from "../../shared/services/users/role.guard";
+import { ToolListPage } from "../../tooling/components/tool-list/tool-list.page";
+import { MaintenanceReparationPage } from "../../tooling/components/maintenance-reparation/maintenance-reparation.page";
+import { Control3DPage } from "../../tooling/components/control3-d/control.page";
+import { ManageTeamPage } from "../../tooling/components/manage-team/manage-team.page";
+import { IndicatorsPage } from "../../tooling/components/indicators/indicators.page";
 
 export const TOOLING_ROUTES: Routes = [
   {

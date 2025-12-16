@@ -6,16 +6,17 @@ import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/tooling/
 import { ToolCreation } from 'src/app/tooling/tool';
 import { ActivatedRoute } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
-import { SboComponent } from '../sbo/sbo.component';
+import { SboComponent } from '../../../../../tooling/components/sbo/sbo.component';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
-import { ToolFormComponent } from '../create-tool/tool-form.component';
-import { ToolRequestStore } from '../../stores/tool-request.store';
+import { ToolFormComponent } from '../../../../../tooling/components/create-tool/tool-form.component';
+import { ToolRequestStore } from '../../../../../tooling/stores/tool-request.store';
 import { take } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { SboFormComponent } from '../sbo-form/sbo-form.component';
+import { SboFormComponent } from '../../../../../tooling/components/sbo-form/sbo-form.component';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 
 // const MENU_ITEMS = [
 //   {
@@ -62,6 +63,7 @@ export class NewToolPage implements OnInit {
   protected readonly store = inject(ToolRequestStore);
   private readonly alertService = inject(AlertService);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly loaderService = inject(LoadingService);
   // ============================================================================
   // PROPRIÉTÉS
   // ============================================================================
@@ -117,6 +119,14 @@ export class NewToolPage implements OnInit {
 
       }
     });
+       effect(async () => {
+      const isCreatingRequest = this.store.isCreatingRequest();
+      if (isCreatingRequest) {
+        await this.loaderService.startLoading('Envoie de la demande ...');
+      } else{
+        await this.loaderService.stopLoading();
+      }
+    });
 
     effect(async () => {
       const error = this.store.error();
@@ -139,7 +149,7 @@ export class NewToolPage implements OnInit {
     const id = this.requestId();
     if (this.isEditMode() && id) {
       this.store.loadToolRequest(id);
-      this.page.pageTitle = `Modification de la demande ${id}`;
+      this.page.pageTitle = `Modification de la demande n°${id}`;
     }
   }
   // ============================================================================

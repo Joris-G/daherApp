@@ -1,10 +1,11 @@
-import { Component, inject, Signal } from '@angular/core';
-import { ToolRequestFiltersComponent } from './tool-requests-components/tool-request-filters/tool-request-filters.component';
-import { ToolRequestTableComponent } from './tool-requests-components/tool-request-table/tool-request-table.component';
+import { Component, effect, inject, Signal } from '@angular/core';
+import { ToolRequestFiltersComponent } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.component';
+import { ToolRequestTableComponent } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-table/tool-request-table.component';
 import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { ToolRequestFilterService } from './tool-requests-components/tool-request-filters/tool-request-filters.service';
-import { ToolRequestListStore } from '../../stores/tool-request-list.store';
-import { ToolRequest } from '../../models/tool-request.model';
+import { ToolRequestFilterService } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.service';
+import { ToolRequestListStore } from '../../../../tooling/stores/tool-request-list.store';
+import { ToolRequest } from '../../../../tooling/models/tool-request.model';
+import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 
 @Component({
     templateUrl: './tool-requests.page.html',
@@ -31,8 +32,9 @@ export class ToolRequestsPage {
   // ============================================================================
   // INJECTION DE DÉPENDANCES
   // ============================================================================
-  protected readonly toolRequestFilterService: ToolRequestFilterService = inject(ToolRequestFilterService);
-  private readonly toolRequestListStore: ToolRequestListStore = inject(ToolRequestListStore);
+  protected readonly toolRequestFilterService = inject(ToolRequestFilterService);
+  private readonly toolRequestListStore  = inject(ToolRequestListStore);
+  private readonly loaderService = inject(LoadingService);
   // ============================================================================
   // PROPRIÉTÉS
   // ============================================================================
@@ -44,6 +46,19 @@ export class ToolRequestsPage {
   protected readonly isLoadingList = this.toolRequestListStore.isLoadingList; // Utilisation du Store
 
   public isAdmin = false;
+
+
+constructor() {
+  effect(()=>{
+    const isLoading = this.toolRequestListStore.isLoadingList();
+    if(isLoading){
+      this.loaderService.startLoading('Chargement des demandes');
+    }else{
+      this.loaderService.stopLoading();
+    }
+  })
+  
+}
 
   ionViewWillEnter() {
     this.reloadRequestList();
