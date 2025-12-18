@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
-import { ApplicationConfig, LOCALE_ID } from "@angular/core";
+import { ApplicationConfig, LOCALE_ID, importProvidersFrom } from "@angular/core";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { PreloadAllModules, RouteReuseStrategy, provideRouter, withComponentInputBinding, withHashLocation, withPreloading } from "@angular/router";
 import { IonicRouteStrategy } from "@ionic/angular";
@@ -7,6 +7,13 @@ import { provideIonicAngular } from "@ionic/angular/standalone";
 import { TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
 import { AuthInterceptor } from "./shared/services/users/auth.interceptor";
 import { routes } from "./app.routes";
+import { fr_FR, provideNzI18n } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import fr from '@angular/common/locales/fr';
+import { FormsModule } from '@angular/forms';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+registerLocaleData(fr);
 
 export const appConfig:ApplicationConfig = {
     providers: [
@@ -20,6 +27,6 @@ export const appConfig:ApplicationConfig = {
         // File,
     // FileOpener,
         // PDFGenerator,
-        provideAnimations()
+        provideAnimations(), provideNzI18n(fr_FR), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient()
     ]
 }
