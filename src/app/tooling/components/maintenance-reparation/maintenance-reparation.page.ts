@@ -11,7 +11,7 @@ import { ToolRequestFooterComponent } from '../../../features/tooling/components
 import { FormGroup } from '@angular/forms';
 import { IonContent, IonFooter, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { ToolRequestStore } from '../../stores/tool-request.store';
-import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
+import { ToolRequestFormBuilder } from 'src/app/features/tooling/services/forms/toolRequestFormBuilder/tool-request-form-builder';
 import { RequestStatus, ToolRequest } from '../../models/tool-request.model';
 import { SpecMaintRepRequest } from '../../models/maintenance-and-repair.model';
 

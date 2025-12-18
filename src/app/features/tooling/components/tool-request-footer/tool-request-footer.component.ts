@@ -5,18 +5,25 @@ import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { PdfService } from 'src/app/shared/services/divers/pdf.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { RequestStatus } from '../../../../tooling/models/tool-request.model';
-import { IonToolbar, IonItem, IonLabel, IonButton, IonIcon, IonSelect, IonSelectOption } from "@ionic/angular/standalone";
+import { IonToolbar, IonItem, IonButton, IonIcon, IonSelect, IonSelectOption } from "@ionic/angular/standalone";
 
 @Component({
     selector: 'app-tool-request-footer',
     templateUrl: './tool-request-footer.component.html',
     styleUrls: ['./tool-request-footer.component.scss'],
     standalone: true,
-  imports: [IonIcon, IonButton, IonLabel, IonItem, IonToolbar, IonSelect, IonSelectOption
+  imports: [IonIcon, IonButton, IonItem, IonToolbar, IonSelect, IonSelectOption
 
     ],
 })
 export class ToolRequestFooterComponent implements OnInit {
+  /**
+    *
+    *
+    * @type {boolean}
+    * @memberof ToolRequestFooterComponent
+    */
+  @Input() canSubmit: boolean;
 
   /**
    *
@@ -59,7 +66,7 @@ export class ToolRequestFooterComponent implements OnInit {
    * @type {EventEmitter<any>}
    * @memberof ToolRequestFooterComponent
    */
-  @Output() evSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() submit: EventEmitter<any> = new EventEmitter();
 
 
   /**
@@ -125,7 +132,7 @@ export class ToolRequestFooterComponent implements OnInit {
   }
 
   submitClick() {
-    this.evSubmit.emit(null);
+    this.submit.emit(null);
   }
 
   updateClick() {

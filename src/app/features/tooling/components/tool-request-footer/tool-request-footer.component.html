@@ -1,15 +1,20 @@
-<ion-toolbar>
-    <ion-item *ngIf="canManage">
-        <ion-label>Affecter</ion-label>
-        <ion-select multiple="true" placeholder="Séléctionner une personne" (ionChange)="affectationChange($event)">
+<ion-toolbar color="light">
+    @if(canManage){
+    <ion-item>
+        <ion-select label="Affecter" multiple="true" placeholder="Séléctionner une personne"
+            (ionChange)="affectationChange($event)">
             <ion-select-option *ngFor="let affectationGroup of affectationGroups" [value]="affectationGroup">
                 {{affectationGroup.libelle}}</ion-select-option>
         </ion-select>
     </ion-item>
-    <ion-item *ngIf="canManage">
-        <ion-label>Changer le statut</ion-label>
+    }
+    
+    @if(canManage){
+    
+    <ion-item>
         <!-- <ion-select #statut multiple="false" placeholder="Séléctionner un statut" (ionChange)="toolRequest.statut = statut.value"> -->
-        <ion-select #statut multiple="false" placeholder="Séléctionner un statut" (ionChange)="statusChange($event)">
+        <ion-select label="Changer le statut" #statut multiple="false" placeholder="Séléctionner un statut"
+            (ionChange)="statusChange($event)">
             <ion-select-option value="NOUVELLE">Nouvelle</ion-select-option>
             <ion-select-option value="REFUSEE">Refuser</ion-select-option>
             <ion-select-option value="ACCEPTEE">Accepter</ion-select-option>
@@ -21,16 +26,22 @@
             <ion-select-option value="DEM EXT">Demande externalisée</ion-select-option>
         </ion-select>
     </ion-item>
+    }
     <ion-button slot=end (click)="pdfExportClick()">
         <ion-icon slot="end" name="document-attach-outline"></ion-icon>
         Exporter pdf
     </ion-button>
-    <ion-button slot=end block color="success" *ngIf="!canUpdate" (click)="submitClick()">
+    @if(!canUpdate){
+    <ion-button slot=end block color="success" [disabled]="!canSubmit" (click)="submitClick()">
         <ion-icon slot="end" name="send-outline"></ion-icon>
         Envoyer
     </ion-button>
-    <ion-button slot=end block color="success" *ngIf="canUpdate" (click)="updateClick()">
-        <ion-icon slot="end" name="send-outline"></ion-icon>
-        Mettre à jour
-    </ion-button>
+}
+@if(canUpdate){
+
+<ion-button slot=end block color="success" (click)="updateClick()">
+    <ion-icon slot="end" name="send-outline"></ion-icon>
+    Mettre à jour
+</ion-button>
+    }
 </ion-toolbar>

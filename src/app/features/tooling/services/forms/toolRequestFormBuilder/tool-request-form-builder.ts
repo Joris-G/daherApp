@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OutillNoRefSAP } from 'src/app/tooling/tool';
-import { SpecSBOCreation, SpecSBOForm } from 'src/app/tooling/models/sbo.model';
-import { SpecCtrlCreation } from 'src/app/tooling/models/controle-3d-request.model';
+import { SpecSBOCreation, SpecSBOForm } from 'src/app/features/tooling/sbo-request/models/sbo.model';
+import { SpecCtrlCreation, SpecCtrlRequestControls } from 'src/app/features/tooling/control-request/models/controle-3d-request.model';
 import { MaintenanceItem, SpecMaintRepRequestCreation } from 'src/app/tooling/models/maintenance-and-repair.model';
 
 
@@ -12,7 +12,7 @@ import { MaintenanceItem, SpecMaintRepRequestCreation } from 'src/app/tooling/mo
 export class ToolRequestFormBuilder {
   private fb = inject(FormBuilder);
 
-  
+
   // ==========================================================================
   // TOOL REQUEST PRINCIPAL
   // ==========================================================================
@@ -43,33 +43,38 @@ export class ToolRequestFormBuilder {
   // SPÉCIFICATIONS CONTRÔLE
   // ==========================================================================
 
-  createSpecCtrlForm(initialValue?: Partial<SpecCtrlCreation>): FormGroup {
-    return this.fb.group({
-      // Informations plan
-      refPlan: [initialValue?.refPlan ?? '', Validators.required],
-      indPlan: [initialValue?.indPlan ?? '', Validators.required],
-      cheminCAO: [initialValue?.cheminCAO ?? ''],
+  // createSpecCtrlForm(initialValue?: Partial<SpecCtrlCreation>): FormGroup<SpecCtrlRequestControls> {
+  //   return this.fb.group({
+  //     bloquantProd: [initialValue?.bloquantProd ?? false, Validators.required],
+  //     dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
+  //     fichier: [initialValue?.fichier ?? null],
+  //     image: [initialValue?.image ?? null],
+  //     tool: [initialValue?.tool ?? null],
+  //     // Informations plan
+  //     refPlan: [initialValue?.refPlan ?? '', Validators.required],
+  //     indPlan: [initialValue?.indPlan ?? '', Validators.required],
+  //     cheminCAO: [initialValue?.cheminCAO ?? ''],
 
-      // Description
-      description: [initialValue?.description ?? '', Validators.required],
-      detailsControle: [initialValue?.detailsControle ?? ''],
-      tolerances: [initialValue?.tolerances ?? ''],
+  //     // Description
+  //     description: [initialValue?.description ?? '', Validators.required],
+  //     detailsControle: [initialValue?.detailsControle ?? '', Validators.required],
+  //     tolerances: [initialValue?.tolerances ?? '', Validators.required],
 
-      // Dates
-      dispoOut: [initialValue?.dispoOut ?? null],
+  //     // Dates
+  //     dispoOut: [initialValue?.dispoOut ?? null],
 
-      // Type de contrôle
-      typeRapport: [initialValue?.typeRapport ?? null],
-      moyenMesure: [initialValue?.moyenMesure ?? null],
+  //     // Type de contrôle
+  //     typeRapport: [initialValue?.typeRapport ?? null],
+  //     moyenMesure: [initialValue?.moyenMesure ?? null],
 
-      // Informations complémentaires
-      infosComplementaire: [initialValue?.infosComplementaire ?? ''],
-      visaControleur: [initialValue?.visaControleur ?? ''],
-
-      // Options
-      // immobilisationOutillage: [initialValue?.immobilisationOutillage ?? false]
-    });
-  }
+  //     // Informations complémentaires
+  //     infosComplementaire: [initialValue?.infosComplementaire ?? ''],
+  //     visaControleur: [initialValue?.visaControleur ?? ''],
+  //     interventionDate: [initialValue?.interventionDate ?? null],
+  //     // Options
+  //     // immobilisationOutillage: [initialValue?.immobilisationOutillage ?? false]
+  //   });
+  // }
 
   // ==========================================================================
   // MAINTENANCE ITEM (ligne d'action corrective)

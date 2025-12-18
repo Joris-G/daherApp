@@ -1,11 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Tool } from 'src/app/tooling/tool';
-import { ToolService } from 'src/app/tooling/services/tool.service';
 import { ToolInputService } from './tool-input.service';
-import { IonicModule } from '@ionic/angular';
 import { ToolInputDirective } from './tool-input.directive';
-import { NgIf } from '@angular/common';
+import { IonIcon, IonInput, IonItem } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'app-tool-input',
@@ -19,15 +17,16 @@ import { NgIf } from '@angular/common';
         },
     ],
     standalone: true,
-    imports: [IonicModule, ToolInputDirective, NgIf]
+  imports: [ToolInputDirective, IonItem, IonInput, IonIcon]
 })
 export class ToolInputComponent implements ControlValueAccessor, OnInit {
+  ////////////////////////////////////////////////////
+  //INJECTION DEPENDANCES
+  ////////////////////////////////////////////////////
+  private readonly toolInputService = inject(ToolInputService);
   disabled = false;
   public tool: Tool;
 
-  constructor(
-    private toolInputService: ToolInputService
-  ) { }
   ngOnInit(): void {
     this.toolInputService.inputTool$
       .subscribe((tool) => {

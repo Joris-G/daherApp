@@ -1,5 +1,5 @@
 import { FormControl } from "@angular/forms";
-import { ToolRequestBase, ToolRequestBaseForm } from "./tool-request.model";
+import { ToolRequestBase, ToolRequestBaseForm } from "../../../../tooling/models/tool-request.model";
 // ============================================================================
 // SPÉCIFICATIONS SBO (Nouvelle demande outillage)
 // ============================================================================

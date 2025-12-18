@@ -1,13 +1,13 @@
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Component, input, } from '@angular/core';
-import { DatePipe, KeyValuePipe } from '@angular/common';
+import {  KeyValuePipe } from '@angular/common';
 import { EditorComponent } from '@tinymce/tinymce-angular';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
-import { ToolInputComponent } from '../../../../features/tooling/components/tool-input/tool-input.component';
-import { IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonCardTitle, IonText, IonIcon, IonModal, IonContent, IonSelectOption, IonNote, IonInput, IonTextarea, IonSelect, IonToggle, IonDatetime } from '@ionic/angular/standalone';
+import { IonCol, IonGrid, IonItem, IonLabel, IonRow, IonText,  IonSelectOption, IonNote, IonInput,  IonSelect, IonToggle } from '@ionic/angular/standalone';
 import { Editor } from 'ngx-editor';
 import { RAPPORT_TYPES } from 'src/app/tooling/models/type-rapport.model';
 import { MOYENS_MESURE } from 'src/app/tooling/models/moyen-mesure.model';
+import { CardComponent } from 'src/app/shared/components/card/card.component';
 
 @Component({
     selector: 'app-control3-dform',
@@ -15,19 +15,15 @@ import { MOYENS_MESURE } from 'src/app/tooling/models/moyen-mesure.model';
     styleUrls: ['./control3-dform.component.scss'],
     standalone: true,
   imports: [
-    IonCardTitle,
     ReactiveFormsModule,
-    ToolInputComponent,
+    CardComponent,
     EditorComponent,
-    DatePipe, KeyValuePipe,
+    KeyValuePipe,
     IonGrid, IonRow, IonCol, IonInput,
-    IonCard, IonCardHeader, IonCardContent, IonList,
-    IonListHeader, IonLabel, IonItem, IonText, IonIcon,
-    IonModal, IonContent, IonSelectOption, IonNote,
+    IonLabel, IonItem, IonText, IonSelectOption, IonNote,
     IonSelect,
     IonSelectOption,
-    IonToggle,
-    IonDatetime]
+    IonToggle]
 })
 export class Control3DFormComponent {
   /** Formulaire pour les spécifications SBO. */
@@ -114,27 +110,6 @@ export class Control3DFormComponent {
   //     // Ajouter les autres champs nécessaires
   //   });
 
-  //   this.controlForm = this.fb.group({
-  //     id: [null],
-  //     outillage: [null],
-  //     outillNoRefSAP: [this.outillNoRefSAPForm],
-  //     bloquantProd: [false],
-  //     dispoOut: [null],
-  //     refPlan: ['', Validators.required],
-  //     indPlan: ['', Validators.required],
-  //     cheminCAO: [''],
-  //     dateBesoin: [null],
-  //     ligneBudgetaire: ['', Validators.required],
-  //     typeRapport: [''],
-  //     description: ['', Validators.required],
-  //     detailsControle: ['', Validators.required],
-  //     tolerances: ['', Validators.required],
-  //     immobilisationOutillage: [null],
-  //     interventionDate: [null],
-  //     infosComplementaire: [''],
-  //     moyenMesure: [''],
-  //     visaControleur: ['']
-  //   });
 
   //   // Synchroniser les données d'entrée avec les formulaires
   //   effect(() => {

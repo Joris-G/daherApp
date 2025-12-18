@@ -125,7 +125,7 @@ export class MaintenanceToolRequestService {
     }> {
         this.loaderService.startLoading('Chargement de la demande de maintenance...');
 
-        return this.toolReqService.getToolRequest(toolRequestId).pipe(
+        return this.toolReqService.getToolRequest<SpecMaintRepRequest>(toolRequestId).pipe(
             concatMap((toolRequest) => {
                 if (!toolRequest.id) {
                     return throwError(() => new Error('Aucune maintenance associée à cette demande'));

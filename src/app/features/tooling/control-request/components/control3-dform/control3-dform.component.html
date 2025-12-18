@@ -1,4 +1,4 @@
-<form class="main-form" [formGroup]="specCtrlForm()">
+<form [formGroup]="specCtrlForm()">
   <ion-grid>
     <ion-row>
       <ion-col size="6">
@@ -6,12 +6,7 @@
         <!-- ******************************* -->
         <!-- *******   COMPLEMENT    ******* -->
         <!-- ******************************* -->
-        <ion-card>
-          <ion-card-header color=light>
-            <ion-card-title class="ion-text-uppercase">Complément</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-
+        <app-card [titles]="{title:'Complément'}">
             <ion-item>
               <ion-label>Bloquant Prod</ion-label>
               <ion-toggle slot="end" formControlName="bloquantProd"></ion-toggle>
@@ -20,24 +15,11 @@
             <!-- ******************************* -->
             <!-- ****   DATE MISE A DISPO   **** -->
             <!-- ******************************* -->
-            <ion-item button id="open-modal">
-              <ion-label>Date de mise à disposition au service outillage</ion-label>
-              <ion-text slot="end">
-                {{specCtrlForm().value.dispoOut | date:"dd/MM/yyyy"}}</ion-text>
-
-              <ion-icon slot=end icon="calendar-outline"></ion-icon>
-              <ion-modal trigger="open-modal">
-                <ng-template>
-                  <ion-content>
-                    <ion-datetime #dispoOut presentation="date" formControlName="dispoOut"
-                      display-format="EEEE DD.MMMM.YYYY"
-                      (ionChange)="specCtrlForm().value.dispoOut= dispoOut.value">
-                      <div slot="title">Date de mise à disposition au service outillage</div>
-                    </ion-datetime>
-                  </ion-content>
-                </ng-template>
-              </ion-modal>
-            </ion-item>
+                    <ion-item>
+          <ion-input labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY" formControlName="dispoOut">
+            <div slot="label">Date de mise à disposition au service outillage<ion-text color="danger"> *</ion-text></div>
+          </ion-input>
+          </ion-item>
 
 
             <!-- ******************************* -->
@@ -82,38 +64,20 @@
                 placeholder="Fournir CAO et / ou chemin d’accès">
               </ion-input>
             </ion-item>
-          </ion-card-content>
-        </ion-card>
+        </app-card>
 
 
         <!-- ******************************* -->
         <!-- *******   LE RAPPORT   ******** -->
         <!-- ******************************* -->
-        <ion-card>
-          <ion-card-header color=light>
-            <ion-card-title class="ion-text-uppercase">Le rapport</ion-card-title>
-          </ion-card-header>
+        <app-card [titles]="{title:'Le rapport'}">
           <!-- ******************************* -->
           <!-- *******   DATE BUTOIR   ******* -->
           <!-- ******************************* -->
-
-
-          <ion-item button id="open-date-butoir">
-            <ion-label>Date butoir demandée</ion-label>
-            <ion-icon slot=end icon="calendar-outline"></ion-icon>
-            <ion-text slot="end">
-              {{specCtrlForm().value.dateBesoin | date:"dd/MM/yyyy"}}</ion-text>
-            <!-- <ion-button id="open-modal">Open Datetime Modal</ion-button> -->
-            <ion-modal trigger="open-date-butoir">
-              <ng-template>
-                <ion-content>
-                  <ion-datetime #needDate presentation="date" formControlName="dateBesoin"
-                    display-format="EEEE DD.MMMM.YYYY">
-                    <div slot="title">Date butoir demandée</div>
-                  </ion-datetime>
-                </ion-content>
-              </ng-template>
-            </ion-modal>
+                               <ion-item>
+          <ion-input labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY" formControlName="dateBesoin">
+            <div slot="label">Date butoir demandée<ion-text color="danger"> *</ion-text></div>
+          </ion-input>
           </ion-item>
 
 
@@ -135,15 +99,14 @@
 
 
           <ion-item>
-            <ion-label>Types de rapport</ion-label>
-            <ion-select required #typeRapportSelect formControlName="typeRapport">
+            <ion-select  #typeRapportSelect formControlName="typeRapport">
               @for(type of typeRapport| keyvalue; track $index){
-              
               <ion-select-option [value]="type.value">{{type.value}}</ion-select-option>
               }
+               <div slot="label">Types de rapport<ion-text color="danger"> *</ion-text></div>
             </ion-select>
           </ion-item>
-        </ion-card>
+        </app-card>
 
 
       </ion-col>
@@ -151,11 +114,7 @@
         <!-- ******************************* -->
         <!-- ******   LE CONTROLE   ******** -->
         <!-- ******************************* -->
-        <ion-card>
-          <ion-card-header color=light>
-            <ion-card-title class="ion-text-uppercase">Le contrôle</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
+        <app-card [titles]="{title:'Le contrôle'}">
             <!-- ******************************* -->
             <!-- ******   DESCRIPTION   ******** -->
             <!-- ******************************* -->
@@ -221,8 +180,7 @@
               <!-- <ion-textarea autoGrow required #tolerance formControlName="precisionTolerances" type="text"
               placeholder="IT plans et spécifications de définition"></ion-textarea> -->
             </div>
-          </ion-card-content>
-        </ion-card>
+        </app-card>
 
       </ion-col>
     </ion-row>
@@ -234,10 +192,7 @@
         <!-- *******   LA MESURE   ********* -->
         <!-- ******************************* -->
         @if(requestState()){
-        <ion-card>
-          <ion-card-header color=light>
-            <ion-card-title class="ion-text-uppercase">La Mesure</ion-card-title>
-          </ion-card-header>
+        <app-card [titles]="{title:'La Mesure'}">
           <ion-item>
             <!-- <ion-label position="stacked"></ion-label> -->
             <ion-input label="Durée d'immobilisation estimée de l'outillage" labelPlacement="stacked" type="number"
@@ -245,27 +200,11 @@
             <ion-note slot="end">en jours</ion-note>
           </ion-item>
         
-          <!-- Datetime in overlay -->
-          <ion-item button id="open-date-interv">
-            <ion-label>Date d'intervention</ion-label>
-            <ion-icon slot=end icon="calendar-outline"></ion-icon>
-            <ion-text slot="end">
-              {{specCtrlForm().value.interventionDate | date:"dd/MM/yyyy"}}</ion-text>
-            <!-- TODO intervention -->
-            <!-- <ion-text slot="end " *ngIf="toolRequest?.controle?.interventionDate">
-                    {{toolRequest?.controle?.interventionDate | date:"dd/MM/yyyy"}}</ion-text> -->
-            <!-- <ion-button id="open-modal ">Open Datetime Modal</ion-button> -->
-            <ion-modal trigger="open-date-interv">
-              <ng-template>
-                <ion-content>
-                  <ion-datetime #interventionDate presentation="date" formControlName="interventionDate"
-                    display-format="EEEE DD.MMMM.YYYY">
-                    <div slot="title">Date d'intervention</div>
-                  </ion-datetime>
-                </ion-content>
-              </ng-template>
-            </ion-modal>
+                                         <ion-item>
+          <ion-input label="Date d'intervention" labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY" formControlName="interventionDate">
+          </ion-input>
           </ion-item>
+
         
           <div class="vertical">
         
@@ -294,7 +233,7 @@
               }
             </ion-select>
           </ion-item>
-        </ion-card>
+        </app-card>
         }
       </ion-col>
     </ion-row>

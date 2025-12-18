@@ -1,4 +1,4 @@
-import { SpecCtrlStorage } from "src/app/tooling/models/controle-3d-request.model";
+import { SpecCtrlStorage } from "src/app/features/tooling/control-request/models/controle-3d-request.model";
 
 export const mockSpecCtrl: SpecCtrlStorage[] = [
     {
@@ -41,6 +41,7 @@ export const mockSpecCtrl: SpecCtrlStorage[] = [
         id: 7,
         description: "ddsqdqs",
         toolRequestId: 7,
+
 
     },
 ]

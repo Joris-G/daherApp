@@ -93,7 +93,7 @@ export class ToolRequestService {
   }
 
 
-  getToolRequest(id: string): Observable<ToolRequest | undefined> {
+  getToolRequest<ToolRequest>(id: string): Observable<ToolRequest | undefined> {
     console.log("get ToolRequest ", id);
     return this.http.get<ToolRequest>(`api/tools/request/${id}`);
   }

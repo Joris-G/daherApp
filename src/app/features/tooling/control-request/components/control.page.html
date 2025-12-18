@@ -1,18 +1,20 @@
 <!-- ******************************* -->
 <!-- **********   HEADER   *********** -->
 <!-- ******************************* -->
+ <!-- TODO FAIRE UN COMPOSANT COMMUN QUI GERE LE TITRE -->
 <ion-header>
   <ion-toolbar color=dark no-padding>
-    <ion-title>Remplacer par un signal pour gérer le titre de la page</ion-title>
+    <ion-title>{{page.pageTitle}}</ion-title>
   </ion-toolbar>
 </ion-header>
 <!-- ******************************* -->
 <!-- **********   CONTENT   *********** -->
 <!-- ******************************* -->
-<ion-content color=light>
+<ion-content>
   <!-- TODO Revoir la mise en page scroll partie droite -->
   <app-card [titles]="{title:'Outillage', subtitle:'Créer ou choisir'}">
-    <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
+    <app-tool-input formControlName="tool" />
+    <!-- <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" /> -->
   </app-card>
   <app-card [titles]="{title:'Controle 3D', subtitle:'description'}">
     <app-control3-dform [specCtrlForm]="controlForm" />
@@ -24,7 +26,6 @@
 <!-- ******************************* -->
 <!-- **********   FOOTER   *********** -->
 <!-- ******************************* -->
-<!-- <ion-footer>
-  <app-tool-request-footer [canManage]="requestState().canManage" [canUpdate]="requestState().canUpdate"
-    (evStatusChange)="onStatusChange($event)" (evSubmit)="onSubmit($event)" (evUpdate)="onUpdate($event)" />
-</ion-footer> -->
+<ion-footer>
+  <app-tool-request-footer [canSubmit]="controlForm.valid" [canManage]="canManage()" [canUpdate]="canUpdate()" (submit)="onSubmit()" />
+</ion-footer>

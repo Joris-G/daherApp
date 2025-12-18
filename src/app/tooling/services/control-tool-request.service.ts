@@ -4,7 +4,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { concatMap, finalize } from 'rxjs/operators';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { RequestService } from 'src/app/shared/services/request.service';
-import { SpecCtrl, ToolRequest } from 'src/app/tooling/models/sbo.model';
+import { SpecCtrl, ToolRequest } from 'src/app/features/tooling/sbo-request/models/sbo.model';
 import { environment } from 'src/environments/environment';
 import { ToolRequestService } from './tool-request.service';
 import { ToolService } from './tool.service';

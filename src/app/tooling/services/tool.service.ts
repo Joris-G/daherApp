@@ -13,7 +13,7 @@ import { RequestService } from 'src/app/shared/services/request.service';
 export class ToolService {
   constructor(
     private http: HttpClient,
-    private requestService: RequestService,
+    // private requestService: RequestService,
     private alertService: AlertService,
   ) { }
 
@@ -64,12 +64,12 @@ export class ToolService {
   }
 
   getToolById(idTool: string) {
-    return this.requestService.createGetRequest(`api/toolApi/tools/${idTool}`);
+    return this.http.get(`api/toolApi/tools/${idTool}`);
   }
 
   getToolByToolNumber(toolNumber: string): Observable<Tool | undefined> {
-    return this.requestService
-      .createGetRequest(`api/toolApi/tools?sapToolNumber=${toolNumber}`)
+    return this.http
+      .get(`api/tools`, { params: { "sapToolNumber": toolNumber } })
       .pipe(
         map((returnsData: any) => {
           if (returnsData.length === 1) {
@@ -87,7 +87,7 @@ export class ToolService {
 
   getToolByIdentification(identification: string) {
     return new Promise((resolve, reject) => {
-      this.requestService.createGetRequest(`api/toolApi/tools?identification=${identification}`)
+      this.http.get(`api/toolApi/tools?identification=${identification}`)
         .subscribe((returnsData: any) => {
           if (returnsData.length === 1) {
             const returnMoldingTool: Tool = returnsData[0];

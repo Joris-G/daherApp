@@ -5,9 +5,9 @@
 import { GroupeAffectation } from "src/app/_interfaces/groupe-affectation";
 import { User } from "src/app/_interfaces/user";
 import { Tool } from "../tool";
-import { SpecCtrlCreation, SpecCtrlRequest } from "./controle-3d-request.model";
+import { SpecCtrlCreation, SpecCtrlRequest } from "../../features/tooling/control-request/models/controle-3d-request.model";
 import { SpecMaintRepRequest } from "./maintenance-and-repair.model";
-import { SpecSBOCreation, SpecSBORequest } from "./sbo.model";
+import { SpecSBOCreation, SpecSBORequest } from "../../features/tooling/sbo-request/models/sbo.model";
 import { FormControl } from "@angular/forms";
 
 // ============================================================================
@@ -18,18 +18,18 @@ export interface ToolRequestBase {
   bloquantProd: boolean;
   dateBesoin: Date;
   tool: Tool;
+  createdAt: Date;
+  demandeur: User;
+  statut: RequestStatus;
   //TODO Outillage NO REF
   // tool: Tool | OutillNoRefSAP;
   groupeAffectation?: GroupeAffectation;
   affectation?: string[];
   dateAffectation?: Date;
   datePlanif?: Date;
-  statut: RequestStatus;
   dateReal?: Date;
   userReal?: User;
   toolingNote?: string;
-  createdAt: Date;
-  demandeur: User;
 }
 
 export type ToolRequestBaseForm = {
@@ -59,7 +59,7 @@ export interface ToolRequestStorage {
 }
 
 
-export type ToolRequestCreation = SpecCtrlCreation | SpecSBOCreation;
+export type ToolRequestCreation = SpecCtrlCreation | SpecSBOCreation | SpecMaintRepRequest;
 export type ToolRequest = SpecCtrlRequest | SpecMaintRepRequest | SpecSBORequest;
 
 

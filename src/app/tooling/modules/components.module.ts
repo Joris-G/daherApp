@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AppSharedModule } from 'src/app/shared/shared.module';
-import { Control3DPage } from '../components/control3-d/control.page';
-import { Control3DFormComponent } from '../components/control3-d/control3-dform/control3-dform.component';
+import { Control3DPage } from '../../features/tooling/control-request/components/control.page';
+import { Control3DFormComponent } from '../../features/tooling/control-request/components/control3-dform/control3-dform.component';
 import { ControledddComponent } from '../components/controle3d/controleddd.component';
 import { IndicatorsPage } from '../components/indicators/indicators.page';
 import { MaintenanceItemFormComponent } from '../components/maintenance-reparation/maintenance-item-form/maintenance-item-form.component';

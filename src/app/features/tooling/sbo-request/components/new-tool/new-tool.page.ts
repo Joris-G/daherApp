@@ -2,13 +2,13 @@ import { Component, computed, effect, inject, input, OnInit, signal } from '@ang
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IonButton, IonContent, IonFooter, IonToolbar, IonTitle, IonHeader, NavController } from '@ionic/angular/standalone';
 import { NgxEditorModule } from 'ngx-editor';
-import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/tooling/models/sbo.model';
+import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/features/tooling/sbo-request/models/sbo.model';
 import { ToolCreation } from 'src/app/tooling/tool';
 import { ActivatedRoute } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
 import { SboComponent } from '../../../../../tooling/components/sbo/sbo.component';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
-import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
+import { ToolRequestFormBuilder } from 'src/app/features/tooling/services/forms/toolRequestFormBuilder/tool-request-form-builder';
 import { ToolFormComponent } from '../../../../../tooling/components/create-tool/tool-form.component';
 import { ToolRequestStore } from '../../../../../tooling/stores/tool-request.store';
 import { take } from 'rxjs';

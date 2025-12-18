@@ -5,7 +5,7 @@ import { ToolRequestsPage } from "./tool-request-list/components/tool-requests.p
 import { RoleGuard } from "../../shared/services/users/role.guard";
 import { ToolListPage } from "../../tooling/components/tool-list/tool-list.page";
 import { MaintenanceReparationPage } from "../../tooling/components/maintenance-reparation/maintenance-reparation.page";
-import { Control3DPage } from "../../tooling/components/control3-d/control.page";
+import { Control3DPage } from "./control-request/components/control.page";
 import { ManageTeamPage } from "../../tooling/components/manage-team/manage-team.page";
 import { IndicatorsPage } from "../../tooling/components/indicators/indicators.page";
 

@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { IonRadioGroup, IonicModule } from '@ionic/angular';
-import { ToolRequest, MoyenMesure, TypeRapport } from 'src/app/tooling/models/sbo.model';
+import { ToolRequest, MoyenMesure, TypeRapport } from 'src/app/features/tooling/sbo-request/models/sbo.model';
 import { NgFor, DatePipe, KeyValuePipe } from '@angular/common';
 
 @Component({

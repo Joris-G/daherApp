@@ -2,23 +2,24 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
-import { ToolRequestManager } from '../../services/tool-request-manager.service';
+import { ToolRequestManager } from '../../../../tooling/services/tool-request-manager.service';
 import { Control3DFormComponent } from './control3-dform/control3-dform.component';
-import { ToolRequestFooterComponent } from '../../../features/tooling/components/tool-request-footer/tool-request-footer.component';
+import { ToolRequestFooterComponent } from '../../components/tool-request-footer/tool-request-footer.component';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter } from '@ionic/angular/standalone';
-import { ToolRequestService } from '../../services/tool-request.service';
+import { ToolRequestService } from '../../../../tooling/services/tool-request.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToolRequestFormBuilder } from 'src/app/shared/services/toolRequestFormBuilder/tool-request-form-builder';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
-import { ToolRequestStore } from '../../stores/tool-request.store';
 import { FormGroup } from '@angular/forms';
-import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { filter, take } from 'rxjs';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
-import { ToolFormComponent } from '../create-tool/tool-form.component';
-import { ToolCreation } from '../../tool';
-import { SpecCtrlRequest, SpecCtrlCreation, SpecCtrlUpdate } from '../../models/controle-3d-request.model';
+import { ToolFormComponent } from '../../../../tooling/components/create-tool/tool-form.component';
+import { SpecCtrlRequest, SpecCtrlCreation, SpecCtrlUpdate } from '../models/controle-3d-request.model';
+import { ControlRequestFormBuilder } from '../services/control-request.form-builder';
+import { ControlRequestStore } from 'src/app/tooling/stores/controlRequest.store';
+import { ToolInputComponent } from "../../components/tool-input/tool-input.component";
 
+
+// TODO message d'erreurs en snack
 @Component({
     selector: 'app-control',
     templateUrl: './control.page.html',
@@ -27,23 +28,24 @@ import { SpecCtrlRequest, SpecCtrlCreation, SpecCtrlUpdate } from '../../models/
   imports: [
     CardComponent,
     ToolFormComponent,
-        Control3DFormComponent,
-        ToolRequestFooterComponent,
+    Control3DFormComponent,
+    ToolRequestFooterComponent,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
-    IonFooter
-    ],
+    IonFooter,
+    ToolInputComponent
+],
 })
 export class Control3DPage {
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
-  private readonly formBuilderService = inject(ToolRequestFormBuilder);
+  private readonly formBuilderService = inject(ControlRequestFormBuilder);
   private readonly programService = inject(ProgramsService);
   private readonly router = inject(Router);
-  protected readonly store = inject(ToolRequestStore);
+  protected readonly store = inject(ControlRequestStore);
   private readonly toolRequestService = inject(ToolRequestService);
   private readonly toolRequestManager: ToolRequestManager = inject(ToolRequestManager);
   private readonly loaderService: LoadingService = inject(LoadingService);
@@ -59,34 +61,39 @@ export class Control3DPage {
   /** Indique si la page est en mode édition. */
   protected isEditMode = signal<boolean>(false);
 
-  /** Formulaire pour les spécifications SBO. */
+  /** Formulaire pour les spécifications controle outillage. */
   protected controlForm: FormGroup;
-  /** Formulaire pour l'outil. */
-  protected toolForm: FormGroup;
 
   /** Liste des programmes avion */
-  programs = signal<ProgrammeAvion[]>([]);
+  // programs = signal<ProgrammeAvion[]>([]);
 
+/** Configuration de la page */
+  public page = {
+    pageTitle: 'Création d\'une demande de controle 3D',
+    menuTitle: 'Menu outillage',
+    // menuItems: MENU_ITEMS,
+    contentId: 'tooling-content'
+  };
 
   // ============================================================================
   // SIGNALS (État réactif)
   // ============================================================================
+  protected readonly canManage = this.store.canManage;
+  protected readonly canUpdate = this.store.canUpdate;
+
   // protected readonly toolRequest = signal<ToolRequest | null>(null);
   // // protected readonly controlRequest = signal<ControlRequest | null>(null);
   // protected readonly requestState = signal<RequestState>(new RequestState());
   // protected readonly pageTitle = signal('Nouvelle demande de contrôle 3D');
 
   // readonly toolRequestId: string;
-  // controlForm: FormGroup
-  // toolRequestForm: FormGroup
-  // outillNoRefSAPForm: FormGroup;
 
   // ============================================================================
   // LIFECYCLE HOOKS
   // ============================================================================
   constructor() {
     effect(() => {
-      const toolRequest = this.store.currentToolRequest() as SpecCtrlRequest;
+      const toolRequest = this.store.currentControlRequest() as SpecCtrlRequest;
       // On vérifie le mode édition pour ne pas remplir le formulaire en mode création
       if (toolRequest && this.isEditMode()) {
         this.fillForm(toolRequest);
@@ -99,7 +106,7 @@ export class Control3DPage {
      */
   ngOnInit(): void {
     this.initializeForms();
-    this.loadPrograms();
+    // this.loadPrograms();
 
 
     // 1. Lire les paramètres de la route
@@ -128,7 +135,6 @@ export class Control3DPage {
    */
   private initializeForms(): void {
     this.controlForm = this.formBuilderService.createSpecCtrlForm();
-    this.toolForm = this.formBuilderService.createNewToolForm();
   }
 
   // ============================================================================
@@ -139,15 +145,15 @@ export class Control3DPage {
    * Charge la liste des programmes avion.
    */
   private loadPrograms(): void {
-    this.programService.getPrograms().pipe(take(1)).subscribe({
-      next: (programList) => {
-        this.programs.set(programList);
-      },
-      error: (error) => {
-        console.error('Erreur lors du chargement des programmes:', error);
-        //TODO Vous pouvez ajouter un toast d'erreur ici
-      }
-    });
+    // this.programService.getPrograms().pipe(take(1)).subscribe({
+    //   next: (programList) => {
+    //     this.programs.set(programList);
+    //   },
+    //   error: (error) => {
+    //     console.error('Erreur lors du chargement des programmes:', error);
+    //     //TODO Vous pouvez ajouter un toast d'erreur ici
+    //   }
+    // });
   }
 
   // ionViewCanEnter() {
@@ -171,36 +177,27 @@ export class Control3DPage {
   // ============================================================================
   // HANDLERS D'ÉVÉNEMENTS
   // ============================================================================
-  protected onSubmit(toolRequest: SpecCtrlCreation) {
-    if (this.toolForm.invalid || this.controlForm.invalid) {
-      this.toolForm.markAllAsTouched();
+  protected onSubmit() {
+    if (this.controlForm.invalid) {
       this.controlForm.markAllAsTouched();
       return;
     }
-    console.log("onSubmit in page");
     if (this.isEditMode()) {
       this.onUpdateToolRequest();
     } else {
-      this.onCreateToolRequest();
+      this.onCreateControlRequest();
     }
   }
   /**
  * Créer une demande d'outillage complète
  */
-  private onCreateToolRequest() {
-    console.log("onCreateToolRequest in page");
-    // Validation
-    // if (this.toolForm.invalid || this.specSboForm.invalid) {
-    //   this.specSboForm.markAllAsTouched();
-    //   this.toolForm.markAllAsTouched();
-    //   return;
-    // }
-    const toolData: ToolCreation = this.toolForm.value;
-    const toolRequest: SpecCtrlCreation = {
+  private onCreateControlRequest() {
+    // const toolData: ToolCreation = this.toolForm.value;
+    const controlRequest: SpecCtrlCreation = {
       ...this.controlForm.value,
-      type: 'SBO',
+      type:'CONTROLE',
     };
-    this.store.createToolRequest(toolRequest, toolData);
+    this.store.createControlRequest(controlRequest);
   }
 
 
@@ -208,7 +205,7 @@ export class Control3DPage {
      * Met à jour une demande d'outillage complète
      */
   private onUpdateToolRequest(): void {
-    const currentRequest = this.store.currentToolRequest();
+    const currentRequest = this.store.currentControlRequest();
     if (!currentRequest || this.controlForm.invalid) {
       this.controlForm.markAllAsTouched();
       return;
@@ -262,7 +259,7 @@ export class Control3DPage {
    */
   private loadToolRequestForEdit(id: string): void {
     console.log("load ToolRequest for Edit");
-    this.store.loadToolRequest(id);
+    this.store.loadControlRequest(id);
   }
   /**
      * Préremplit le formulaire avec les données de la demande.
@@ -277,12 +274,11 @@ export class Control3DPage {
       toolingNote: request.toolingNote,
       tool: request.tool,
     });
-    this.toolForm.patchValue({
-      sapToolNumber: request.tool.sapToolNumber,
-      identification: request.tool.identification,
-      designation: request.tool.designation
-
-    })
+    // this.toolForm.patchValue({
+    //   sapToolNumber: request.tool.sapToolNumber,
+    //   identification: request.tool.identification,
+    //   designation: request.tool.designation
+    // })
     // L'outil est mis à jour dans le store: store.createdTool est initialisé
   }
 
