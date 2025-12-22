@@ -18,6 +18,8 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar color="light">
+    <button nz-button nzType="primary" [disabled]="toolForm.invalid || specSboForm.invalid"
+      (click)="onSubmit()">Primary</button>
     <ion-button [disabled]="toolForm.invalid || specSboForm.invalid" (click)="onSubmit()" slot=end expand="block"
       color=primary>
       Créer la demande

@@ -17,15 +17,15 @@ export const toolsHandlers = [
     return HttpResponse.json(tool, { status: 201 });
   }),
   // GET - Trouver un outillage
-  http.get('/api/tools', async ({ request }) => {
+  http.get('/api/tools', ({ request, params }) => {
     const url = new URL(request.url);
-    const refSAP = url.searchParams.get('sapToolNumber');
-    console.log(refSAP);
-    if (!refSAP) {
+    const sapToolNumber = url.searchParams.get('sapToolNumber');
+    console.log(sapToolNumber);
+    if (!sapToolNumber) {
       return HttpResponse.json(mockTools, { status: 200 });
     }
-    //TODO il cherche le chiffre alors que les refSap c'est OT ...
-    const responseTool = mockTools.find(mockTool => mockTool.sapToolNumber === refSAP);
+    //TODO il cherche le chiffre alors que les sapToolNumber c'est OT ...
+    const responseTool = mockTools.find(mockTool => mockTool.sapToolNumber === sapToolNumber);
     console.log(responseTool);
     if (responseTool) {
 

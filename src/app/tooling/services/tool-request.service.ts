@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
-import { ToolRequest, ToolRequestCreation } from '../models/tool-request.model';
+import { ToolRequest, ToolRequestCreation, ToolRequestUpdate } from '../models/tool-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +26,9 @@ export class ToolRequestService {
    * Obtient la liste des demandes d'outillage.
    * @returns Un Observable de la liste des demandes.
    */
-  getToolRequests(): Observable<ToolRequest[]> {
+  getToolRequests<ToolRequestReturnType extends ToolRequest>(): Observable<ToolRequestReturnType[]> {
     // NOTE: Le loader est géré par le Store qui appelle cette méthode.
-    return this.http.get<ToolRequest[]>(`api/tools/request`)
+    return this.http.get<ToolRequestReturnType[]>(`api/tools/request`)
       .pipe(
         // On retire take/share/finalize/catchError ici, car c'est le Store qui gère le cycle de vie de l'abonnement
         catchError((error) => {
@@ -44,8 +44,8 @@ export class ToolRequestService {
      * @param toolRequestToCreate - Les données de la demande.
      * @returns Un Observable de la demande créée.
      */
-  createToolRequest(toolRequestToCreate: ToolRequestCreation): Observable<ToolRequest> {
-    return this.http.post<ToolRequest>(`api/tools/request`, toolRequestToCreate);
+  createToolRequest<ToolRequestCreationType extends ToolRequestCreation, ToolRequestReturnType extends ToolRequest>(toolRequestToCreate: ToolRequestCreationType): Observable<ToolRequestReturnType> {
+    return this.http.post<ToolRequestReturnType>(`api/tools/request`, toolRequestToCreate);
   }
 
 
@@ -54,8 +54,8 @@ export class ToolRequestService {
      * @param toolRequestToUpdate - La demande à mettre à jour.
      * @returns Un Observable de la réponse de l'API.
      */
-  updateToolRequest(toolRequestToUpdate: Partial<ToolRequest>) {
-    return this.http.patch(`api/tools/request/${toolRequestToUpdate.id}`, toolRequestToUpdate)
+  updateToolRequest<ToolRequestUpdateType extends ToolRequestUpdate, ToolRequestReturnType extends ToolRequest>(toolRequestId: number, toolRequestToUpdate: Partial<ToolRequestUpdateType>) {
+    return this.http.patch<ToolRequestReturnType>(`api/tools/request/${toolRequestId}`, toolRequestToUpdate)
       .pipe(
         catchError((error) => {
           // Lancer l'erreur pour que le Store la capture
@@ -93,9 +93,9 @@ export class ToolRequestService {
   }
 
 
-  getToolRequest<ToolRequest>(id: string): Observable<ToolRequest | undefined> {
+  getToolRequest<ToolRequestType>(id: string): Observable<ToolRequestType> {
     console.log("get ToolRequest ", id);
-    return this.http.get<ToolRequest>(`api/tools/request/${id}`);
+    return this.http.get<ToolRequestType>(`api/tools/request/${id}`);
   }
 
 

@@ -138,7 +138,7 @@ export class ControlRequestStore {
      * Met à jour une demande d'outillage existante.
      * @param requestToUpdate - Les données de mise à jour.
      */
-  public updateToolRequest(requestToUpdate: SpecSBOUpdate | SpecCtrlUpdate | SpecMaintRepRequestUpdate): void {
+  public updateToolRequest(requestToUpdate: SpecCtrlUpdate): void {
     const currentId = this.currentControlRequest()?.id;
     if (!currentId) {
       this.updateState({ error: 'ID de demande manquant pour la mise à jour.' });
@@ -147,7 +147,7 @@ export class ControlRequestStore {
 
     this.updateState({ isUpdatingRequest: true, error: null });
 
-    this.toolRequestService.updateToolRequest(requestToUpdate).pipe(
+    this.toolRequestService.updateToolRequest<SpecCtrlUpdate, SpecCtrlRequest>(currentId, requestToUpdate).pipe(
       finalize(() => this.updateState({ isUpdatingRequest: false }))
     ).subscribe({
       next: () => {

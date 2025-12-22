@@ -13,8 +13,8 @@ export class ToolInputDirective {
         this.inputToolAction(eventTarget.value);
     }
 
-    @HostBinding('value')
-    toolInputValue: Tool;
+    // @HostBinding('value')
+    // toolInputValue: Tool;
 
     constructor(
         private toolService: ToolService,
@@ -25,8 +25,10 @@ export class ToolInputDirective {
 
 
     private inputToolAction(toolInput: string) {
+        console.log(toolInput);
         this.toolService.getToolByInput(toolInput)
-            .then((responseTool: Tool) => {
+            .subscribe((responseTool: Tool) => {
+                console.log(responseTool);
                 this.toolInputService.emitTool(responseTool);
             });
     }

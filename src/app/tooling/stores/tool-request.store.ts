@@ -4,9 +4,11 @@ import { ToolRequestService } from '../services/tool-request.service';
 import { SpecSBORequest, SpecSBOUpdate, } from '../../features/tooling/sbo-request/models/sbo.model';
 import { Tool, ToolCreation } from '../tool';
 import { ToolService } from '../services/tool.service';
-import { ToolRequest, ToolRequestCreation } from '../models/tool-request.model';
+import { ToolRequest, ToolRequestCreation, ToolRequestUpdate } from '../models/tool-request.model';
 import { SpecCtrlUpdate } from '../../features/tooling/control-request/models/controle-3d-request.model';
 import { SpecMaintRepRequestUpdate } from '../models/maintenance-and-repair.model';
+
+//TODO changement d'état onUpdate pour prévenir le composant list toolrequest de la mise à jour
 
 /**
  * Interface d'état pour le ToolRequestStore.
@@ -168,7 +170,7 @@ export class ToolRequestStore {
      * Met à jour une demande d'outillage existante.
      * @param requestToUpdate - Les données de mise à jour.
      */
-  public updateToolRequest(requestToUpdate: SpecSBOUpdate | SpecCtrlUpdate | SpecMaintRepRequestUpdate): void {
+  public updateToolRequest<ToolRequestUpdateType extends ToolRequestUpdate, ToolRequestReturnType extends ToolRequest>(requestToUpdate: ToolRequestUpdateType): void {
     const currentId = this.currentToolRequest()?.id;
     if (!currentId) {
       this.updateState({ error: 'ID de demande manquant pour la mise à jour.' });
@@ -177,7 +179,7 @@ export class ToolRequestStore {
 
     this.updateState({ isUpdatingRequest: true, error: null });
 
-    this.toolRequestService.updateToolRequest(requestToUpdate).pipe(
+    this.toolRequestService.updateToolRequest<ToolRequestUpdateType, ToolRequestReturnType>(currentId, requestToUpdate).pipe(
       finalize(() => this.updateState({ isUpdatingRequest: false }))
     ).subscribe({
       next: () => {

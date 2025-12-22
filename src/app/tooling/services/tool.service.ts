@@ -4,7 +4,7 @@ import { Tool, ToolCreation } from 'src/app/tooling/tool';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
-import { RequestService } from 'src/app/shared/services/request.service';
+
 
 
 @Injectable({
@@ -18,76 +18,27 @@ export class ToolService {
   ) { }
 
   getToolByInput(inputOTValue: string) {
-    return new Promise((resolve, reject) => {
-      switch (inputOTValue.length) {
-        case 5 | 6:
-          this.getToolByToolNumber(inputOTValue)
-            .subscribe((responseTool: Tool) => {
-              resolve(responseTool);
-            },
-              (message: string) => {
-                this.alertService.simpleAlert('Erreur', 'Le serveur outillage à renvoyé une erreur :', message);
-                reject();
-              });
-          break;
-        case 7:
-          // this.toolService.getEquipement()
-          break;
-        case 8:
-          if (inputOTValue.startsWith('OT')) {
-            this.getToolByToolNumber(inputOTValue.substring(inputOTValue.length - 5))
-              .subscribe((responseTool: Tool) => {
-                resolve(responseTool);
-              },
-                (message: string) => {
-                  this.alertService.simpleAlert('Erreur', 'Le serveur outillage à renvoyé une erreur :', message);
-                  reject();
-                });
-          }
-          break;
-
-        default:
-          this.getToolByIdentification(inputOTValue)
-            .then((responseTool: Tool) => {
-              resolve(responseTool);
-            },
-              (message: string) => {
-                this.alertService.simpleAlert('Erreur', 'Le serveur outillage à renvoyé une erreur :', message);
-                reject();
-              })
-            .catch((error) => {
-              console.error(error);
-            });
-          break;
-      }
-    });
+    console.log(inputOTValue);
+    return this.getToolByToolNumber(inputOTValue)
+    // TODO gérer les erreurs
+    // (message: string) => {
+    //   this.alertService.simpleAlert('Erreur', 'Le serveur outillage à renvoyé une erreur :', message);
+    //   reject();
+    // });
   }
 
-  getToolById(idTool: string) {
-    return this.http.get(`api/toolApi/tools/${idTool}`);
+  getToolById(idTool: string): Observable<Tool> {
+    return this.http.get<Tool>(`api/tools?${idTool}`);
   }
 
   getToolByToolNumber(toolNumber: string): Observable<Tool | undefined> {
-    return this.http
-      .get(`api/tools`, { params: { "sapToolNumber": toolNumber } })
-      .pipe(
-        map((returnsData: any) => {
-          if (returnsData.length === 1) {
-            const returnMoldingTool: Tool = returnsData[0];
-            return returnMoldingTool;
-          } else if (returnsData.length > 1) {
-            console.error('Il y a plus d\'un outillage correspondant en base de donnée');
-            return undefined;
-          } else {
-            console.error('aucun outillage trouvé');
-            return undefined;
-          }
-        }));
+    console.log(toolNumber);
+    return this.http.get<Tool>(`api/tools`, { params: { sapToolNumber: toolNumber } });
   }
 
   getToolByIdentification(identification: string) {
     return new Promise((resolve, reject) => {
-      this.http.get(`api/toolApi/tools?identification=${identification}`)
+      this.http.get(`api/tools/?identification=${identification}`)
         .subscribe((returnsData: any) => {
           if (returnsData.length === 1) {
             const returnMoldingTool: Tool = returnsData[0];
@@ -124,9 +75,8 @@ export class ToolService {
   }
 
   createTool(toolToCreate: ToolCreation) {
-    const tool: any = toolToCreate;
-    tool.sapToolNumber = parseInt(toolToCreate.sapToolNumber.substring(2), 10);
-    console.log(tool);
-    return this.http.post<Tool>(`api/tools`, tool);
+    // toolToCreate.sapToolNumber = parseInt(toolToCreate.sapToolNumber.substring(2), 10);
+    // console.log(tool);
+    return this.http.post<Tool>(`api/tools`, toolToCreate);
   }
 }

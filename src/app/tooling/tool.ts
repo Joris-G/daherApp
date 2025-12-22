@@ -4,9 +4,8 @@ export interface Tool {
   sapToolNumber: string;
   designation: string;
   programme?: any;
-  description?: string;
 }
-export type ToolCreation = Omit<Tool, 'id' | 'programme' | 'description'>
+export type ToolCreation = Omit<Tool, 'id' | 'programme'>
 
 export class ToolUtils {
   static isTool(inputValue: any) {

@@ -7,8 +7,7 @@ import { mockSpecCtrl } from "../mockData/mockSpecCtrl.mock";
 import { mockToolRequests } from "../mockData/mockToolRequest.mock";
 import { mockTools } from "../mockData/mockTools.mock";
 import { mockUsers } from "../mockData/mockUser.mock";
-import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlStorage } from "src/app/features/tooling/control-request/models/controle-3d-request.model";
-import { SpecMaintRepRequest } from "src/app/tooling/models/maintenance-and-repair.model";
+import { SpecCtrlRequest, SpecCtrlStorage } from "src/app/features/tooling/control-request/models/controle-3d-request.model";
 import { ToolRequestStorage, ToolRequest, ToolRequestCreation } from "src/app/tooling/models/tool-request.model";
 
 export const toolRequestHandlers = [
@@ -84,97 +83,117 @@ export const toolRequestHandlers = [
 
 
 
-  http.get('/api/tools/request', async ({ request }) => {
-    const allRequests: ToolRequest[] = mockToolRequests.map((request: ToolRequestStorage) => {
-      const requestSBO = request.type === "SBO" ? mockSpecSBO.find((sbo) => sbo.toolRequestId === request.id) : null
-      const newRequest: ToolRequest = {
-        ...request,
-        ...requestSBO,
-        demandeur: mockUsers[request.demandeurId - 1],
-        tool: mockTools[request.toolId - 1]
-      };
-      return newRequest;
-    })
-    return HttpResponse.json(allRequests, { status: 201 });
+  http.get('/api/tools/request', async () => {
+    // const allRequests: ToolRequest[] = mockToolRequests.map((request: ToolRequestStorage) => {
+    //   const requestSBO = request.type === "SBO" ? mockSpecSBO.find((sbo) => sbo.toolRequestId === request.id) : null
+    //   const newRequest: ToolRequest = {
+    //     ...request,
+    //     ...requestSBO,
+    //     demandeur: mockUsers[request.demandeurId - 1],
+    //     tool: mockTools[request.toolId - 1]
+    //   };
+    //   return newRequest;
+    // })
+    // return HttpResponse.json(allRequests, { status: 201 });
+    const allRequests = mockToolRequests.map(req => findToolRequestData(req.id));
+    return HttpResponse.json<ToolRequest[]>(allRequests, { status: 200 });
   }),
 
 
 
-  http.get('/api/tools/request/:id', async ({ request, params }) => {
-    const { id } = params;
-    const toolRequestId = Number(id);
-    return getToolRequestById(toolRequestId);
+  http.get('/api/tools/request/:id', async ({ params }) => {
+    // const { id } = params;
+    // const toolRequestId = Number(id);
+    // return getToolRequestById(toolRequestId);
+    const data = findToolRequestData(Number(params.id));
+    if (!data) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json<ToolRequest>(data);
   }),
 
   http.patch('/api/tools/request/:id', async ({ request, params }) => {
-    const { id } = params;
-    const toolRequestId = Number(id);
+    // const { id } = params;
+    // const toolRequestId = Number(id);
 
-    const updateDto: SpecSBOUpdate = await request.json() as SpecSBOUpdate;
+    // const updateDto: SpecSBOUpdate = await request.json() as SpecSBOUpdate;
 
-    const masterRequestIndex = mockToolRequests.findIndex(req => req.id === toolRequestId);
-    console.log(masterRequestIndex);
-    if (masterRequestIndex === -1) {
-      return new HttpResponse(null, { status: 404 });
+    // const masterRequestIndex = mockToolRequests.findIndex(req => req.id === toolRequestId);
+    // console.log(masterRequestIndex);
+    // if (masterRequestIndex === -1) {
+    //   return new HttpResponse(null, { status: 404 });
+    // }
+
+    // const masterRequest = mockToolRequests[masterRequestIndex];
+    // const originalType = masterRequest.type;
+
+    // const updatedMasterData = {
+    //   ...masterRequest,
+    //   title: updateDto.title,
+    //   description: updateDto.description,
+    //   dateBesoin: updateDto.dateBesoin,
+    //   // ... ajoutez d'autres champs maîtres communs si nécessaire (ex: statut, etc.)
+    // };
+
+    // mockToolRequests[masterRequestIndex] = updatedMasterData;
+
+    // let updatedDetailData: SpecSBOStorage | undefined;
+    // let detailDataIndex: number;
+
+    // switch (originalType) {
+    //   case "SBO":
+    //     detailDataIndex = mockSpecSBO.findIndex(s => s.toolRequestId === toolRequestId);
+    //     if (detailDataIndex !== -1) {
+    //       const specSboData = mockSpecSBO[detailDataIndex];
+    //       updatedDetailData = {
+    //         ...specSboData,
+    //         description: updateDto.description,
+    //         toolingNote: updateDto.toolingNote,
+    //         // ... ajoutez d'autres champs spécifiques SBO si nécessaire
+    //       } as SpecSBOStorage;
+    //       mockSpecSBO[detailDataIndex] = updatedDetailData;
+    //     }
+    //     break;
+    //   case "CONTROLE":
+    //     // Logique de mise à jour pour SpecCtrl...
+    //     break;
+    //   // ... autres types
+    //   default:
+    //     break;
+    // }
+
+    // const demandeur: User | undefined = mockUsers.find(u => u.id === updatedMasterData.demandeurId);
+    // const tool: Tool | OutillNoRefSAP | undefined = mockTools.find(t => t.id === updatedMasterData.toolId);
+
+    // if (!demandeur || !tool) {
+    //   return new HttpResponse(null, { status: 500 });
+    // }
+
+    // const fullUpdatedRequest: ToolRequest = {
+    //   ...updatedMasterData,
+    //   demandeur: demandeur,
+    //   tool: tool,
+    //   ...(updatedDetailData || {}) // Ajouter les détails spécifiques SBO mis à jour
+    // } as ToolRequest;
+
+
+    // delete (fullUpdatedRequest as any).demandeurId;
+    // delete (fullUpdatedRequest as any).toolId;
+
+    // return HttpResponse.json(fullUpdatedRequest);
+    const id = Number(params.id);
+    const updateDto = await request.json() as SpecSBOUpdate;
+
+    const index = mockToolRequests.findIndex(req => req.id === id);
+    if (index === -1) return new HttpResponse(null, { status: 404 });
+
+    // Mise à jour partielle (Declarative approach)
+    mockToolRequests[index] = { ...mockToolRequests[index], ...updateDto };
+
+    if (mockToolRequests[index].type === 'SBO') {
+      const sboIdx = mockSpecSBO.findIndex(s => s.toolRequestId === id);
+      if (sboIdx !== -1) mockSpecSBO[sboIdx] = { ...mockSpecSBO[sboIdx], ...updateDto };
     }
 
-    const masterRequest = mockToolRequests[masterRequestIndex];
-    const originalType = masterRequest.type;
-
-    const updatedMasterData = {
-      ...masterRequest,
-      title: updateDto.title,
-      description: updateDto.description,
-      dateBesoin: updateDto.dateBesoin,
-      // ... ajoutez d'autres champs maîtres communs si nécessaire (ex: statut, etc.)
-    };
-
-    mockToolRequests[masterRequestIndex] = updatedMasterData;
-
-    let updatedDetailData: SpecSBOStorage | undefined;
-    let detailDataIndex: number;
-
-    switch (originalType) {
-      case "SBO":
-        detailDataIndex = mockSpecSBO.findIndex(s => s.toolRequestId === toolRequestId);
-        if (detailDataIndex !== -1) {
-          const specSboData = mockSpecSBO[detailDataIndex];
-          updatedDetailData = {
-            ...specSboData,
-            description: updateDto.description,
-            toolingNote: updateDto.toolingNote,
-            // ... ajoutez d'autres champs spécifiques SBO si nécessaire
-          } as SpecSBOStorage;
-          mockSpecSBO[detailDataIndex] = updatedDetailData;
-        }
-        break;
-      case "CONTROLE":
-        // Logique de mise à jour pour SpecCtrl...
-        break;
-      // ... autres types
-      default:
-        break;
-    }
-
-    const demandeur: User | undefined = mockUsers.find(u => u.id === updatedMasterData.demandeurId);
-    const tool: Tool | OutillNoRefSAP | undefined = mockTools.find(t => t.id === updatedMasterData.toolId);
-
-    if (!demandeur || !tool) {
-      return new HttpResponse(null, { status: 500 });
-    }
-
-    const fullUpdatedRequest: ToolRequest = {
-      ...updatedMasterData,
-      demandeur: demandeur,
-      tool: tool,
-      ...(updatedDetailData || {}) // Ajouter les détails spécifiques SBO mis à jour
-    } as ToolRequest;
-
-
-    delete (fullUpdatedRequest as any).demandeurId;
-    delete (fullUpdatedRequest as any).toolId;
-
-    return HttpResponse.json(fullUpdatedRequest);
+    return HttpResponse.json(findToolRequestData(id));
   }),
 ];
 
@@ -237,3 +256,41 @@ const getToolRequestById = (toolRequestId: number) => {
   } as ToolRequest; // Le cast est maintenant valide car l'objet correspond aux propriétés attendues
   return HttpResponse.json(fullRequest);
 }
+
+/**
+ * Récupère et agrège les données d'une requête sans emballage HTTP.
+ * @param toolRequestId ID de la requête
+ * @returns ToolRequest ou null si non trouvé
+ */
+const findToolRequestData = (toolRequestId: number): ToolRequest | null => {
+  const master = mockToolRequests.find(req => req.id === toolRequestId);
+  if (!master) return null;
+
+  const demandeur = mockUsers.find(u => u.id === master.demandeurId);
+  const tool = mockTools.find(t => t.id === master.toolId);
+
+  let detailData: SpecCtrlStorage | SpecSBOStorage;
+  switch (master.type) {
+    case "SBO":
+      detailData = mockSpecSBO.find(s => s.toolRequestId === toolRequestId);
+      break;
+    case "CONTROLE":
+      detailData = mockSpecCtrl.find(s => s.toolRequestId === toolRequestId);
+      break;
+  }
+
+  // Construction de l'objet selon le principe de transformation de données
+  const result = {
+    ...master,
+    ...detailData,
+    demandeur,
+    tool
+  };
+
+  // Nettoyage des propriétés de stockage
+  delete (result as any).demandeurId;
+  delete (result as any).toolId;
+  delete (result as any).toolRequestId;
+
+  return result as ToolRequest;
+};

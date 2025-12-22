@@ -12,7 +12,7 @@ import { ProgramsService } from 'src/app/shared/services/programs/programs.servi
 import { FormGroup } from '@angular/forms';
 import { filter, take } from 'rxjs';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
-import { ToolFormComponent } from '../../../../tooling/components/create-tool/tool-form.component';
+import { ToolFormComponent } from '../../sbo-request/components/create-tool/tool-form.component';
 import { SpecCtrlRequest, SpecCtrlCreation, SpecCtrlUpdate } from '../models/controle-3d-request.model';
 import { ControlRequestFormBuilder } from '../services/control-request.form-builder';
 import { ControlRequestStore } from 'src/app/tooling/stores/controlRequest.store';

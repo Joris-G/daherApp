@@ -27,6 +27,6 @@ export const appConfig:ApplicationConfig = {
         // File,
     // FileOpener,
         // PDFGenerator,
-        provideAnimations(), provideNzI18n(fr_FR), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient()
+        provideAnimations(), provideNzI18n(fr_FR), importProvidersFrom(FormsModule), provideAnimationsAsync()
     ]
 }

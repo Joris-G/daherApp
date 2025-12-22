@@ -5,9 +5,9 @@
 import { GroupeAffectation } from "src/app/_interfaces/groupe-affectation";
 import { User } from "src/app/_interfaces/user";
 import { Tool } from "../tool";
-import { SpecCtrlCreation, SpecCtrlRequest } from "../../features/tooling/control-request/models/controle-3d-request.model";
+import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from "../../features/tooling/control-request/models/controle-3d-request.model";
 import { SpecMaintRepRequest } from "./maintenance-and-repair.model";
-import { SpecSBOCreation, SpecSBORequest } from "../../features/tooling/sbo-request/models/sbo.model";
+import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from "../../features/tooling/sbo-request/models/sbo.model";
 import { FormControl } from "@angular/forms";
 
 // ============================================================================
@@ -58,10 +58,10 @@ export interface ToolRequestStorage {
   toolingNote?: string;
 }
 
-
+//TODO Créer les type maintenance
 export type ToolRequestCreation = SpecCtrlCreation | SpecSBOCreation | SpecMaintRepRequest;
 export type ToolRequest = SpecCtrlRequest | SpecMaintRepRequest | SpecSBORequest;
-
+export type ToolRequestUpdate = SpecCtrlUpdate | SpecSBOUpdate | SpecMaintRepRequest;
 
 /**
  * @type RequestType
