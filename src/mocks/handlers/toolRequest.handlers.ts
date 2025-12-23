@@ -264,7 +264,7 @@ const getToolRequestById = (toolRequestId: number) => {
  * @param toolRequestId ID de la requête
  * @returns ToolRequest ou null si non trouvé
  */
-const findToolRequestData = (toolRequestId: number): ToolRequest | null => {
+const findToolRequestData = (toolRequestId: number): ToolRequest => {
   const master = mockToolRequests.find(req => req.id === toolRequestId);
   if (!master) return null;
 
@@ -274,10 +274,14 @@ const findToolRequestData = (toolRequestId: number): ToolRequest | null => {
   let detailData: SpecCtrlStorage | SpecSBOStorage;
   switch (master.type) {
     case "SBO":
-      detailData = mockSpecSBO.find(s => s.toolRequestId === toolRequestId);
+      const searchSpecSBO = mockSpecSBO.find(s => s.toolRequestId === toolRequestId);
+      detailData = searchSpecSBO ? { ...searchSpecSBO } : null;
+      delete (detailData as any).id;
       break;
     case "CONTROLE":
-      detailData = mockSpecCtrl.find(s => s.toolRequestId === toolRequestId);
+      const searchSpecCtrl = mockSpecCtrl.find(s => s.toolRequestId === toolRequestId);
+      detailData = searchSpecCtrl ? { ...searchSpecCtrl } : null;
+      delete (detailData as any).id;
       break;
   }
 
@@ -288,7 +292,7 @@ const findToolRequestData = (toolRequestId: number): ToolRequest | null => {
     demandeur,
     tool
   };
-
+  console.log(result);
   // Nettoyage des propriétés de stockage
   delete (result as any).demandeurId;
   delete (result as any).toolId;

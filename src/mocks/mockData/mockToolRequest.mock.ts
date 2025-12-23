@@ -12,5 +12,15 @@ export const mockToolRequests: ToolRequestStorage[] = [
     statut: "Nouvelle",
     toolId: mockTools[0].id,
     type: "SBO"
+  },
+  {
+    id: 2,
+    bloquantProd: false,
+    createdAt: new Date(),
+    dateBesoin: new Date(2026, 0, 25),
+    demandeurId: mockUsers[0].id,
+    statut: "Nouvelle",
+    toolId: mockTools[0].id,
+    type: "CONTROLE"
   }
 ]
