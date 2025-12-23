@@ -1,68 +1,104 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, signal, SimpleChanges } from '@angular/core';
-import { AsyncValidatorFn, ControlValueAccessor, FormControl, FormControlOptions, NG_VALUE_ACCESSOR, NgModel, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, effect, inject, signal, untracked, } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
 import { Tool } from 'src/app/tooling/tool';
-import { ToolInputService } from './tool-input.service';
-import { ToolInputDirective } from './tool-input.directive';
-import { IonIcon, IonInput, IonItem } from '@ionic/angular/standalone';
-import { Observable } from 'rxjs';
+import { IonIcon, IonInput, IonItem, IonSpinner, IonText } from '@ionic/angular/standalone';
+import { ToolInputStore } from './tool-input.store';
+import { ToolLabelPipe } from './tool-label-pipe';
+
+const TOOL_INPUT_VALIDATOR: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  return control.value ? null : { toolRequired: true };
+};
 
 @Component({
     selector: 'app-tool-input',
     templateUrl: './tool-input.component.html',
     styleUrls: ['./tool-input.component.scss'],
     providers: [
+      ToolInputStore,
         {
             provide: NG_VALUE_ACCESSOR,
             multi: true,
             useExisting: ToolInputComponent
         },
+      {
+        provide: NG_VALIDATORS,
+        useValue: TOOL_INPUT_VALIDATOR,
+        multi: true
+      }
     ],
     standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ToolInputDirective, IonItem, IonInput, IonIcon]
+  imports: [ToolLabelPipe, IonItem, IonInput, IonIcon, IonSpinner, IonText]
 })
-export class ToolInputComponent implements ControlValueAccessor, OnInit {
+export class ToolInputComponent implements ControlValueAccessor, Validator {
+  readonly store = inject(ToolInputStore);
 
-  ////////////////////////////////////////////////////
-  //INJECTION DEPENDANCES
-  ////////////////////////////////////////////////////
-  private readonly toolInputService = inject(ToolInputService);
-  readonly value = signal<Tool>(null);
-  readonly disabled = signal<boolean>(false);
+  readonly disabled = signal(false);
 
-  // public tool: Tool;
+  private onChange: (tool: Tool | null) => void = () => { };
+  protected onTouched = () => { };
 
-  ngOnInit(): void {
-    this.toolInputService.inputTool$
-      .subscribe((tool) => {
-        this.value.set(tool);
-        this.onChange(tool);
-      });
+
+  // readonly tool = this.store.tool;
+  // readonly loading = this.store.loading;
+  // readonly error = this.store.error;
+  // readonly success = this.store.success;
+
+  // readonly statusIcon = computed(() => {
+  //   if (this.loading()) return 'spinner';
+  //   if (this.error()) return 'close-outline';
+  //   if (this.success()) return 'checkmark';
+  //   return null;
+  // });
+
+  // readonly statusColor = computed(() => {
+  //   if (this.error()) return 'danger';
+  //   if (this.success()) return 'success';
+  //   return 'medium';
+  // });
+
+
+  constructor() {
+    effect(() => {
+      const currentTool = this.store.tool();
+      untracked(() => this.onChange(currentTool));
+    });
   }
 
-
-
-  // onInputChange() {
-  //   const value = this.inputElementRef.nativeElement.value;
-  //   this.onChange(value);
-  // }
-
-  onChange = (tool: Tool) => { };
-  onTouched = () => { };
-
-  writeValue(tool: Tool): void {
-    this.value.set(tool);
+  writeValue(tool: Tool | null): void {
+    this.store.tool.set(tool);
   }
 
-  registerOnChange(onChange: any): void {
-    this.onChange = onChange;
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
   }
-  registerOnTouched(onTouched: any): void {
-    this.onTouched = onTouched;
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
   }
-  setDisabledState?(isDisabled: boolean): void {
+
+  setDisabledState(isDisabled: boolean): void {
     this.disabled.set(isDisabled);
   }
 
+  validate(): ValidationErrors | null {
+    return this.store.tool() ? null : { toolRequired: true };
+  }
+
+  clear() {
+    this.store.clear();
+    this.onTouched();
+  }
+
+  /**
+     * @description Gère la saisie utilisateur
+     * @param event CustomEvent de ionInput
+     */
+  handleInput(event: any): void {
+    const value = event.detail.value;
+    this.store.loadTool(value);
+  }
 
 }

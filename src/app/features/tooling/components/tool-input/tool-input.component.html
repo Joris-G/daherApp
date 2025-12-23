@@ -1,18 +1,27 @@
-@let tool = value();
 <ion-item>
   <!-- <ion-label *ngIf="tool"> {{(tool.sapToolNumber.length > 5) ? ' OT' : ' OT0'}}</ion-label> -->
-  <ion-input label="Outillage SAP : " toolInput placeholder="n°OT SAP ou n° Equipement SAP" />
-  @if(tool){
-  <ion-icon slot="end" name="close-outline" color=danger></ion-icon>
-  }@else {
-  <ion-icon slot="end" name="checkmark" color=success></ion-icon>
+  <ion-input label="Outillage SAP : " placeholder="n°OT SAP ou n° Equipement SAP" [disabled]="disabled()"
+    [value]="store.tool()?.sapToolNumber" (ionInput)="handleInput($event)" (ionBlur)="onTouched()" />
+  @if(store.loading()){
+  <ion-spinner slot="end" />
+  }
+  @else if(store.error() || store.success()){
+  <ion-icon slot="end" [name]="store.error() ? 'close-outline' : 'checkmark'"
+    [color]="store.error() ? 'danger' : 'success'" [style.cursor]="store.error() ? 'pointer' : 'default'"
+    (click)="store.error() && clear()" />
   }
 </ion-item>
-@if(tool){
-<ion-item>
-  <ion-input label="Désignation outillage" type="text" disabled="true" [value]="tool.designation"></ion-input>
-  </ion-item>
-  <ion-item>
-  <ion-input label="Programme avion" type="text" disabled="true" [value]="tool.programme.designation"></ion-input>
+@if (store.error()) {
+<ion-text color="danger" class="ion-padding-start">
+  <small>{{ store.error() }}</small>
+</ion-text>
+}
+
+@if(store.tool(); as selectedTool){
+<ion-item lines="none">
+  <div slot="label">
+    <h3>{{ selectedTool.designation }}</h3>
+    <p>{{ selectedTool | toolLabel }} - {{ selectedTool.programme.designation }}</p>
+  </div>
   </ion-item>
 }

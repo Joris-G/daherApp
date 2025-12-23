@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+ion-item {
+  --border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+ion-item.invalid {
+  --highlight-color-focused: var(--ion-color-danger);
+}
+
+.error-text {
+  display: block;
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0 0.75rem;
+}
+
+ion-icon {
+  cursor: pointer;
+}
+
+ion-spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+}
