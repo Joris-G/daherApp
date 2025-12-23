@@ -14,25 +14,26 @@ export const toolRequestHandlers = [
      // POST - Créer une request
   http.post('/api/tools/request', async ({ request }) => {
     const newToolRequestId = mockToolRequests.length + 1;
-    const loggedInUserId = 1;
+    // TODO faire mieux pour le user
+    const demandeurId = 1;
     const requestData = await request.json() as ToolRequestCreation;
+    console.log(requestData);
     const newToolRequestData = {
-      demandeur: mockUsers[loggedInUserId - 1],
-      createdAt: new Date(),
+      demandeur: mockUsers[demandeurId - 1],
       ...requestData
-    } as ToolRequestCreation;
-    const toolRef = (newToolRequestData.tool as Tool).id;
+    };
+    const toolId = newToolRequestData.tool.id;
 
     const masterRequest: ToolRequestStorage = {
       id: newToolRequestId,
       type: newToolRequestData.type,
-      demandeurId: loggedInUserId, // Remplacer par l'utilisateur connecté
+      demandeurId,
       createdAt: new Date(),
       statut: "Nouvelle",
       bloquantProd: newToolRequestData.bloquantProd,
       dateBesoin: new Date(newToolRequestData.dateBesoin),
       // tool: newToolRequestData.tool,
-      toolId: toolRef,
+      toolId,
     };
     mockToolRequests.push(masterRequest);
 
@@ -41,23 +42,24 @@ export const toolRequestHandlers = [
         const newSpecCtrlId = mockSpecCtrl.length + 1
         const specCtrlData = newToolRequestData as SpecCtrlRequest;
         const newSpecCtrlEntry: SpecCtrlStorage = {
+          ...specCtrlData,
           id: newSpecCtrlId,
           toolRequestId: newToolRequestId,
-          description: specCtrlData.description,
-          refPlan: specCtrlData.refPlan,
-          image: specCtrlData.image,
-          fichier: specCtrlData.fichier,
-          indPlan: specCtrlData.indPlan,
-          cheminCAO: specCtrlData.cheminCAO,
-          detailsControle: specCtrlData.detailsControle,
-          tolerances: specCtrlData.tolerances,
-          dispoOut: specCtrlData.dispoOut,
-          typeRapport: specCtrlData.typeRapport,
-          moyenMesure: specCtrlData.moyenMesure,
-          infosComplementaire: specCtrlData.infosComplementaire,
-          visaControleur: specCtrlData.visaControleur,
-          interventionDate: specCtrlData.interventionDate,
-          ligneBudgetaire: specCtrlData.ligneBudgetaire
+          // description: specCtrlData.description,
+          // refPlan: specCtrlData.refPlan,
+          // image: specCtrlData.image,
+          // fichier: specCtrlData.fichier,
+          // indPlan: specCtrlData.indPlan,
+          // cheminCAO: specCtrlData.cheminCAO,
+          // detailsControle: specCtrlData.detailsControle,
+          // tolerances: specCtrlData.tolerances,
+          // dispoOut: specCtrlData.dispoOut,
+          // typeRapport: specCtrlData.typeRapport,
+          // moyenMesure: specCtrlData.moyenMesure,
+          // infosComplementaire: specCtrlData.infosComplementaire,
+          // visaControleur: specCtrlData.visaControleur,
+          // interventionDate: specCtrlData.interventionDate,
+          // ligneBudgetaire: specCtrlData.ligneBudgetaire
         };
         console.log(newSpecCtrlEntry);
         mockSpecCtrl.push(newSpecCtrlEntry);

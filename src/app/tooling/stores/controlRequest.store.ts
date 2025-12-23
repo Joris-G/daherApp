@@ -94,9 +94,11 @@ export class ControlRequestStore {
    * @param controlRequest - Les données de la demande de controle.
    */
   public createControlRequest(controlRequest: SpecCtrlCreation): void {
+    // TODO cohérence des dates
+    console.log(controlRequest);
     this.resetCreationState();
     this.updateState({ isCreatingRequest: true, error: null });
-     this.toolRequestService.createToolRequest(controlRequest)  
+    this.toolRequestService.createToolRequest<SpecCtrlCreation, SpecCtrlRequest>(controlRequest)  
     .pipe(
         delay(2000),
         take(1),

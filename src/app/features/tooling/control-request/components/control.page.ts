@@ -9,7 +9,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter } from '@ionic/a
 import { ToolRequestService } from '../../../../tooling/services/tool-request.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, ɵInternalFormsSharedModule } from '@angular/forms';
 import { filter, take } from 'rxjs';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { ToolFormComponent } from '../../sbo-request/components/create-tool/tool-form.component';
@@ -26,6 +26,7 @@ import { ToolInputComponent } from "../../components/tool-input/tool-input.compo
     styleUrls: ['./control.page.scss'],
     standalone: true,
   imports: [
+    ReactiveFormsModule,
     CardComponent,
     ToolFormComponent,
     Control3DFormComponent,
@@ -35,7 +36,8 @@ import { ToolInputComponent } from "../../components/tool-input/tool-input.compo
     IonTitle,
     IonContent,
     IonFooter,
-    ToolInputComponent
+    ToolInputComponent,
+    ɵInternalFormsSharedModule
 ],
 })
 export class Control3DPage {
@@ -99,6 +101,29 @@ export class Control3DPage {
         this.fillForm(toolRequest);
       }
     });
+
+    effect(async () => {
+      const isCreatingSuccess = this.store.isCreatingSuccess();
+      if (isCreatingSuccess) {
+        await this.alertService.presentToast('Demande créée avec succès', 'success');
+        this.navCtrl.navigateForward(['tooling/requests']);
+      } else {
+
+      }
+    });
+    effect(async () => {
+      const isCreatingRequest = this.store.isCreatingRequest();
+      if (isCreatingRequest) {
+        await this.loaderService.startLoading('Envoie de la demande ...');
+      } else {
+        await this.loaderService.stopLoading();
+      }
+    });
+
+    effect(async () => {
+      const error = this.store.error();
+      if (error) await this.alertService.presentToast(error, 'danger');
+    })
   }
 
   /**
@@ -134,7 +159,16 @@ export class Control3DPage {
    * Initialise les FormGroup nécessaires à la page.
    */
   private initializeForms(): void {
-    this.controlForm = this.formBuilderService.createSpecCtrlForm();
+    this.controlForm = this.formBuilderService.createSpecCtrlForm({
+      description: 'fsehdjofuihus',
+      detailsControle: 'fsdgfsdgdfdfh',
+      indPlan: 'A',
+      infosComplementaire: 'fdsfgfh',
+      tolerances: 'fsfgsg',
+      refPlan: 'PLANREFERENCE',
+      ligneBudgetaire: 'grsdgdfg',
+      dateBesoin: new Date(2026, 0, 12),
+    });
   }
 
   // ============================================================================

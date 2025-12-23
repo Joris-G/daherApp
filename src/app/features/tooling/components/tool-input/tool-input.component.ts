@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, signal, SimpleChanges } from '@angular/core';
+import { AsyncValidatorFn, ControlValueAccessor, FormControl, FormControlOptions, NG_VALUE_ACCESSOR, NgModel, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Tool } from 'src/app/tooling/tool';
 import { ToolInputService } from './tool-input.service';
 import { ToolInputDirective } from './tool-input.directive';
 import { IonIcon, IonInput, IonItem } from '@ionic/angular/standalone';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-tool-input',
@@ -17,20 +18,24 @@ import { IonIcon, IonInput, IonItem } from '@ionic/angular/standalone';
         },
     ],
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ToolInputDirective, IonItem, IonInput, IonIcon]
 })
 export class ToolInputComponent implements ControlValueAccessor, OnInit {
+
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
   private readonly toolInputService = inject(ToolInputService);
-  disabled = false;
-  public tool: Tool;
+  readonly value = signal<Tool>(null);
+  readonly disabled = signal<boolean>(false);
+
+  // public tool: Tool;
 
   ngOnInit(): void {
     this.toolInputService.inputTool$
       .subscribe((tool) => {
-        this.tool = tool;
+        this.value.set(tool);
         this.onChange(tool);
       });
   }
@@ -46,7 +51,7 @@ export class ToolInputComponent implements ControlValueAccessor, OnInit {
   onTouched = () => { };
 
   writeValue(tool: Tool): void {
-    this.tool = tool;
+    this.value.set(tool);
   }
 
   registerOnChange(onChange: any): void {
@@ -56,7 +61,7 @@ export class ToolInputComponent implements ControlValueAccessor, OnInit {
     this.onTouched = onTouched;
   }
   setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabled.set(isDisabled);
   }
 
 

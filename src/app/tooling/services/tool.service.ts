@@ -31,29 +31,13 @@ export class ToolService {
     return this.http.get<Tool>(`api/tools?${idTool}`);
   }
 
-  getToolByToolNumber(toolNumber: string): Observable<Tool | undefined> {
+  getToolByToolNumber(toolNumber: string): Observable<Tool> {
     console.log(toolNumber);
     return this.http.get<Tool>(`api/tools`, { params: { sapToolNumber: toolNumber } });
   }
 
-  getToolByIdentification(identification: string) {
-    return new Promise((resolve, reject) => {
-      this.http.get(`api/tools/?identification=${identification}`)
-        .subscribe((returnsData: any) => {
-          if (returnsData.length === 1) {
-            const returnMoldingTool: Tool = returnsData[0];
-            resolve(returnMoldingTool);
-          } else if (returnsData.length > 1) {
-            reject('Il y a plus d\'un outillage correspondant en base de donnée');
-          } else {
-            reject('aucun outillage trouvé');
-          }
-        },
-          (error) => {
-            console.log(error);
-            reject('Pas de réponse du serveur');
-          });
-    });
+  getToolByIdentification(identification: string): Observable<Tool> {
+    return this.http.get<Tool>(`api/tools/?identification=${identification}`);
   }
 
   getAllTools() {
