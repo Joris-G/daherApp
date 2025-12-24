@@ -3,8 +3,8 @@ import { ToolRequestFiltersComponent } from '../../../../tooling/components/tool
 import { ToolRequestTableComponent } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-table/tool-request-table.component';
 import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { ToolRequestFilterService } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.service';
-import { ToolRequestListStore } from '../../../../tooling/stores/tool-request-list.store';
-import { ToolRequest } from '../../../../tooling/models/tool-request.model';
+import { ToolRequestListStore } from '../../stores/tool-request-list.store';
+import { ToolRequest } from '../../models/tool-request.model';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 
 @Component({

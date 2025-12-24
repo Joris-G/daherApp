@@ -3,7 +3,7 @@ import { ToolRequestService } from 'src/app/tooling/services/tool-request.servic
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { IonicModule } from '@ionic/angular';
 import { NgFor } from '@angular/common';
-import { ToolRequest } from '../../models/tool-request.model';
+import { ToolRequest } from '../../../features/tooling/models/tool-request.model';
 
 @Component({
     selector: 'app-tool-list',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of, Subject } from 'rxjs';
 import { AdditionalMaterial, Core, Kit } from 'src/app/_interfaces/molding/composite-material-types';
-import { Tool } from 'src/app/tooling/tool';
+import { Tool } from 'src/app/features/tooling/models/tool.model';
 import { CoreService } from 'src/app/molding/services/core.service';
 import { KitService } from 'src/app/molding/services/kit.service';
 import { ToolService } from 'src/app/tooling/services/tool.service';

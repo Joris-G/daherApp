@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { ToolRequestManager } from '../../../../tooling/services/tool-request-manager.service';
-import { Control3DFormComponent } from './control3-dform/control3-dform.component';
+import { Control3DFormComponent } from '../../components/control3-dform/control3-dform.component';
 import { ToolRequestFooterComponent } from '../../components/tool-request-footer/tool-request-footer.component';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter } from '@ionic/angular/standalone';
 import { ToolRequestService } from '../../../../tooling/services/tool-request.service';
@@ -12,11 +12,11 @@ import { ProgramsService } from 'src/app/shared/services/programs/programs.servi
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { filter, take } from 'rxjs';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
-import { ToolFormComponent } from '../../sbo-request/components/create-tool/tool-form.component';
-import { SpecCtrlRequest, SpecCtrlCreation, SpecCtrlUpdate, SpecCtrlRequestControls } from '../models/controle-3d-request.model';
-import { ControlRequestFormBuilder } from '../services/control-request.form-builder';
-import { ControlRequestStore } from 'src/app/tooling/stores/controlRequest.store';
+import { ToolFormComponent } from '../../components/create-tool/tool-form.component';
+import { ControlRequestFormBuilder } from '../../services/forms/control-request.form-builder';
+import { ControlRequestStore } from 'src/app/features/tooling/stores/controlRequest.store';
 import { ToolInputComponent } from "../../components/tool-input/tool-input.component";
+import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlRequestControls, SpecCtrlUpdate } from '../../models/controle-3d-request.model';
 
 
 // TODO message d'erreurs en snack

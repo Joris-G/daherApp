@@ -2,7 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
-import { MaintenanceItem } from 'src/app/tooling/models/maintenance-and-repair.model';
+import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and-repair.model';
 import { IonButton, IonButtons, IonContent, IonIcon, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonModal, IonText } from '@ionic/angular/standalone';
 
 @Component({

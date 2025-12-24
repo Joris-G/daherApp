@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } fro
 import { IonButton, IonInput, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { AdditionalMaterial, Kit } from 'src/app/_interfaces/molding/composite-material-types';
-import { Tool } from 'src/app/tooling/tool';
+import { Tool } from 'src/app/features/tooling/models/tool.model';
 import { ScanService } from 'src/app/molding/services/scan.service';
 import { NgIf } from '@angular/common';
 

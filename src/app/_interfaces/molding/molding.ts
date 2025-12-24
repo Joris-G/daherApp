@@ -1,5 +1,5 @@
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Tool } from 'src/app/tooling/tool';
+import { Tool } from 'src/app/features/tooling/models/tool.model';
 import { User } from 'src/app/_interfaces/user';
 import { AdditionalMaterial, Core, Kit } from './composite-material-types';
 

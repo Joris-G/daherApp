@@ -1,4 +1,4 @@
-import { SpecCtrlStorage } from "src/app/features/tooling/control-request/models/controle-3d-request.model";
+import { SpecCtrlStorage } from "src/app/features/tooling/models/controle-3d-request.model";
 
 export const mockSpecCtrl: SpecCtrlStorage[] = [
     {

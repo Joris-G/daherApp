@@ -1,5 +1,5 @@
 import { Pipe } from "@angular/core";
-import { Tool } from "src/app/tooling/tool";
+import { Tool } from "src/app/features/tooling/models/tool.model";
 
 @Pipe({
   name: 'toolLabel',

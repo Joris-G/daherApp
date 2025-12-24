@@ -1,14 +1,14 @@
 import { http, HttpResponse, JsonBodyType } from "msw";
 import { User } from "src/app/_interfaces/user";
-import { Tool, OutillNoRefSAP } from "src/app/tooling/tool";
-import { SpecSBOCreation, SpecSBOStorage, SpecSBOUpdate, } from "src/app/features/tooling/sbo-request/models/sbo.model";
+import { Tool, OutillNoRefSAP } from "src/app/features/tooling/models/tool.model";
+import { SpecSBOCreation, SpecSBOStorage, SpecSBOUpdate, } from "src/app/features/tooling/models/sbo.model";
 import { mockSpecSBO } from "../mockData/mockSBO.mock";
 import { mockSpecCtrl } from "../mockData/mockSpecCtrl.mock";
 import { mockToolRequests } from "../mockData/mockToolRequest.mock";
 import { mockTools } from "../mockData/mockTools.mock";
 import { mockUsers } from "../mockData/mockUser.mock";
-import { SpecCtrlRequest, SpecCtrlStorage } from "src/app/features/tooling/control-request/models/controle-3d-request.model";
-import { ToolRequestStorage, ToolRequest, ToolRequestCreation } from "src/app/tooling/models/tool-request.model";
+import { ToolRequestStorage, ToolRequest, ToolRequestCreation } from "src/app/features/tooling/models/tool-request.model";
+import { SpecCtrlRequest, SpecCtrlStorage } from "src/app/features/tooling/models/controle-3d-request.model";
 
 export const toolRequestHandlers = [
      // POST - Créer une request

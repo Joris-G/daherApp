@@ -1,12 +1,10 @@
-
-
 // ============================================================================
 // SPÉCIFICATIONS CONTRÔLE
 // ============================================================================
 import { FormControl } from "@angular/forms";
-import { MoyenMesure } from "../../../../tooling/models/moyen-mesure.model";
-import { ToolRequestBase, ToolRequestBaseForm } from "../../../../tooling/models/tool-request.model";
-import { TypeRapport } from "../../../../tooling/models/type-rapport.model";
+import { ToolRequestBase, ToolRequestBaseForm } from "./tool-request.model";
+import { MoyenMesure } from "./moyen-mesure.model";
+import { TypeRapport } from "./type-rapport.model";
 
 // ============================================================================
 export type SpecCtrlRequest = ToolRequestBase & {

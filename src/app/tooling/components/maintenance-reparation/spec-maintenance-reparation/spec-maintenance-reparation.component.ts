@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonRadioGroup, IonicModule } from '@ionic/angular';
-import { ToolRequest } from 'src/app/features/tooling/sbo-request/models/sbo.model';
+import { ToolRequest } from 'src/app/features/tooling/models/sbo.model';
 import { NgFor, DatePipe } from '@angular/common';
 
 @Component({

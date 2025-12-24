@@ -64,7 +64,7 @@ export class UsersService {
   registerUser(userObj: UserCreate): Observable<User> {
     return this.http.post<User>(`api/users`, userObj)
       .pipe(
-      delay(2000)
+        delay(500)
     );
   }
 

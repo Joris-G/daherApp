@@ -29,7 +29,7 @@ export class AuthService {
   login(credentials: Credentials): Observable<AuthUser> {
     return this.http.post<AuthUser | any>(`api/login`, credentials)
       .pipe(
-        delay(2000)
+        delay(300)
     );
     // }
     // this.loadingService.stopLoading();

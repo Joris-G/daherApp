@@ -1,28 +1,24 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
-import { delay, finalize, switchMap, take, tap } from 'rxjs';
-import { ToolRequestService } from '../services/tool-request.service';
-import { SpecSBORequest } from '../../features/tooling/models/sbo.model';
-import { Tool, ToolCreation } from '../../features/tooling/models/tool.model';
-import { ToolService } from '../services/tool.service';
-import { ToolRequest, ToolRequestCreation, ToolRequestUpdate } from '../../features/tooling/models/tool-request.model';
+import { delay, finalize,  take } from 'rxjs';
+import { ToolRequestService } from '../../../tooling/services/tool-request.service';
+import { Tool} from '../models/tool.model';
+import { ToolService } from '../../../tooling/services/tool.service';
+import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from '../models/controle-3d-request.model';
 
-
-//TODO changement d'état onUpdate pour prévenir le composant list toolrequest de la mise à jour
 
 /**
- * Interface d'état pour le ToolRequestStore.
+ * Interface d'état pour le ControlRequestStore.
  * Représente l'état interne du Store.
- * @interface ToolRequestState
+ * @type ControlRequestState
  */
-export interface ToolRequestState {
-  isCreatingTool: boolean;
+export type ControlRequestState= {
   isCreatingRequest: boolean;
-  selectedTool: Tool | null;
-  error: string | null;
-  currentToolRequest: ToolRequest | null;
   isLoadingRequest: boolean;
   isUpdatingRequest: boolean;
   isCreatingSuccess: boolean;
+  selectedTool: Tool | null;
+  error: string | null;
+  currentControlRequest: SpecCtrlRequest  | null;
   canManage: boolean,
   canUpdate: boolean,
   canEdit: boolean,
@@ -35,7 +31,7 @@ export interface ToolRequestState {
  * Store pour la gestion de l'état et des actions liées à la création et à la modification 
  * de demandes d'outillage (SBO).
  */
-export class ToolRequestStore {
+export class ControlRequestStore {
   // ============================================================================
   // INJECTION DE DÉPENDANCES
   // ============================================================================
@@ -45,15 +41,14 @@ export class ToolRequestStore {
   // ============================================================================
   // ÉTAT INTERNE (Signals Privés Modifiables)
   // ============================================================================
-  private readonly state = signal<ToolRequestState>({
-    isCreatingTool: false,
+  private readonly state = signal<ControlRequestState>({
     isCreatingRequest: false,
-    selectedTool: null,
-    error: null,
-    currentToolRequest: null,
     isLoadingRequest: false,
     isUpdatingRequest: false,
     isCreatingSuccess: false,
+    selectedTool: null,
+    error: null,
+    currentControlRequest: null,
     canEdit: true,
     canManage: false,
     canUpdate: false,
@@ -63,8 +58,6 @@ export class ToolRequestStore {
   // SÉLECTEURS (Signals en Lecture Seule)
   // ============================================================================
 
-  /** Indique si un outil est en cours de création. */
-  public readonly isCreatingTool = computed(() => this.state().isCreatingTool);
 
   /** Indique si la demande est en cours de soumission. */
   public readonly isCreatingRequest = computed(() => this.state().isCreatingRequest);
@@ -79,7 +72,7 @@ export class ToolRequestStore {
   public readonly error = computed(() => this.state().error);
 
   /** La demande en cours d'édition. */
-  public readonly currentToolRequest = computed(() => this.state().currentToolRequest); // 👈 Nouveau
+  public readonly currentControlRequest = computed(() => this.state().currentControlRequest); // 👈 Nouveau
 
   /** Indique si une demande existante est en cours de chargement (pour l'édition). */
   public readonly isLoadingRequest = computed(() => this.state().isLoadingRequest); // 👈 Nouveau
@@ -96,44 +89,23 @@ export class ToolRequestStore {
   // ============================================================================
 
   /**
-   * Crée un nouvel outil en base de données.
-   * Met à jour l'état `createdTool` en cas de succès.
-   * @param toolData - Les données de création de l'outil.
+   * Soumet la demande de controle d'outillage.
+   * @param controlRequest - Les données de la demande de controle.
    */
-  public createTool(toolData: ToolCreation): void {
-    this.updateState({ isCreatingTool: true, error: null });
-
-    this.toolService.createTool(toolData).pipe(
-      tap((tool) => {
-        this.updateState({ selectedTool: tool });
-      }),
-      finalize(() => this.updateState({ isCreatingTool: false }))
-    ).subscribe({
-      error: (error) => {
-        console.error('Erreur lors de la création de l\'outil:', error);
-        this.updateState({ error: 'Erreur lors de la création de l\'outil.' });
-      },
-    });
-  }
-
-  /**
-   * Soumet la demande d'outillage SBO.
-   * @param toolRequest - Les données de la demande d'outillage.
-   */
-  public createToolRequest(toolRequest: ToolRequestCreation, toolData: ToolCreation): void {
-    this.resetCreationState();
+  public createControlRequest(controlRequest: SpecCtrlCreation): void {
+    // TODO cohérence des dates
+    // this.resetCreationState();
     this.updateState({ isCreatingRequest: true, error: null });
-    this.toolService.createTool(toolData)
-      .pipe(
+    this.toolRequestService.createToolRequest<SpecCtrlCreation, SpecCtrlRequest>(controlRequest)  
+    .pipe(
         delay(300),
-      take(1),
-      switchMap((createdTool: Tool) => {
-        toolRequest.tool = createdTool;
-        return this.toolRequestService.createToolRequest(toolRequest)
-      }),
-      finalize(() => this.updateState({ isCreatingRequest: false })
-      )
-    ).subscribe({
+        take(1),
+      finalize(() => {
+        this.updateState({ isCreatingRequest: false })
+        console.log("finalize creating");
+      })
+)
+    .subscribe({
       next: () => this.updateState({ isCreatingSuccess: true }),
       error: (error) => {
         console.error('Erreur lors de la création de la demande:', error);
@@ -146,15 +118,15 @@ export class ToolRequestStore {
      * Charge une demande existante par son ID pour l'édition.
      * @param requestId - L'ID de la demande.
      */
-  public loadToolRequest(requestId: string): void {
-    this.updateState({ isLoadingRequest: true, error: null, currentToolRequest: null });
-
-    this.toolRequestService.getToolRequest<SpecSBORequest>(requestId).pipe(
+  public loadControlRequest(requestId: string): void {
+    this.updateState({ isLoadingRequest: true, error: null, currentControlRequest: null });
+//TODO faire un service pour les controlRequest
+    this.toolRequestService.getToolRequest<SpecCtrlRequest>(requestId).pipe(
       finalize(() => this.updateState({ isLoadingRequest: false }))
     ).subscribe({
       next: (request) => {
         if (request) {
-          this.updateState({ currentToolRequest: request, selectedTool: request.tool });
+          this.updateState({ currentControlRequest: request, selectedTool: request.tool });
         } else {
           this.updateState({ error: `Demande avec ID ${requestId} non trouvée.` });
         }
@@ -169,8 +141,8 @@ export class ToolRequestStore {
      * Met à jour une demande d'outillage existante.
      * @param requestToUpdate - Les données de mise à jour.
      */
-  public updateToolRequest<ToolRequestUpdateType extends ToolRequestUpdate, ToolRequestReturnType extends ToolRequest>(requestToUpdate: ToolRequestUpdateType): void {
-    const currentId = this.currentToolRequest()?.id;
+  public updateToolRequest(requestToUpdate: SpecCtrlUpdate): void {
+    const currentId = this.currentControlRequest()?.id;
     if (!currentId) {
       this.updateState({ error: 'ID de demande manquant pour la mise à jour.' });
       return;
@@ -178,7 +150,7 @@ export class ToolRequestStore {
 
     this.updateState({ isUpdatingRequest: true, error: null });
 
-    this.toolRequestService.updateToolRequest<ToolRequestUpdateType, ToolRequestReturnType>(currentId, requestToUpdate).pipe(
+    this.toolRequestService.updateToolRequest<SpecCtrlUpdate, SpecCtrlRequest>(currentId, requestToUpdate).pipe(
       finalize(() => this.updateState({ isUpdatingRequest: false }))
     ).subscribe({
       next: () => {
@@ -208,10 +180,9 @@ export class ToolRequestStore {
   public resetCreationState(): void {
     this.updateState({
       selectedTool: null,
-      isCreatingTool: false,
       isCreatingSuccess: false,
       isCreatingRequest: false,
-      currentToolRequest: null,
+      currentControlRequest: null,
       isUpdatingRequest: false,
       error: null
     });
@@ -225,7 +196,7 @@ export class ToolRequestStore {
    * Met à jour une partie de l'état interne de manière immuable.
    * @param newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
    */
-  private updateState(newState: Partial<ToolRequestState>): void {
+  private updateState(newState: Partial<ControlRequestState>): void {
     this.state.update(current => ({
       ...current,
       ...newState

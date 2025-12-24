@@ -1,6 +1,6 @@
 import { mockUsers } from "./mockUser.mock";
 import { mockTools } from "./mockTools.mock";
-import { ToolRequestStorage } from "src/app/tooling/models/tool-request.model";
+import { ToolRequestStorage } from "src/app/features/tooling/models/tool-request.model";
 
 export const mockToolRequests: ToolRequestStorage[] = [
   {

@@ -1,11 +1,10 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { delay, finalize, switchMap, take, tap } from 'rxjs';
-import { ToolRequestService } from '../services/tool-request.service';
-import { SpecSBORequest } from '../../features/tooling/models/sbo.model';
-import { Tool, ToolCreation } from '../../features/tooling/models/tool.model';
-import { ToolService } from '../services/tool.service';
-import { ToolRequest, ToolRequestCreation, ToolRequestUpdate } from '../../features/tooling/models/tool-request.model';
-
+import { ToolRequestService } from '../../../tooling/services/tool-request.service';
+import { SpecSBORequest,  } from '../models/sbo.model';
+import { Tool, ToolCreation } from '../models/tool.model';
+import { ToolService } from '../../../tooling/services/tool.service';
+import { ToolRequest, ToolRequestCreation, ToolRequestUpdate } from '../models/tool-request.model';
 
 //TODO changement d'état onUpdate pour prévenir le composant list toolrequest de la mise à jour
 
@@ -23,6 +22,7 @@ export interface ToolRequestState {
   isLoadingRequest: boolean;
   isUpdatingRequest: boolean;
   isCreatingSuccess: boolean;
+  isUpdateSuccess:boolean;
   canManage: boolean,
   canUpdate: boolean,
   canEdit: boolean,
@@ -54,6 +54,7 @@ export class ToolRequestStore {
     isLoadingRequest: false,
     isUpdatingRequest: false,
     isCreatingSuccess: false,
+    isUpdateSuccess:false,
     canEdit: true,
     canManage: false,
     canUpdate: false,
@@ -69,8 +70,11 @@ export class ToolRequestStore {
   /** Indique si la demande est en cours de soumission. */
   public readonly isCreatingRequest = computed(() => this.state().isCreatingRequest);
 
-  /** Indique si la demande est en cours de soumission. */
+  /** Indique si la demande est soumise avec succes */
   public readonly isCreatingSuccess = computed(() => this.state().isCreatingSuccess);
+
+  /** Indique si la demande est mise à jour avec succes */
+  public readonly isUpdateSuccess = computed(() => this.state().isUpdateSuccess);
 
   /** L'outil qui a été créé et est lié à la demande. */
   public readonly selectedTool = computed(() => this.state().selectedTool);
@@ -183,7 +187,7 @@ export class ToolRequestStore {
     ).subscribe({
       next: () => {
         console.log(`Demande ${currentId} mise à jour avec succès`);
-        this.resetCreationState();
+        this.updateState({ isUpdateSuccess : true });
         // Optionnel: Recharger la liste des demandes ici via ToolRequestListStore si vous l'avez
       },
       error: (error) => {
@@ -213,6 +217,8 @@ export class ToolRequestStore {
       isCreatingRequest: false,
       currentToolRequest: null,
       isUpdatingRequest: false,
+      isUpdateSuccess:false,
+      isLoadingRequest:false,
       error: null
     });
   }

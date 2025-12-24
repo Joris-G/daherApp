@@ -1,11 +1,10 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { delay, finalize,  take } from 'rxjs';
 import { ToolRequestService } from '../services/tool-request.service';
-import { SpecSBOUpdate, } from '../../features/tooling/sbo-request/models/sbo.model';
-import { Tool} from '../tool';
+import { Tool } from '../../features/tooling/models/tool.model';
 import { ToolService } from '../services/tool.service';
-import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from '../../features/tooling/control-request/models/controle-3d-request.model';
-import { SpecMaintRepRequestUpdate } from '../models/maintenance-and-repair.model';
+import { SpecCtrlRequest, SpecCtrlCreation, SpecCtrlUpdate } from 'src/app/features/tooling/models/controle-3d-request.model';
+
 
 /**
  * Interface d'état pour le ControlRequestStore.
@@ -99,7 +98,7 @@ export class ControlRequestStore {
     this.updateState({ isCreatingRequest: true, error: null });
     this.toolRequestService.createToolRequest<SpecCtrlCreation, SpecCtrlRequest>(controlRequest)  
     .pipe(
-        delay(2000),
+      delay(300),
         take(1),
       finalize(() => {
         this.updateState({ isCreatingRequest: false })

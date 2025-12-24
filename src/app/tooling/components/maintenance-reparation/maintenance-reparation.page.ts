@@ -10,10 +10,10 @@ import { MaintRepairFormComponent } from './maint-repair-form/maint-repair-form.
 import { ToolRequestFooterComponent } from '../../../features/tooling/components/tool-request-footer/tool-request-footer.component';
 import { FormGroup } from '@angular/forms';
 import { IonContent, IonFooter, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { ToolRequestStore } from '../../stores/tool-request.store';
+import { ToolRequestStore } from '../../../features/tooling/stores/tool-request.store';
 import { ToolRequestFormBuilder } from 'src/app/features/tooling/services/forms/toolRequestFormBuilder/tool-request-form-builder';
-import { RequestStatus, ToolRequest } from '../../models/tool-request.model';
-import { SpecMaintRepRequest } from '../../models/maintenance-and-repair.model';
+import { RequestStatus, ToolRequest } from '../../../features/tooling/models/tool-request.model';
+import { SpecMaintRepRequest } from '../../../features/tooling/models/maintenance-and-repair.model';
 
 // ============================================================================
 // TYPE POUR LE MODE DU COMPOSANT

@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { ToolRequestService } from '../services/tool-request.service';
+import { ToolRequestService } from '../../../tooling/services/tool-request.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { ToolRequest } from '../models/tool-request.model';
 

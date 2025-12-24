@@ -4,7 +4,7 @@ import { ToolInputComponent } from '../../../../features/tooling/components/tool
 import { MaintenanceItemComponent } from '../maintenance-item/maintenance-item.component';
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonToggle } from '@ionic/angular/standalone';
 import { CardComponent } from "src/app/shared/components/card/card.component";
-import { MaintenanceItem } from 'src/app/tooling/models/maintenance-and-repair.model';
+import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and-repair.model';
 
 @Component({
     selector: 'app-maint-repair-form',

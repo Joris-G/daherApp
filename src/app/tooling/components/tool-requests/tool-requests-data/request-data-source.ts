@@ -2,7 +2,7 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
-import { ToolRequest } from 'src/app/features/tooling/sbo-request/models/sbo.model';
+import { ToolRequest } from 'src/app/features/tooling/models/sbo.model';
 import { ToolRequestService } from '../../../services/tool-request.service';
 
 

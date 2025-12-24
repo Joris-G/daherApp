@@ -4,11 +4,11 @@
 
 import { GroupeAffectation } from "src/app/_interfaces/groupe-affectation";
 import { User } from "src/app/_interfaces/user";
-import { Tool } from "../tool";
-import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from "../../features/tooling/control-request/models/controle-3d-request.model";
+import { Tool } from "./tool.model";
 import { SpecMaintRepRequest } from "./maintenance-and-repair.model";
-import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from "../../features/tooling/sbo-request/models/sbo.model";
+import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from "./sbo.model";
 import { FormControl } from "@angular/forms";
+import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from "./controle-3d-request.model";
 
 // ============================================================================
 export interface ToolRequestBase {

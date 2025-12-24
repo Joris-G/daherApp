@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from "@angular/core";
 import { catchError, debounceTime, distinctUntilChanged, of, Subject, switchMap, take, tap } from "rxjs";
 import { ToolService } from "src/app/tooling/services/tool.service";
-import { Tool } from "src/app/tooling/tool";
+import { Tool } from "src/app/features/tooling/models/tool.model";
 
 @Injectable()
 export class ToolInputStore {

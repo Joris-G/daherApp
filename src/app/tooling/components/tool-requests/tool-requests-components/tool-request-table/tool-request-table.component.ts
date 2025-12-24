@@ -6,9 +6,9 @@ import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { DatePipe } from '@angular/common';
 import { HeaderRowDirective } from '../../../../../shared/directives/header-row.directive';
 import { DataRowDirective } from '../../../../../shared/directives/data-row.directive';
-import { Tool, OutillNoRefSAP } from 'src/app/tooling/tool';
+import { Tool, OutillNoRefSAP } from 'src/app/features/tooling/models/tool.model';
 import { IonCol, IonGrid, IonLabel, IonRow } from '@ionic/angular/standalone';
-import { RequestType, ToolRequest } from 'src/app/tooling/models/tool-request.model';
+import { RequestType, ToolRequest } from 'src/app/features/tooling/models/tool-request.model';
 
 
 @Component({

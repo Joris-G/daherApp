@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal, Signal } from "@angular/core";
 import { filterSelectObjects, ToolRequestFilter } from "src/app/tooling/tool-request-filters";
-import { ToolRequestListStore } from "src/app/tooling/stores/tool-request-list.store";
-import { ToolRequest } from "src/app/tooling/models/tool-request.model";
+import { ToolRequestListStore } from "src/app/features/tooling/stores/tool-request-list.store";
+import { ToolRequest } from "src/app/features/tooling/models/tool-request.model";
 
 @Injectable({ providedIn: "root" })
   /**

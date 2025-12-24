@@ -6,7 +6,7 @@ import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { RequestService } from 'src/app/shared/services/request.service';
 import { environment } from 'src/environments/environment';
 import { ToolRequestService } from './tool-request.service';
-import { ToolRequest } from '../models/tool-request.model';
+import { ToolRequest } from '../../features/tooling/models/tool-request.model';
 import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from 'src/app/features/tooling/control-request/models/controle-3d-request.model';
 
 @Injectable({ providedIn: "root" })

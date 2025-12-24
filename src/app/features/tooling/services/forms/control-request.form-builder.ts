@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SpecCtrlCreation, SpecCtrlRequestControls } from 'src/app/features/tooling/control-request/models/controle-3d-request.model';
+import { SpecCtrlCreation, SpecCtrlRequestControls } from '../../models/controle-3d-request.model';
 
 
 @Injectable({

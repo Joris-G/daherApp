@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { mockTools } from "../mockData/mockTools.mock";
-import { Tool, ToolCreation } from "src/app/tooling/tool";
+import { Tool, ToolCreation } from "src/app/features/tooling/models/tool.model";
 import { HttpErrorResponse } from "@angular/common/http";
 
 export const toolsHandlers = [

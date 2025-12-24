@@ -1,13 +1,13 @@
 import { Routes } from "@angular/router";
 import { ToolingPage } from "../../pages/tooling/tooling.page";
-import { NewToolPage } from "./sbo-request/components/new-tool/new-tool.page";
-import { ToolRequestsPage } from "./tool-request-list/components/tool-requests.page";
+import { NewToolPage } from "./pages/sbo-request/sbo-request.page";
 import { RoleGuard } from "../../shared/services/users/role.guard";
 import { ToolListPage } from "../../tooling/components/tool-list/tool-list.page";
 import { MaintenanceReparationPage } from "../../tooling/components/maintenance-reparation/maintenance-reparation.page";
-import { Control3DPage } from "./control-request/components/control.page";
+import { Control3DPage } from "./pages/control-request/control.page";
 import { ManageTeamPage } from "../../tooling/components/manage-team/manage-team.page";
 import { IndicatorsPage } from "../../tooling/components/indicators/indicators.page";
+import { ToolRequestsPage } from "./pages/tool-request-list/tool-requests.page";
 
 export const TOOLING_ROUTES: Routes = [
   {

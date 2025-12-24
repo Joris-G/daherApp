@@ -4,7 +4,7 @@ import { EventEmitter } from '@angular/core';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { PdfService } from 'src/app/shared/services/divers/pdf.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
-import { RequestStatus } from '../../../../tooling/models/tool-request.model';
+import { RequestStatus } from '../../models/tool-request.model';
 import { IonToolbar, IonItem, IonButton, IonIcon, IonSelect, IonSelectOption } from "@ionic/angular/standalone";
 
 @Component({

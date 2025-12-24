@@ -1,23 +1,26 @@
-import { Component, computed, effect, inject, input, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject,  OnInit, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IonButton, IonContent, IonFooter, IonToolbar, IonTitle, IonHeader, NavController } from '@ionic/angular/standalone';
 import { NgxEditorModule } from 'ngx-editor';
-import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/features/tooling/sbo-request/models/sbo.model';
-import { ToolCreation } from 'src/app/tooling/tool';
+import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/features/tooling/models/sbo.model';
+import { ToolCreation } from 'src/app/features/tooling/models/tool.model';
 import { ActivatedRoute } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
-import { SboComponent } from '../../../../../tooling/components/sbo/sbo.component';
+import { SboComponent } from '../../../../tooling/components/sbo/sbo.component';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
 import { ToolRequestFormBuilder } from 'src/app/features/tooling/services/forms/toolRequestFormBuilder/tool-request-form-builder';
-import { ToolFormComponent } from '../create-tool/tool-form.component';
-import { ToolRequestStore } from '../../../../../tooling/stores/tool-request.store';
+import { ToolFormComponent } from '../../components/create-tool/tool-form.component';
+import { ToolRequestStore } from '../../stores/tool-request.store';
 import { take } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { SboFormComponent } from '../sbo-form/sbo-form.component';
+import { SboFormComponent } from '../../components/sbo-form/sbo-form.component';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+
+// TODO lorsque l'on passe sur une demande à modifier il faut changer le nom du bouton et le logo pour stipuler clairement qu'on fait une mise à jours des datas.
+// Bloquer certains champs à la modification en fonction du role.
 
 // const MENU_ITEMS = [
 //   {
@@ -34,8 +37,8 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-new-tool',
-  templateUrl: './new-tool.page.html',
-  styleUrls: ['./new-tool.page.scss'],
+  templateUrl: './sbo-request.page.html',
+  styleUrls: ['./sbo-request.page.scss'],
   standalone: true,
   imports: [IonHeader, IonTitle,
     SboFormComponent,
@@ -133,7 +136,15 @@ export class NewToolPage implements OnInit {
     effect(async () => {
       const error = this.store.error();
       if (error) await this.alertService.presentToast(error, 'danger');
-    })
+    });
+
+    effect(async () => {
+      const isUpdateSuccess = this.store.isUpdateSuccess();
+      if (isUpdateSuccess) {
+        await this.alertService.presentToast('Demande mise à jour avec succès', 'success');
+      this.navCtrl.navigateForward(['tooling/requests']);
+       }
+    });
 
   }
   // ============================================================================
@@ -263,14 +274,8 @@ export class NewToolPage implements OnInit {
     // L'ID de la requête et l'ID de l'outil sont nécessaires pour la mise à jour
     const requestToUpdate: SpecSBOUpdate = {
       id: currentRequest.id,
-      // Assumer que l'outil ne change pas pour une SBO, ou qu'il est géré par la logique enfant
-      toolId: currentRequest.tool.id,
-      // Les valeurs du formulaire
-      ...this.specSboForm.value,
-      // L'API attend peut-être un type
-      type: 'SBO',
-
-      // La logique de votre API pour l'UPDATE pourrait nécessiter plus de champs
+      tool: currentRequest.tool,
+      ...this.specSboForm.getRawValue(),
     };
 
     this.store.updateToolRequest(requestToUpdate);

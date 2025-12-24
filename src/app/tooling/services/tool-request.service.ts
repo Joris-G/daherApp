@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
-import { ToolRequest, ToolRequestCreation, ToolRequestUpdate } from '../models/tool-request.model';
+import { ToolRequest, ToolRequestCreation, ToolRequestUpdate } from '../../features/tooling/models/tool-request.model';
 
 @Injectable({
   providedIn: 'root'

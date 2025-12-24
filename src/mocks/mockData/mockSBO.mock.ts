@@ -1,4 +1,4 @@
-import { SpecSBOStorage } from "src/app/features/tooling/sbo-request/models/sbo.model";
+import { SpecSBOStorage } from "src/app/features/tooling/models/sbo.model";
 
 export const mockSpecSBO: SpecSBOStorage[] = [
     {

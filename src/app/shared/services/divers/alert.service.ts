@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 
+type AlertColor = 'success' | 'danger' | 'warning' 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -61,7 +63,7 @@ export class AlertService {
     });
   }
 
-  async presentToast(message: string, color: string) {
+  async presentToast(message: string, color: AlertColor) {
     const toast = await this.toastController.create({
       message,
       duration: 3000,

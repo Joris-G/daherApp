@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal, untracked, } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
-import { Tool } from 'src/app/tooling/tool';
+import { Tool } from 'src/app/features/tooling/models/tool.model';
 import { IonIcon, IonInput, IonItem, IonSpinner, IonText } from '@ionic/angular/standalone';
 import { ToolInputStore } from './tool-input.store';
 import { ToolLabelPipe } from './tool-label-pipe';

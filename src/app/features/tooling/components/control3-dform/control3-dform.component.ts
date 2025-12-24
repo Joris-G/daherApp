@@ -5,8 +5,8 @@ import { EditorComponent } from '@tinymce/tinymce-angular';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
 import { IonCol, IonGrid, IonItem, IonLabel, IonRow, IonText,  IonSelectOption, IonNote, IonInput,  IonSelect, IonToggle } from '@ionic/angular/standalone';
 import { Editor } from 'ngx-editor';
-import { RAPPORT_TYPES } from 'src/app/tooling/models/type-rapport.model';
-import { MOYENS_MESURE } from 'src/app/tooling/models/moyen-mesure.model';
+import { RAPPORT_TYPES } from 'src/app/features/tooling/models/type-rapport.model';
+import { MOYENS_MESURE } from 'src/app/features/tooling/models/moyen-mesure.model';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 
 @Component({

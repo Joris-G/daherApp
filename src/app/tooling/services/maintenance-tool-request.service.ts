@@ -4,8 +4,8 @@ import { catchError, concatMap, finalize, map, switchMap, tap } from 'rxjs/opera
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { ToolRequestService } from './tool-request.service';
 import { HttpClient } from '@angular/common/http';
-import { MaintenanceItem, SpecMaintRepRequest } from '../models/maintenance-and-repair.model';
-import { ToolRequest } from '../models/tool-request.model';
+import { MaintenanceItem, SpecMaintRepRequest } from '../../features/tooling/models/maintenance-and-repair.model';
+import { ToolRequest } from '../../features/tooling/models/tool-request.model';
 
 // ============================================================================
 // INTERFACES POUR LES RÉPONSES API
