@@ -79,7 +79,7 @@ export const toolRequestHandlers = [
         mockSpecSBO.push(newSpecSBOEntry);
         break;
     }
-    const responseRequest = getToolRequestById(masterRequest.id);
+    const responseRequest = findToolRequestData(masterRequest.id);
     return HttpResponse.json(responseRequest, { status: 201 });
   }),
 

@@ -162,8 +162,8 @@ export class NewToolPage implements OnInit {
    * Initialise les FormGroup nécessaires à la page.
    */
   private initializeForms(): void {
-    this.specSboForm = this.formBuilderService.createSpecSBOForm({ dateBesoin: new Date(2026, 0, 1), description: 'fdezfdfgsd', title: 'edfsdffsdgfg' });
-    this.toolForm = this.formBuilderService.createNewToolForm({ designation: 'dsffsdfsd', identification: 'sdgfdwd', sapToolNumber: '099330' });
+    this.specSboForm = this.formBuilderService.createSpecSBOForm({ dateBesoin: new Date(2026, 0, 1), description: 'Respecter le CDC : xxxx', title: 'Création outillage' });
+    this.toolForm = this.formBuilderService.createNewToolForm({ designation: 'ASSEMBLAGE ...', identification: 'TB81001Z01-F46C572544121', sapToolNumber: '099330' });
   }
 
   // ============================================================================

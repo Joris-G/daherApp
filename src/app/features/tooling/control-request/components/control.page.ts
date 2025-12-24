@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal, untracked } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
@@ -9,11 +9,11 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter } from '@ionic/a
 import { ToolRequestService } from '../../../../tooling/services/tool-request.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
-import { FormGroup, ReactiveFormsModule, ɵInternalFormsSharedModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { filter, take } from 'rxjs';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { ToolFormComponent } from '../../sbo-request/components/create-tool/tool-form.component';
-import { SpecCtrlRequest, SpecCtrlCreation, SpecCtrlUpdate } from '../models/controle-3d-request.model';
+import { SpecCtrlRequest, SpecCtrlCreation, SpecCtrlUpdate, SpecCtrlRequestControls } from '../models/controle-3d-request.model';
 import { ControlRequestFormBuilder } from '../services/control-request.form-builder';
 import { ControlRequestStore } from 'src/app/tooling/stores/controlRequest.store';
 import { ToolInputComponent } from "../../components/tool-input/tool-input.component";
@@ -36,8 +36,7 @@ import { ToolInputComponent } from "../../components/tool-input/tool-input.compo
     IonTitle,
     IonContent,
     IonFooter,
-    ToolInputComponent,
-    ɵInternalFormsSharedModule
+    ToolInputComponent
 ],
 })
 export class Control3DPage {
@@ -64,7 +63,7 @@ export class Control3DPage {
   protected isEditMode = signal<boolean>(false);
 
   /** Formulaire pour les spécifications controle outillage. */
-  protected controlForm: FormGroup;
+  protected controlForm: FormGroup<SpecCtrlRequestControls>;
 
   /** Liste des programmes avion */
   // programs = signal<ProgrammeAvion[]>([]);
@@ -94,36 +93,29 @@ export class Control3DPage {
   // LIFECYCLE HOOKS
   // ============================================================================
   constructor() {
-    effect(() => {
-      const toolRequest = this.store.currentControlRequest() as SpecCtrlRequest;
-      // On vérifie le mode édition pour ne pas remplir le formulaire en mode création
-      if (toolRequest && this.isEditMode()) {
-        this.fillForm(toolRequest);
-      }
-    });
-
     effect(async () => {
-      const isCreatingSuccess = this.store.isCreatingSuccess();
-      if (isCreatingSuccess) {
-        await this.alertService.presentToast('Demande créée avec succès', 'success');
-        this.navCtrl.navigateForward(['tooling/requests']);
-      } else {
+      const store = this.store;
 
-      }
-    });
-    effect(async () => {
-      const isCreatingRequest = this.store.isCreatingRequest();
-      if (isCreatingRequest) {
+      if (store.isCreatingRequest() || store.isUpdatingRequest()) {
         await this.loaderService.startLoading('Envoie de la demande ...');
       } else {
         await this.loaderService.stopLoading();
       }
-    });
 
-    effect(async () => {
-      const error = this.store.error();
-      if (error) await this.alertService.presentToast(error, 'danger');
-    })
+
+      if (store.error()) {
+        await this.alertService.presentToast(store.error()!, 'danger');
+      }
+
+      if (store.isCreatingSuccess()) {
+        await this.alertService.presentToast('Demande créée avec succès', 'success');
+        untracked(() => this.navCtrl.navigateForward(['tooling/requests']));
+      }
+
+      if (store.currentControlRequest() && this.isEditMode()) {
+        this.fillForm(store.currentControlRequest());
+      }
+    });
   }
 
   /**
@@ -136,7 +128,7 @@ export class Control3DPage {
 
     // 1. Lire les paramètres de la route
     this.activatedRoute.params.pipe(
-      filter(params => !!params['id']), // S'assurer que l'ID existe
+      filter(params => !!params['id']), // store'assurer que l'ID existe
       take(1)
     ).subscribe(params => {
       this.requestId = params['id'];
@@ -228,7 +220,7 @@ export class Control3DPage {
   private onCreateControlRequest() {
     // const toolData: ToolCreation = this.toolForm.value;
     const controlRequest: SpecCtrlCreation = {
-      ...this.controlForm.value,
+      ...this.controlForm.getRawValue(),
       type:'CONTROLE',
     };
     this.store.createControlRequest(controlRequest);
@@ -247,13 +239,13 @@ export class Control3DPage {
 
     // L'ID de la requête et l'ID de l'outil sont nécessaires pour la mise à jour
     const requestToUpdate: SpecCtrlUpdate = {
-      id: currentRequest.id,
+      // id: currentRequest.id,
       // Assumer que l'outil ne change pas pour une SBO, ou qu'il est géré par la logique enfant
-      toolId: currentRequest.tool.id,
+      tool: currentRequest.tool,
       // Les valeurs du formulaire
       ...this.controlForm.value,
       // L'API attend peut-être un type
-      type: 'SBO',
+      type: 'CONTROLE',
 
       // La logique de votre API pour l'UPDATE pourrait nécessiter plus de champs
     };
@@ -303,9 +295,10 @@ export class Control3DPage {
     const formattedDateBesoin = request.dateBesoin.toString().split('T')[0];
     this.controlForm.patchValue({
       description: request.description,
-      dateBesoin: formattedDateBesoin,
-      type: request.type,
-      toolingNote: request.toolingNote,
+      // dateBesoin: formattedDateBesoin,
+
+      // type: request.type,
+      // toolingNote: request.toolingNote,
       tool: request.tool,
     });
     // this.toolForm.patchValue({

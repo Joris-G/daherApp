@@ -11,7 +11,7 @@ export class ControlRequestFormBuilder {
   
   public createSpecCtrlForm(initialValue?: Partial<SpecCtrlCreation>): FormGroup<SpecCtrlRequestControls> {
     return this.fb.group({
-      bloquantProd: [initialValue?.bloquantProd ?? false, Validators.required],
+      bloquantProd: [initialValue?.bloquantProd ?? false, { nonNullable: true, validators: [Validators.required] }],
       dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
       fichier: [initialValue?.fichier ?? null],
       image: [initialValue?.image ?? null],

@@ -95,14 +95,16 @@ export class ControlRequestStore {
    */
   public createControlRequest(controlRequest: SpecCtrlCreation): void {
     // TODO cohérence des dates
-    console.log(controlRequest);
-    this.resetCreationState();
+    // this.resetCreationState();
     this.updateState({ isCreatingRequest: true, error: null });
     this.toolRequestService.createToolRequest<SpecCtrlCreation, SpecCtrlRequest>(controlRequest)  
     .pipe(
         delay(2000),
         take(1),
-      finalize(() => this.updateState({ isCreatingRequest: false }))
+      finalize(() => {
+        this.updateState({ isCreatingRequest: false })
+        console.log("finalize creating");
+      })
 )
     .subscribe({
       next: () => this.updateState({ isCreatingSuccess: true }),

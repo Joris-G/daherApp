@@ -1,14 +1,13 @@
 import { Component, input, output } from '@angular/core';
-import { IonSelect, IonicModule } from '@ionic/angular';
-import { NgFor } from '@angular/common';
 import { ToolRequestFilter } from 'src/app/tooling/tool-request-filters';
-
+import { IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonList, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+// TODO transformer ce composant de filtres en formulaire pour profiter des reset patch ... signaux
 @Component({
     selector: 'app-tool-request-filters',
     templateUrl: './tool-request-filters.component.html',
     styleUrls: ['./tool-request-filters.component.scss'],
     standalone: true,
-    imports: [IonicModule, NgFor],
+  imports: [IonHeader, IonContent, IonToolbar, IonTitle, IonIcon, IonList, IonItem, IonSelectOption, IonButtons, IonButton, IonFooter, IonSelect],
 })
 export class ToolRequestFiltersComponent {
   ////////////////////////////////////////////////////

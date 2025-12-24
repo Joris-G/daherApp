@@ -2,7 +2,8 @@ import { Component, input, } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IonInput, IonItem, IonText, } from '@ionic/angular/standalone';
 
-
+// TODO Gérer les outillage existant. Proposer la mise à jour de la SBO pour une modification outillage.
+// TODO Introduire donc la notion de révision de SBO.
 @Component({
   selector: 'app-tool-form',
   templateUrl: './tool-form.component.html',

@@ -50,8 +50,8 @@ export class ToolRequestsPage {
 
 constructor() {
   effect(()=>{
-    const isLoading = this.toolRequestListStore.isLoadingList();
-    if(isLoading){
+    const store = this.toolRequestListStore;
+    if (store.isLoadingList()) {
       this.loaderService.startLoading('Chargement des demandes');
     }else{
       this.loaderService.stopLoading();

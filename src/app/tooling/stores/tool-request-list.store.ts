@@ -77,6 +77,7 @@ export class ToolRequestListStore {
       // take(1),
       finalize(() => {
         this.updateState({ isLoadingList: false });
+        console.log("finalize getToolRequest");
       })
     ).subscribe({
       next: (requests) => {

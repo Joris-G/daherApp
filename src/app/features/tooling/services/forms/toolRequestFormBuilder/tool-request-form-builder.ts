@@ -4,6 +4,7 @@ import { OutillNoRefSAP } from 'src/app/tooling/tool';
 import { SpecSBOCreation, SpecSBOForm } from 'src/app/features/tooling/sbo-request/models/sbo.model';
 import { SpecCtrlCreation, SpecCtrlRequestControls } from 'src/app/features/tooling/control-request/models/controle-3d-request.model';
 import { MaintenanceItem, SpecMaintRepRequestCreation } from 'src/app/tooling/models/maintenance-and-repair.model';
+import { formatDateForInput } from 'src/app/shared/utils/format-date';
 
 
 @Injectable({
@@ -146,6 +147,7 @@ export class ToolRequestFormBuilder {
      * @returns Le FormGroup typé pour les spécifications SBO.
      */
   createSpecSBOForm(initialValue?: Partial<SpecSBOCreation>): FormGroup<SpecSBOForm> {
+    // TODO Faire mieux pour la date de besoin
     return this.fb.group({
       title: [initialValue?.title ?? '', Validators.required],
       description: [initialValue?.description ?? '', Validators.required],

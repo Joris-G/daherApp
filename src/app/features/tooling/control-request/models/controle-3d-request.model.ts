@@ -51,9 +51,9 @@ export type SpecCtrlRequestControls =ToolRequestBaseForm & {
 // export type SpecCtrlRequestForm = FormGroup<SpecCtrlRequestControls>;
 
 
-export type SpecCtrlCreation = Omit<SpecCtrlRequest,'id'>;
+export type SpecCtrlCreation = Omit<SpecCtrlRequest, 'id' | 'createdAt' | 'demandeur' | 'statut'>;
 
-export type SpecCtrlUpdate = Omit<SpecCtrlRequest,'id'>;
+export type SpecCtrlUpdate = Partial<SpecCtrlCreation>;
 
 export interface SpecCtrlStorage {
   id: number;
