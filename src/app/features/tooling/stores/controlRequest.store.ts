@@ -4,6 +4,7 @@ import { ToolRequestService } from '../../../tooling/services/tool-request.servi
 import { Tool} from '../models/tool.model';
 import { ToolService } from '../../../tooling/services/tool.service';
 import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from '../models/controle-3d-request.model';
+import { ToolRequestStore } from './tool-request.store';
 
 
 /**
@@ -66,9 +67,7 @@ export class ControlRequestStore {
   // ============================================================================
   // INJECTION DE DÉPENDANCES
   // ============================================================================
-  private readonly toolService = inject(ToolService);
   private readonly toolRequestService = inject(ToolRequestService);
-
   // ============================================================================
   // ÉTAT INTERNE (Signals Privés Modifiables)
   // ============================================================================
@@ -95,8 +94,6 @@ export class ControlRequestStore {
    * @param {SpecCtrlCreation} controlRequest - Les données de la demande de controle.
    */
   public createControlRequest(controlRequest: SpecCtrlCreation): void {
-    // TODO cohérence des dates
-    // this.resetCreationState();
     this.updateState({ isCreatingRequest: true, error: null });
     this.toolRequestService.createToolRequest<SpecCtrlCreation, SpecCtrlRequest>(controlRequest)
     .pipe(
@@ -122,7 +119,6 @@ export class ControlRequestStore {
    */
   public loadControlRequest(requestId: string): void {
     this.updateState({ isLoadingRequest: true, error: null, currentControlRequest: null });
-//TODO faire un service pour les controlRequest
     this.toolRequestService.getToolRequest<SpecCtrlRequest>(requestId).pipe(
       finalize(() => this.updateState({ isLoadingRequest: false }))
     ).subscribe({
@@ -161,20 +157,10 @@ export class ControlRequestStore {
         // Optionnel: Recharger la liste des demandes ici via ToolRequestListStore si vous l'avez
       },
       error: (error) => {
-        // TODO préciser les erreurs si le code SAP outillage est déjà connu par ex.
         console.error('Erreur lors de la mise à jour de la demande:', error);
         this.updateState({ error: 'Erreur lors de la mise à jour de la demande.', isCreatingSuccess: false });
       },
     });
-  }
-
-  // TODO vérifier si on garde le tool null
-  /**
-   * Définit l'outil créé manuellement (utilisé par le composant si nécessaire).
-   * @param {Tool | null} tool - L'outil créé ou null.
-   */
-  public setCreatedTool(tool: Tool | null): void {
-    this.updateState({ selectedTool: tool });
   }
 
   /**

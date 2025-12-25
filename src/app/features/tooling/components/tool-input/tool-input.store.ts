@@ -44,34 +44,37 @@ constructor() {
     ).subscribe();
   }
 
+
+  /**
+   * @description
+   * @author Joris GRANGIER  e-mail : joris-web-dev@gmail.com
+   * @date 25/12/2025
+   * @param {Tool} tool
+   */
   setTool(tool: Tool) {
     this.tool.set(tool);
     this.searchToolList.set(null);
   }
-  // TODO faire le this.tool.set après le selct dans la liste
 
-    loadTool(input: string) {
-        const value = input?.trim();
-        if (!value) {return this.clear();}
-       this.searchAction.next(value);
+  /**
+   * @description 
+   * @author Joris GRANGIER  e-mail : joris-web-dev@gmail.com
+   * @date 25/12/2025
+   * @param {string} input
+   * @returns {*} 
+   */
+  findTool(input: string): void {
+    console.log(input);
+    const value = input?.trim();
+    if (!value) return this.clear();
+    this.searchAction.next(value);
+  }
 
-        // this.loading.set(true);
-        // this.error.set(null);
-
-        // this.toolService.getToolByInput(value)
-        //     .pipe(
-        //         take(1)
-        //     )
-        //     .subscribe({
-        //         next: tool => this.tool.set(tool),
-        //         error: () => {
-        //             this.tool.set(null);
-        //             this.error.set('Outillage introuvable');
-        //         },
-        //         complete: () => this.loading.set(false)
-        //     });
-    }
-
+  /**
+   * @description
+   * @author Joris GRANGIER  e-mail : joris-web-dev@gmail.com
+   * @date 25/12/2025
+   */
     clear() {
         this.tool.set(null);
         this.error.set(null);

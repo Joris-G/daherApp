@@ -4,8 +4,8 @@ import { Tool } from 'src/app/features/tooling/models/tool.model';
 import { IonIcon, IonInput, IonItem, IonSpinner, IonText, IonList } from '@ionic/angular/standalone';
 import { ToolInputStore } from './tool-input.store';
 import { ToolLabelPipe } from './tool-label-pipe';
-import { JsonPipe } from '@angular/common';
 import { InputConfigDirective } from 'src/app/shared/directives/input-config.directive';
+import type { InputInputEventDetail, IonInputCustomEvent } from '@ionic/core';
 
 const TOOL_INPUT_VALIDATOR: ValidatorFn = (
   control: AbstractControl
@@ -95,11 +95,11 @@ export class ToolInputComponent implements ControlValueAccessor, Validator {
 
   /**
    * @description Gère la saisie utilisateur
-   * @param event CustomEvent de ionInput
+   * @param {IonInputCustomEvent<InputInputEventDetail>} event CustomEvent de ionInput
    */
-  handleInput(event: any): void {
+  handleInput(event: IonInputCustomEvent<InputInputEventDetail>): void {
     const value = event.detail.value;
-    this.store.loadTool(value);
+    this.store.findTool(value);
   }
 
 

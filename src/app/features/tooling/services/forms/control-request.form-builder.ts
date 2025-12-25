@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpecCtrlCreation, SpecCtrlRequestControls } from '../../models/controle-3d-request.model';
+import { dateAfterValidator } from 'src/app/shared/utils/forms/validators/compare-date.validator';
 
 
 @Injectable({
@@ -27,7 +28,7 @@ export class ControlRequestFormBuilder {
       tolerances: [initialValue?.tolerances ?? '', Validators.required],
 
       // Dates
-      dispoOut: [initialValue?.dispoOut ?? null, Validators.required],
+      dispoOut: [initialValue?.dispoOut ?? null, { validators: [Validators.required] }],
 
       // Type de contrôle
       typeRapport: [initialValue?.typeRapport ?? null],
@@ -40,6 +41,8 @@ export class ControlRequestFormBuilder {
       // Options
       immobilisationOutillage: [initialValue?.immobilisationOutillage ?? null],
       ligneBudgetaire:[initialValue?.infosComplementaire ?? ''],
+    }, {
+      validators: dateAfterValidator<SpecCtrlRequestControls>('dispoOut', 'dateBesoin')
     });
   }
 }

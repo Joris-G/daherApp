@@ -195,7 +195,6 @@ export class ToolRequestStore {
         // Optionnel: Recharger la liste des demandes ici via ToolRequestListStore si vous l'avez
       },
       error: (error) => {
-        // TODO préciser les erreurs si le code SAP outillage est déjà connu par ex.
         console.error('Erreur lors de la mise à jour de la demande:', error);
         this.updateState({ error: 'Erreur lors de la mise à jour de la demande.', isCreatingSuccess: false });
       },
@@ -206,10 +205,9 @@ export class ToolRequestStore {
    * Définit l'outil créé manuellement (utilisé par le composant si nécessaire).
    * @param {Tool | null} tool - L'outil créé ou null.
    */
-  // TODO vérifier si on doit garder le null
-  public setCreatedTool(tool: Tool | null): void {
-    this.updateState({ selectedTool: tool });
-  }
+  // public setCreatedTool(tool: Tool): void {
+  //   this.updateState({ selectedTool: tool });
+  // }
 
   /**
    * Réinitialise l'état de création de l'outil et de la requête.

@@ -1,4 +1,5 @@
-<form [formGroup]="specCtrlForm()">
+@let specCtrlFormForm = specCtrlForm();
+<form [formGroup]="specCtrlFormForm">
   <ion-grid>
     <ion-row>
       <ion-col size="6">
@@ -16,9 +17,15 @@
             <!-- ****   DATE MISE A DISPO   **** -->
             <!-- ******************************* -->
                     <ion-item>
-          <ion-input labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY" formControlName="dispoOut">
+          <ion-input name="dispoOut" id="dispoOut" labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY"
+            formControlName="dispoOut">
             <div slot="label">Date de mise à disposition au service outillage<ion-text color="danger"> *</ion-text></div>
           </ion-input>
+          @if (specCtrlFormForm.controls.dispoOut.hasError('dateMismatch')) {
+          <ion-note color="danger">
+            La date de mise à disposition outillage doit être avant le besoin du rapport.
+          </ion-note>
+          }
           </ion-item>
 
 
@@ -74,10 +81,15 @@
           <!-- ******************************* -->
           <!-- *******   DATE BUTOIR   ******* -->
           <!-- ******************************* -->
-                               <ion-item>
+          <ion-item>
           <ion-input labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY" formControlName="dateBesoin">
             <div slot="label">Date butoir demandée<ion-text color="danger"> *</ion-text></div>
           </ion-input>
+          @if (specCtrlFormForm.controls.dateBesoin.hasError('dateMismatch')) {
+          <ion-note color="danger">
+            La date buttoir doit être après la mise à dispo de l'outillage.
+          </ion-note>
+          }
           </ion-item>
 
 
