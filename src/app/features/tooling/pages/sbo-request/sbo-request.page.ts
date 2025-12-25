@@ -22,6 +22,8 @@ import { ToolInputComponent } from '../../components/tool-input/tool-input.compo
 
 // TODO lorsque l'on passe sur une demande à modifier il faut changer le nom du bouton et le logo pour stipuler clairement qu'on fait une mise à jours des datas.
 // Bloquer certains champs à la modification en fonction du role.
+// TODO Gérer les outillage existant. Proposer la mise à jour de la SBO pour une modification outillage.
+// TODO Introduire donc la notion de révision de SBO.
 
 // const MENU_ITEMS = [
 //   {
