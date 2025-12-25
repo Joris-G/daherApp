@@ -41,8 +41,8 @@ export class Control3DFormComponent {
     this.editor = new Editor();
   }
   /**
-     * Destruction du composant.
-     */
+   * Destruction du composant.
+   */
   ngOnDestroy(): void {
     this.editor.destroy();
   }

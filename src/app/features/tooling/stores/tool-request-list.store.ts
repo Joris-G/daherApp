@@ -22,6 +22,19 @@ export interface ToolRequestListState {
  */
 export class ToolRequestListStore {
   // ============================================================================
+  // SÉLECTEURS (Signals en Lecture Seule)
+  // ============================================================================
+
+  /** Liste complète des demandes d'outillage. */
+  public readonly toolRequestList = computed(() => this.state().toolRequestList);
+
+  /** Indique si la liste est en cours de chargement. */
+  public readonly isLoadingList = computed(() => this.state().isLoadingList);
+
+  /** Message d'erreur lié au chargement de la liste. */
+  public readonly error = computed(() => this.state().error);
+
+  // ============================================================================
   // INJECTION DE DÉPENDANCES
   // ============================================================================
   private readonly toolRequestService = inject(ToolRequestService);
@@ -36,25 +49,14 @@ export class ToolRequestListStore {
     error: null,
   });
 
-  // ============================================================================
-  // SÉLECTEURS (Signals en Lecture Seule)
-  // ============================================================================
 
-  /** Liste complète des demandes d'outillage. */
-  public readonly toolRequestList = computed(() => this.state().toolRequestList);
-
-  /** Indique si la liste est en cours de chargement. */
-  public readonly isLoadingList = computed(() => this.state().isLoadingList);
-
-  /** Message d'erreur lié au chargement de la liste. */
-  public readonly error = computed(() => this.state().error);
 
   // ============================================================================
   // LIFECYCLE / INITIALISATION
   // ============================================================================
 
   constructor() {
-    console.log("ToolRequestListStore initialized");
+    console.log('ToolRequestListStore initialized');
     // Initialisation automatique au démarrage du Store
     // this.loadToolRequests();
   }
@@ -77,7 +79,7 @@ export class ToolRequestListStore {
       // take(1),
       finalize(() => {
         this.updateState({ isLoadingList: false });
-        console.log("finalize getToolRequest");
+        console.log('finalize getToolRequest');
       })
     ).subscribe({
       next: (requests) => {
@@ -87,9 +89,9 @@ export class ToolRequestListStore {
       error: (error) => {
         console.error('Erreur lors du chargement des demandes:', error);
         // 4. Mise à jour de l'état en cas d'erreur
-        this.updateState({ 
-          toolRequestList: [], 
-          error: 'Erreur lors du chargement des demandes.' 
+        this.updateState({
+          toolRequestList: [],
+          error: 'Erreur lors du chargement des demandes.'
         });
       },
     });
@@ -101,7 +103,7 @@ export class ToolRequestListStore {
 
   /**
    * Met à jour une partie de l'état interne de manière immuable.
-   * @param newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
+   * @param {Partial<ToolRequestListState>} newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
    */
   private updateState(newState: Partial<ToolRequestListState>): void {
     this.state.update(current => ({

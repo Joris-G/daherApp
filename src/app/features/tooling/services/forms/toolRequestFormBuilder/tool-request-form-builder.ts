@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OutillNoRefSAP } from 'src/app/features/tooling/models/tool.model';
+import { OutillNoRefSAP, ToolCreation } from 'src/app/features/tooling/models/tool.model';
 import { SpecSBOCreation, SpecSBOForm } from 'src/app/features/tooling/models/sbo.model';
 import { MaintenanceItem, SpecMaintRepRequestCreation } from 'src/app/features/tooling/models/maintenance-and-repair.model';
 
@@ -29,6 +29,13 @@ export class ToolRequestFormBuilder {
   // OUTILLAGE SANS REF SAP
   // ==========================================================================
 
+  /**
+   * @description
+   * @author Joris GRANGIER  e-mail : joris-web-dev@gmail.com
+   * @date 25/12/2025
+   * @param {Partial<OutillNoRefSAP>} [initialValue]
+   * @returns {*}  {FormGroup}
+   */
   createOutillNoRefSAPForm(initialValue?: Partial<OutillNoRefSAP>): FormGroup {
     return this.fb.group({
       identification: [initialValue?.identification ?? '', Validators.required],
@@ -78,7 +85,7 @@ export class ToolRequestFormBuilder {
   // MAINTENANCE ITEM (ligne d'action corrective)
   // ==========================================================================
 
-  createMaintenanceItemForm(rep: number, initialValue?: Partial<MaintenanceItem>): FormGroup {
+  private createMaintenanceItemForm(rep: number, initialValue?: Partial<MaintenanceItem>): FormGroup {
     return this.fb.group({
       rep: [{ value: rep, disabled: true }],
       nonConformite: [initialValue?.nonConformite ?? '', Validators.required],
@@ -94,7 +101,7 @@ export class ToolRequestFormBuilder {
   // SPÉCIFICATIONS MAINTENANCE (avec FormArray)
   // ==========================================================================
 
-  createSpecMaintenanceForm(initialValue?: Partial<SpecMaintRepRequestCreation>): FormGroup {
+  public createSpecMaintenanceForm(initialValue?: Partial<SpecMaintRepRequestCreation>): FormGroup {
     const itemsArray = this.fb.array(
       initialValue?.itemActionCorrective?.length
         ? initialValue.itemActionCorrective.map((item, index) =>
@@ -116,14 +123,14 @@ export class ToolRequestFormBuilder {
   }
 
   // Ajouter un item de maintenance
-  addMaintenanceItem(form: FormGroup): void {
+  private addMaintenanceItem(form: FormGroup): void {
     const itemsArray = form.get('itemActionCorrective') as FormArray;
     const newRep = itemsArray.length + 1;
     itemsArray.push(this.createMaintenanceItemForm(newRep));
   }
 
   // Supprimer un item de maintenance
-  removeMaintenanceItem(form: FormGroup, index: number): void {
+  private removeMaintenanceItem(form: FormGroup, index: number): void {
     const itemsArray = form.get('itemActionCorrective') as FormArray;
     if (itemsArray.length > 1) {
       itemsArray.removeAt(index);
@@ -138,11 +145,12 @@ export class ToolRequestFormBuilder {
   // SPÉCIFICATIONS SBO (Nouvelle demande outillage)
   // ==========================================================================
 
+  // TODO créer une fonction générique pour créer des forms avec des inital value à partir d'object FormGroup
   /**
-     * Crée le FormGroup pour les spécifications SBO d'une demande.
-     * @param initialValue - Valeurs initiales optionnelles.
-     * @returns Le FormGroup typé pour les spécifications SBO.
-     */
+   * Crée le FormGroup pour les spécifications SBO d'une demande.
+   * @param {Partial<SpecSBOCreation>} initialValue - Valeurs initiales optionnelles.
+   * @returns FormGroup<SpecSBOForm> - Le FormGroup typé pour les spécifications SBO.
+   */
   createSpecSBOForm(initialValue?: Partial<SpecSBOCreation>): FormGroup<SpecSBOForm> {
     // TODO Faire mieux pour la date de besoin
     return this.fb.group({
@@ -158,12 +166,13 @@ export class ToolRequestFormBuilder {
   // NOUVEAU TOOL (création d'outillage)
   // ==========================================================================
 
+  // TODO créer une fonction générique pour créer des forms avec des inital value à partir d'object FormGroup
   /**
-     * Crée le FormGroup pour les données de création d'un nouvel outil (ToolCreation).
-     * @param initialValue - Valeurs initiales optionnelles.
-     * @returns Le FormGroup pour la création d'outil.
-     */
-  createNewToolForm(initialValue?: { sapToolNumber?: string; identification?: string; designation?: string }): FormGroup {
+   * Crée le FormGroup pour les données de création d'un nouvel outil (ToolCreation).
+   * @param {Partial<ToolCreation>} initialValue - Valeurs initiales optionnelles.
+   * @returns Le FormGroup pour la création d'outil.
+   */
+  createNewToolForm(initialValue?: Partial<ToolCreation>): FormGroup {
     return this.fb.group({
       sapToolNumber: [initialValue?.sapToolNumber ?? '', Validators.required],
       identification: [initialValue?.identification ?? '', Validators.required],
@@ -187,11 +196,8 @@ export class ToolRequestFormBuilder {
 // ============================================================================
 // HELPERS POUR ACCÉDER AUX FORM ARRAYS
 // ============================================================================
+// TODO remplacer le type form FormGroup par le type MaintForm à créer s'il le faut
+export const getMaintenanceItems = (form: FormGroup): FormArray => form.get('itemActionCorrective') as FormArray;
 
-export function getMaintenanceItems(form: FormGroup): FormArray {
-  return form.get('itemActionCorrective') as FormArray;
-}
-
-export function getMaintenanceItemAt(form: FormGroup, index: number): FormGroup {
-  return getMaintenanceItems(form).at(index) as FormGroup;
-}
+// TODO remplacer le type form FormGroup par le type MaintForm à créer s'il le faut
+export const getMaintenanceItemAt = (form: FormGroup, index: number): FormGroup => getMaintenanceItems(form).at(index) as FormGroup;

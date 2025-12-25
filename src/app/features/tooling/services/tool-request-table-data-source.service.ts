@@ -1,35 +1,39 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ToolRequest } from 'src/app/features/tooling/models/sbo.model';
-import { ToolRequestService } from '../../services/tool-request.service';
+import { ToolRequestService } from 'src/app/tooling/services/tool-request.service';
+import { ToolRequest } from '../models/tool-request.model';
 
+
+// TODO se poser la question de l'utiliter de cette class
 @Injectable({
   providedIn: 'root'
 })
 export class ToolRequestTableDataSourceService {
+  private readonly toolRequestService = inject(ToolRequestService);
 
   public toolRequestsDataSource$: Observable<MatTableDataSource<ToolRequest>>;
-  private filterSelectObjects;
+  // private filterSelectObjects;
   private matTableDataSource: MatTableDataSource<ToolRequest> = new MatTableDataSource<ToolRequest>([]);
   private subjectDataSource: BehaviorSubject<MatTableDataSource<ToolRequest>> = new BehaviorSubject(this.matTableDataSource);
-  constructor(
-    private toolRequestService: ToolRequestService,
-  ) {
+
+  constructor() {
     this.toolRequestsDataSource$ = this.subjectDataSource.asObservable();
     this.toolRequestService.getToolRequests()
       .subscribe(
-        requests => {
+        (requests: ToolRequest[]) => {
           this.matTableDataSource.data = requests;
           this.matTableDataSource.filterPredicate = this.createFilter();
-          this.filterSelectObjects.filter((o) => {
-            o.options = this.getFilterObject(this.matTableDataSource.data, o.columnProp);
-          });
+          // this.filterSelectObjects.filter((o) => {
+          //   o.options = getFilterObject(this.matTableDataSource.data, o.columnProp);
+          // });
           this.subjectDataSource.next(this.matTableDataSource);
         }
       );
   }
-  refreshDatas() {
+
+  // TODO voir si cette méthode est utile
+  private refreshDatas() {
     this.toolRequestService.getToolRequests()
       .subscribe(
         requests => {
@@ -113,17 +117,56 @@ export class ToolRequestTableDataSourceService {
     };
     return filterFunction;
   }
+}
 
-  /**
-*Get Uniqu values from columns to build filter
-*
-* @param fullObj
-* @param key
-* @return
-* @memberof ToolRequestsPage
-*/
-  private getFilterObject(fullObj, key) {
-    // console.log(fullObj, key);
+
+/**
+ * Type utilitaire pour extraire soit une clé de l'objet, soit via une fonction personnalisée.
+ */
+export type ValueExtractor<T, R> = keyof T | ((item: T) => R | undefined | null);
+
+/**
+ * Extrait les valeurs uniques d'un tableau d'objets.
+ * Utilise un Set pour une complexité algorithmique optimale en O(n).
+ * @template T Le type des objets du tableau.
+ * @template R Le type de la valeur de retour attendue.
+ * @param {T[]} data - Le tableau d'objets source.
+ * @param {ValueExtractor<T, R>} selector - La clé ou la fonction d'extraction.
+ * @returns {R[]} Un tableau de valeurs uniques, filtrant les valeurs nulles/indéfinies.
+ */
+export const getUniqueValues = <T, R = any>(
+  data: T[],
+  selector: ValueExtractor<T, R>
+): R[] => {
+  const uniqueSet = new Set<R>();
+
+  for (const item of data) {
+    let value: any;
+
+    if (typeof selector === 'function') {
+      value = selector(item);
+    } else {
+      value = item[selector];
+    }
+
+    // On n'ajoute que si la valeur n'est pas "falsy" (selon ton besoin initial)
+    if (value !== undefined && value !== null && value !== '') {
+      uniqueSet.add(value);
+    }
+  }
+
+  return Array.from(uniqueSet);
+};
+
+
+
+/**
+ *Get Uniqu values from columns to build filter
+ * @param fullObj
+ * @param key
+ * @returns
+ */
+export const getFilterObject = (fullObj, key) => {
     const uniqChk = [];
     fullObj.filter((obj) => {
       if (obj[key]) {
@@ -150,6 +193,4 @@ export class ToolRequestTableDataSourceService {
       return obj;
     });
     return uniqChk;
-  }
-
-}
+  };

@@ -1,7 +1,7 @@
-import { computed, inject, Injectable, signal } from "@angular/core";
-import { catchError, debounceTime, distinctUntilChanged, of, Subject, switchMap, take, tap } from "rxjs";
-import { ToolService } from "src/app/tooling/services/tool.service";
-import { Tool } from "src/app/features/tooling/models/tool.model";
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { catchError, debounceTime, distinctUntilChanged, of, Subject, switchMap, take, tap } from 'rxjs';
+import { ToolService } from 'src/app/tooling/services/tool.service';
+import { Tool } from 'src/app/features/tooling/models/tool.model';
 
 @Injectable()
 export class ToolInputStore {
@@ -29,7 +29,7 @@ constructor() {
         this.error.set(null);
         this.tool.set(null);
       }),
-      switchMap(value => 
+      switchMap(value =>
         this.toolService.searchToolsByInput(value).pipe(
           catchError(() => {
             this.error.set('Outillage introuvable');
@@ -49,10 +49,10 @@ constructor() {
     this.searchToolList.set(null);
   }
   // TODO faire le this.tool.set après le selct dans la liste
-  
+
     loadTool(input: string) {
         const value = input?.trim();
-        if (!value) return this.clear();  
+        if (!value) {return this.clear();}
        this.searchAction.next(value);
 
         // this.loading.set(true);

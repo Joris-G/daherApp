@@ -2,13 +2,13 @@
 // ============================================================================
 // TOOL REQUEST (Demande principale)
 
-import { GroupeAffectation } from "src/app/_interfaces/groupe-affectation";
-import { User } from "src/app/_interfaces/user";
-import { Tool } from "./tool.model";
-import { SpecMaintRepRequest } from "./maintenance-and-repair.model";
-import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from "./sbo.model";
-import { FormControl } from "@angular/forms";
-import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from "./controle-3d-request.model";
+import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
+import { User } from 'src/app/_interfaces/user';
+import { Tool } from './tool.model';
+import { SpecMaintRepRequest } from './maintenance-and-repair.model';
+import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from './sbo.model';
+import { FormControl } from '@angular/forms';
+import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from './controle-3d-request.model';
 
 // ============================================================================
 export interface ToolRequestBase {
@@ -46,13 +46,13 @@ export type ToolRequestRevision = {
   dateReal?: Date;
   userReal?: User;
   toolingNote?: string;
-}
+};
 
 export type ToolRequestBaseForm = {
   bloquantProd: FormControl<boolean>;
   dateBesoin: FormControl<Date>;
-  tool:FormControl<Tool>;
-}
+  tool: FormControl<Tool>;
+};
 
 export interface ToolRequestStorage {
   id: number;

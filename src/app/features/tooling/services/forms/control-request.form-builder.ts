@@ -8,7 +8,7 @@ import { SpecCtrlCreation, SpecCtrlRequestControls } from '../../models/controle
 })
 export class ControlRequestFormBuilder {
   private fb = inject(FormBuilder);
-  
+
   public createSpecCtrlForm(initialValue?: Partial<SpecCtrlCreation>): FormGroup<SpecCtrlRequestControls> {
     return this.fb.group({
       bloquantProd: [initialValue?.bloquantProd ?? false, { nonNullable: true, validators: [Validators.required] }],

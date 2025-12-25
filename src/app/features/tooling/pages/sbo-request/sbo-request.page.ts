@@ -79,12 +79,12 @@ export class NewToolPage implements OnInit {
   private readonly routeParams = toSignal(this.activatedRoute.params);
   private readonly requestId = computed<string | null>(() => {
     const params = this.routeParams();
-    return params && params['id'] ? params['id'] : null;
+    return params && params.id ? params.id : null;
   });
 
-  /** * @description Indique si la page est en mode édition. 
-  *
-       */
+  /**
+   * @description Indique si la page est en mode édition.
+   */
   protected readonly isEditMode = computed<boolean>(() => !!this.requestId());
 
   /** Formulaire pour les spécifications SBO. */
@@ -139,7 +139,7 @@ export class NewToolPage implements OnInit {
 
     effect(async () => {
       const error = this.store.error();
-      if (error) await this.alertService.presentToast(error, 'danger');
+      if (error) {await this.alertService.presentToast(error, 'danger');}
     });
 
     effect(async () => {
@@ -230,15 +230,15 @@ export class NewToolPage implements OnInit {
   // ============================================================================
 
   /**
-     * Gère la soumission du formulaire : Création ou Mise à jour.
-     */
+   * Gère la soumission du formulaire : Création ou Mise à jour.
+   */
   protected onSubmit(): void {
     if (this.toolForm.invalid || this.specSboForm.invalid) {
       this.toolForm.markAllAsTouched();
       this.specSboForm.markAllAsTouched();
       return;
     }
-    console.log("onSubmit in page");
+    console.log('onSubmit in page');
     if (this.isEditMode()) {
       this.onUpdateToolRequest();
     } else {
@@ -247,8 +247,8 @@ export class NewToolPage implements OnInit {
   }
 
   /**
- * Créer une demande d'outillage complète
- */
+   * Créer une demande d'outillage complète
+   */
   private onCreateToolRequest() {
     // Validation
     // if (this.toolForm.invalid || this.specSboForm.invalid) {
@@ -266,8 +266,8 @@ export class NewToolPage implements OnInit {
 
 
   /**
-     * Met à jour une demande d'outillage complète
-     */
+   * Met à jour une demande d'outillage complète
+   */
   private onUpdateToolRequest(): void {
     const currentRequest = this.store.currentToolRequest();
     if (!currentRequest || this.specSboForm.invalid) {
@@ -308,8 +308,8 @@ export class NewToolPage implements OnInit {
   }
 
   /**
-     * Indique si la mise à jour de la demande est possible.
-     */
+   * Indique si la mise à jour de la demande est possible.
+   */
   get canUpdateRequest(): boolean {
     // Vérifier si nous sommes en mode édition et que les formulaires sont valides
     return (
@@ -346,8 +346,8 @@ export class NewToolPage implements OnInit {
 
 
   /**
-  * Réinitialiser tous les formulaires
-  */
+   * Réinitialiser tous les formulaires
+   */
   private resetForms(): void {
     this.specSboForm.reset();
     // this.createdTool.set(null);

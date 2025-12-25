@@ -9,9 +9,7 @@ import { InputConfigDirective } from 'src/app/shared/directives/input-config.dir
 
 const TOOL_INPUT_VALIDATOR: ValidatorFn = (
   control: AbstractControl
-): ValidationErrors | null => {
-  return control.value ? null : { toolRequired: true };
-};
+): ValidationErrors | null => control.value ? null : { toolRequired: true };
 
 @Component({
     selector: 'app-tool-input',
@@ -96,9 +94,9 @@ export class ToolInputComponent implements ControlValueAccessor, Validator {
   }
 
   /**
-     * @description Gère la saisie utilisateur
-     * @param event CustomEvent de ionInput
-     */
+   * @description Gère la saisie utilisateur
+   * @param event CustomEvent de ionInput
+   */
   handleInput(event: any): void {
     const value = event.detail.value;
     this.store.loadTool(value);

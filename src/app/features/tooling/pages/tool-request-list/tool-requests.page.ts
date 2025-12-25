@@ -56,8 +56,8 @@ constructor() {
     }else{
       this.loaderService.stopLoading();
     }
-  })
-  
+  });
+
 }
 
   ionViewWillEnter() {
@@ -65,9 +65,12 @@ constructor() {
   }
 
   /**
-     * Gère les changements de filtres venant du composant enfant
-     */
-  filterChange(event: { columnProp: string, selectedValues: string[] }) {
+   * Gère les changements de filtres venant du composant enfant
+   * @param event
+   * @param event.columnProp
+   * @param event.selectedValues
+   */
+  filterChange(event: { columnProp: string; selectedValues: string[] }) {
     if (event.columnProp === 'reset') {
       this.toolRequestFilterService.resetFilters();
     } else {

@@ -5,7 +5,7 @@ export interface Tool {
   designation: string;
   programme?: any;
 }
-export type ToolCreation = Omit<Tool, 'id' | 'programme'>
+export type ToolCreation = Omit<Tool, 'id' | 'programme'>;
 
 export class ToolUtils {
   static isTool(inputValue: any) {

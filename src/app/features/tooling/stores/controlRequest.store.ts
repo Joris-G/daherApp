@@ -9,7 +9,7 @@ import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from '../models/con
 /**
  * Interface d'état pour le ControlRequestStore.
  * Représente l'état interne du Store.
- * @type ControlRequestState
+ * @type {ControlRequestState}
  */
 export type ControlRequestState= {
   isCreatingRequest: boolean;
@@ -19,40 +19,19 @@ export type ControlRequestState= {
   selectedTool: Tool | null;
   error: string | null;
   currentControlRequest: SpecCtrlRequest  | null;
-  canManage: boolean,
-  canUpdate: boolean,
-  canEdit: boolean,
-}
+  canManage: boolean;
+  canUpdate: boolean;
+  canEdit: boolean;
+};
 
 @Injectable({
   providedIn: 'root',
 })
 /**
- * Store pour la gestion de l'état et des actions liées à la création et à la modification 
+ * Store pour la gestion de l'état et des actions liées à la création et à la modification
  * de demandes d'outillage (SBO).
  */
 export class ControlRequestStore {
-  // ============================================================================
-  // INJECTION DE DÉPENDANCES
-  // ============================================================================
-  private readonly toolService = inject(ToolService);
-  private readonly toolRequestService = inject(ToolRequestService);
-
-  // ============================================================================
-  // ÉTAT INTERNE (Signals Privés Modifiables)
-  // ============================================================================
-  private readonly state = signal<ControlRequestState>({
-    isCreatingRequest: false,
-    isLoadingRequest: false,
-    isUpdatingRequest: false,
-    isCreatingSuccess: false,
-    selectedTool: null,
-    error: null,
-    currentControlRequest: null,
-    canEdit: true,
-    canManage: false,
-    canUpdate: false,
-  });
 
   // ============================================================================
   // SÉLECTEURS (Signals en Lecture Seule)
@@ -85,24 +64,47 @@ export class ControlRequestStore {
   public readonly canUpdate = computed(() => this.state().canUpdate);
 
   // ============================================================================
+  // INJECTION DE DÉPENDANCES
+  // ============================================================================
+  private readonly toolService = inject(ToolService);
+  private readonly toolRequestService = inject(ToolRequestService);
+
+  // ============================================================================
+  // ÉTAT INTERNE (Signals Privés Modifiables)
+  // ============================================================================
+  private readonly state = signal<ControlRequestState>({
+    isCreatingRequest: false,
+    isLoadingRequest: false,
+    isUpdatingRequest: false,
+    isCreatingSuccess: false,
+    selectedTool: null,
+    error: null,
+    currentControlRequest: null,
+    canEdit: true,
+    canManage: false,
+    canUpdate: false,
+  });
+
+
+  // ============================================================================
   // MUTATIONS (Méthodes Publiques d'Action)
   // ============================================================================
 
   /**
    * Soumet la demande de controle d'outillage.
-   * @param controlRequest - Les données de la demande de controle.
+   * @param {SpecCtrlCreation} controlRequest - Les données de la demande de controle.
    */
   public createControlRequest(controlRequest: SpecCtrlCreation): void {
     // TODO cohérence des dates
     // this.resetCreationState();
     this.updateState({ isCreatingRequest: true, error: null });
-    this.toolRequestService.createToolRequest<SpecCtrlCreation, SpecCtrlRequest>(controlRequest)  
+    this.toolRequestService.createToolRequest<SpecCtrlCreation, SpecCtrlRequest>(controlRequest)
     .pipe(
         delay(300),
         take(1),
       finalize(() => {
-        this.updateState({ isCreatingRequest: false })
-        console.log("finalize creating");
+        this.updateState({ isCreatingRequest: false });
+        console.log('finalize creating');
       })
 )
     .subscribe({
@@ -113,11 +115,11 @@ export class ControlRequestStore {
       },
     });
   }
-  
+
   /**
-     * Charge une demande existante par son ID pour l'édition.
-     * @param requestId - L'ID de la demande.
-     */
+   * Charge une demande existante par son ID pour l'édition.
+   * @param {string} requestId - L'ID de la demande.
+   */
   public loadControlRequest(requestId: string): void {
     this.updateState({ isLoadingRequest: true, error: null, currentControlRequest: null });
 //TODO faire un service pour les controlRequest
@@ -138,9 +140,9 @@ export class ControlRequestStore {
     });
   }
   /**
-     * Met à jour une demande d'outillage existante.
-     * @param requestToUpdate - Les données de mise à jour.
-     */
+   * Met à jour une demande d'outillage existante.
+   * @param {SpecCtrlUpdate} requestToUpdate - Les données de mise à jour.
+   */
   public updateToolRequest(requestToUpdate: SpecCtrlUpdate): void {
     const currentId = this.currentControlRequest()?.id;
     if (!currentId) {
@@ -166,9 +168,10 @@ export class ControlRequestStore {
     });
   }
 
+  // TODO vérifier si on garde le tool null
   /**
    * Définit l'outil créé manuellement (utilisé par le composant si nécessaire).
-   * @param tool - L'outil créé ou null.
+   * @param {Tool | null} tool - L'outil créé ou null.
    */
   public setCreatedTool(tool: Tool | null): void {
     this.updateState({ selectedTool: tool });
@@ -194,7 +197,7 @@ export class ControlRequestStore {
 
   /**
    * Met à jour une partie de l'état interne de manière immuable.
-   * @param newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
+   * @param {Partial<ControlRequestState>} newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
    */
   private updateState(newState: Partial<ControlRequestState>): void {
     this.state.update(current => ({

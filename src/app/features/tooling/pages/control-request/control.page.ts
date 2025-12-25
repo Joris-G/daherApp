@@ -15,7 +15,7 @@ import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { ToolFormComponent } from '../../components/create-tool/tool-form.component';
 import { ControlRequestFormBuilder } from '../../services/forms/control-request.form-builder';
 import { ControlRequestStore } from 'src/app/features/tooling/stores/controlRequest.store';
-import { ToolInputComponent } from "../../components/tool-input/tool-input.component";
+import { ToolInputComponent } from '../../components/tool-input/tool-input.component';
 import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlRequestControls, SpecCtrlUpdate } from '../../models/controle-3d-request.model';
 
 
@@ -118,12 +118,12 @@ export class Control3DPage implements OnInit, AfterContentInit {
     });
   }
   ngAfterContentInit(): void {
-    this.store.resetCreationState()
+    this.store.resetCreationState();
   }
 
   /**
-     * Initialisation du composant.
-     */
+   * Initialisation du composant.
+   */
   ngOnInit(): void {
     this.initializeForms();
     // this.loadPrograms();
@@ -131,10 +131,10 @@ export class Control3DPage implements OnInit, AfterContentInit {
 
     // 1. Lire les paramètres de la route
     this.activatedRoute.params.pipe(
-      filter(params => !!params['id']), // store'assurer que l'ID existe
+      filter(params => !!params.id), // store'assurer que l'ID existe
       take(1)
     ).subscribe(params => {
-      this.requestId = params['id'];
+      this.requestId = params.id;
       console.log(this.requestId);
       if (this.requestId) {
         this.isEditMode.set(true);
@@ -218,8 +218,8 @@ export class Control3DPage implements OnInit, AfterContentInit {
     }
   }
   /**
- * Créer une demande d'outillage complète
- */
+   * Créer une demande d'outillage complète
+   */
   private onCreateControlRequest() {
     // const toolData: ToolCreation = this.toolForm.value;
     const controlRequest: SpecCtrlCreation = {
@@ -231,8 +231,8 @@ export class Control3DPage implements OnInit, AfterContentInit {
 
 
   /**
-     * Met à jour une demande d'outillage complète
-     */
+   * Met à jour une demande d'outillage complète
+   */
   private onUpdateToolRequest(): void {
     const currentRequest = this.store.currentControlRequest();
     if (!currentRequest || this.controlForm.invalid) {
@@ -287,13 +287,13 @@ export class Control3DPage implements OnInit, AfterContentInit {
    * @param id - L'ID de la demande à charger.
    */
   private loadToolRequestForEdit(id: string): void {
-    console.log("load ToolRequest for Edit");
+    console.log('load ToolRequest for Edit');
     this.store.loadControlRequest(id);
   }
   /**
-     * Préremplit le formulaire avec les données de la demande.
-     * @param request - La demande d'outillage.
-     */
+   * Préremplit le formulaire avec les données de la demande.
+   * @param request - La demande d'outillage.
+   */
   private fillForm(request: SpecCtrlRequest): void {
     const formattedDateBesoin = request.dateBesoin.toString().split('T')[0];
     this.controlForm.patchValue({

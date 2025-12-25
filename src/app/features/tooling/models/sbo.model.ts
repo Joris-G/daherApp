@@ -1,5 +1,5 @@
-import { FormControl } from "@angular/forms";
-import { ToolRequestBase, ToolRequestBaseForm } from "./tool-request.model";
+import { FormControl } from '@angular/forms';
+import { ToolRequestBase, ToolRequestBaseForm } from './tool-request.model';
 // ============================================================================
 // SPÉCIFICATIONS SBO (Nouvelle demande outillage)
 // ============================================================================
@@ -7,9 +7,9 @@ export type SpecSBORequest = ToolRequestBase & {
   title: string;
   description: string;
   aircraftProgram?: string;
-}
+};
 //TODO programme avion
-export type SpecSBOCreation = Omit<SpecSBORequest, "id" | "aircraftProgram">;
+export type SpecSBOCreation = Omit<SpecSBORequest, 'id' | 'aircraftProgram'>;
 export type SpecSBOUpdate = Partial<SpecSBOCreation>;
 
 export type SpecSBOStorage= {
@@ -19,9 +19,9 @@ export type SpecSBOStorage= {
   description: string;
   //TODO programme avion
   aircraftProgram?: string;
-}
+};
 
 export type SpecSBOForm = ToolRequestBaseForm & {
-  title:FormControl<string>;
-  description:FormControl<string>;
-}
+  title: FormControl<string>;
+  description: FormControl<string>;
+};

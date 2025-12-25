@@ -147,9 +147,9 @@ export class ToolRequestStore {
   }
 
   /**
-  * Charge une demande existante par son ID pour l'édition.
-  * @param {string} requestId - L'ID de la demande.
-  */
+   * Charge une demande existante par son ID pour l'édition.
+   * @param {string} requestId - L'ID de la demande.
+   */
   public loadToolRequest(requestId: string): void {
     this.updateState({ isLoadingRequest: true, error: null, currentToolRequest: null });
 
@@ -169,10 +169,12 @@ export class ToolRequestStore {
       },
     });
   }
+
+  // eslint-disable-next-line jsdoc/no-undefined-types
   /**
-     * Met à jour une demande d'outillage existante.
-     * @param {ToolRequestUpdateType} requestToUpdate - Les données de mise à jour.
-     */
+   * Met à jour une demande d'outillage existante.
+   * @param requestToUpdate - Les données de mise à jour.
+   */
   public updateToolRequest<
     ToolRequestUpdateType extends ToolRequestUpdate,
     ToolRequestReturnType extends ToolRequest>(requestToUpdate: ToolRequestUpdateType): void {

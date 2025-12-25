@@ -48,7 +48,11 @@
             "prefix": "app",
             "style": "camelCase"
           }
-        ]
+        ],
+        "jsdoc/require-jsdoc": "off",
+        "jsdoc/require-param": "error",
+        "jsdoc/require-returns": "error",
+        "jsdoc/check-tag-names": "error"
       }
     },
     {

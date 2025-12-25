@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class ToolInputService implements OnInit {
     ngOnInit(): void {
         this.inputTool$

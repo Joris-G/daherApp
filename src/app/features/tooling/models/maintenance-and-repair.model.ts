@@ -2,12 +2,12 @@
 // ============================================================================
 // SPÉCIFICATIONS MAINTENANCE
 
-import { User } from "src/app/_interfaces/user";
-import { ToolRequestBase } from "./tool-request.model";
+import { User } from 'src/app/_interfaces/user';
+import { ToolRequestBase } from './tool-request.model';
 
 // ============================================================================
 export type SpecMaintRepRequest = ToolRequestBase & {
-  type: "MAINTENANCE";
+  type: 'MAINTENANCE';
   // outillage?: Tool;
   // outillNoRefSAP: OutillNoRefSAP
   itemActionCorrective: MaintenanceItem[];
@@ -20,7 +20,7 @@ export type SpecMaintRepRequest = ToolRequestBase & {
   fichier?: string;
   sigle?: string;
   dateValid?: Date;
-}
+};
 
 export type MaintenanceItem = {
   id?: number;
@@ -31,7 +31,7 @@ export type MaintenanceItem = {
   delaiAction: Date;
   userReal?: string;
   dateReal?: Date;
-}
+};
 
 export type SpecMaintRepRequestCreation = Omit<SpecMaintRepRequest, 'id'>;
 export type SpecMaintRepRequestUpdate = Partial<SpecMaintRepRequestCreation>;
