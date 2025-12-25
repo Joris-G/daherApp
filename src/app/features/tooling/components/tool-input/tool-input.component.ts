@@ -5,6 +5,7 @@ import { IonIcon, IonInput, IonItem, IonSpinner, IonText, IonList } from '@ionic
 import { ToolInputStore } from './tool-input.store';
 import { ToolLabelPipe } from './tool-label-pipe';
 import { JsonPipe } from '@angular/common';
+import { InputConfigDirective } from 'src/app/shared/directives/input-config.directive';
 
 const TOOL_INPUT_VALIDATOR: ValidatorFn = (
   control: AbstractControl
@@ -31,7 +32,7 @@ const TOOL_INPUT_VALIDATOR: ValidatorFn = (
     ],
     standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonList, ToolLabelPipe, IonItem, IonInput, IonIcon, IonSpinner, IonText, JsonPipe]
+  imports: [IonList, ToolLabelPipe, IonItem, IonInput, IonIcon, IonSpinner, IonText, InputConfigDirective]
 })
 export class ToolInputComponent implements ControlValueAccessor, Validator {
   readonly store = inject(ToolInputStore);

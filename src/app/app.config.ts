@@ -18,15 +18,19 @@ registerLocaleData(fr);
 export const appConfig:ApplicationConfig = {
     providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
+        provideIonicAngular({
+            rippleEffect: false,
+        }),
         provideRouter(routes, withPreloading(PreloadAllModules), withHashLocation(), withComponentInputBinding()),
         provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
+
         // File,
     // FileOpener,
         // PDFGenerator,
         provideAnimations(), provideNzI18n(fr_FR), importProvidersFrom(FormsModule), provideAnimationsAsync()
     ]
+
 }

@@ -14,7 +14,7 @@
     @for (filterItem of toolRequestFilters(); track $index) {
     <ion-item class="filter-item ion-margin" lines="none">
       <ion-select color="medium" #filter cancel-text="annuler" ok-text="appliquer" fill="outline" [label]="filterItem.name"
-        class="filter" multiple="true" [placeholder]="'Filtre ' + filterItem.name"
+        class="filter" multiple="true"
       (ionChange)="filterChange(filterItem,$event)">
         @for(filter of filterItem.options; track filter){
         

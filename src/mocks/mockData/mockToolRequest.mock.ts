@@ -10,7 +10,7 @@ export const mockToolRequests: ToolRequestStorage[] = [
     dateBesoin: new Date(2025, 11, 25),
     demandeurId: mockUsers[0].id,
     statut: "Nouvelle",
-    toolId: mockTools[0].id,
+    toolId: mockTools[101].id,
     type: "SBO"
   },
   {
@@ -20,7 +20,7 @@ export const mockToolRequests: ToolRequestStorage[] = [
     dateBesoin: new Date(2026, 0, 25),
     demandeurId: mockUsers[0].id,
     statut: "Nouvelle",
-    toolId: mockTools[0].id,
+    toolId: mockTools[102].id,
     type: "CONTROLE"
   }
 ]

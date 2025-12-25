@@ -42,8 +42,11 @@ export class ToolService {
     return this.http.get<Tool>(`api/tools/?identification=${identification}`);
   }
 
-  getAllTools(searchToolParams?: string[]): Observable<Tool[]> {
-    let params = new HttpParams();
+  //TODO faire en sorte d'activer la pagination pour ne limiter le résultat qu'aux 10 premiers
+  getAllTools(searchToolParams?: string[], page: number = 1, limit: number = 10): Observable<Tool[]> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
     if (searchToolParams && searchToolParams.length > 0) {
       searchToolParams.forEach(term => {
         params = params.append('search', term.trim());

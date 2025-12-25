@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal, untracked } from '@angular/core';
+import { AfterContentInit, Component, effect, inject, OnInit, signal, untracked } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
@@ -39,7 +39,7 @@ import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlRequestControls, SpecCtrlUpd
     ToolInputComponent
 ],
 })
-export class Control3DPage {
+export class Control3DPage implements OnInit, AfterContentInit {
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
@@ -116,6 +116,9 @@ export class Control3DPage {
         this.fillForm(store.currentControlRequest());
       }
     });
+  }
+  ngAfterContentInit(): void {
+    this.store.resetCreationState()
   }
 
   /**

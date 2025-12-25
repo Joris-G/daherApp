@@ -19,6 +19,12 @@ export const toolsHandlers = [
   http.get('/api/tools', ({ request }) => {
     const url = new URL(request.url);
     const searchTerms = url.searchParams.getAll('search').map(s => s.toLowerCase());
+
+    const page = parseInt(url.searchParams.get('page') || '1', 10);
+    const limit = parseInt(url.searchParams.get('limit') || '10', 10);
+    const startIndex = (page - 1) * limit;
+
+
     if (searchTerms.length === 0) {
       return HttpResponse.json(mockTools, { status: 200 });
     }
@@ -33,8 +39,9 @@ export const toolsHandlers = [
         );
       });
     });
+    const paginatedResults = filteredTools.slice(startIndex, startIndex + limit);
 
-    if (filteredTools) return HttpResponse.json(filteredTools, { status: 200 });
+    if (filteredTools) return HttpResponse.json(paginatedResults, { status: 200, headers: { 'X-Total-Count': filteredTools.length.toString() } });
 
     return HttpResponse.error();
 
