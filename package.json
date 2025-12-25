@@ -21,7 +21,8 @@
     "build:ci": "ionic build --configuration=qual --base-href /TEST/",
     "compodoc:build": "compodoc -p tsconfig.doc.json",
     "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s",
-    "compodoc:serve": "compodoc -s"
+    "compodoc:serve": "compodoc -s",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -89,8 +90,9 @@
     "cypress": "^12.17.4",
     "eslint": "^8.57.1",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jsdoc": "^61.4.1",
+    "eslint-plugin-jsdoc": "^61.5.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
+    "husky": "^9.1.7",
     "jasmine-core": "~4.6.0",
     "jasmine-spec-reporter": "~7.0.0",
     "json-server": "^0.17.4",
@@ -99,6 +101,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "^2.1.0",
+    "lint-staged": "^16.2.7",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.2",
     "typescript": "~5.4.5"
@@ -107,6 +110,12 @@
   "msw": {
     "workerDirectory": [
       "src"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{ts,html}": [
+      "eslint --fix",
+      "jest --findRelatedTests --bail"
     ]
   }
 }
