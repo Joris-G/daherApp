@@ -1,7 +1,7 @@
 <ion-item>
   <!-- <ion-label *ngIf="tool"> {{(tool.sapToolNumber.length > 5) ? ' OT' : ' OT0'}}</ion-label> -->
   <ion-input label="Outillage SAP : " placeholder="n°OT SAP ou n° Equipement SAP" [disabled]="disabled()"
-    [value]="store.tool()?.sapToolNumber" (ionInput)="handleInput($event)" (ionBlur)="onTouched()" [debounce]="550" />
+    [value]="store.tool()?.sapToolNumber" (ionInput)="handleInput($event)" (ionBlur)="onTouched()" debounce="1000" />
   @if(store.loading()){
   <ion-spinner slot="end" />
   }

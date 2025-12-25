@@ -1,6 +1,6 @@
 import { Component, computed, effect, inject,  OnInit, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonButton, IonContent, IonFooter, IonToolbar, IonTitle, IonHeader, NavController } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonFooter, IonToolbar, IonTitle, IonHeader, NavController, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, IonLabel } from '@ionic/angular/standalone';
 import { NgxEditorModule } from 'ngx-editor';
 import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/features/tooling/models/sbo.model';
 import { ToolCreation } from 'src/app/features/tooling/models/tool.model';
@@ -18,6 +18,7 @@ import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { ToolInputComponent } from '../../components/tool-input/tool-input.component';
 
 // TODO lorsque l'on passe sur une demande à modifier il faut changer le nom du bouton et le logo pour stipuler clairement qu'on fait une mise à jours des datas.
 // Bloquer certains champs à la modification en fonction du role.
@@ -40,7 +41,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   templateUrl: './sbo-request.page.html',
   styleUrls: ['./sbo-request.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonTitle,
+  imports: [IonLabel, IonHeader, IonTitle,
     SboFormComponent,
     CardComponent,
     ReactiveFormsModule,
@@ -52,6 +53,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     ToolFormComponent,
     SboComponent,
     NzButtonModule,
+    ToolInputComponent, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView
   ],
 })
   /**

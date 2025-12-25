@@ -9,7 +9,24 @@
 </ion-header>
 <ion-content color=light>
   <app-card [titles]="{title:'Outillage', subtitle:'Créer ou choisir'}">
-    <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
+    <ion-segment>
+      <ion-segment-button value="existing" content-id="existing">
+        <ion-label>Outillage existant</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="new" content-id="new">
+        <ion-label>Nouvel outillage</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <ion-segment-view>
+      <!-- OUTILLAGE EXISTANT -->
+      <ion-segment-content id="existing">
+        <app-tool-input formControlName="tool"></app-tool-input>
+      </ion-segment-content>
+      <!-- NOUVEL OUTILLAGE -->
+      <ion-segment-content id="new">
+        <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
+      </ion-segment-content>
+      </ion-segment-view>
   </app-card>
   <app-card [titles]="{title:'Demande'}">
     <app-sbo-form [isEditMode]="isEditMode()" [specSboForm]="specSboForm" />
