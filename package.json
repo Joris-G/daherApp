@@ -13,15 +13,15 @@
     "build": "ionic build --prod",
     "build-p": "ionic build --prod",
     "build-q": "ionic build --configuration=qual",
-    "test": "ng test",
+    "test": "ng test --passWithNoTests --runInBand",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
     "build-p-q": "npm run build-p && npm run build-q",
     "build:ci": "ionic build --configuration=qual --base-href /TEST/",
-    "compodoc:build": "compodoc -p tsconfig.doc.json",
-    "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s",
-    "compodoc:serve": "compodoc -s",
+    "compodoc:build": "compodoc -p tsconfig.doc.json --language fr-FR --theme original --hideGenerator",
+    "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json --language fr-FR -s -o --theme original --hideGenerator",
+    "compodoc:serve": "compodoc -s -o",
     "prepare": "husky"
   },
   "private": true,
@@ -106,7 +106,7 @@
     "ts-node": "^10.9.2",
     "typescript": "~5.4.5"
   },
-  "description": "An Ionic project",
+  "description": "Applications DAHER. Créées par joris-web-dev",
   "msw": {
     "workerDirectory": [
       "src"
@@ -115,7 +115,7 @@
   "lint-staged": {
     "src/**/*.{ts,html}": [
       "eslint --fix",
-      "jest --findRelatedTests --bail"
+      "jest --findRelatedTests --bail --passWithNoTests --runInBand"
     ]
   }
 }

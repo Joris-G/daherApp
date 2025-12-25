@@ -15,14 +15,30 @@ export interface ToolRequestBase {
   id: number;
   // TODO voir si on fait un controlForm pour ce champ pour simplifier la vue de création en une seule page
   type: RequestType;
-  bloquantProd: boolean;
-  dateBesoin: Date;
+  bloquantProd: boolean; //TODO Retirer si master revision OK
+  dateBesoin: Date; //TODO Retirer si master revision OK
   tool: Tool;
-  createdAt: Date;
-  demandeur: User;
-  statut: RequestStatus;
+  createdAt: Date; //TODO Retirer si master revision OK
+  demandeur: User; //TODO Retirer si master revision OK
+  statut: RequestStatus; //TODO Retirer si master revision OK
   //TODO Outillage NO REF
   // tool: Tool | OutillNoRefSAP;
+  groupeAffectation?: GroupeAffectation; //TODO Retirer si master revision OK
+  affectation?: string[]; //TODO Retirer si master revision OK
+  dateAffectation?: Date; //TODO Retirer si master revision OK
+  datePlanif?: Date; //TODO Retirer si master revision OK
+  dateReal?: Date; //TODO Retirer si master revision OK
+  userReal?: User; //TODO Retirer si master revision OK
+  toolingNote?: string; //TODO Retirer si master revision OK
+}
+
+export type ToolRequestRevision = {
+  indice: string;
+  bloquantProd: boolean;
+  dateBesoin: Date;
+  statut: RequestStatus;
+  createdAt: Date;
+  demandeur: User;
   groupeAffectation?: GroupeAffectation;
   affectation?: string[];
   dateAffectation?: Date;

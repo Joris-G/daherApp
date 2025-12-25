@@ -22,44 +22,20 @@ export interface ToolRequestState {
   isLoadingRequest: boolean;
   isUpdatingRequest: boolean;
   isCreatingSuccess: boolean;
-  isUpdateSuccess:boolean;
-  canManage: boolean,
-  canUpdate: boolean,
-  canEdit: boolean,
+  isUpdateSuccess: boolean;
+  canManage: boolean;
+  canUpdate: boolean;
+  canEdit: boolean;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 /**
- * Store pour la gestion de l'état et des actions liées à la création et à la modification 
+ * Store pour la gestion de l'état et des actions liées à la création et à la modification
  * de demandes d'outillage (SBO).
  */
 export class ToolRequestStore {
-  // ============================================================================
-  // INJECTION DE DÉPENDANCES
-  // ============================================================================
-  private readonly toolService = inject(ToolService);
-  private readonly toolRequestService = inject(ToolRequestService);
-
-  // ============================================================================
-  // ÉTAT INTERNE (Signals Privés Modifiables)
-  // ============================================================================
-  private readonly state = signal<ToolRequestState>({
-    isCreatingTool: false,
-    isCreatingRequest: false,
-    selectedTool: null,
-    error: null,
-    currentToolRequest: null,
-    isLoadingRequest: false,
-    isUpdatingRequest: false,
-    isCreatingSuccess: false,
-    isUpdateSuccess:false,
-    canEdit: true,
-    canManage: false,
-    canUpdate: false,
-  });
-
   // ============================================================================
   // SÉLECTEURS (Signals en Lecture Seule)
   // ============================================================================
@@ -94,6 +70,30 @@ export class ToolRequestStore {
   public readonly canEdit = computed(() => this.state().canEdit);
   public readonly canManage = computed(() => this.state().canManage);
   public readonly canUpdate = computed(() => this.state().canUpdate);
+
+  // ============================================================================
+  // INJECTION DE DÉPENDANCES
+  // ============================================================================
+  private readonly toolService = inject(ToolService);
+  private readonly toolRequestService = inject(ToolRequestService);
+
+  // ============================================================================
+  // ÉTAT INTERNE (Signals Privés Modifiables)
+  // ============================================================================
+  private readonly state = signal<ToolRequestState>({
+    isCreatingTool: false,
+    isCreatingRequest: false,
+    selectedTool: null,
+    error: null,
+    currentToolRequest: null,
+    isLoadingRequest: false,
+    isUpdatingRequest: false,
+    isCreatingSuccess: false,
+    isUpdateSuccess: false,
+    canEdit: true,
+    canManage: false,
+    canUpdate: false,
+  });
 
   // ============================================================================
   // MUTATIONS (Méthodes Publiques d'Action)
@@ -133,7 +133,7 @@ export class ToolRequestStore {
       take(1),
       switchMap((createdTool: Tool) => {
         toolRequest.tool = createdTool;
-        return this.toolRequestService.createToolRequest(toolRequest)
+        return this.toolRequestService.createToolRequest(toolRequest);
       }),
       finalize(() => this.updateState({ isCreatingRequest: false })
       )
@@ -145,11 +145,11 @@ export class ToolRequestStore {
       },
     });
   }
-  
+
   /**
-     * Charge une demande existante par son ID pour l'édition.
-     * @param requestId - L'ID de la demande.
-     */
+  * Charge une demande existante par son ID pour l'édition.
+  * @param requestId - L'ID de la demande.
+  */
   public loadToolRequest(requestId: string): void {
     this.updateState({ isLoadingRequest: true, error: null, currentToolRequest: null });
 
@@ -173,7 +173,9 @@ export class ToolRequestStore {
      * Met à jour une demande d'outillage existante.
      * @param requestToUpdate - Les données de mise à jour.
      */
-  public updateToolRequest<ToolRequestUpdateType extends ToolRequestUpdate, ToolRequestReturnType extends ToolRequest>(requestToUpdate: ToolRequestUpdateType): void {
+  public updateToolRequest<
+    ToolRequestUpdateType extends ToolRequestUpdate,
+    ToolRequestReturnType extends ToolRequest>(requestToUpdate: ToolRequestUpdateType): void {
     const currentId = this.currentToolRequest()?.id;
     if (!currentId) {
       this.updateState({ error: 'ID de demande manquant pour la mise à jour.' });
