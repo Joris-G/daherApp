@@ -1,3 +1,4 @@
+
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { delay, finalize, switchMap, take, tap } from 'rxjs';
 import { ToolRequestService } from '../../../tooling/services/tool-request.service';
@@ -5,8 +6,6 @@ import { SpecSBORequest,  } from '../models/sbo.model';
 import { Tool, ToolCreation } from '../models/tool.model';
 import { ToolService } from '../../../tooling/services/tool.service';
 import { ToolRequest, ToolRequestCreation, ToolRequestUpdate } from '../models/tool-request.model';
-
-//TODO changement d'état onUpdate pour prévenir le composant list toolrequest de la mise à jour
 
 /**
  * Interface d'état pour le ToolRequestStore.
@@ -102,7 +101,7 @@ export class ToolRequestStore {
   /**
    * Crée un nouvel outil en base de données.
    * Met à jour l'état `createdTool` en cas de succès.
-   * @param toolData - Les données de création de l'outil.
+   * @param {ToolCreation} toolData - Les données de création de l'outil.
    */
   public createTool(toolData: ToolCreation): void {
     this.updateState({ isCreatingTool: true, error: null });
@@ -122,7 +121,8 @@ export class ToolRequestStore {
 
   /**
    * Soumet la demande d'outillage SBO.
-   * @param toolRequest - Les données de la demande d'outillage.
+   * @param {ToolRequestCreation} toolRequest - Les données de la demande d'outillage.
+   * @param {ToolCreation} toolData - Les données de création de l'outil.
    */
   public createToolRequest(toolRequest: ToolRequestCreation, toolData: ToolCreation): void {
     this.resetCreationState();
@@ -148,7 +148,7 @@ export class ToolRequestStore {
 
   /**
   * Charge une demande existante par son ID pour l'édition.
-  * @param requestId - L'ID de la demande.
+  * @param {string} requestId - L'ID de la demande.
   */
   public loadToolRequest(requestId: string): void {
     this.updateState({ isLoadingRequest: true, error: null, currentToolRequest: null });
@@ -171,7 +171,7 @@ export class ToolRequestStore {
   }
   /**
      * Met à jour une demande d'outillage existante.
-     * @param requestToUpdate - Les données de mise à jour.
+     * @param {ToolRequestUpdateType} requestToUpdate - Les données de mise à jour.
      */
   public updateToolRequest<
     ToolRequestUpdateType extends ToolRequestUpdate,
@@ -202,8 +202,9 @@ export class ToolRequestStore {
 
   /**
    * Définit l'outil créé manuellement (utilisé par le composant si nécessaire).
-   * @param tool - L'outil créé ou null.
+   * @param {Tool | null} tool - L'outil créé ou null.
    */
+  // TODO vérifier si on doit garder le null
   public setCreatedTool(tool: Tool | null): void {
     this.updateState({ selectedTool: tool });
   }
@@ -231,7 +232,7 @@ export class ToolRequestStore {
 
   /**
    * Met à jour une partie de l'état interne de manière immuable.
-   * @param newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
+   * @param {Partial<ToolRequestState>} newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
    */
   private updateState(newState: Partial<ToolRequestState>): void {
     this.state.update(current => ({
