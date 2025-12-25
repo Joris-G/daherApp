@@ -1,0 +1,1289 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>moldingApp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">moldingApp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ToolRequestFooterComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-tool-request-footer</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>IonIcon</code>
+                            <code>IonButton</code>
+                            <code>IonItem</code>
+                                <code><a href="../interfaces/Tool.html" target="_self" >IonToolbar</a></code>
+                            <code>IonSelect</code>
+                            <code>IonSelectOption</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./tool-request-footer.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./tool-request-footer.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#affectationGroups" >affectationGroups</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#userList" >userList</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#affectationChange" >affectationChange</a>
+                            </li>
+                            <li>
+                                <a href="#loadAffectationGroups" >loadAffectationGroups</a>
+                            </li>
+                            <li>
+                                <a href="#loadUsers" >loadUsers</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#pdfExportClick" >pdfExportClick</a>
+                            </li>
+                            <li>
+                                <a href="#statusChange" >statusChange</a>
+                            </li>
+                            <li>
+                                <a href="#submitClick" >submitClick</a>
+                            </li>
+                            <li>
+                                <a href="#updateClick" >updateClick</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#canManage" >canManage</a>
+                            </li>
+                            <li>
+                                <a href="#canSubmit" >canSubmit</a>
+                            </li>
+                            <li>
+                                <a href="#canUpdate" >canUpdate</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#evAffectationChange" >evAffectationChange</a>
+                            </li>
+                            <li>
+                                <a href="#evStatusChange" >evStatusChange</a>
+                            </li>
+                            <li>
+                                <a href="#evUpdate" >evUpdate</a>
+                            </li>
+                            <li>
+                                <a href="#submit" >submit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(userService: UsersService, pdfService: PdfService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:95</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>userService</td>
+                                                  
+                                                        <td>
+                                                                    <code>UsersService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>pdfService</td>
+                                                  
+                                                        <td>
+                                                                    <code>PdfService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="canManage"></a>
+                        <b>canManage</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:34</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="canSubmit"></a>
+                        <b>canSubmit</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:26</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="canUpdate"></a>
+                        <b>canUpdate</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:43</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="evAffectationChange"></a>
+                        <b>evAffectationChange</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;GroupeAffectation&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:61</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="evStatusChange"></a>
+                        <b>evStatusChange</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#RequestStatus" target="_self" >EventEmitter&lt;RequestStatus&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:52</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="evUpdate"></a>
+                        <b>evUpdate</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:78</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="submit"></a>
+                        <b>submit</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:69</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="affectationChange"></a>
+                    <span class="name">
+                        <span ><b>affectationChange</b></span>
+                        <a href="#affectationChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>affectationChange(affectationGroup: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>affectationGroup</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadAffectationGroups"></a>
+                    <span class="name">
+                        <span ><b>loadAffectationGroups</b></span>
+                        <a href="#loadAffectationGroups"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadAffectationGroups()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="114"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:114</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadUsers"></a>
+                    <span class="name">
+                        <span ><b>loadUsers</b></span>
+                        <a href="#loadUsers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadUsers()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="107"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:107</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pdfExportClick"></a>
+                    <span class="name">
+                        <span ><b>pdfExportClick</b></span>
+                        <a href="#pdfExportClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>pdfExportClick()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="statusChange"></a>
+                    <span class="name">
+                        <span ><b>statusChange</b></span>
+                        <a href="#statusChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>statusChange(status: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="125"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:125</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>status</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitClick"></a>
+                    <span class="name">
+                        <span ><b>submitClick</b></span>
+                        <a href="#submitClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitClick()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="134"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:134</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateClick"></a>
+                    <span class="name">
+                        <span ><b>updateClick</b></span>
+                        <a href="#updateClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateClick()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="affectationGroups"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>affectationGroups</b></span>
+                        <a href="#affectationGroups"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>GroupeAffectation[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:95</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userList"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>userList</b></span>
+                        <a href="#userList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>User[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/app/features/tooling/components/tool-request-footer/tool-request-footer.component.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, OnInit, Output } from &#x27;@angular/core&#x27;;
+import { User } from &#x27;src/app/_interfaces/user&#x27;;
+import { EventEmitter } from &#x27;@angular/core&#x27;;
+import { GroupeAffectation } from &#x27;src/app/_interfaces/groupe-affectation&#x27;;
+import { PdfService } from &#x27;src/app/shared/services/divers/pdf.service&#x27;;
+import { UsersService } from &#x27;src/app/shared/services/users/users.service&#x27;;
+import { RequestStatus } from &#x27;../../models/tool-request.model&#x27;;
+import { IonToolbar, IonItem, IonButton, IonIcon, IonSelect, IonSelectOption } from &quot;@ionic/angular/standalone&quot;;
+
+@Component({
+    selector: &#x27;app-tool-request-footer&#x27;,
+    templateUrl: &#x27;./tool-request-footer.component.html&#x27;,
+    styleUrls: [&#x27;./tool-request-footer.component.scss&#x27;],
+    standalone: true,
+  imports: [IonIcon, IonButton, IonItem, IonToolbar, IonSelect, IonSelectOption
+
+    ],
+})
+export class ToolRequestFooterComponent implements OnInit {
+  /**
+    *
+    *
+    * @type {boolean}
+    * @memberof ToolRequestFooterComponent
+    */
+  @Input() canSubmit: boolean;
+
+  /**
+   *
+   *
+   * @type {boolean}
+   * @memberof ToolRequestFooterComponent
+   */
+  @Input() canManage: boolean;
+
+
+  /**
+   *
+   *
+   * @type {boolean}
+   * @memberof ToolRequestFooterComponent
+   */
+  @Input() canUpdate: boolean;
+
+
+  /**
+   *
+   *
+   * @type {EventEmitter}
+   * @memberof ToolRequestFooterComponent
+   */
+  @Output() evStatusChange: EventEmitter&lt;RequestStatus&gt; &#x3D; new EventEmitter();
+
+
+  /**
+   *
+   *
+   * @type {EventEmitter&lt;string&gt;}
+   * @memberof ToolRequestFooterComponent
+   */
+  @Output() evAffectationChange: EventEmitter&lt;GroupeAffectation&gt; &#x3D; new EventEmitter();
+
+  /**
+   *
+   *
+   * @type {EventEmitter&lt;any&gt;}
+   * @memberof ToolRequestFooterComponent
+   */
+  @Output() submit: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
+
+
+  /**
+   *
+   *
+   * @type {EventEmitter&lt;any&gt;}
+   * @memberof ToolRequestFooterComponent
+   */
+  @Output() evUpdate: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
+
+  /**
+   *
+   *
+   * @type {User[]}
+   * @memberof ToolRequestFooterComponent
+   */
+  public userList: User[];
+
+
+  /**
+   *
+   *
+   * @type {GroupeAffectation[]}
+   * @memberof ToolRequestFooterComponent
+   */
+  public affectationGroups: GroupeAffectation[];
+
+  constructor(
+    private userService: UsersService,
+    private pdfService: PdfService,
+  ) { }
+
+  ngOnInit() {
+    this.loadUsers();
+    this.loadAffectationGroups();
+  }
+
+  loadUsers() {
+    this.userService.getUsers()
+      .subscribe((responseUsers: User[]) &#x3D;&gt; {
+        this.userList &#x3D; responseUsers;
+      });
+  }
+
+  loadAffectationGroups() {
+    this.userService.getGroups()
+      .subscribe((responseGroups: GroupeAffectation[]) &#x3D;&gt; {
+        this.affectationGroups &#x3D; responseGroups;
+      });
+  }
+
+  affectationChange(affectationGroup: any) {
+    this.evAffectationChange.emit(affectationGroup.target.value);
+  }
+
+  statusChange(status: any) {
+    this.evStatusChange.emit(status.target.value);
+  }
+
+  pdfExportClick() {
+    console.log(document.getElementById(&#x27;toExport&#x27;));
+    this.pdfService.openPDF(document.getElementById(&#x27;toExport&#x27;), &#x27;test impression&#x27;);
+  }
+
+  submitClick() {
+    this.submit.emit(null);
+  }
+
+  updateClick() {
+    this.evUpdate.emit(null);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ion-toolbar color&#x3D;&quot;light&quot;&gt;
+    @if(canManage){
+    &lt;ion-item&gt;
+        &lt;ion-select label&#x3D;&quot;Affecter&quot; multiple&#x3D;&quot;true&quot; placeholder&#x3D;&quot;Séléctionner une personne&quot;
+            (ionChange)&#x3D;&quot;affectationChange($event)&quot;&gt;
+            &lt;ion-select-option *ngFor&#x3D;&quot;let affectationGroup of affectationGroups&quot; [value]&#x3D;&quot;affectationGroup&quot;&gt;
+                {{affectationGroup.libelle}}&lt;/ion-select-option&gt;
+        &lt;/ion-select&gt;
+    &lt;/ion-item&gt;
+    }
+    
+    @if(canManage){
+    
+    &lt;ion-item&gt;
+        &lt;!-- &lt;ion-select #statut multiple&#x3D;&quot;false&quot; placeholder&#x3D;&quot;Séléctionner un statut&quot; (ionChange)&#x3D;&quot;toolRequest.statut &#x3D; statut.value&quot;&gt; --&gt;
+        &lt;ion-select label&#x3D;&quot;Changer le statut&quot; #statut multiple&#x3D;&quot;false&quot; placeholder&#x3D;&quot;Séléctionner un statut&quot;
+            (ionChange)&#x3D;&quot;statusChange($event)&quot;&gt;
+            &lt;ion-select-option value&#x3D;&quot;NOUVELLE&quot;&gt;Nouvelle&lt;/ion-select-option&gt;
+            &lt;ion-select-option value&#x3D;&quot;REFUSEE&quot;&gt;Refuser&lt;/ion-select-option&gt;
+            &lt;ion-select-option value&#x3D;&quot;ACCEPTEE&quot;&gt;Accepter&lt;/ion-select-option&gt;
+            &lt;ion-select-option value&#x3D;&quot;ANNULEE&quot;&gt;Annuler&lt;/ion-select-option&gt;
+            &lt;ion-select-option value&#x3D;&quot;EN COURS DE REALISATION&quot;&gt;En cours de réalisation&lt;/ion-select-option&gt;
+            &lt;ion-select-option value&#x3D;&quot;TERMINEE&quot;&gt;Terminée&lt;/ion-select-option&gt;
+            &lt;ion-select-option value&#x3D;&quot;CLOTUREE&quot;&gt;Cloturer&lt;/ion-select-option&gt;
+            &lt;ion-select-option value&#x3D;&quot;ATTENTE FOURNITURE EXT&quot;&gt;Attente de fourniture extérieure&lt;/ion-select-option&gt;
+            &lt;ion-select-option value&#x3D;&quot;DEM EXT&quot;&gt;Demande externalisée&lt;/ion-select-option&gt;
+        &lt;/ion-select&gt;
+    &lt;/ion-item&gt;
+    }
+    &lt;ion-button slot&#x3D;end (click)&#x3D;&quot;pdfExportClick()&quot;&gt;
+        &lt;ion-icon slot&#x3D;&quot;end&quot; name&#x3D;&quot;document-attach-outline&quot;&gt;&lt;/ion-icon&gt;
+        Exporter pdf
+    &lt;/ion-button&gt;
+    @if(!canUpdate){
+    &lt;ion-button slot&#x3D;end block color&#x3D;&quot;success&quot; [disabled]&#x3D;&quot;!canSubmit&quot; (click)&#x3D;&quot;submitClick()&quot;&gt;
+        &lt;ion-icon slot&#x3D;&quot;end&quot; name&#x3D;&quot;send-outline&quot;&gt;&lt;/ion-icon&gt;
+        Envoyer
+    &lt;/ion-button&gt;
+}
+@if(canUpdate){
+
+&lt;ion-button slot&#x3D;end block color&#x3D;&quot;success&quot; (click)&#x3D;&quot;updateClick()&quot;&gt;
+    &lt;ion-icon slot&#x3D;&quot;end&quot; name&#x3D;&quot;send-outline&quot;&gt;&lt;/ion-icon&gt;
+    Mettre à jour
+&lt;/ion-button&gt;
+    }
+&lt;/ion-toolbar&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./tool-request-footer.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ion-toolbar color="light">    @if(canManage){    <ion-item>        <ion-select label="Affecter" multiple="true" placeholder="Séléctionner une personne"            (ionChange)="affectationChange($event)">            <ion-select-option *ngFor="let affectationGroup of affectationGroups" [value]="affectationGroup">                {{affectationGroup.libelle}}</ion-select-option>        </ion-select>    </ion-item>    }        @if(canManage){        <ion-item>        <!-- <ion-select #statut multiple="false" placeholder="Séléctionner un statut" (ionChange)="toolRequest.statut = statut.value"> -->        <ion-select label="Changer le statut" #statut multiple="false" placeholder="Séléctionner un statut"            (ionChange)="statusChange($event)">            <ion-select-option value="NOUVELLE">Nouvelle</ion-select-option>            <ion-select-option value="REFUSEE">Refuser</ion-select-option>            <ion-select-option value="ACCEPTEE">Accepter</ion-select-option>            <ion-select-option value="ANNULEE">Annuler</ion-select-option>            <ion-select-option value="EN COURS DE REALISATION">En cours de réalisation</ion-select-option>            <ion-select-option value="TERMINEE">Terminée</ion-select-option>            <ion-select-option value="CLOTUREE">Cloturer</ion-select-option>            <ion-select-option value="ATTENTE FOURNITURE EXT">Attente de fourniture extérieure</ion-select-option>            <ion-select-option value="DEM EXT">Demande externalisée</ion-select-option>        </ion-select>    </ion-item>    }    <ion-button slot=end (click)="pdfExportClick()">        <ion-icon slot="end" name="document-attach-outline"></ion-icon>        Exporter pdf    </ion-button>    @if(!canUpdate){    <ion-button slot=end block color="success" [disabled]="!canSubmit" (click)="submitClick()">        <ion-icon slot="end" name="send-outline"></ion-icon>        Envoyer    </ion-button>}@if(canUpdate){<ion-button slot=end block color="success" (click)="updateClick()">    <ion-icon slot="end" name="send-outline"></ion-icon>    Mettre à jour</ion-button>    }</ion-toolbar></div>'
+    var COMPONENTS = [{'name': 'Control3DFormComponent', 'selector': 'app-control3-dform'},{'name': 'Control3DPage', 'selector': 'app-control'},{'name': 'NewToolPage', 'selector': 'app-new-tool'},{'name': 'SboFormComponent', 'selector': 'app-sbo-form'},{'name': 'ToolFormComponent', 'selector': 'app-tool-form'},{'name': 'ToolInputComponent', 'selector': 'app-tool-input'},{'name': 'ToolRequestFooterComponent', 'selector': 'app-tool-request-footer'},{'name': 'ToolRequestMenuComponent', 'selector': 'app-tool-request-menu'},{'name': 'ToolRequestsPage', 'selector': ''}];
+    var DIRECTIVES = [{'name': 'ToolInputDirective', 'selector': '[toolInput]'}];
+    var ACTUAL_COMPONENT = {'name': 'ToolRequestFooterComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ToolRequestFooterComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,1122 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>moldingApp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">moldingApp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  Control3DFormComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/tooling/components/control3-dform/control3-dform.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-control3-dform</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>ReactiveFormsModule</code>
+                            <code>CardComponent</code>
+                            <code>EditorComponent</code>
+                            <code>KeyValuePipe</code>
+                            <code>IonGrid</code>
+                            <code>IonRow</code>
+                            <code>IonCol</code>
+                            <code>IonInput</code>
+                            <code>IonLabel</code>
+                            <code>IonItem</code>
+                            <code>IonText</code>
+                            <code>IonSelectOption</code>
+                            <code>IonNote</code>
+                            <code>IonSelect</code>
+                            <code>IonSelectOption</code>
+                            <code>IonToggle</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./control3-dform.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./control3-dform.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#editor" >editor</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#moyenMesure" >moyenMesure</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#typeRapport" >typeRapport</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#isEditMode" >isEditMode</a>
+                            </li>
+                            <li>
+                                <a href="#requestState" >requestState</a>
+                            </li>
+                            <li>
+                                <a href="#specCtrlForm" >specCtrlForm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isEditMode"></a>
+                        <b>isEditMode</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/features/tooling/components/control3-dform/control3-dform.component.ts:32</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indique si la page est en mode édition.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="requestState"></a>
+                        <b>requestState</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>RequestState</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{    canManage: false,    canUpdate: false,    canEdit: false  }</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/features/tooling/components/control3-dform/control3-dform.component.ts:58</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="specCtrlForm"></a>
+                        <b>specCtrlForm</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Required : </i>&nbsp;<b>true</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/features/tooling/components/control3-dform/control3-dform.component.ts:30</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Formulaire pour les spécifications SBO.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="46"
+                                    class="link-to-prism">src/app/features/tooling/components/control3-dform/control3-dform.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Destruction du composant.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/app/features/tooling/components/control3-dform/control3-dform.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editor"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>editor</b></span>
+                        <a href="#editor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Editor</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/features/tooling/components/control3-dform/control3-dform.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Éditeur de texte riche</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="moyenMesure"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>moyenMesure</b></span>
+                        <a href="#moyenMesure"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>MOYENS_MESURE</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/features/tooling/components/control3-dform/control3-dform.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="typeRapport"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>typeRapport</b></span>
+                        <a href="#typeRapport"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>RAPPORT_TYPES</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/features/tooling/components/control3-dform/control3-dform.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { FormGroup, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import { Component, input, } from &#x27;@angular/core&#x27;;
+import {  KeyValuePipe } from &#x27;@angular/common&#x27;;
+import { EditorComponent } from &#x27;@tinymce/tinymce-angular&#x27;;
+import { RequestState } from &#x27;src/app/tooling/services/tool-request-manager.service&#x27;;
+import { IonCol, IonGrid, IonItem, IonLabel, IonRow, IonText,  IonSelectOption, IonNote, IonInput,  IonSelect, IonToggle } from &#x27;@ionic/angular/standalone&#x27;;
+import { Editor } from &#x27;ngx-editor&#x27;;
+import { RAPPORT_TYPES } from &#x27;src/app/features/tooling/models/type-rapport.model&#x27;;
+import { MOYENS_MESURE } from &#x27;src/app/features/tooling/models/moyen-mesure.model&#x27;;
+import { CardComponent } from &#x27;src/app/shared/components/card/card.component&#x27;;
+
+@Component({
+    selector: &#x27;app-control3-dform&#x27;,
+    templateUrl: &#x27;./control3-dform.component.html&#x27;,
+    styleUrls: [&#x27;./control3-dform.component.scss&#x27;],
+    standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    CardComponent,
+    EditorComponent,
+    KeyValuePipe,
+    IonGrid, IonRow, IonCol, IonInput,
+    IonLabel, IonItem, IonText, IonSelectOption, IonNote,
+    IonSelect,
+    IonSelectOption,
+    IonToggle]
+})
+export class Control3DFormComponent {
+  /** Formulaire pour les spécifications SBO. */
+  public specCtrlForm &#x3D; input.required&lt;FormGroup&gt;();
+  /** Indique si la page est en mode édition. */
+  isEditMode &#x3D; input&lt;boolean&gt;(true);
+
+  /** Éditeur de texte riche */
+  public editor: Editor;
+
+  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // LIFECYCLE
+  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  ngOnInit() {
+    this.editor &#x3D; new Editor();
+  }
+  /**
+     * Destruction du composant.
+     */
+  ngOnDestroy(): void {
+    this.editor.destroy();
+  }
+
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // // INJECTION DEPENDANCES
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // private readonly fb &#x3D; inject(FormBuilder);
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // // INPUTS (Signals modernes)
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // readonly toolRequest &#x3D; input&lt;ToolRequest | null&gt;(null);
+  readonly requestState &#x3D; input&lt;RequestState&gt;({
+    canManage: false,
+    canUpdate: false,
+    canEdit: false
+  });
+
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // // OUTPUTS (Signals modernes)
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // readonly submit &#x3D; output&lt;SpecCtrlCreation&gt;();
+  // readonly update &#x3D; output&lt;Partial&lt;ToolRequest&gt;&gt;();
+  // readonly statusChange &#x3D; output&lt;RequestStatus&gt;();
+
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // // PROPRIETES
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  protected readonly moyenMesure &#x3D; MOYENS_MESURE;
+  protected readonly typeRapport &#x3D; RAPPORT_TYPES;
+
+  // // Formulaires
+  // protected readonly toolRequestForm: FormGroup;
+  // protected readonly controlForm: FormGroup;
+  // protected readonly outillNoRefSAPForm: FormGroup;
+
+  // // État du formulaire
+  // protected readonly formValid &#x3D; signal(false);
+
+  // // Configuration TinyMCE
+  // protected readonly editorConfig &#x3D; {
+  //   plugins: &#x27;lists link image table wordcount&#x27;,
+  //   toolbar: &#x27;bold italic underline strikethrough forecolor fontsize styles | alignleft aligncenter alignright alignjustify | bullist numlist | h1 h2 h3&#x27;,
+  //   menubar: false,
+  //   statusbar: false,
+  //   object_resizing: true,
+  //   height: 150,
+  //   inline: false
+  // };
+
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // // CONSTRUCTOR
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // constructor() {
+  //   // Initialisation des formulaires
+  //   this.outillNoRefSAPForm &#x3D; this.fb.group({
+  //     identification: [&#x27;&#x27;],
+  //     description: [&#x27;&#x27;],
+  //     localisation: [&#x27;&#x27;]
+  //   });
+
+  //   this.toolRequestForm &#x3D; this.fb.group({
+  //     id: [null],
+  //     statut: [&#x27;&#x27;],
+  //     // Ajouter les autres champs nécessaires
+  //   });
+
+
+  //   // Synchroniser les données d&#x27;entrée avec les formulaires
+  //   effect(() &#x3D;&gt; {
+  //     console.log(&quot;hello from effect ctrl3D&quot;);
+  //     const toolReq &#x3D; this.toolRequest();
+
+  //     if (toolReq) {
+  //       this.toolRequestForm.patchValue(toolReq, { emitEvent: false });
+  //       this.controlForm.patchValue(toolReq, { emitEvent: false });
+  //     }
+
+  //   });
+
+  //   // Surveiller la validité du formulaire
+  //   effect(() &#x3D;&gt; {
+  //     this.formValid.set(
+  //       this.controlForm.valid &amp;&amp; this.toolRequestForm.valid
+  //     );
+  //   });
+  // }
+
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // // MÉTHODES PUBLIQUES
+  // // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  // protected onToolSelected(tool: any) {
+  //   this.controlForm.patchValue({ outillage: tool });
+  // }
+
+  // protected formatDate(dateValue: string): Date {
+  //   return new Date(dateValue);
+  // }
+
+  // protected handleSubmit() {
+  //   if (this.controlForm.valid) {
+  //     const data: SpecCtrlCreation &#x3D; {
+  //       ...this.toolRequestForm.value,
+  //       typeData: this.controlForm.value
+  //     };
+
+  //     if (this.isEditMode()) {
+  //       this.update.emit(data);
+  //     } else {
+  //       this.submit.emit(data);
+  //     }
+  //   }
+  // }
+
+  // protected handleStatusChange(newStatus: RequestStatus) {
+  //   this.statusChange.emit(newStatus);
+  //   this.toolRequestForm.patchValue({ statut: newStatus });
+  // }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;form [formGroup]&#x3D;&quot;specCtrlForm()&quot;&gt;
+  &lt;ion-grid&gt;
+    &lt;ion-row&gt;
+      &lt;ion-col size&#x3D;&quot;6&quot;&gt;
+
+        &lt;!-- ******************************* --&gt;
+        &lt;!-- *******   COMPLEMENT    ******* --&gt;
+        &lt;!-- ******************************* --&gt;
+        &lt;app-card [titles]&#x3D;&quot;{title:&#x27;Complément&#x27;}&quot;&gt;
+            &lt;ion-item&gt;
+              &lt;ion-label&gt;Bloquant Prod&lt;/ion-label&gt;
+              &lt;ion-toggle slot&#x3D;&quot;end&quot; formControlName&#x3D;&quot;bloquantProd&quot;&gt;&lt;/ion-toggle&gt;
+            &lt;/ion-item&gt;
+
+            &lt;!-- ******************************* --&gt;
+            &lt;!-- ****   DATE MISE A DISPO   **** --&gt;
+            &lt;!-- ******************************* --&gt;
+                    &lt;ion-item&gt;
+          &lt;ion-input labelPlacement&#x3D;&quot;floating&quot; type&#x3D;&quot;date&quot; display-format&#x3D;&quot;EEEE DD-MM-YYYY&quot; formControlName&#x3D;&quot;dispoOut&quot;&gt;
+            &lt;div slot&#x3D;&quot;label&quot;&gt;Date de mise à disposition au service outillage&lt;ion-text color&#x3D;&quot;danger&quot;&gt; *&lt;/ion-text&gt;&lt;/div&gt;
+          &lt;/ion-input&gt;
+          &lt;/ion-item&gt;
+
+
+            &lt;!-- ******************************* --&gt;
+            &lt;!-- ********   LA PIECE   ********* --&gt;
+            &lt;!-- ******************************* --&gt;
+            &lt;div class&#x3D;&quot;flex-row&quot;&gt;
+
+              &lt;!-- ******************************* --&gt;
+              &lt;!-- ********   reference   ******** --&gt;
+              &lt;!-- ******************************* --&gt;
+
+
+              &lt;ion-item&gt;
+                &lt;ion-input labelPlacement&#x3D;&quot;floating&quot; required #refPlan formControlName&#x3D;&quot;refPlan&quot; type&#x3D;&quot;text&quot;
+                  placeholder&#x3D;&quot;indiquer n° de plan&quot;&gt;
+                  &lt;div slot&#x3D;&quot;label&quot;&gt;Référence pièce&lt;ion-text color&#x3D;&quot;danger&quot;&gt; *&lt;/ion-text&gt;&lt;/div&gt;
+                &lt;/ion-input&gt;
+              &lt;/ion-item&gt;
+
+              &lt;!-- ******************************* --&gt;
+              &lt;!-- ********   INDICE   *********** --&gt;
+              &lt;!-- ******************************* --&gt;
+
+
+              &lt;ion-item&gt;
+                &lt;ion-input labelPlacement&#x3D;&quot;floating&quot; required #indPlan formControlName&#x3D;&quot;indPlan&quot; type&#x3D;&quot;text&quot;
+                  placeholder&#x3D;&quot;indiquer l &#x27;indice du plan&quot;&gt;
+                  &lt;div slot&#x3D;&quot;label&quot;&gt;Indice plan&lt;ion-text color&#x3D;&quot;danger&quot;&gt; *&lt;/ion-text&gt;&lt;/div&gt;
+                &lt;/ion-input&gt;
+              &lt;/ion-item&gt;
+            &lt;/div&gt;
+
+
+            &lt;!-- ******************************* --&gt;
+            &lt;!-- *******   CHEMIN CAO   ******** --&gt;
+            &lt;!-- ******************************* --&gt;
+
+
+            &lt;ion-item&gt;
+              &lt;ion-input labelPlacement&#x3D;&quot;floating&quot; label&#x3D;&quot;Format du modèle 3D fourni si nécessaire&quot; #caoPath
+                formControlName&#x3D;&quot;cheminCAO&quot; type&#x3D;&quot;text&quot;
+                placeholder&#x3D;&quot;Fournir CAO et / ou chemin d’accès&quot;&gt;
+              &lt;/ion-input&gt;
+            &lt;/ion-item&gt;
+        &lt;/app-card&gt;
+
+
+        &lt;!-- ******************************* --&gt;
+        &lt;!-- *******   LE RAPPORT   ******** --&gt;
+        &lt;!-- ******************************* --&gt;
+        &lt;app-card [titles]&#x3D;&quot;{title:&#x27;Le rapport&#x27;}&quot;&gt;
+          &lt;!-- ******************************* --&gt;
+          &lt;!-- *******   DATE BUTOIR   ******* --&gt;
+          &lt;!-- ******************************* --&gt;
+                               &lt;ion-item&gt;
+          &lt;ion-input labelPlacement&#x3D;&quot;floating&quot; type&#x3D;&quot;date&quot; display-format&#x3D;&quot;EEEE DD-MM-YYYY&quot; formControlName&#x3D;&quot;dateBesoin&quot;&gt;
+            &lt;div slot&#x3D;&quot;label&quot;&gt;Date butoir demandée&lt;ion-text color&#x3D;&quot;danger&quot;&gt; *&lt;/ion-text&gt;&lt;/div&gt;
+          &lt;/ion-input&gt;
+          &lt;/ion-item&gt;
+
+
+          &lt;!-- ******************************* --&gt;
+          &lt;!-- *********   OI eOTP   ********* --&gt;
+          &lt;!-- ******************************* --&gt;
+
+
+          &lt;ion-item&gt;
+            &lt;ion-input labelPlacement&#x3D;&quot;floating&quot; #ligneBudgetaire required formControlName&#x3D;&quot;ligneBudgetaire&quot; type&#x3D;&quot;text&quot;
+              placeholder&#x3D;&quot;Indiquez le n° pour imputation&quot;&gt;
+              &lt;div slot&#x3D;&quot;label&quot;&gt;Oi ou Eotp&lt;ion-text color&#x3D;&quot;danger&quot;&gt; *&lt;/ion-text&gt;&lt;/div&gt;
+            &lt;/ion-input&gt;
+          &lt;/ion-item&gt;
+
+          &lt;!-- ******************************* --&gt;
+          &lt;!-- ******   TYPE RAPPORT   ******* --&gt;
+          &lt;!-- ******************************* --&gt;
+
+
+          &lt;ion-item&gt;
+            &lt;ion-select  #typeRapportSelect formControlName&#x3D;&quot;typeRapport&quot;&gt;
+              @for(type of typeRapport| keyvalue; track $index){
+              &lt;ion-select-option [value]&#x3D;&quot;type.value&quot;&gt;{{type.value}}&lt;/ion-select-option&gt;
+              }
+               &lt;div slot&#x3D;&quot;label&quot;&gt;Types de rapport&lt;ion-text color&#x3D;&quot;danger&quot;&gt; *&lt;/ion-text&gt;&lt;/div&gt;
+            &lt;/ion-select&gt;
+          &lt;/ion-item&gt;
+        &lt;/app-card&gt;
+
+
+      &lt;/ion-col&gt;
+      &lt;ion-col size&#x3D;&quot;6&quot;&gt;
+        &lt;!-- ******************************* --&gt;
+        &lt;!-- ******   LE CONTROLE   ******** --&gt;
+        &lt;!-- ******************************* --&gt;
+        &lt;app-card [titles]&#x3D;&quot;{title:&#x27;Le contrôle&#x27;}&quot;&gt;
+            &lt;!-- ******************************* --&gt;
+            &lt;!-- ******   DESCRIPTION   ******** --&gt;
+            &lt;!-- ******************************* --&gt;
+            &lt;div class&#x3D;&quot;vertical&quot;&gt;
+              &lt;ion-item lines&#x3D;&quot;none&quot;&gt;
+                &lt;ion-label&gt;But du contrôle, de l&#x27;essai ou de l &#x27;expertise
+                  &lt;ion-text color&#x3D;&quot;danger&quot;&gt;*&lt;/ion-text&gt;
+                &lt;/ion-label&gt;
+              &lt;/ion-item&gt;
+              &lt;!-- base_url: &#x27;/tinymce&#x27;,
+          suffix: &#x27;.min&#x27;, --&gt;
+              &lt;editor #ctrlReasons slot&#x3D;&quot;&quot; formControlName&#x3D;&quot;description&quot; [init]&#x3D;&quot;{
+            plugins: &#x27;lists link image table wordcount&#x27;,
+            toolbar:&#x27;bold italic underline strikethrough forecolor fontsize styles | alignleft aligncenter alignright alignjustify | bullist numlist | h1 h2 h3 |&#x27;,
+            menubar: false,
+            statusbar:false,
+            object_resizing: true,
+            placeholder:&#x27;Descriptif de la mesure demandée (contrôle réception, suite à choc, déménagement d’outillage ou autre)&#x27;,
+            height:150,
+            inline: false
+          }&quot;&gt;&lt;/editor&gt;
+              &lt;!-- &lt;ion-textarea autoGrow required #ctrlReasons formControlName&#x3D;&quot; ctrlReasons &quot; type&#x3D;&quot;text &quot; (ionChange)&#x3D;&quot;test() &quot;&gt;&lt;/ion-textarea&gt; --&gt;
+              &lt;!-- &lt;ion-note&gt;&lt;/ion-note&gt; --&gt;
+            &lt;/div&gt;
+
+
+            &lt;!-- ******************************* --&gt;
+            &lt;!-- *********   DETAIL   ********** --&gt;
+            &lt;!-- ******************************* --&gt;
+            &lt;div class&#x3D;&quot;vertical&quot;&gt;
+              &lt;ion-item lines&#x3D;&quot;none&quot;&gt;
+                &lt;ion-label&gt;Détails de la mesure
+                  &lt;ion-text color&#x3D;&quot;danger&quot;&gt;*&lt;/ion-text&gt;
+                &lt;/ion-label&gt;
+              &lt;/ion-item&gt;
+              &lt;editor #ctrlReasons slot&#x3D;&quot;&quot; formControlName&#x3D;&quot;detailsControle&quot; [init]&#x3D;&quot;{
+            plugins: &#x27;lists link image table wordcount&#x27;,
+            menubar: false,
+            statusbar:false,
+            placeholder:&#x27;lieux, référentiel...&#x27;,
+            height:150
+          }&quot;&gt;&lt;/editor&gt;
+              &lt;!-- &lt;ion-textarea autoGrow required #ctrlDetails formControlName&#x3D;&quot;ctrlDetails&quot; type&#x3D;&quot;text&quot;
+            placeholder&#x3D;&quot;lieux, référentiel...&quot;&gt;&lt;/ion-textarea&gt; --&gt;
+            &lt;/div&gt;
+
+            &lt;!-- ******************************* --&gt;
+            &lt;!-- **  PRECISION / TOLERANCES   ** --&gt;
+            &lt;!-- ******************************* --&gt;
+            &lt;div class&#x3D;&quot;vertical&quot;&gt;
+              &lt;ion-item lines&#x3D;&quot;none&quot;&gt;
+                &lt;ion-label&gt;Précision demandée et attendue
+                  &lt;ion-text color&#x3D;&quot;danger&quot;&gt;*&lt;/ion-text&gt;
+                &lt;/ion-label&gt;
+              &lt;/ion-item&gt;
+              &lt;editor #ctrlReasons slot&#x3D;&quot;&quot; formControlName&#x3D;&quot;tolerances&quot; [init]&#x3D;&quot;{
+              plugins: &#x27;lists link image table wordcount&#x27;,
+              menubar: false,
+              statusbar:false,
+              placeholder:&#x27;IT plans et spécifications de définition&#x27;,
+              height:150
+            }&quot;&gt;&lt;/editor&gt;
+              &lt;!-- &lt;ion-textarea autoGrow required #tolerance formControlName&#x3D;&quot;precisionTolerances&quot; type&#x3D;&quot;text&quot;
+              placeholder&#x3D;&quot;IT plans et spécifications de définition&quot;&gt;&lt;/ion-textarea&gt; --&gt;
+            &lt;/div&gt;
+        &lt;/app-card&gt;
+
+      &lt;/ion-col&gt;
+    &lt;/ion-row&gt;
+    &lt;ion-row&gt;
+      &lt;ion-col size&#x3D;&quot;12&quot;&gt;
+        &lt;!-- *********************************************************************************************** --&gt;
+        &lt;!-- *********************************************************************************************** --&gt;
+        &lt;!-- ******************************* --&gt;
+        &lt;!-- *******   LA MESURE   ********* --&gt;
+        &lt;!-- ******************************* --&gt;
+        @if(requestState()){
+        &lt;app-card [titles]&#x3D;&quot;{title:&#x27;La Mesure&#x27;}&quot;&gt;
+          &lt;ion-item&gt;
+            &lt;!-- &lt;ion-label position&#x3D;&quot;stacked&quot;&gt;&lt;/ion-label&gt; --&gt;
+            &lt;ion-input label&#x3D;&quot;Durée d&#x27;immobilisation estimée de l&#x27;outillage&quot; labelPlacement&#x3D;&quot;stacked&quot; type&#x3D;&quot;number&quot;
+              formControlName&#x3D;&quot;immobilisationOutillage&quot; /&gt;
+            &lt;ion-note slot&#x3D;&quot;end&quot;&gt;en jours&lt;/ion-note&gt;
+          &lt;/ion-item&gt;
+        
+                                         &lt;ion-item&gt;
+          &lt;ion-input label&#x3D;&quot;Date d&#x27;intervention&quot; labelPlacement&#x3D;&quot;floating&quot; type&#x3D;&quot;date&quot; display-format&#x3D;&quot;EEEE DD-MM-YYYY&quot; formControlName&#x3D;&quot;interventionDate&quot;&gt;
+          &lt;/ion-input&gt;
+          &lt;/ion-item&gt;
+
+        
+          &lt;div class&#x3D;&quot;vertical&quot;&gt;
+        
+            &lt;ion-item&gt;
+              &lt;ion-label&gt;Informations complémentaires
+                &lt;ion-text color&#x3D;&quot;danger&quot;&gt;*&lt;/ion-text&gt;
+              &lt;/ion-label&gt;
+              &lt;!-- &lt;ion-input #infosComplementaire formControlName&#x3D;&quot;infosComplementaire&quot; type&#x3D;&quot;text&quot;
+                       placeholder&#x3D;&quot;Information complémentaire&quot;&gt;&lt;/ion-input&gt; --&gt;
+            &lt;/ion-item&gt;
+            &lt;editor #infosComplementaire slot&#x3D;&quot;&quot; formControlName&#x3D;&quot;infosComplementaire&quot; [init]&#x3D;&quot;{
+                       plugins: &#x27;lists link image table wordcount&#x27;,
+                       menubar: false,
+                       statusbar:false,
+                       placeholder:&#x27;Information complémentaire&#x27;,
+                       height:150
+                     }&quot;&gt;&lt;/editor&gt;
+          &lt;/div&gt;
+        
+          &lt;ion-item&gt;
+            &lt;ion-label&gt;Moyen de mesure&lt;/ion-label&gt;
+            &lt;ion-select #moyenMesureSelect formControlName&#x3D;&quot;moyenMesure&quot;&gt;
+              @for(moyen of moyenMesure | keyvalue; track $index){
+              &lt;ion-select-option [value]&#x3D;&quot;moyen.value&quot;&gt;{{moyen.value}}
+              &lt;/ion-select-option&gt;
+              }
+            &lt;/ion-select&gt;
+          &lt;/ion-item&gt;
+        &lt;/app-card&gt;
+        }
+      &lt;/ion-col&gt;
+    &lt;/ion-row&gt;
+  &lt;/ion-grid&gt;
+&lt;/form&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./control3-dform.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><form [formGroup]="specCtrlForm()">  <ion-grid>    <ion-row>      <ion-col size="6">        <!-- ******************************* -->        <!-- *******   COMPLEMENT    ******* -->        <!-- ******************************* -->        <app-card [titles]="{title:\'Complément\'}">            <ion-item>              <ion-label>Bloquant Prod</ion-label>              <ion-toggle slot="end" formControlName="bloquantProd"></ion-toggle>            </ion-item>            <!-- ******************************* -->            <!-- ****   DATE MISE A DISPO   **** -->            <!-- ******************************* -->                    <ion-item>          <ion-input labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY" formControlName="dispoOut">            <div slot="label">Date de mise à disposition au service outillage<ion-text color="danger"> *</ion-text></div>          </ion-input>          </ion-item>            <!-- ******************************* -->            <!-- ********   LA PIECE   ********* -->            <!-- ******************************* -->            <div class="flex-row">              <!-- ******************************* -->              <!-- ********   reference   ******** -->              <!-- ******************************* -->              <ion-item>                <ion-input labelPlacement="floating" required #refPlan formControlName="refPlan" type="text"                  placeholder="indiquer n° de plan">                  <div slot="label">Référence pièce<ion-text color="danger"> *</ion-text></div>                </ion-input>              </ion-item>              <!-- ******************************* -->              <!-- ********   INDICE   *********** -->              <!-- ******************************* -->              <ion-item>                <ion-input labelPlacement="floating" required #indPlan formControlName="indPlan" type="text"                  placeholder="indiquer l \'indice du plan">                  <div slot="label">Indice plan<ion-text color="danger"> *</ion-text></div>                </ion-input>              </ion-item>            </div>            <!-- ******************************* -->            <!-- *******   CHEMIN CAO   ******** -->            <!-- ******************************* -->            <ion-item>              <ion-input labelPlacement="floating" label="Format du modèle 3D fourni si nécessaire" #caoPath                formControlName="cheminCAO" type="text"                placeholder="Fournir CAO et / ou chemin d’accès">              </ion-input>            </ion-item>        </app-card>        <!-- ******************************* -->        <!-- *******   LE RAPPORT   ******** -->        <!-- ******************************* -->        <app-card [titles]="{title:\'Le rapport\'}">          <!-- ******************************* -->          <!-- *******   DATE BUTOIR   ******* -->          <!-- ******************************* -->                               <ion-item>          <ion-input labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY" formControlName="dateBesoin">            <div slot="label">Date butoir demandée<ion-text color="danger"> *</ion-text></div>          </ion-input>          </ion-item>          <!-- ******************************* -->          <!-- *********   OI eOTP   ********* -->          <!-- ******************************* -->          <ion-item>            <ion-input labelPlacement="floating" #ligneBudgetaire required formControlName="ligneBudgetaire" type="text"              placeholder="Indiquez le n° pour imputation">              <div slot="label">Oi ou Eotp<ion-text color="danger"> *</ion-text></div>            </ion-input>          </ion-item>          <!-- ******************************* -->          <!-- ******   TYPE RAPPORT   ******* -->          <!-- ******************************* -->          <ion-item>            <ion-select  #typeRapportSelect formControlName="typeRapport">              @for(type of typeRapport| keyvalue; track $index){              <ion-select-option [value]="type.value">{{type.value}}</ion-select-option>              }               <div slot="label">Types de rapport<ion-text color="danger"> *</ion-text></div>            </ion-select>          </ion-item>        </app-card>      </ion-col>      <ion-col size="6">        <!-- ******************************* -->        <!-- ******   LE CONTROLE   ******** -->        <!-- ******************************* -->        <app-card [titles]="{title:\'Le contrôle\'}">            <!-- ******************************* -->            <!-- ******   DESCRIPTION   ******** -->            <!-- ******************************* -->            <div class="vertical">              <ion-item lines="none">                <ion-label>But du contrôle, de l\'essai ou de l \'expertise                  <ion-text color="danger">*</ion-text>                </ion-label>              </ion-item>              <!-- base_url: \'/tinymce\',          suffix: \'.min\', -->              <editor #ctrlReasons slot="" formControlName="description" [init]="{            plugins: \'lists link image table wordcount\',            toolbar:\'bold italic underline strikethrough forecolor fontsize styles | alignleft aligncenter alignright alignjustify | bullist numlist | h1 h2 h3 |\',            menubar: false,            statusbar:false,            object_resizing: true,            placeholder:\'Descriptif de la mesure demandée (contrôle réception, suite à choc, déménagement d’outillage ou autre)\',            height:150,            inline: false          }"></editor>              <!-- <ion-textarea autoGrow required #ctrlReasons formControlName=" ctrlReasons " type="text " (ionChange)="test() "></ion-textarea> -->              <!-- <ion-note></ion-note> -->            </div>            <!-- ******************************* -->            <!-- *********   DETAIL   ********** -->            <!-- ******************************* -->            <div class="vertical">              <ion-item lines="none">                <ion-label>Détails de la mesure                  <ion-text color="danger">*</ion-text>                </ion-label>              </ion-item>              <editor #ctrlReasons slot="" formControlName="detailsControle" [init]="{            plugins: \'lists link image table wordcount\',            menubar: false,            statusbar:false,            placeholder:\'lieux, référentiel...\',            height:150          }"></editor>              <!-- <ion-textarea autoGrow required #ctrlDetails formControlName="ctrlDetails" type="text"            placeholder="lieux, référentiel..."></ion-textarea> -->            </div>            <!-- ******************************* -->            <!-- **  PRECISION / TOLERANCES   ** -->            <!-- ******************************* -->            <div class="vertical">              <ion-item lines="none">                <ion-label>Précision demandée et attendue                  <ion-text color="danger">*</ion-text>                </ion-label>              </ion-item>              <editor #ctrlReasons slot="" formControlName="tolerances" [init]="{              plugins: \'lists link image table wordcount\',              menubar: false,              statusbar:false,              placeholder:\'IT plans et spécifications de définition\',              height:150            }"></editor>              <!-- <ion-textarea autoGrow required #tolerance formControlName="precisionTolerances" type="text"              placeholder="IT plans et spécifications de définition"></ion-textarea> -->            </div>        </app-card>      </ion-col>    </ion-row>    <ion-row>      <ion-col size="12">        <!-- *********************************************************************************************** -->        <!-- *********************************************************************************************** -->        <!-- ******************************* -->        <!-- *******   LA MESURE   ********* -->        <!-- ******************************* -->        @if(requestState()){        <app-card [titles]="{title:\'La Mesure\'}">          <ion-item>            <!-- <ion-label position="stacked"></ion-label> -->            <ion-input label="Durée d\'immobilisation estimée de l\'outillage" labelPlacement="stacked" type="number"              formControlName="immobilisationOutillage" />            <ion-note slot="end">en jours</ion-note>          </ion-item>                                                 <ion-item>          <ion-input label="Date d\'intervention" labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY" formControlName="interventionDate">          </ion-input>          </ion-item>                  <div class="vertical">                    <ion-item>              <ion-label>Informations complémentaires                <ion-text color="danger">*</ion-text>              </ion-label>              <!-- <ion-input #infosComplementaire formControlName="infosComplementaire" type="text"                       placeholder="Information complémentaire"></ion-input> -->            </ion-item>            <editor #infosComplementaire slot="" formControlName="infosComplementaire" [init]="{                       plugins: \'lists link image table wordcount\',                       menubar: false,                       statusbar:false,                       placeholder:\'Information complémentaire\',                       height:150                     }"></editor>          </div>                  <ion-item>            <ion-label>Moyen de mesure</ion-label>            <ion-select #moyenMesureSelect formControlName="moyenMesure">              @for(moyen of moyenMesure | keyvalue; track $index){              <ion-select-option [value]="moyen.value">{{moyen.value}}              </ion-select-option>              }            </ion-select>          </ion-item>        </app-card>        }      </ion-col>    </ion-row>  </ion-grid></form></div>'
+    var COMPONENTS = [{'name': 'Control3DFormComponent', 'selector': 'app-control3-dform'},{'name': 'Control3DPage', 'selector': 'app-control'},{'name': 'NewToolPage', 'selector': 'app-new-tool'},{'name': 'SboFormComponent', 'selector': 'app-sbo-form'},{'name': 'ToolFormComponent', 'selector': 'app-tool-form'},{'name': 'ToolInputComponent', 'selector': 'app-tool-input'},{'name': 'ToolRequestFooterComponent', 'selector': 'app-tool-request-footer'},{'name': 'ToolRequestMenuComponent', 'selector': 'app-tool-request-menu'},{'name': 'ToolRequestsPage', 'selector': ''}];
+    var DIRECTIVES = [{'name': 'ToolInputDirective', 'selector': '[toolInput]'}];
+    var ACTUAL_COMPONENT = {'name': 'Control3DFormComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'Control3DFormComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

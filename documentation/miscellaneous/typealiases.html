@@ -1,0 +1,672 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>moldingApp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">moldingApp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-typealiases">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Type aliases</li>
+</ol>
+
+<section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#ControlRequestState" title="src/app/features/tooling/stores/controlRequest.store.ts" ><b>ControlRequestState</b>&nbsp;&nbsp;&nbsp;(src/.../controlRequest.store.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#MaintenanceItem" title="src/app/features/tooling/models/maintenance-and-repair.model.ts" ><b>MaintenanceItem</b>&nbsp;&nbsp;&nbsp;(src/.../maintenance-and-repair.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#MoyenMesure" title="src/app/features/tooling/models/moyen-mesure.model.ts" ><b>MoyenMesure</b>&nbsp;&nbsp;&nbsp;(src/.../moyen-mesure.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RequestStatus" title="src/app/features/tooling/models/tool-request.model.ts" ><b>RequestStatus</b>&nbsp;&nbsp;&nbsp;(src/.../tool-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RequestType" title="src/app/features/tooling/models/tool-request.model.ts" ><b>RequestType</b>&nbsp;&nbsp;&nbsp;(src/.../tool-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecCtrlCreation" title="src/app/features/tooling/models/controle-3d-request.model.ts" ><b>SpecCtrlCreation</b>&nbsp;&nbsp;&nbsp;(src/.../controle-3d-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecCtrlRequest" title="src/app/features/tooling/models/controle-3d-request.model.ts" ><b>SpecCtrlRequest</b>&nbsp;&nbsp;&nbsp;(src/.../controle-3d-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecCtrlRequestControls" title="src/app/features/tooling/models/controle-3d-request.model.ts" ><b>SpecCtrlRequestControls</b>&nbsp;&nbsp;&nbsp;(src/.../controle-3d-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecCtrlUpdate" title="src/app/features/tooling/models/controle-3d-request.model.ts" ><b>SpecCtrlUpdate</b>&nbsp;&nbsp;&nbsp;(src/.../controle-3d-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecMaintRepRequest" title="src/app/features/tooling/models/maintenance-and-repair.model.ts" ><b>SpecMaintRepRequest</b>&nbsp;&nbsp;&nbsp;(src/.../maintenance-and-repair.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecMaintRepRequestCreation" title="src/app/features/tooling/models/maintenance-and-repair.model.ts" ><b>SpecMaintRepRequestCreation</b>&nbsp;&nbsp;&nbsp;(src/.../maintenance-and-repair.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecMaintRepRequestUpdate" title="src/app/features/tooling/models/maintenance-and-repair.model.ts" ><b>SpecMaintRepRequestUpdate</b>&nbsp;&nbsp;&nbsp;(src/.../maintenance-and-repair.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecSBOCreation" title="src/app/features/tooling/models/sbo.model.ts" ><b>SpecSBOCreation</b>&nbsp;&nbsp;&nbsp;(src/.../sbo.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecSBOForm" title="src/app/features/tooling/models/sbo.model.ts" ><b>SpecSBOForm</b>&nbsp;&nbsp;&nbsp;(src/.../sbo.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecSBORequest" title="src/app/features/tooling/models/sbo.model.ts" ><b>SpecSBORequest</b>&nbsp;&nbsp;&nbsp;(src/.../sbo.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecSBOStorage" title="src/app/features/tooling/models/sbo.model.ts" ><b>SpecSBOStorage</b>&nbsp;&nbsp;&nbsp;(src/.../sbo.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SpecSBOUpdate" title="src/app/features/tooling/models/sbo.model.ts" ><b>SpecSBOUpdate</b>&nbsp;&nbsp;&nbsp;(src/.../sbo.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ToolCreation" title="src/app/features/tooling/models/tool.model.ts" ><b>ToolCreation</b>&nbsp;&nbsp;&nbsp;(src/.../tool.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ToolRequest" title="src/app/features/tooling/models/tool-request.model.ts" ><b>ToolRequest</b>&nbsp;&nbsp;&nbsp;(src/.../tool-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ToolRequestBaseForm" title="src/app/features/tooling/models/tool-request.model.ts" ><b>ToolRequestBaseForm</b>&nbsp;&nbsp;&nbsp;(src/.../tool-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ToolRequestCreation" title="src/app/features/tooling/models/tool-request.model.ts" ><b>ToolRequestCreation</b>&nbsp;&nbsp;&nbsp;(src/.../tool-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ToolRequestUpdate" title="src/app/features/tooling/models/tool-request.model.ts" ><b>ToolRequestUpdate</b>&nbsp;&nbsp;&nbsp;(src/.../tool-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TypeRapport" title="src/app/features/tooling/models/type-rapport.model.ts" ><b>TypeRapport</b>&nbsp;&nbsp;&nbsp;(src/.../type-rapport.model.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/app/features/tooling/stores/controlRequest.store.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ControlRequestState"></a>
+                    <span class="name "><b>ControlRequestState</b><a href="#ControlRequestState"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Interface d&#39;état pour le ControlRequestStore.
+Représente l&#39;état interne du Store.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/app/features/tooling/models/maintenance-and-repair.model.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MaintenanceItem"></a>
+                    <span class="name "><b>MaintenanceItem</b><a href="#MaintenanceItem"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecMaintRepRequest"></a>
+                    <span class="name "><b>SpecMaintRepRequest</b><a href="#SpecMaintRepRequest"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>unknown</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecMaintRepRequestCreation"></a>
+                    <span class="name "><b>SpecMaintRepRequestCreation</b><a href="#SpecMaintRepRequestCreation"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../miscellaneous/typealiases.html#SpecMaintRepRequest" target="_self" >Omit&lt;SpecMaintRepRequest | id&gt;</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecMaintRepRequestUpdate"></a>
+                    <span class="name "><b>SpecMaintRepRequestUpdate</b><a href="#SpecMaintRepRequestUpdate"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>Partial&lt;SpecMaintRepRequestCreation&gt;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/app/features/tooling/models/moyen-mesure.model.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MoyenMesure"></a>
+                    <span class="name "><b>MoyenMesure</b><a href="#MoyenMesure"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;Bras&quot; | &quot;Laser&quot; | &quot;laser + TProbe&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/app/features/tooling/models/tool-request.model.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RequestStatus"></a>
+                    <span class="name "><b>RequestStatus</b><a href="#RequestStatus"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;Brouillon&quot; | &quot;Nouvelle&quot; | &quot;En cours&quot; | &quot;Finalisée&quot; | &quot;Retournée&quot; | &quot;Annulée&quot; | &quot;En attente&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RequestType"></a>
+                    <span class="name "><b>RequestType</b><a href="#RequestType"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;SBO&quot; | &quot;MAINTENANCE&quot; | &quot;CONTROLE&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ToolRequest"></a>
+                    <span class="name "><b>ToolRequest</b><a href="#ToolRequest"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>SpecCtrlRequest | SpecMaintRepRequest | SpecSBORequest</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ToolRequestBaseForm"></a>
+                    <span class="name "><b>ToolRequestBaseForm</b><a href="#ToolRequestBaseForm"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ToolRequestCreation"></a>
+                    <span class="name "><b>ToolRequestCreation</b><a href="#ToolRequestCreation"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>SpecCtrlCreation | SpecSBOCreation | SpecMaintRepRequest</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ToolRequestUpdate"></a>
+                    <span class="name "><b>ToolRequestUpdate</b><a href="#ToolRequestUpdate"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>SpecCtrlUpdate | SpecSBOUpdate | SpecMaintRepRequest</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/app/features/tooling/models/controle-3d-request.model.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecCtrlCreation"></a>
+                    <span class="name "><b>SpecCtrlCreation</b><a href="#SpecCtrlCreation"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../miscellaneous/typealiases.html#SpecCtrlRequest" target="_self" >Omit&lt;SpecCtrlRequest | &quot;id&quot; | &quot;createdAt&quot; | &quot;demandeur&quot; | &quot;statut&quot;&gt;</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecCtrlRequest"></a>
+                    <span class="name "><b>SpecCtrlRequest</b><a href="#SpecCtrlRequest"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>unknown</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecCtrlRequestControls"></a>
+                    <span class="name "><b>SpecCtrlRequestControls</b><a href="#SpecCtrlRequestControls"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>unknown</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecCtrlUpdate"></a>
+                    <span class="name "><b>SpecCtrlUpdate</b><a href="#SpecCtrlUpdate"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../miscellaneous/typealiases.html#SpecCtrlCreation" target="_self" >Partial&lt;SpecCtrlCreation&gt;</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/app/features/tooling/models/sbo.model.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecSBOCreation"></a>
+                    <span class="name "><b>SpecSBOCreation</b><a href="#SpecSBOCreation"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../miscellaneous/typealiases.html#SpecSBORequest" target="_self" >Omit&lt;SpecSBORequest | &quot;id&quot; | &quot;aircraftProgram&quot;&gt;</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecSBOForm"></a>
+                    <span class="name "><b>SpecSBOForm</b><a href="#SpecSBOForm"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>unknown</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecSBORequest"></a>
+                    <span class="name "><b>SpecSBORequest</b><a href="#SpecSBORequest"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>unknown</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecSBOStorage"></a>
+                    <span class="name "><b>SpecSBOStorage</b><a href="#SpecSBOStorage"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SpecSBOUpdate"></a>
+                    <span class="name "><b>SpecSBOUpdate</b><a href="#SpecSBOUpdate"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../miscellaneous/typealiases.html#SpecSBOCreation" target="_self" >Partial&lt;SpecSBOCreation&gt;</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/app/features/tooling/models/tool.model.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ToolCreation"></a>
+                    <span class="name "><b>ToolCreation</b><a href="#ToolCreation"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../interfaces/Tool.html" target="_self" >Omit&lt;Tool | &quot;id&quot; | &quot;programme&quot;&gt;</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/app/features/tooling/models/type-rapport.model.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TypeRapport"></a>
+                    <span class="name "><b>TypeRapport</b><a href="#TypeRapport"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;Mail&quot; | &quot;DQRC&quot; | &quot;PV d&#x60;identification ou de contrôle&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-typealiases';
+            var COMPODOC_CURRENT_PAGE_URL = 'typealiases.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

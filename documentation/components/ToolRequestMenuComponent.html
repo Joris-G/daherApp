@@ -1,0 +1,969 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>moldingApp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">moldingApp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ToolRequestMenuComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>AfterViewInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-tool-request-menu</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>IonList</code>
+                            <code>IonMenu</code>
+                            <code>IonContent</code>
+                            <code>RouterLink</code>
+                            <code>NgIf</code>
+                            <code>AsyncPipe</code>
+                            <code>IonHeader</code>
+                                <code><a href="../interfaces/Tool.html" target="_self" >IonToolbar</a></code>
+                            <code>IonTitle</code>
+                            <code>IonItemDivider</code>
+                            <code>IonLabel</code>
+                            <code>IonMenuToggle</code>
+                            <code>IonBadge</code>
+                            <code>IonItem</code>
+                            <code>IonItemGroup</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./tool-request-menu.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./tool-request-menu.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#authStore" >authStore</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isManager" >isManager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#menu" >menu</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newRequests" >newRequests</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#newUsers$" >newUsers$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#roleGuard" >roleGuard</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#userService" >userService</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#buildManagerPage" >buildManagerPage</a>
+                            </li>
+                            <li>
+                                <a href="#loadIndicators" >loadIndicators</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildManagerPage"></a>
+                    <span class="name">
+                        <span ><b>buildManagerPage</b></span>
+                        <a href="#buildManagerPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>buildManagerPage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="55"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadIndicators"></a>
+                    <span class="name">
+                        <span ><b>loadIndicators</b></span>
+                        <a href="#loadIndicators"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadIndicators()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="48"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="43"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authStore"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>authStore</b></span>
+                        <a href="#authStore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(AuthStore)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isManager"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isManager</b></span>
+                        <a href="#isManager"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="menu"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>menu</b></span>
+                        <a href="#menu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>IonMenu</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;menuTool&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newRequests"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newRequests</b></span>
+                        <a href="#newRequests"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newUsers$"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>newUsers$</b></span>
+                        <a href="#newUsers$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Observable&lt;User[]&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="roleGuard"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>roleGuard</b></span>
+                        <a href="#roleGuard"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(RoleGuard)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>userService</b></span>
+                        <a href="#userService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(UsersService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/features/tooling/components/tool-request-menu/tool-request-menu.component.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, Component, inject, OnInit, ViewChild } from &#x27;@angular/core&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+import { RoleGuard } from &#x27;src/app/shared/services/users/role.guard&#x27;;
+import { UsersService } from &#x27;src/app/shared/services/users/users.service&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
+import { User } from &#x27;src/app/_interfaces/user&#x27;;
+import { NgIf, AsyncPipe } from &#x27;@angular/common&#x27;;
+import { AuthStore } from &#x27;src/app/shared/services/users/auth.store&#x27;;
+import { IonHeader, IonMenu, IonTitle, IonToolbar, IonContent, IonList, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup } from &#x27;@ionic/angular/standalone&#x27;;
+
+@Component({
+    selector: &#x27;app-tool-request-menu&#x27;,
+    templateUrl: &#x27;./tool-request-menu.component.html&#x27;,
+    styleUrls: [&#x27;./tool-request-menu.component.css&#x27;],
+    standalone: true,
+  imports: [IonList, IonMenu, IonContent, RouterLink, NgIf, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup]
+})
+export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
+  ////////////////////////////////////////////////////
+  //INJECTION DEPENDANCES
+  ////////////////////////////////////////////////////
+  private userService &#x3D; inject(UsersService);
+  private authStore &#x3D; inject(AuthStore);
+  private roleGuard &#x3D; inject(RoleGuard);
+
+
+  @ViewChild(&#x27;menuTool&#x27;) menu: IonMenu;
+
+  ////////////////////////////////////////////////////
+  //PROPRIETES
+  ////////////////////////////////////////////////////
+  public newRequests: number;
+  public isManager &#x3D; false;
+  public newUsers$: Observable&lt;User[]&gt;;
+
+
+  // *************************************************
+  //  LIFECYCLE HOOKS   ******************************
+  // *************************************************
+  ngOnInit(): void {
+    this.buildManagerPage();
+  }
+  ngAfterViewInit(): void {
+    this.menu.setOpen(true);
+  }
+
+
+  loadIndicators() {
+    this.newUsers$ &#x3D; this.userService.getUsersByService(&#x27;5&#x27;);
+    // this.toolRequestsService.allToolRequests.asObservable()
+    //   .subscribe((toolRequests: ToolRequest[]) &#x3D;&gt; {
+    //     this.newRequests &#x3D; toolRequests.filter(request &#x3D;&gt; request.statut &#x3D;&#x3D;&#x3D; &#x27;NOUVELLE&#x27;).length;
+    //   });
+  }
+  buildManagerPage() {
+    this.isManager &#x3D; (this.roleGuard.isRole([&#x27;ADMIN&#x27;, &#x27;RESP_OUTIL&#x27;, &#x27;CE_OUTIL&#x27;]));
+    if (this.isManager) { this.loadIndicators(); };
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ion-menu menuId&#x3D;&quot;main-menu&quot; open&#x3D;&quot;true&quot; #menuTool side&#x3D;&quot;start&quot; type&#x3D;&quot;push&quot; contentId&#x3D;&quot;tooling-content&quot;&gt;
+  &lt;ion-header&gt;
+    &lt;ion-toolbar color&#x3D;&quot;succes&quot;&gt;
+      &lt;ion-title&gt;
+        Menu outillage
+      &lt;/ion-title&gt;
+    &lt;/ion-toolbar&gt;
+  &lt;/ion-header&gt;
+  &lt;ion-content&gt;
+    &lt;ion-list&gt;
+      &lt;ion-item-divider&gt;
+        &lt;ion-label color&#x3D;secondary&gt;Faire une demande&lt;/ion-label&gt;
+      &lt;/ion-item-divider&gt;
+      &lt;ion-menu-toggle auto-hide&#x3D;&quot;true&quot;&gt;
+        &lt;ion-item [disabled]&#x3D;&quot;false&quot; button routerLink&#x3D;&quot;/tooling/new-tool&quot;
+          [style.boder-right]&#x3D;&quot;&#x27;solid 4px yellow&#x27;&quot;&gt;
+          &lt;ion-label&gt;
+            Nouvel outillage (SBO)
+          &lt;/ion-label&gt;
+        &lt;/ion-item&gt;
+      &lt;/ion-menu-toggle&gt;
+      &lt;ion-menu-toggle auto-hide&#x3D;&quot;true&quot;&gt;
+        &lt;ion-item button routerLink&#x3D;&quot;/tooling/repair&quot;&gt;
+          &lt;ion-label&gt;
+            Maintenance et réparation
+          &lt;/ion-label&gt;
+        &lt;/ion-item&gt;
+      &lt;/ion-menu-toggle&gt;
+      &lt;ion-menu-toggle auto-hide&#x3D;&quot;true&quot;&gt;
+        &lt;ion-item button routerLink&#x3D;&quot;/tooling/3d&quot;&gt;
+          &lt;ion-label&gt;
+            Contrôle 3D
+          &lt;/ion-label&gt;
+        &lt;/ion-item&gt;
+      &lt;/ion-menu-toggle&gt;
+
+
+      &lt;ion-item-divider&gt;
+        &lt;ion-label color&#x3D;secondary&gt;Suivi&lt;/ion-label&gt;
+      &lt;/ion-item-divider&gt;
+
+
+      &lt;ion-menu-toggle auto-hide&#x3D;&quot;true&quot;&gt;
+        &lt;ion-item [button]&#x3D;&quot;true&quot; routerLink&#x3D;&quot;/tooling/requests&quot;&gt;
+          &lt;ion-label&gt;
+            Liste des demandes outillages
+          &lt;/ion-label&gt;
+          &lt;ion-badge *ngIf&#x3D;&quot;(newRequests &amp;&amp; isManager)&quot; color&#x3D;&quot;danger&quot;&gt;New {{newRequests}}&lt;/ion-badge&gt;
+        &lt;/ion-item&gt;
+      &lt;/ion-menu-toggle&gt;
+      &lt;ion-menu-toggle auto-hide&#x3D;&quot;true&quot;&gt;
+        &lt;ion-item [disabled]&#x3D;&quot;true&quot; [button]&#x3D;&quot;true&quot; [routerLink]&#x3D;&quot;&#x27;tool-list&#x27;&quot; routerDirection&#x3D;&quot;forward&quot;&gt;
+          &lt;ion-label&gt;
+            Liste des outillages
+          &lt;/ion-label&gt;
+        &lt;/ion-item&gt;
+      &lt;/ion-menu-toggle&gt;
+
+
+
+      &lt;ion-item-group *ngIf&#x3D;&quot;isManager&quot;&gt;
+
+        &lt;ion-item-divider&gt;
+          &lt;ion-label color&#x3D;secondary&gt;L&#x27;équipe&lt;/ion-label&gt;
+        &lt;/ion-item-divider&gt;
+
+
+        &lt;ion-menu-toggle auto-hide&#x3D;&quot;true&quot;&gt;
+          &lt;ion-item [button]&#x3D;&quot;true&quot; routerDirection&#x3D;&quot;forward&quot; [routerLink]&#x3D;&quot;&#x27;manage-tool-team&#x27;&quot;&gt;
+            &lt;ion-label&gt;
+              Gestion de l&#x27;équipe
+            &lt;/ion-label&gt;
+            &lt;ion-badge *ngIf&#x3D;&quot;newUsers$ | async as newUsers&quot; color&#x3D;&quot;danger&quot;&gt;New {{newUsers.length}}&lt;/ion-badge&gt;
+          &lt;/ion-item&gt;
+        &lt;/ion-menu-toggle&gt;
+        &lt;ion-menu-toggle auto-hide&#x3D;&quot;true&quot;&gt;
+          &lt;ion-item [button]&#x3D;&quot;true&quot;
+            [routerLink]&#x3D;&quot;&#x27;tool-indicators&#x27;&quot; routerDirection&#x3D;&quot;forward&quot;&gt;
+            &lt;ion-label&gt;
+              Indicateurs
+            &lt;/ion-label&gt;
+          &lt;/ion-item&gt;
+        &lt;/ion-menu-toggle&gt;
+      &lt;/ion-item-group&gt;
+    &lt;/ion-list&gt;
+
+  &lt;/ion-content&gt;
+&lt;/ion-menu&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./tool-request-menu.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ion-menu menuId="main-menu" open="true" #menuTool side="start" type="push" contentId="tooling-content">  <ion-header>    <ion-toolbar color="succes">      <ion-title>        Menu outillage      </ion-title>    </ion-toolbar>  </ion-header>  <ion-content>    <ion-list>      <ion-item-divider>        <ion-label color=secondary>Faire une demande</ion-label>      </ion-item-divider>      <ion-menu-toggle auto-hide="true">        <ion-item [disabled]="false" button routerLink="/tooling/new-tool"          [style.boder-right]="\'solid 4px yellow\'">          <ion-label>            Nouvel outillage (SBO)          </ion-label>        </ion-item>      </ion-menu-toggle>      <ion-menu-toggle auto-hide="true">        <ion-item button routerLink="/tooling/repair">          <ion-label>            Maintenance et réparation          </ion-label>        </ion-item>      </ion-menu-toggle>      <ion-menu-toggle auto-hide="true">        <ion-item button routerLink="/tooling/3d">          <ion-label>            Contrôle 3D          </ion-label>        </ion-item>      </ion-menu-toggle>      <ion-item-divider>        <ion-label color=secondary>Suivi</ion-label>      </ion-item-divider>      <ion-menu-toggle auto-hide="true">        <ion-item [button]="true" routerLink="/tooling/requests">          <ion-label>            Liste des demandes outillages          </ion-label>          <ion-badge *ngIf="(newRequests && isManager)" color="danger">New {{newRequests}}</ion-badge>        </ion-item>      </ion-menu-toggle>      <ion-menu-toggle auto-hide="true">        <ion-item [disabled]="true" [button]="true" [routerLink]="\'tool-list\'" routerDirection="forward">          <ion-label>            Liste des outillages          </ion-label>        </ion-item>      </ion-menu-toggle>      <ion-item-group *ngIf="isManager">        <ion-item-divider>          <ion-label color=secondary>L\'équipe</ion-label>        </ion-item-divider>        <ion-menu-toggle auto-hide="true">          <ion-item [button]="true" routerDirection="forward" [routerLink]="\'manage-tool-team\'">            <ion-label>              Gestion de l\'équipe            </ion-label>            <ion-badge *ngIf="newUsers$ | async as newUsers" color="danger">New {{newUsers.length}}</ion-badge>          </ion-item>        </ion-menu-toggle>        <ion-menu-toggle auto-hide="true">          <ion-item [button]="true"            [routerLink]="\'tool-indicators\'" routerDirection="forward">            <ion-label>              Indicateurs            </ion-label>          </ion-item>        </ion-menu-toggle>      </ion-item-group>    </ion-list>  </ion-content></ion-menu></div>'
+    var COMPONENTS = [{'name': 'Control3DFormComponent', 'selector': 'app-control3-dform'},{'name': 'Control3DPage', 'selector': 'app-control'},{'name': 'NewToolPage', 'selector': 'app-new-tool'},{'name': 'SboFormComponent', 'selector': 'app-sbo-form'},{'name': 'ToolFormComponent', 'selector': 'app-tool-form'},{'name': 'ToolInputComponent', 'selector': 'app-tool-input'},{'name': 'ToolRequestFooterComponent', 'selector': 'app-tool-request-footer'},{'name': 'ToolRequestMenuComponent', 'selector': 'app-tool-request-menu'},{'name': 'ToolRequestsPage', 'selector': ''}];
+    var DIRECTIVES = [{'name': 'ToolInputDirective', 'selector': '[toolInput]'}];
+    var ACTUAL_COMPONENT = {'name': 'ToolRequestMenuComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ToolRequestMenuComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

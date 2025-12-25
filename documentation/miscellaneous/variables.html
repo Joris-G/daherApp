@@ -1,0 +1,461 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>moldingApp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">moldingApp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
+</ol>
+
+<section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#MOYENS_MESURE" title="src/app/features/tooling/models/moyen-mesure.model.ts" ><b>MOYENS_MESURE</b>&nbsp;&nbsp;&nbsp;(src/.../moyen-mesure.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RAPPORT_TYPES" title="src/app/features/tooling/models/type-rapport.model.ts" ><b>RAPPORT_TYPES</b>&nbsp;&nbsp;&nbsp;(src/.../type-rapport.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#REQUEST_STATUSES" title="src/app/features/tooling/models/tool-request.model.ts" ><b>REQUEST_STATUSES</b>&nbsp;&nbsp;&nbsp;(src/.../tool-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#REQUEST_TYPES" title="src/app/features/tooling/models/tool-request.model.ts" ><b>REQUEST_TYPES</b>&nbsp;&nbsp;&nbsp;(src/.../tool-request.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TOOL_INPUT_VALIDATOR" title="src/app/features/tooling/components/tool-input/tool-input.component.ts" ><b>TOOL_INPUT_VALIDATOR</b>&nbsp;&nbsp;&nbsp;(src/.../tool-input.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TOOLING_ROUTES" title="src/app/features/tooling/tooling.routes.ts" ><b>TOOLING_ROUTES</b>&nbsp;&nbsp;&nbsp;(src/.../tooling.routes.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/app/features/tooling/models/moyen-mesure.model.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MOYENS_MESURE"></a>
+                    <span class="name">
+                        <span ><b>MOYENS_MESURE</b></span>
+                        <a href="#MOYENS_MESURE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#MoyenMesure" target="_self" >MoyenMesure[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  &#x27;Bras&#x27;,
+  &#x27;Laser&#x27;,
+  &#x27;laser + TProbe&#x27;,
+] as const</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/features/tooling/models/type-rapport.model.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RAPPORT_TYPES"></a>
+                    <span class="name">
+                        <span ><b>RAPPORT_TYPES</b></span>
+                        <a href="#RAPPORT_TYPES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#TypeRapport" target="_self" >TypeRapport[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  &#x27;Mail&#x27;,
+  &#x27;DQRC&#x27;,
+  &#x27;PV d&#x60;identification ou de contrôle&#x27;,
+] as const</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/features/tooling/models/tool-request.model.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="REQUEST_STATUSES"></a>
+                    <span class="name">
+                        <span ><b>REQUEST_STATUSES</b></span>
+                        <a href="#REQUEST_STATUSES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#RequestStatus" target="_self" >RequestStatus[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  &#x27;Brouillon&#x27;,
+  &#x27;Nouvelle&#x27;,
+  &#x27;En cours&#x27;,
+  &#x27;Finalisée&#x27;,
+  &#x27;Retournée&#x27;,
+  &#x27;Annulée&#x27;,
+  &#x27;En attente&#x27;,
+] as const</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="REQUEST_TYPES"></a>
+                    <span class="name">
+                        <span ><b>REQUEST_TYPES</b></span>
+                        <a href="#REQUEST_TYPES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#RequestType" target="_self" >RequestType[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  &#x27;SBO&#x27;,
+  &#x27;MAINTENANCE&#x27;,
+  &#x27;CONTROLE&#x27;,
+] as const</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/features/tooling/components/tool-input/tool-input.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TOOL_INPUT_VALIDATOR"></a>
+                    <span class="name">
+                        <span ><b>TOOL_INPUT_VALIDATOR</b></span>
+                        <a href="#TOOL_INPUT_VALIDATOR"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ValidatorFn</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(
+  control: AbstractControl
+): ValidationErrors | null &#x3D;&gt; {
+  return control.value ? null : { toolRequired: true };
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/features/tooling/tooling.routes.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TOOLING_ROUTES"></a>
+                    <span class="name">
+                        <span ><b>TOOLING_ROUTES</b></span>
+                        <a href="#TOOLING_ROUTES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Routes</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  {
+    path: &#x27;&#x27;,
+    component: ToolingPage,
+    children: [
+      { path: &#x27;new-tool&#x27;, component: NewToolPage },
+      { path: &#x27;new-tool/:id&#x27;, component: NewToolPage },
+      { path: &#x27;requests&#x27;, component: ToolRequestsPage },
+      {
+        path: &#x27;list&#x27;,
+        canActivate: [RoleGuard],
+        data: { expectedRole: [&#x27;ROLE_ADMIN&#x27;, &#x27;ROLE_RESP_OUTIL&#x27;] },
+        component: ToolListPage
+      },
+
+      { path: &#x27;repair&#x27;, component: MaintenanceReparationPage },
+      { path: &#x27;repair/:id&#x27;, component: MaintenanceReparationPage },
+
+      { path: &#x27;3d&#x27;, component: Control3DPage },
+      { path: &#x27;3d/:id&#x27;, component: Control3DPage },
+
+      {
+        path: &#x27;manage-team&#x27;,
+        canActivate: [RoleGuard],
+        data: { expectedRole: [&#x27;ROLE_ADMIN&#x27;, &#x27;ROLE_RESP_OUTIL&#x27;, &#x27;ROLE_CE_OUTIL&#x27;] },
+        component: ManageTeamPage
+      },
+
+      {
+        path: &#x27;indicators&#x27;,
+        canActivate: [RoleGuard],
+        data: { expectedRole: [&#x27;ROLE_ADMIN&#x27;, &#x27;ROLE_RESP_OUTIL&#x27;, &#x27;ROLE_CE_OUTIL&#x27;] },
+        component: IndicatorsPage
+      }
+    ]
+  }
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

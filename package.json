@@ -18,7 +18,10 @@
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
     "build-p-q": "npm run build-p && npm run build-q",
-    "build:ci": "ionic build --configuration=qual --base-href /TEST/"
+    "build:ci": "ionic build --configuration=qual --base-href /TEST/",
+    "compodoc:build": "compodoc -p tsconfig.doc.json",
+    "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s",
+    "compodoc:serve": "compodoc -s"
   },
   "private": true,
   "dependencies": {
@@ -76,6 +79,7 @@
     "@angular/compiler-cli": "~18.2.14",
     "@angular/language-service": "~18.2.14",
     "@capacitor/cli": "^6.2.1",
+    "@compodoc/compodoc": "^1.1.32",
     "@ionic/angular-toolkit": "^12.3.0",
     "@tsconfig/cypress": "^1.0.1",
     "@types/jasmine": "~4.3.0",
