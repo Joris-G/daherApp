@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal, untracked, } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
-import { IonIcon, IonInput, IonItem, IonSpinner, IonText } from '@ionic/angular/standalone';
+import { IonIcon, IonInput, IonItem, IonSpinner, IonText, IonList } from '@ionic/angular/standalone';
 import { ToolInputStore } from './tool-input.store';
 import { ToolLabelPipe } from './tool-label-pipe';
+import { JsonPipe } from '@angular/common';
 
 const TOOL_INPUT_VALIDATOR: ValidatorFn = (
   control: AbstractControl
@@ -30,7 +31,7 @@ const TOOL_INPUT_VALIDATOR: ValidatorFn = (
     ],
     standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ToolLabelPipe, IonItem, IonInput, IonIcon, IonSpinner, IonText]
+  imports: [IonList, ToolLabelPipe, IonItem, IonInput, IonIcon, IonSpinner, IonText, JsonPipe]
 })
 export class ToolInputComponent implements ControlValueAccessor, Validator {
   readonly store = inject(ToolInputStore);
@@ -40,6 +41,7 @@ export class ToolInputComponent implements ControlValueAccessor, Validator {
   private onChange: (tool: Tool | null) => void = () => { };
   protected onTouched = () => { };
 
+  protected searchToolList = this.store.searchToolList;
 
   // readonly tool = this.store.tool;
   // readonly loading = this.store.loading;
@@ -101,4 +103,8 @@ export class ToolInputComponent implements ControlValueAccessor, Validator {
     this.store.loadTool(value);
   }
 
+
+  onSelectedTool(tool: Tool) {
+    this.store.setTool(tool);
+  }
 }

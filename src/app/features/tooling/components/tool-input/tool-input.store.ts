@@ -8,6 +8,7 @@ export class ToolInputStore {
     private readonly toolService = inject(ToolService);
     private readonly searchAction = new Subject<string>();
 
+  readonly searchToolList = signal<Tool[] | null>(null);
     readonly tool = signal<Tool | null>(null);
     readonly loading = signal(false);
     readonly error = signal<string | null>(null);
@@ -21,27 +22,33 @@ constructor() {
 
   private setupSearchEffect() {
     this.searchAction.pipe(
-      debounceTime(300),
+      // debounceTime(300),
       distinctUntilChanged(),
       tap(() => {
         this.loading.set(true);
         this.error.set(null);
+        this.tool.set(null);
       }),
       switchMap(value => 
-        this.toolService.getToolByInput(value).pipe(
+        this.toolService.searchToolsByInput(value).pipe(
           catchError(() => {
             this.error.set('Outillage introuvable');
             return of(null);
           })
         )
       ),
-      tap(tool => {
-        this.tool.set(tool);
+      tap(tools => {
+        this.searchToolList.set(tools);
         this.loading.set(false);
       })
     ).subscribe();
   }
 
+  setTool(tool: Tool) {
+    this.tool.set(tool);
+    this.searchToolList.set(null);
+  }
+  // TODO faire le this.tool.set après le selct dans la liste
   
     loadTool(input: string) {
         const value = input?.trim();

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Tool, ToolCreation } from 'src/app/features/tooling/models/tool.model';
 import { Observable } from 'rxjs';
@@ -17,9 +17,11 @@ export class ToolService {
     private alertService: AlertService,
   ) { }
 
-  getToolByInput(inputOTValue: string) {
-    console.log(inputOTValue);
-    return this.getToolByToolNumber(inputOTValue)
+  searchToolsByInput(inputOT: string): Observable<Tool[]> {
+    const values = inputOT.split(' ');
+    console.log(values);
+    return this.getAllTools(values);
+  // return this.getToolByToolNumber(inputOTValue)
     // TODO gérer les erreurs
     // (message: string) => {
     //   this.alertService.simpleAlert('Erreur', 'Le serveur outillage à renvoyé une erreur :', message);
@@ -40,20 +42,18 @@ export class ToolService {
     return this.http.get<Tool>(`api/tools/?identification=${identification}`);
   }
 
-  getAllTools() {
-    return new Promise((resolve, reject) => {
-      const httpHeaders = new HttpHeaders()
-        .append('content-type', 'application/json');
-      this.http.get(`api/molding_tools`, { headers: httpHeaders })
-        .subscribe((returnsData: any) => {
-          resolve(returnsData);
-        },
-          (error) => {
-            console.log(error);
-            reject();
-          });
+  getAllTools(searchToolParams?: string[]): Observable<Tool[]> {
+    let params = new HttpParams();
+    if (searchToolParams && searchToolParams.length > 0) {
+      searchToolParams.forEach(term => {
+        params = params.append('search', term.trim());
     });
   }
+
+    return this.http.get<Tool[]>(`api/tools`, { params });
+
+  }
+
   getIri(tool: Tool): string {
     return `/api/tools/${tool.id}`;
   }
