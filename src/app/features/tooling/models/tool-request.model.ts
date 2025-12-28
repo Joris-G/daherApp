@@ -133,17 +133,20 @@ export const REQUEST_STATUSES: readonly RequestStatus[] = [
  * Représente l'état interne du Store.
  * @interface ToolRequestState
  */
-export interface ToolRequestState {
+export interface ToolRequestState<ToolRequesType extends ToolRequest | SpecCtrlRequest>{
   isCreatingTool: boolean;
   isCreatingRequest: boolean;
   selectedTool: Tool | null;
   error: string | null;
-  currentToolRequest: ToolRequest | null;
+  currentToolRequest: ToolRequesType | null;
   isLoadingRequest: boolean;
   isUpdatingRequest: boolean;
   isCreatingSuccess: boolean;
   isUpdateSuccess: boolean;
+  // pour distribuer le boulot pour changer le statut d'une demande c'est le chef outillage ou au dessus qui a ce pouvoir
   canManage: boolean;
+  // pour modifier la demande ne peut se déclencher uniquement si canManage ou si la demande à un statut nouveau
   canUpdate: boolean;
+  // les champs ne sont plus accessibles si la demande est annulée ou si elle est terminée. La demande ne peut être modifiée que par le créateur ou le manager du créateur
   canEdit: boolean;
 }

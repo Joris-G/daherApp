@@ -1,29 +1,9 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { delay, finalize,  take } from 'rxjs';
 import { ToolRequestService } from '../../../tooling/services/tool-request.service';
-import { Tool} from '../models/tool.model';
-import { ToolService } from '../../../tooling/services/tool.service';
 import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from '../models/controle-3d-request.model';
-import { ToolRequestStore } from './tool-request.store';
+import { RequestStatus, ToolRequestState } from '../models/tool-request.model';
 
-
-/**
- * Interface d'état pour le ControlRequestStore.
- * Représente l'état interne du Store.
- * @type {ControlRequestState}
- */
-export type ControlRequestState= {
-  isCreatingRequest: boolean;
-  isLoadingRequest: boolean;
-  isUpdatingRequest: boolean;
-  isCreatingSuccess: boolean;
-  selectedTool: Tool | null;
-  error: string | null;
-  currentControlRequest: SpecCtrlRequest  | null;
-  canManage: boolean;
-  canUpdate: boolean;
-  canEdit: boolean;
-};
 
 @Injectable({
   providedIn: 'root',
@@ -52,7 +32,7 @@ export class ControlRequestStore {
   public readonly error = computed(() => this.state().error);
 
   /** La demande en cours d'édition. */
-  public readonly currentControlRequest = computed(() => this.state().currentControlRequest); // 👈 Nouveau
+  public readonly currentControlRequest = computed(() => this.state().currentToolRequest); // 👈 Nouveau
 
   /** Indique si une demande existante est en cours de chargement (pour l'édition). */
   public readonly isLoadingRequest = computed(() => this.state().isLoadingRequest); // 👈 Nouveau
@@ -71,17 +51,19 @@ export class ControlRequestStore {
   // ============================================================================
   // ÉTAT INTERNE (Signals Privés Modifiables)
   // ============================================================================
-  private readonly state = signal<ControlRequestState>({
+  private readonly state = signal<ToolRequestState<SpecCtrlRequest>>({
     isCreatingRequest: false,
     isLoadingRequest: false,
     isUpdatingRequest: false,
     isCreatingSuccess: false,
     selectedTool: null,
     error: null,
-    currentControlRequest: null,
+    currentToolRequest: null,
     canEdit: true,
     canManage: false,
     canUpdate: false,
+    isCreatingTool:false,
+    isUpdateSuccess:false
   });
 
 
@@ -113,18 +95,19 @@ export class ControlRequestStore {
     });
   }
 
+
   /**
    * Charge une demande existante par son ID pour l'édition.
    * @param {string} requestId - L'ID de la demande.
    */
   public loadControlRequest(requestId: string): void {
-    this.updateState({ isLoadingRequest: true, error: null, currentControlRequest: null });
+    this.updateState({ isLoadingRequest: true, error: null, currentToolRequest: null });
     this.toolRequestService.getToolRequest<SpecCtrlRequest>(requestId).pipe(
       finalize(() => this.updateState({ isLoadingRequest: false }))
     ).subscribe({
       next: (request) => {
         if (request) {
-          this.updateState({ currentControlRequest: request, selectedTool: request.tool });
+          this.updateState({ currentToolRequest: request, selectedTool: request.tool , canEdit: request.statut !== 'Finalisée' ||  });
         } else {
           this.updateState({ error: `Demande avec ID ${requestId} non trouvée.` });
         }
@@ -171,7 +154,7 @@ export class ControlRequestStore {
       selectedTool: null,
       isCreatingSuccess: false,
       isCreatingRequest: false,
-      currentControlRequest: null,
+      currentToolRequest: null,
       isUpdatingRequest: false,
       error: null
     });
@@ -185,10 +168,12 @@ export class ControlRequestStore {
    * Met à jour une partie de l'état interne de manière immuable.
    * @param {Partial<ControlRequestState>} newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
    */
-  private updateState(newState: Partial<ControlRequestState>): void {
+  private updateState(newState: Partial<ToolRequestState<SpecCtrlRequest>>): void {
     this.state.update(current => ({
       ...current,
       ...newState
     }));
   }
 }
+
+  type cantEdit = Pick<RequestStatus, 'Finalisée' | 'Annulée'>

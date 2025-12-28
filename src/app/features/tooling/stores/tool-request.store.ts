@@ -6,7 +6,7 @@ import { SpecSBORequest,  } from '../models/sbo.model';
 import { Tool, ToolCreation } from '../models/tool.model';
 import { ToolService } from '../../../tooling/services/tool.service';
 import { ToolRequest, ToolRequestCreation, ToolRequestState, ToolRequestUpdate } from '../models/tool-request.model';
-
+//TODO demander à gemini de comparer ce store et le control store pour savoir si 
 @Injectable({
   providedIn: 'root',
 })
@@ -59,7 +59,7 @@ export class ToolRequestStore {
   // ============================================================================
   // ÉTAT INTERNE (Signals Privés Modifiables)
   // ============================================================================
-  private readonly state = signal<ToolRequestState>({
+  private readonly state = signal<ToolRequestState<ToolRequest>>({
     isCreatingTool: false,
     isCreatingRequest: false,
     selectedTool: null,
@@ -214,7 +214,7 @@ export class ToolRequestStore {
    * Met à jour une partie de l'état interne de manière immuable.
    * @param {Partial<ToolRequestState>} newState - Le sous-ensemble des propriétés de l'état à mettre à jour.
    */
-  private updateState(newState: Partial<ToolRequestState>): void {
+  private updateState(newState: Partial<ToolRequestState<ToolRequest>>): void {
     this.state.update(current => ({
       ...current,
       ...newState

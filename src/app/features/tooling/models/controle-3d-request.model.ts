@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { ToolRequestBase, ToolRequestBaseForm } from './tool-request.model';
 import { MoyenMesure } from './moyen-mesure.model';
 import { TypeRapport } from './type-rapport.model';
+import { Tool } from './tool.model';
 
 // ============================================================================
 export type SpecCtrlRequest = ToolRequestBase & {
@@ -73,3 +74,22 @@ export interface SpecCtrlStorage {
   immobilisationOutillage?: number;
   ligneBudgetaire?: string;
 }
+
+
+/**
+ * Interface d'état pour le ControlRequestStore.
+ * Représente l'état interne du Store.
+ * @type {ControlRequestState}
+ */
+export type ControlRequestState= {
+  isCreatingRequest: boolean;
+  isLoadingRequest: boolean;
+  isUpdatingRequest: boolean;
+  isCreatingSuccess: boolean;
+  selectedTool: Tool | null;
+  error: string | null;
+  currentControlRequest: SpecCtrlRequest  | null;
+  canManage: boolean;
+  canUpdate: boolean;
+  canEdit: boolean;
+};
