@@ -127,3 +127,23 @@ export const REQUEST_STATUSES: readonly RequestStatus[] = [
   'Annulée',
   'En attente',
 ] as const;
+
+/**
+ * Interface d'état pour le ToolRequestStore.
+ * Représente l'état interne du Store.
+ * @interface ToolRequestState
+ */
+export interface ToolRequestState {
+  isCreatingTool: boolean;
+  isCreatingRequest: boolean;
+  selectedTool: Tool | null;
+  error: string | null;
+  currentToolRequest: ToolRequest | null;
+  isLoadingRequest: boolean;
+  isUpdatingRequest: boolean;
+  isCreatingSuccess: boolean;
+  isUpdateSuccess: boolean;
+  canManage: boolean;
+  canUpdate: boolean;
+  canEdit: boolean;
+}

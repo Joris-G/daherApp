@@ -19,7 +19,7 @@ export const mockToolRequests: ToolRequestStorage[] = [
     createdAt: new Date(2026, 0, 5),
     dateBesoin: new Date(2026, 0, 25),
     demandeurId: mockUsers[0].id,
-    statut: "Nouvelle",
+    statut: "Finalisée",
     toolId: mockTools[102].id,
     type: "CONTROLE"
   }

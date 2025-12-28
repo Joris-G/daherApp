@@ -6,7 +6,7 @@ import { RoleList } from './roles';
 import { Service } from './service';
 import { Usine } from './usine';
 
-export class User {
+export interface User {
   id: number;
   nom: string;
   prenom: string;

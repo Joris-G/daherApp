@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar color=dark no-padding>
+    <ion-title>{{title()}}</ion-title>
+    @if(isLocked() !== null){
+      @if(!isLocked()){
+      <ion-button size="large" slot="end" (click)="toggleEditMode(false)" [disabled]="!canEdit()">
+  <ion-icon slot="icon-only" name="lock-open-outline"></ion-icon>
+</ion-button>
+    }@else {
+      <ion-button size="large" slot="end" (click)="toggleEditMode(true)" [disabled]="!canEdit()">
+        <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
+      </ion-button>
+    }
+  }
+  </ion-toolbar>
+</ion-header>

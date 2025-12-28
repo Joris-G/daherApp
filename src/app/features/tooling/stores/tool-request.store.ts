@@ -5,27 +5,7 @@ import { ToolRequestService } from '../../../tooling/services/tool-request.servi
 import { SpecSBORequest,  } from '../models/sbo.model';
 import { Tool, ToolCreation } from '../models/tool.model';
 import { ToolService } from '../../../tooling/services/tool.service';
-import { ToolRequest, ToolRequestCreation, ToolRequestUpdate } from '../models/tool-request.model';
-
-/**
- * Interface d'état pour le ToolRequestStore.
- * Représente l'état interne du Store.
- * @interface ToolRequestState
- */
-export interface ToolRequestState {
-  isCreatingTool: boolean;
-  isCreatingRequest: boolean;
-  selectedTool: Tool | null;
-  error: string | null;
-  currentToolRequest: ToolRequest | null;
-  isLoadingRequest: boolean;
-  isUpdatingRequest: boolean;
-  isCreatingSuccess: boolean;
-  isUpdateSuccess: boolean;
-  canManage: boolean;
-  canUpdate: boolean;
-  canEdit: boolean;
-}
+import { ToolRequest, ToolRequestCreation, ToolRequestState, ToolRequestUpdate } from '../models/tool-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -158,7 +138,7 @@ export class ToolRequestStore {
     ).subscribe({
       next: (request) => {
         if (request) {
-          this.updateState({ currentToolRequest: request, selectedTool: request.tool });
+          this.updateState({ currentToolRequest: request, selectedTool: request.tool, canEdit:this.currentToolRequest().statut ==='Nouvelle'  });
         } else {
           this.updateState({ error: `Demande avec ID ${requestId} non trouvée.` });
         }

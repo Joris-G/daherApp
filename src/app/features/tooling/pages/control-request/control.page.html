@@ -1,12 +1,8 @@
+@let canEdit = store.canEdit();
 <!-- ******************************* -->
 <!-- **********   HEADER   *********** -->
 <!-- ******************************* -->
- <!-- TODO FAIRE UN COMPOSANT COMMUN QUI GERE LE TITRE -->
-<ion-header>
-  <ion-toolbar color=dark no-padding>
-    <ion-title>{{page.pageTitle}}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-request-header [title]="page.pageTitle" [canEdit]="canEdit" [isLocked]="false"></app-request-header>
 <!-- ******************************* -->
 <!-- **********   CONTENT   *********** -->
 <!-- ******************************* -->
@@ -14,7 +10,7 @@
   <form [formGroup]="controlForm">
   <!-- TODO Revoir la mise en page scroll partie droite -->
   <app-card [titles]="{title:'Outillage', subtitle:'Créer ou choisir'}">
-    <app-tool-input formControlName="tool" />
+    <app-tool-input formControlName="tool" [disabled]="!canEdit" />
     <!-- <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" /> -->
   </app-card>
   <app-card [titles]="{title:'Controle 3D', subtitle:'description'}">

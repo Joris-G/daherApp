@@ -5,7 +5,7 @@ import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { ToolRequestManager } from '../../../../tooling/services/tool-request-manager.service';
 import { Control3DFormComponent } from '../../components/control3-dform/control3-dform.component';
 import { ToolRequestFooterComponent } from '../../components/tool-request-footer/tool-request-footer.component';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonIcon } from '@ionic/angular/standalone';
 import { ToolRequestService } from '../../../../tooling/services/tool-request.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
@@ -17,6 +17,7 @@ import { ControlRequestFormBuilder } from '../../services/forms/control-request.
 import { ControlRequestStore } from 'src/app/features/tooling/stores/controlRequest.store';
 import { ToolInputComponent } from '../../components/tool-input/tool-input.component';
 import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlRequestControls, SpecCtrlUpdate } from '../../models/controle-3d-request.model';
+import { RequestHeaderComponent } from 'src/app/shared/components/request-header/request-header.component';
 
 
 // TODO message d'erreurs en snack
@@ -31,12 +32,10 @@ import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlRequestControls, SpecCtrlUpd
     ToolFormComponent,
     Control3DFormComponent,
     ToolRequestFooterComponent,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     IonFooter,
-    ToolInputComponent
+    ToolInputComponent,
+    RequestHeaderComponent,
 ],
 })
 export class Control3DPage implements OnInit, AfterContentInit {
@@ -83,7 +82,7 @@ export class Control3DPage implements OnInit, AfterContentInit {
   protected readonly canUpdate = this.store.canUpdate;
 
   // protected readonly toolRequest = signal<ToolRequest | null>(null);
-  // // protected readonly controlRequest = signal<ControlRequest | null>(null);
+  // protected readonly controlRequest = signal<ControlRequest | null>(null);
   // protected readonly requestState = signal<RequestState>(new RequestState());
   // protected readonly pageTitle = signal('Nouvelle demande de contrôle 3D');
 
@@ -114,6 +113,10 @@ export class Control3DPage implements OnInit, AfterContentInit {
 
       if (store.currentControlRequest() && this.isEditMode()) {
         this.fillForm(store.currentControlRequest());
+      }
+
+      if(!store.canEdit()){
+        this.controlForm.disable();
       }
     });
   }
