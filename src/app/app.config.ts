@@ -1,15 +1,11 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
-import { ApplicationConfig, LOCALE_ID, importProvidersFrom } from "@angular/core";
-import { provideAnimations } from "@angular/platform-browser/animations";
-import { PreloadAllModules, RouteReuseStrategy, provideRouter, withComponentInputBinding, withHashLocation, withPreloading } from "@angular/router";
+import { ApplicationConfig, LOCALE_ID } from "@angular/core";
+import { PreloadAllModules, provideRouter, withComponentInputBinding, withHashLocation, withPreloading } from "@angular/router";
 import { TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
 import { AuthInterceptor } from "./shared/services/users/auth.interceptor";
 import { routes } from "./app.routes";
-import { fr_FR, provideNzI18n } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import fr from '@angular/common/locales/fr';
-import { FormsModule } from '@angular/forms';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import Material from '@primeuix/themes/material';
 
 registerLocaleData(fr);

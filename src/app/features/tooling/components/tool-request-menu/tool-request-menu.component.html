@@ -45,7 +45,9 @@
           <ion-label>
             Liste des demandes outillages
           </ion-label>
-          <ion-badge *ngIf="(newRequests && isManager)" color="danger">New {{newRequests}}</ion-badge>
+          @if ((newRequests && isManager)) {
+            <ion-badge color="danger">New {{newRequests}}</ion-badge>
+          }
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle auto-hide="true">
@@ -58,30 +60,31 @@
 
 
 
-      <ion-item-group *ngIf="isManager">
-
-        <ion-item-divider>
-          <ion-label color=secondary>L'équipe</ion-label>
-        </ion-item-divider>
-
-
-        <ion-menu-toggle auto-hide="true">
-          <ion-item [button]="true" routerDirection="forward" [routerLink]="'manage-tool-team'">
-            <ion-label>
-              Gestion de l'équipe
-            </ion-label>
-            <ion-badge *ngIf="newUsers$ | async as newUsers" color="danger">New {{newUsers.length}}</ion-badge>
-          </ion-item>
-        </ion-menu-toggle>
-        <ion-menu-toggle auto-hide="true">
-          <ion-item [button]="true"
-            [routerLink]="'tool-indicators'" routerDirection="forward">
-            <ion-label>
-              Indicateurs
-            </ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-      </ion-item-group>
+      @if (isManager) {
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label color=secondary>L'équipe</ion-label>
+          </ion-item-divider>
+          <ion-menu-toggle auto-hide="true">
+            <ion-item [button]="true" routerDirection="forward" [routerLink]="'manage-tool-team'">
+              <ion-label>
+                Gestion de l'équipe
+              </ion-label>
+              @if (newUsers$ | async; as newUsers) {
+                <ion-badge color="danger">New {{newUsers.length}}</ion-badge>
+              }
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="true">
+            <ion-item [button]="true"
+              [routerLink]="'tool-indicators'" routerDirection="forward">
+              <ion-label>
+                Indicateurs
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-item-group>
+      }
     </ion-list>
 
   </ion-content>

@@ -33,13 +33,12 @@
     </ion-segment>
   </div>
 
-  <ng-container *ngIf="selectedType==='nida'">
+  @if (selectedType==='nida') {
     <app-nida [batchNumberInput]="batchNumber" (nidaEmitter)="materialObject.next($event)"></app-nida>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="selectedType!=='nida'">
+  @if (selectedType!=='nida') {
     Ce module est en cours de création
-
-  </ng-container>
+  }
 
 </ion-content>

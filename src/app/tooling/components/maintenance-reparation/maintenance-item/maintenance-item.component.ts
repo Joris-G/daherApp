@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UploadFileService } from 'src/app/shared/services/upload-file.service';
 import { IonicModule } from '@ionic/angular';
-import { NgIf } from '@angular/common';
+
 import { MaintenanceItemFormComponent } from '../maintenance-item-form/maintenance-item-form.component';
 import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and-repair.model';
 
@@ -10,10 +10,9 @@ import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and
     templateUrl: './maintenance-item.component.html',
     styleUrls: ['./maintenance-item.component.scss'],
     imports: [
-        IonicModule,
-        NgIf,
-        MaintenanceItemFormComponent,
-    ]
+    IonicModule,
+    MaintenanceItemFormComponent
+]
 })
 export class MaintenanceItemComponent implements OnInit, OnChanges {
   @Input() maintenanceItem: MaintenanceItem;

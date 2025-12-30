@@ -5,17 +5,16 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
 import { AlertService } from '../../services/divers/alert.service';
 import { LoadingService } from '../../services/divers/loading.service';
 import { UsersService } from '../../services/users/users.service';
-import { NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-user-sheet',
     templateUrl: './user-sheet.component.html',
     styleUrls: ['./user-sheet.component.scss'],
     imports: [
-        IonicModule,
-        NgIf,
-        DatePipe,
-    ]
+    IonicModule,
+    DatePipe
+]
 })
 export class UserSheetComponent {
   @Input('user') user: User;

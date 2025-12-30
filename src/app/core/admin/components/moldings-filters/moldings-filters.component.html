@@ -24,9 +24,11 @@
   <ion-item>
     <ion-label>Outillage</ion-label>
     <ion-select multiple="true" placeholder="Selectionner outillage" (ionChange)="filterToolChange($event)">
-      <ion-select-option *ngFor="let tool of uniqueTools | async" [value]="tool">
-        {{tool.designation}}
-      </ion-select-option>
+      @for (tool of uniqueTools | async; track tool) {
+        <ion-select-option [value]="tool">
+          {{tool.designation}}
+        </ion-select-option>
+      }
     </ion-select>
   </ion-item>
   <ion-button (click)="resetFiltersClick()" expand="block" fill="outline" shape="round">

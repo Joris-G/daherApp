@@ -4,7 +4,7 @@ import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/_interfaces/user';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { AuthStore } from 'src/app/shared/services/users/auth.store';
 import { IonHeader, IonMenu, IonTitle, IonToolbar, IonContent, IonList, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup } from '@ionic/angular/standalone';
 
@@ -12,7 +12,7 @@ import { IonHeader, IonMenu, IonTitle, IonToolbar, IonContent, IonList, IonItemD
     selector: 'app-tool-request-menu',
     templateUrl: './tool-request-menu.component.html',
     styleUrls: ['./tool-request-menu.component.css'],
-    imports: [IonList, IonMenu, IonContent, RouterLink, NgIf, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup]
+    imports: [IonList, IonMenu, IonContent, RouterLink, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup]
 })
 export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
   ////////////////////////////////////////////////////

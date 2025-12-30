@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { HeaderRowDirective } from '../../directives/header-row.directive';
-import { NgFor } from '@angular/common';
+
 import { DataRowDirective } from '../../directives/data-row.directive';
 
 @Component({
@@ -9,11 +9,10 @@ import { DataRowDirective } from '../../directives/data-row.directive';
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],
     imports: [
-        IonicModule,
-        HeaderRowDirective,
-        NgFor,
-        DataRowDirective,
-    ]
+    IonicModule,
+    HeaderRowDirective,
+    DataRowDirective
+]
 })
 export class TableComponent implements OnInit {
   @Input() datas: any[];

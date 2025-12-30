@@ -29,11 +29,13 @@
           </ion-button>
         </ion-toolbar>
         <ion-list>
-          <ion-item *ngFor="let group of groups">
-            <ion-label>
-              {{group.libelle}}
-            </ion-label>
-          </ion-item>
+          @for (group of groups; track group) {
+            <ion-item>
+              <ion-label>
+                {{group.libelle}}
+              </ion-label>
+            </ion-item>
+          }
         </ion-list>
       </ion-card-content>
     </ion-card>
@@ -48,10 +50,12 @@
               <ion-button size=small>
                 Tout
               </ion-button>
-              <ion-button slot=end *ngIf="!selection.isEmpty()" size=small
-                (click)="removeUsersOfTeam(selection.selected)" color=success fill=solid>
-                Faire sortir de l'équipe
-              </ion-button>
+              @if (!selection.isEmpty()) {
+                <ion-button slot=end size=small
+                  (click)="removeUsersOfTeam(selection.selected)" color=success fill=solid>
+                  Faire sortir de l'équipe
+                </ion-button>
+              }
             </ion-buttons>
           </ion-toolbar>
           <table mat-table class="ion-margin" #table [dataSource]="toolsUserDataSource">
@@ -66,18 +70,28 @@
             <ng-container matColumnDef="groupeAffectation">
               <th mat-header-cell *matHeaderCellDef> Groupe </th>
               <td mat-cell *matCellDef="let user">
-                <ion-list *ngIf="user.groupeAffected.length > 0">
-                  <ion-label *ngFor="let group of user.groupeAffected">
-                    {{group.libelle}}
-                  </ion-label>
-                </ion-list>
-                <ion-item lines="none" color="light" *ngIf="user.groupeAffected.length === 0">
-                  <ion-select *ngIf="user.groupeAffected.length === 0" #select multiple="true"
-                    placeholder="Selectionner un groupe" (ionChange)="addGroupToUser(select.value, user)">
-                    <ion-select-option *ngFor="let group of groups" [value]="group">
-                      {{group.libelle}}</ion-select-option>
-                  </ion-select>
-                </ion-item>
+                @if (user.groupeAffected.length > 0) {
+                  <ion-list>
+                    @for (group of user.groupeAffected; track group) {
+                      <ion-label>
+                        {{group.libelle}}
+                      </ion-label>
+                    }
+                  </ion-list>
+                }
+                @if (user.groupeAffected.length === 0) {
+                  <ion-item lines="none" color="light">
+                    @if (user.groupeAffected.length === 0) {
+                      <ion-select #select multiple="true"
+                        placeholder="Selectionner un groupe" (ionChange)="addGroupToUser(select.value, user)">
+                        @for (group of groups; track group) {
+                          <ion-select-option [value]="group">
+                          {{group.libelle}}</ion-select-option>
+                        }
+                      </ion-select>
+                    }
+                  </ion-item>
+                }
               </td>
             </ng-container>
             <ng-container matColumnDef="progAvion">
@@ -91,17 +105,21 @@
             <ng-container matColumnDef="buttons">
               <th mat-header-cell *matHeaderCellDef> </th>
               <td mat-cell *matCellDef="let user">
-                <ion-button *ngIf="user.isUpdated" size=small (click)="updateUser(user)" color=secondary>
-                  <ion-icon slot="icon-only" name="save-outline"></ion-icon>
-                </ion-button>
-                <ion-button *ngIf="!user.isActive" size=small (click)="user.isActive=true">
-                  Accepter
-                </ion-button>
+                @if (user.isUpdated) {
+                  <ion-button size=small (click)="updateUser(user)" color=secondary>
+                    <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+                  </ion-button>
+                }
+                @if (!user.isActive) {
+                  <ion-button size=small (click)="user.isActive=true">
+                    Accepter
+                  </ion-button>
+                }
               </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"
-              [class]="selection.isSelected(row) ? 'row-selected' : ''"></tr>
+            [class]="selection.isSelected(row) ? 'row-selected' : ''"></tr>
           </table>
         </div>
       </ion-card-content>

@@ -25,47 +25,49 @@
     <ion-label>Joindre une image</ion-label>
 
     <a class="item" href="file:///T:/Tarbes/DIAE-C-MC/DONNEES TECHNIQUES PREPARATION SERIE">Lien
-      test vers réseau DAHER</a>
+    test vers réseau DAHER</a>
   </ion-item>
 
   <ion-buttons slot="primary">
     <!-- <ion-button *ngIf="!validate" slot="start" (click)="validateItemClick()"
-      [disabled]="maintenanceItemForm.invalid">
-      <ion-icon slot="start" name="checkmark"></ion-icon>
-     Valider Item
-    </ion-button> -->
-    <ion-button slot="end" (click)="removeItemClick()">
-      <ion-icon slot="start" name="trash-outline"></ion-icon>
-      Supprimer Item
-    </ion-button>
-  </ion-buttons>
-  <!-- <ion-item-group *ngIf="canUpdate"> -->
-  <ion-item-group>
-    <ion-item-divider>
-      <ion-label>Réalisation</ion-label>
-    </ion-item-divider>
-    <ion-item button [id]="'open-date-real' + maintenanceItem.rep">
-      <ion-label>Date de réalisation</ion-label>
-      <ion-icon slot=end icon="calendar-outline"></ion-icon>
-      <ion-text slot="end">
-        {{maintenanceItem.dateReal | date:"dd/MM/yyyy"}}</ion-text>
-      <ion-modal [trigger]="'open-date-real' + maintenanceItem.rep">
-        <ng-template>
-          <ion-content>
-            <ion-datetime #dateReal presentation="date" formControlName="delaiAction" display-format="DD.MM.YYYY"
-              (ionChange)="maintenanceItem.dateReal =maintenanceItemForm.controls.delaiAction.value">
-              <div slot="title">Date de réalisation de la maintenance</div>
-            </ion-datetime>
-          </ion-content>
-        </ng-template>
-      </ion-modal>
-    </ion-item>
-    <ion-buttons slot="primary">
-      <ion-button *ngIf="!maintenanceItem.dateReal" slot="start" (click)="validateMaintenance()"
+    [disabled]="maintenanceItemForm.invalid">
+    <ion-icon slot="start" name="checkmark"></ion-icon>
+    Valider Item
+  </ion-button> -->
+  <ion-button slot="end" (click)="removeItemClick()">
+    <ion-icon slot="start" name="trash-outline"></ion-icon>
+    Supprimer Item
+  </ion-button>
+</ion-buttons>
+<!-- <ion-item-group *ngIf="canUpdate"> -->
+<ion-item-group>
+  <ion-item-divider>
+    <ion-label>Réalisation</ion-label>
+  </ion-item-divider>
+  <ion-item button [id]="'open-date-real' + maintenanceItem.rep">
+    <ion-label>Date de réalisation</ion-label>
+    <ion-icon slot=end icon="calendar-outline"></ion-icon>
+    <ion-text slot="end">
+    {{maintenanceItem.dateReal | date:"dd/MM/yyyy"}}</ion-text>
+    <ion-modal [trigger]="'open-date-real' + maintenanceItem.rep">
+      <ng-template>
+        <ion-content>
+          <ion-datetime #dateReal presentation="date" formControlName="delaiAction" display-format="DD.MM.YYYY"
+            (ionChange)="maintenanceItem.dateReal =maintenanceItemForm.controls.delaiAction.value">
+            <div slot="title">Date de réalisation de la maintenance</div>
+          </ion-datetime>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </ion-item>
+  <ion-buttons slot="primary">
+    @if (!maintenanceItem.dateReal) {
+      <ion-button slot="start" (click)="validateMaintenance()"
         [disabled]="maintenanceItemForm.invalid">
         <ion-icon slot="start" name="checkmark"></ion-icon>
         Effectuée
       </ion-button>
-    </ion-buttons>
-  </ion-item-group>
+    }
+  </ion-buttons>
+</ion-item-group>
 </form>

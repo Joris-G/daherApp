@@ -1,47 +1,49 @@
 <ion-toolbar color="light">
-    @if(canManage){
+  @if(canManage){
     <ion-item>
-        <ion-select label="Affecter" multiple="true" placeholder="Séléctionner une personne"
-            (ionChange)="affectationChange($event)">
-            <ion-select-option *ngFor="let affectationGroup of affectationGroups" [value]="affectationGroup">
-                {{affectationGroup.libelle}}</ion-select-option>
-        </ion-select>
+      <ion-select label="Affecter" multiple="true" placeholder="Séléctionner une personne"
+        (ionChange)="affectationChange($event)">
+        @for (affectationGroup of affectationGroups; track affectationGroup) {
+          <ion-select-option [value]="affectationGroup">
+          {{affectationGroup.libelle}}</ion-select-option>
+        }
+      </ion-select>
     </ion-item>
-    }
-    
-    @if(canManage){
-    
-    <ion-item>
-        <!-- <ion-select #statut multiple="false" placeholder="Séléctionner un statut" (ionChange)="toolRequest.statut = statut.value"> -->
-        <ion-select label="Changer le statut" #statut multiple="false" placeholder="Séléctionner un statut"
-            (ionChange)="statusChange($event)">
-            <ion-select-option value="NOUVELLE">Nouvelle</ion-select-option>
-            <ion-select-option value="REFUSEE">Refuser</ion-select-option>
-            <ion-select-option value="ACCEPTEE">Accepter</ion-select-option>
-            <ion-select-option value="ANNULEE">Annuler</ion-select-option>
-            <ion-select-option value="EN COURS DE REALISATION">En cours de réalisation</ion-select-option>
-            <ion-select-option value="TERMINEE">Terminée</ion-select-option>
-            <ion-select-option value="CLOTUREE">Cloturer</ion-select-option>
-            <ion-select-option value="ATTENTE FOURNITURE EXT">Attente de fourniture extérieure</ion-select-option>
-            <ion-select-option value="DEM EXT">Demande externalisée</ion-select-option>
-        </ion-select>
-    </ion-item>
-    }
-    <ion-button slot=end (click)="pdfExportClick()">
-        <ion-icon slot="end" name="document-attach-outline"></ion-icon>
-        Exporter pdf
-    </ion-button>
-    @if(!canUpdate){
-    <ion-button slot=end block color="success" [disabled]="!canSubmit" (click)="submitClick()">
-        <ion-icon slot="end" name="send-outline"></ion-icon>
-        Envoyer
-    </ion-button>
-}
-@if(canUpdate){
+  }
 
-<ion-button slot=end block color="success" (click)="updateClick()">
-    <ion-icon slot="end" name="send-outline"></ion-icon>
-    Mettre à jour
-</ion-button>
-    }
+  @if(canManage){
+
+    <ion-item>
+      <!-- <ion-select #statut multiple="false" placeholder="Séléctionner un statut" (ionChange)="toolRequest.statut = statut.value"> -->
+      <ion-select label="Changer le statut" #statut multiple="false" placeholder="Séléctionner un statut"
+        (ionChange)="statusChange($event)">
+        <ion-select-option value="NOUVELLE">Nouvelle</ion-select-option>
+        <ion-select-option value="REFUSEE">Refuser</ion-select-option>
+        <ion-select-option value="ACCEPTEE">Accepter</ion-select-option>
+        <ion-select-option value="ANNULEE">Annuler</ion-select-option>
+        <ion-select-option value="EN COURS DE REALISATION">En cours de réalisation</ion-select-option>
+        <ion-select-option value="TERMINEE">Terminée</ion-select-option>
+        <ion-select-option value="CLOTUREE">Cloturer</ion-select-option>
+        <ion-select-option value="ATTENTE FOURNITURE EXT">Attente de fourniture extérieure</ion-select-option>
+        <ion-select-option value="DEM EXT">Demande externalisée</ion-select-option>
+      </ion-select>
+    </ion-item>
+  }
+  <ion-button slot=end (click)="pdfExportClick()">
+    <ion-icon slot="end" name="document-attach-outline"></ion-icon>
+    Exporter pdf
+  </ion-button>
+  @if(!canUpdate){
+    <ion-button slot=end block color="success" [disabled]="!canSubmit" (click)="submitClick()">
+      <ion-icon slot="end" name="send-outline"></ion-icon>
+      Envoyer
+    </ion-button>
+  }
+  @if(canUpdate){
+
+    <ion-button slot=end block color="success" (click)="updateClick()">
+      <ion-icon slot="end" name="send-outline"></ion-icon>
+      Mettre à jour
+    </ion-button>
+  }
 </ion-toolbar>

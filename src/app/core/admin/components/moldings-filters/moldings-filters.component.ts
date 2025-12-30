@@ -4,7 +4,7 @@ import { MoldingListService } from 'src/app/molding/services/molding-list.servic
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
 import { IonicModule } from '@ionic/angular';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 export class FiltersMolding {
   tools: string[] = [];
@@ -16,10 +16,9 @@ export class FiltersMolding {
     templateUrl: './moldings-filters.component.html',
     styleUrls: ['./moldings-filters.component.scss'],
     imports: [
-        IonicModule,
-        NgFor,
-        AsyncPipe,
-    ]
+    IonicModule,
+    AsyncPipe
+]
 })
 export class MoldingsFiltersComponent implements OnInit {
   // public filteredMoldings: Molding[] = [];

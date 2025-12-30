@@ -7,7 +7,7 @@ import { MoldingService } from 'src/app/molding/services/molding.service';
 import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { KitDetailsComponent } from '../kit-details/kit-details.component';
-import { NgFor, NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { PerempDirective } from '../../../directives/peremp.directive';
 
 @Component({
@@ -15,12 +15,10 @@ import { PerempDirective } from '../../../directives/peremp.directive';
     templateUrl: './molding-kit-table.component.html',
     styleUrls: ['./molding-kit-table.component.scss'],
     imports: [
-        IonicModule,
-        NgFor,
-        NgIf,
-        PerempDirective,
-        DatePipe,
-    ]
+    IonicModule,
+    PerempDirective,
+    DatePipe
+]
 })
 export class MoldingKitTableComponent {
   @Input() molding: Molding;

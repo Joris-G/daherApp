@@ -2,7 +2,7 @@
   <app-scan-molding-input slot=start></app-scan-molding-input>
   <!-- <app-scan-molding-input slot=start (evOnInput)="onInput($event)"></app-scan-molding-input> -->
   <!-- <ion-button size=small slot=end (click)="(expanded = !expanded) ? accordion.openAll() : accordion.closeAll()">
-    {{(!expanded) ? 'Développer tout' : 'Replier tout'}}</ion-button> -->
+{{(!expanded) ? 'Développer tout' : 'Replier tout'}}</ion-button> -->
 </ion-toolbar>
 <ion-content>
 
@@ -11,20 +11,24 @@
     <!--  -->
     <!-- LISTE DES KITS -->
     <!--  -->
-    <ion-accordion value="kits" *ngIf="molding.kits.length > 0" toggleIcon="chevron-down-outline" toggleIconSlot="end">
-      <ion-item color=secondary slot=header>LISTE DES KITS</ion-item>
-      <app-molding-kit-table slot=content [molding]=molding!></app-molding-kit-table>
-    </ion-accordion>
+    @if (molding.kits.length > 0) {
+      <ion-accordion value="kits" toggleIcon="chevron-down-outline" toggleIconSlot="end">
+        <ion-item color=secondary slot=header>LISTE DES KITS</ion-item>
+        <app-molding-kit-table slot=content [molding]=molding!></app-molding-kit-table>
+      </ion-accordion>
+    }
     <!--  -->
     <!-- LISTE DES MATERIAUX AUTRES -->
     <!--  -->
-    <ion-accordion value="materialSupplementary" *ngIf="molding?.materialSupplementary.length > 0"
-      toggleIcon="chevron-down-outline" toggleIconSlot="end">
-      <ion-item color=secondary slot=header>
-        <ion-label>LISTE DES NIDAS</ion-label>
-      </ion-item>
-      <app-molding-materials-table slot=content [molding]="molding"></app-molding-materials-table>
-    </ion-accordion>
+    @if (molding?.materialSupplementary.length > 0) {
+      <ion-accordion value="materialSupplementary"
+        toggleIcon="chevron-down-outline" toggleIconSlot="end">
+        <ion-item color=secondary slot=header>
+          <ion-label>LISTE DES NIDAS</ion-label>
+        </ion-item>
+        <app-molding-materials-table slot=content [molding]="molding"></app-molding-materials-table>
+      </ion-accordion>
+    }
   </ion-accordion-group>
 </ion-content>
 
@@ -50,24 +54,24 @@
 
 <!-- footer -->
 <!-- <ion-tab-bar slot="bottom" class="ion-hide-md-up">
-  <ion-tab-button tab="schedule">
-    <ion-icon name="link"></ion-icon>
-    <ion-label>Outillage</ion-label>
-    <ion-badge>6</ion-badge>
-  </ion-tab-button>
+<ion-tab-button tab="schedule">
+  <ion-icon name="link"></ion-icon>
+  <ion-label>Outillage</ion-label>
+  <ion-badge>6</ion-badge>
+</ion-tab-button>
 
-  <ion-tab-button tab="speakers" (click)="kitAlertPrompt()">
-    <ion-icon name="scan"></ion-icon>
-    <ion-label>Scan kit</ion-label>
-  </ion-tab-button>
+<ion-tab-button tab="speakers" (click)="kitAlertPrompt()">
+  <ion-icon name="scan"></ion-icon>
+  <ion-label>Scan kit</ion-label>
+</ion-tab-button>
 
-  <ion-tab-button tab="map">
-    <ion-icon name="print"></ion-icon>
-    <ion-label>Imprimer</ion-label>
-  </ion-tab-button>
+<ion-tab-button tab="map">
+  <ion-icon name="print"></ion-icon>
+  <ion-label>Imprimer</ion-label>
+</ion-tab-button>
 
-  <ion-tab-button tab="about" (click)="saveMoldingClick()">
-    <ion-icon name="save"></ion-icon>
-    <ion-label>Sauvegarder</ion-label>
-  </ion-tab-button>
+<ion-tab-button tab="about" (click)="saveMoldingClick()">
+  <ion-icon name="save"></ion-icon>
+  <ion-label>Sauvegarder</ion-label>
+</ion-tab-button>
 </ion-tab-bar> -->

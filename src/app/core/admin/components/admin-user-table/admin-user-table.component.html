@@ -1,5 +1,5 @@
 <!-- <table mat-table [dataSource]="users | NotActive"> -->
-<ng-container *ngIf="users$ | async as users">
+@if (users$ | async; as users) {
   <ion-grid fixed>
     <ion-row appHeaderRow>
       <ion-col size="1"></ion-col>
@@ -8,24 +8,26 @@
       <ion-col size="">Prénom</ion-col>
       <ion-col size="">Matricule</ion-col>
     </ion-row>
-    <ion-row *ngFor="let user of users" appDataRow (click)="onSelectUser(user)">
-      <ion-col size="1">
-        <ion-icon name="person-circle" appBorderColor [borderColor]="user.isActive" [poste]="user.poste.libelle"
-          size="large">
-        </ion-icon>
-      </ion-col>
-      <ion-col size="">
-        {{user.username}}
-      </ion-col>
-      <ion-col size="">
-        {{user.nom.toUpperCase()}}
-      </ion-col>
-      <ion-col size="">
-        {{user.prenom.charAt(0).toUpperCase() + user.prenom.slice(1).toLowerCase()}}
-      </ion-col>
-      <ion-col size="">
-        {{user.matricule}}
-      </ion-col>
-    </ion-row>
+    @for (user of users; track user) {
+      <ion-row appDataRow (click)="onSelectUser(user)">
+        <ion-col size="1">
+          <ion-icon name="person-circle" appBorderColor [borderColor]="user.isActive" [poste]="user.poste.libelle"
+            size="large">
+          </ion-icon>
+        </ion-col>
+        <ion-col size="">
+          {{user.username}}
+        </ion-col>
+        <ion-col size="">
+          {{user.nom.toUpperCase()}}
+        </ion-col>
+        <ion-col size="">
+          {{user.prenom.charAt(0).toUpperCase() + user.prenom.slice(1).toLowerCase()}}
+        </ion-col>
+        <ion-col size="">
+          {{user.matricule}}
+        </ion-col>
+      </ion-row>
+    }
   </ion-grid>
-</ng-container>
+}

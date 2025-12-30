@@ -3,7 +3,7 @@ import { IonItemSliding, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { MoldingListService } from 'src/app/molding/services/molding-list.service';
 import { Molding } from 'src/app/_interfaces/molding/molding';
-import { NgIf, NgFor } from '@angular/common';
+
 import { MoldingsFiltersComponent } from '../moldings-filters/moldings-filters.component';
 import { RouterLink } from '@angular/router';
 import { DateHeurePipe } from '../../../../_pipes/dateHeure.pipe';
@@ -13,13 +13,11 @@ import { DateHeurePipe } from '../../../../_pipes/dateHeure.pipe';
     templateUrl: './admin-molding-list.component.html',
     styleUrls: ['./admin-molding-list.component.scss'],
     imports: [
-        IonicModule,
-        NgIf,
-        MoldingsFiltersComponent,
-        NgFor,
-        RouterLink,
-        DateHeurePipe,
-    ]
+    IonicModule,
+    MoldingsFiltersComponent,
+    RouterLink,
+    DateHeurePipe
+]
 })
 export class AdminMoldingListComponent implements OnChanges, OnInit {
   public filteredMoldings: Molding[] = [];

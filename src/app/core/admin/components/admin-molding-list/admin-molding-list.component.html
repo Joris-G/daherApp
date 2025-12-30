@@ -2,7 +2,9 @@
   <ion-header>
     <ion-toolbar>
       <ion-title>Liste des moulages</ion-title>
-      <ion-spinner slot=end *ngIf="moldingListLoading" name="circles"></ion-spinner>
+      @if (moldingListLoading) {
+        <ion-spinner slot=end name="circles"></ion-spinner>
+      }
     </ion-toolbar>
   </ion-header>
   <ion-menu contentId="filters-content" menuId="filters-menu">
@@ -27,30 +29,31 @@
         <ion-col>Créé par</ion-col>
         <ion-col>Outillage de moulage</ion-col>
       </ion-row>
-      <ion-row *ngFor="let molding of filteredMoldings; let index = index;" (click)="toggleOptions(slidingItem)">
-        <ion-item-sliding #slidingItem [disabled]="true">
-          <ion-item button class="ion-text-left" lines="full">
-            <ion-col size=1>
-              <ion-chip [color]="(molding.isActive) ? 'success' : 'danger'" mode="ios" outline="true">
-                <ion-label>{{molding.id}}</ion-label>
-              </ion-chip>
-            </ion-col>
-            <ion-col>
-              <ion-text> {{molding.moldingDay | DateHeure}} </ion-text>
-            </ion-col>
-
-            <ion-col>
-              <ion-text> {{molding.userCreat.username}} </ion-text>
-            </ion-col>
-            <ion-col>
-              <ion-text> {{molding.OT.sapToolNumber}} - {{molding.OT.designation}}</ion-text>
-            </ion-col>
-          </ion-item>
-          <ion-item-options>
-            <ion-item-option [routerLink]="'/molding/create-molding/'+molding.id">OUVRIR</ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-row>
+      @for (molding of filteredMoldings; track molding; let index = $index) {
+        <ion-row (click)="toggleOptions(slidingItem)">
+          <ion-item-sliding #slidingItem [disabled]="true">
+            <ion-item button class="ion-text-left" lines="full">
+              <ion-col size=1>
+                <ion-chip [color]="(molding.isActive) ? 'success' : 'danger'" mode="ios" outline="true">
+                  <ion-label>{{molding.id}}</ion-label>
+                </ion-chip>
+              </ion-col>
+              <ion-col>
+                <ion-text> {{molding.moldingDay | DateHeure}} </ion-text>
+              </ion-col>
+              <ion-col>
+                <ion-text> {{molding.userCreat.username}} </ion-text>
+              </ion-col>
+              <ion-col>
+                <ion-text> {{molding.OT.sapToolNumber}} - {{molding.OT.designation}}</ion-text>
+              </ion-col>
+            </ion-item>
+            <ion-item-options>
+              <ion-item-option [routerLink]="'/molding/create-molding/'+molding.id">OUVRIR</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-row>
+      }
     </ion-grid>
   </ion-content>
   <ion-footer>

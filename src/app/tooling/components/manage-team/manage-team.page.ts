@@ -6,28 +6,26 @@ import { UsersService } from 'src/app/shared/services/users/users.service';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { User } from 'src/app/_interfaces/user';
 import { IonicModule } from '@ionic/angular';
-import { NgFor, NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-manage-team',
     templateUrl: './manage-team.page.html',
     styleUrls: ['./manage-team.page.scss'],
     imports: [
-        IonicModule,
-        NgFor,
-        NgIf,
-        MatTable,
-        MatColumnDef,
-        MatHeaderCellDef,
-        MatHeaderCell,
-        MatCellDef,
-        MatCell,
-        MatHeaderRowDef,
-        MatHeaderRow,
-        MatRowDef,
-        MatRow,
-        DatePipe,
-    ]
+    IonicModule,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    DatePipe
+]
 })
 export class ManageTeamPage implements OnInit {
   public page = {

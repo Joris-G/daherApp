@@ -2,9 +2,11 @@
   <ion-card-header class="flex-row">
     <ion-card-title color=secondary>Maintenance n°{{maintenanceItem.rep}}
     </ion-card-title>
-    <ion-icon name="checkmark" color=success size="large" *ngIf="maintenanceRealisee"></ion-icon>
+    @if (maintenanceRealisee) {
+      <ion-icon name="checkmark" color=success size="large"></ion-icon>
+    }
   </ion-card-header>
   <ion-card-content>
-   <app-maintenance-item-form></app-maintenance-item-form>
+    <app-maintenance-item-form></app-maintenance-item-form>
   </ion-card-content>
 </ion-card>

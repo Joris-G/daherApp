@@ -6,14 +6,14 @@ import { environment } from 'src/environments/environment';
 import { MoldingService } from 'src/app/molding/services/molding.service';
 import { RequestService } from 'src/app/shared/services/request.service';
 import { IonicModule } from '@ionic/angular';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 
 @Component({
     selector: 'app-nida',
     templateUrl: './nida.component.html',
     styleUrls: ['./nida.component.scss'],
-    imports: [ReactiveFormsModule, IonicModule, NgIf, NgFor, AsyncPipe]
+    imports: [ReactiveFormsModule, IonicModule, AsyncPipe]
 })
 export class NidaComponent implements OnInit {
   @Output() nidaEmitter: EventEmitter<AdditionalMaterial> = new EventEmitter();

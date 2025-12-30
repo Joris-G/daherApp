@@ -1,18 +1,20 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>toolList</ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>toolList</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-grid fixed>
-        <ion-row class="header-row">
-            <ion-col size="6">header test</ion-col>
-            <ion-col size="6">header test</ion-col>
-        </ion-row>
-        <ion-row class="request-row" *ngFor="let request of requestList">
-            <ion-col size="6">Test</ion-col>
-            <ion-col size="6">Test</ion-col>
-        </ion-row>
-    </ion-grid>
+  <ion-grid fixed>
+    <ion-row class="header-row">
+      <ion-col size="6">header test</ion-col>
+      <ion-col size="6">header test</ion-col>
+    </ion-row>
+    @for (request of requestList; track request) {
+      <ion-row class="request-row">
+        <ion-col size="6">Test</ion-col>
+        <ion-col size="6">Test</ion-col>
+      </ion-row>
+    }
+  </ion-grid>
 </ion-content>

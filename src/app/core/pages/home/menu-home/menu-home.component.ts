@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgFor } from '@angular/common';
+
 import { IonicModule } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
 export interface IMenuItem {
@@ -12,10 +12,9 @@ export interface IMenuItem {
     templateUrl: './menu-home.component.html',
     styleUrls: ['./menu-home.component.scss'],
     imports: [
-        NgFor,
-        IonicModule,
-        RouterLink,
-    ]
+    IonicModule,
+    RouterLink
+]
 })
 export class MenuHomeComponent {
   menuItems: IMenuItem[] = [
