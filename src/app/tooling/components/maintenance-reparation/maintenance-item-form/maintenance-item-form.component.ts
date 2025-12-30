@@ -9,17 +9,16 @@ import { IonButton, IonButtons, IonContent, IonIcon, IonInput, IonItem, IonItemD
     selector: 'app-maintenance-item-form',
     templateUrl: './maintenance-item-form.component.html',
     styleUrls: ['./maintenance-item-form.component.scss'],
-    standalone: true,
     imports: [
-      ReactiveFormsModule,
-      DatePipe,
-      IonItem,
-      IonLabel,
-      IonText,
-      IonIcon,
-      IonInput,
-      IonButtons, IonButton, IonModal, IonItemGroup, IonItemDivider, IonContent
-  ],
+        ReactiveFormsModule,
+        DatePipe,
+        IonItem,
+        IonLabel,
+        IonText,
+        IonIcon,
+        IonInput,
+        IonButtons, IonButton, IonModal, IonItemGroup, IonItemDivider, IonContent
+    ]
 })
 export class MaintenanceItemFormComponent {
   uploadImage($event: Event) {

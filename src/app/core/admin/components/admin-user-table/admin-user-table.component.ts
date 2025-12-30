@@ -19,7 +19,6 @@ import { BorderColorDirective } from '../../../../shared/directives/border-color
     selector: 'app-admin-user-table',
     templateUrl: './admin-user-table.component.html',
     styleUrls: ['./admin-user-table.component.scss'],
-    standalone: true,
     imports: [
         NgIf,
         IonicModule,
@@ -28,7 +27,7 @@ import { BorderColorDirective } from '../../../../shared/directives/border-color
         DataRowDirective,
         BorderColorDirective,
         AsyncPipe,
-    ],
+    ]
 })
 export class AdminUserTableComponent implements OnInit {
   //TODO il faut que ça vienne du store

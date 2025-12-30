@@ -9,8 +9,7 @@ import { ToolRequest } from '../../../features/tooling/models/tool-request.model
     selector: 'app-tool-list',
     templateUrl: './tool-list.page.html',
     styleUrls: ['./tool-list.page.scss'],
-    standalone: true,
-    imports: [IonicModule, NgFor],
+    imports: [IonicModule, NgFor]
 })
 export class ToolListPage implements OnInit {
   public requestList: ToolRequest[];

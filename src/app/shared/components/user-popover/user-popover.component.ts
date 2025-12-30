@@ -9,7 +9,6 @@ import { AuthStore } from '../../services/users/auth.store';
     selector: 'app-user-popover',
     templateUrl: './user-popover.component.html',
     styleUrls: ['./user-popover.component.css'],
-    standalone: true,
     imports: [IonicModule]
 })
 export class UserPopoverComponent implements OnInit {

@@ -13,19 +13,18 @@ import { IonButton, IonButtons, IonChip, IonHeader, IonIcon, IonImg, IonLabel, I
     selector: 'app-shared-user-header',
     templateUrl: './shared-user-header.component.html',
     styleUrls: ['./shared-user-header.component.scss'],
-    standalone: true,
-  imports: [
-    IonHeader,
-    IonToolbar,
-    IonButton,
-    IonButtons,
-    IonMenuButton,
-    IonImg,
-    IonTitle,
-    IonLabel,
-    IonChip,
-    IonIcon
-  ],
+    imports: [
+        IonHeader,
+        IonToolbar,
+        IonButton,
+        IonButtons,
+        IonMenuButton,
+        IonImg,
+        IonTitle,
+        IonLabel,
+        IonChip,
+        IonIcon
+    ]
 })
 export class SharedUserHeaderComponent implements OnInit {
   ////////////////////////////////////////////////////

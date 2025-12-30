@@ -6,8 +6,7 @@ import { IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonIcon, IonIt
     selector: 'app-tool-request-filters',
     templateUrl: './tool-request-filters.component.html',
     styleUrls: ['./tool-request-filters.component.scss'],
-    standalone: true,
-  imports: [IonHeader, IonContent, IonToolbar, IonTitle, IonIcon, IonList, IonItem, IonSelectOption, IonButtons, IonButton, IonFooter, IonSelect],
+    imports: [IonHeader, IonContent, IonToolbar, IonTitle, IonIcon, IonList, IonItem, IonSelectOption, IonButtons, IonButton, IonFooter, IonSelect]
 })
 export class ToolRequestFiltersComponent {
   ////////////////////////////////////////////////////

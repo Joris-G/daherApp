@@ -8,12 +8,11 @@ import { IonContent } from '@ionic/angular/standalone';
     selector: 'app-indicators',
     templateUrl: './indicators.page.html',
     styleUrls: ['./indicators.page.scss'],
-    standalone: true,
-  imports: [
-    IonContent,
+    imports: [
+        IonContent,
         IndicatorGraphComponent,
         IndicatorNumberComponent,
-    ],
+    ]
 })
 export class IndicatorsPage implements OnInit {
   @ViewChild('repartitionDemandesCanvas') private repartitionDemandesCanvas: ElementRef;

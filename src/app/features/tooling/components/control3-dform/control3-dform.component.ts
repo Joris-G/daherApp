@@ -13,17 +13,17 @@ import { CardComponent } from 'src/app/shared/components/card/card.component';
     selector: 'app-control3-dform',
     templateUrl: './control3-dform.component.html',
     styleUrls: ['./control3-dform.component.scss'],
-    standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CardComponent,
-    EditorComponent,
-    KeyValuePipe,
-    IonGrid, IonRow, IonCol, IonInput,
-    IonLabel, IonItem, IonText, IonSelectOption, IonNote,
-    IonSelect,
-    IonSelectOption,
-    IonToggle]
+    imports: [
+        ReactiveFormsModule,
+        CardComponent,
+        EditorComponent,
+        KeyValuePipe,
+        IonGrid, IonRow, IonCol, IonInput,
+        IonLabel, IonItem, IonText, IonSelectOption, IonNote,
+        IonSelect,
+        IonSelectOption,
+        IonToggle
+    ]
 })
 export class Control3DFormComponent {
   /** Formulaire pour les spécifications SBO. */

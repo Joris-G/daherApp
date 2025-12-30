@@ -10,8 +10,7 @@ import { IonIcon, IonFabButton, IonContent, IonFab } from "@ionic/angular/standa
     selector: 'app-home',
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
-    standalone: true,
-  imports: [IonFab, IonContent, IonFabButton, IonIcon, SharedUserHeaderComponent, MenuHomeComponent,],
+    imports: [IonFab, IonContent, IonFabButton, IonIcon, SharedUserHeaderComponent, MenuHomeComponent,]
 })
 export class HomePage {
   public page: any;

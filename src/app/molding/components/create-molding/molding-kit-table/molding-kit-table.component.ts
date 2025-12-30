@@ -14,14 +14,13 @@ import { PerempDirective } from '../../../directives/peremp.directive';
     selector: 'app-molding-kit-table',
     templateUrl: './molding-kit-table.component.html',
     styleUrls: ['./molding-kit-table.component.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         NgFor,
         NgIf,
         PerempDirective,
         DatePipe,
-    ],
+    ]
 })
 export class MoldingKitTableComponent {
   @Input() molding: Molding;

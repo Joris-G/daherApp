@@ -11,12 +11,11 @@ export interface IMenuItem {
     selector: 'app-menu-home',
     templateUrl: './menu-home.component.html',
     styleUrls: ['./menu-home.component.scss'],
-    standalone: true,
     imports: [
         NgFor,
         IonicModule,
         RouterLink,
-    ],
+    ]
 })
 export class MenuHomeComponent {
   menuItems: IMenuItem[] = [

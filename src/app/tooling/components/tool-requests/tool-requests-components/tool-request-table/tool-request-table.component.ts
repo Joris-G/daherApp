@@ -24,16 +24,15 @@ import { RequestType, ToolRequest } from 'src/app/features/tooling/models/tool-r
             })),
         ])
     ],
-  standalone: true,
-  imports: [
-    HeaderRowDirective,
-    DataRowDirective,
-    DatePipe,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonLabel
-  ]
+    imports: [
+        HeaderRowDirective,
+        DataRowDirective,
+        DatePipe,
+        IonGrid,
+        IonRow,
+        IonCol,
+        IonLabel
+    ]
 })
 export class ToolRequestTableComponent implements OnInit {
   ////////////////////////////////////////////////////////////////

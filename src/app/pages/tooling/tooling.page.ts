@@ -8,13 +8,12 @@ import { IonContent, IonRouterOutlet } from '@ionic/angular/standalone';
     selector: 'app-tooling',
     templateUrl: './tooling.page.html',
     styleUrls: ['./tooling.page.scss'],
-    standalone: true,
     imports: [
-      IonContent,
-      IonRouterOutlet,
-      SharedUserHeaderComponent,
+        IonContent,
+        IonRouterOutlet,
+        SharedUserHeaderComponent,
         ToolRequestMenuComponent,
-    ],
+    ]
 })
 export class ToolingPage implements OnInit {
   private readonly titleService = inject(TitleService);

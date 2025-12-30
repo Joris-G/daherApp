@@ -9,12 +9,11 @@ import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and
     selector: 'app-maintenance-item',
     templateUrl: './maintenance-item.component.html',
     styleUrls: ['./maintenance-item.component.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         NgIf,
         MaintenanceItemFormComponent,
-    ],
+    ]
 })
 export class MaintenanceItemComponent implements OnInit, OnChanges {
   @Input() maintenanceItem: MaintenanceItem;

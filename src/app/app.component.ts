@@ -7,8 +7,7 @@ import { informationCircleOutline, accessibilityOutline, personCircleOutline, lo
     selector: 'app-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
-  standalone: true,
-  imports: [IonApp, IonRouterOutlet],
+    imports: [IonApp, IonRouterOutlet]
 })
 export class AppComponent {
   // @HostListener('window:beforeunload', ['$event'])

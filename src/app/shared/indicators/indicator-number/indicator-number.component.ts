@@ -5,8 +5,7 @@ import { IonicModule } from '@ionic/angular';
     selector: 'app-indicator-number',
     templateUrl: './indicator-number.component.html',
     styleUrls: ['./indicator-number.component.scss'],
-    standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule]
 })
 export class IndicatorNumberComponent implements OnInit {
   @Input() indicator: any;

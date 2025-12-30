@@ -8,11 +8,10 @@ import { IonRow, IonGrid, IonInput, IonCol, IonItem, IonText } from "@ionic/angu
     selector: 'app-identity-form',
     templateUrl: './identity-form.component.html',
     styleUrls: ['./identity-form.component.scss'],
-    standalone: true,
-  imports: [IonGrid, IonRow, IonCol, IonInput, IonItem, IonText, 
-    ReactiveFormsModule,
-    CardComponent
-    ],
+    imports: [IonGrid, IonRow, IonCol, IonInput, IonItem, IonText,
+        ReactiveFormsModule,
+        CardComponent
+    ]
 })
 export class IdentityFormComponent {
   identityForm = input.required<FormGroup>();

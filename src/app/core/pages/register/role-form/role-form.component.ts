@@ -18,17 +18,16 @@ import { IonItem, IonLabel, IonProgressBar, IonSelect, IonSelectOption, IonText,
     selector: 'app-role-form',
     templateUrl: './role-form.component.html',
     styleUrls: ['./role-form.component.scss'],
-    standalone: true,
-  imports: [IonList, 
+    imports: [IonList,
         ReactiveFormsModule,
-    CardComponent,
+        CardComponent,
         AsyncPipe,
-    JsonPipe,
-    IonItem,
-    IonLabel,
-    IonText,
-    IonSelect, IonSelectOption, IonProgressBar
-    ],
+        JsonPipe,
+        IonItem,
+        IonLabel,
+        IonText,
+        IonSelect, IonSelectOption, IonProgressBar
+    ]
 })
 export class RoleFormComponent {
   public roleForm = input.required<FormGroup>();

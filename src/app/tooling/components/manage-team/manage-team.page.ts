@@ -12,7 +12,6 @@ import { NgFor, NgIf, DatePipe } from '@angular/common';
     selector: 'app-manage-team',
     templateUrl: './manage-team.page.html',
     styleUrls: ['./manage-team.page.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         NgFor,
@@ -28,7 +27,7 @@ import { NgFor, NgIf, DatePipe } from '@angular/common';
         MatRowDef,
         MatRow,
         DatePipe,
-    ],
+    ]
 })
 export class ManageTeamPage implements OnInit {
   public page = {

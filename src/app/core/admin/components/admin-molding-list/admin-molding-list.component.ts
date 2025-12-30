@@ -12,7 +12,6 @@ import { DateHeurePipe } from '../../../../_pipes/dateHeure.pipe';
     selector: 'app-admin-molding-list',
     templateUrl: './admin-molding-list.component.html',
     styleUrls: ['./admin-molding-list.component.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         NgIf,
@@ -20,7 +19,7 @@ import { DateHeurePipe } from '../../../../_pipes/dateHeure.pipe';
         NgFor,
         RouterLink,
         DateHeurePipe,
-    ],
+    ]
 })
 export class AdminMoldingListComponent implements OnChanges, OnInit {
   public filteredMoldings: Molding[] = [];

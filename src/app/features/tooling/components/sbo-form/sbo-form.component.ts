@@ -4,18 +4,17 @@ import { IonInput, IonItem, IonLabel, IonText, IonTextarea } from '@ionic/angula
 import { Editor, NgxEditorModule } from 'ngx-editor';
 
 @Component({
-  selector: 'app-sbo-form',
-  templateUrl: './sbo-form.component.html',
-  styleUrls: ['./sbo-form.component.scss'],
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    IonInput,
-    IonItem,
-    IonText,
-    IonLabel,
-    NgxEditorModule,
-  ]
+    selector: 'app-sbo-form',
+    templateUrl: './sbo-form.component.html',
+    styleUrls: ['./sbo-form.component.scss'],
+    imports: [
+        ReactiveFormsModule,
+        IonInput,
+        IonItem,
+        IonText,
+        IonLabel,
+        NgxEditorModule,
+    ]
 })
 export class SboFormComponent implements OnInit {
   /** Formulaire pour les spécifications SBO. */

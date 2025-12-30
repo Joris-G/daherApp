@@ -7,17 +7,16 @@ interface CardTitles {
 }
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss'],
-  standalone:true,
-  imports:[
+    selector: 'app-card',
+    templateUrl: './card.component.html',
+    styleUrls: ['./card.component.scss'],
+    imports: [
         IonCard,
         IonCardHeader,
         IonCardTitle,
         IonCardSubtitle,
         IonCardContent,
-  ]
+    ]
 })
 export class CardComponent  implements OnInit {
   public titles = input<CardTitles>();

@@ -12,8 +12,7 @@ import { AuthStore } from 'src/app/shared/services/users/auth.store';
     selector: 'app-shared-admin-header',
     templateUrl: './shared-admin-header.component.html',
     styleUrls: ['./shared-admin-header.component.scss'],
-    standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule]
 })
 export class SharedAdminHeaderComponent implements OnInit, OnDestroy {
   private readonly authStore: AuthStore = inject(AuthStore);

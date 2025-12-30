@@ -10,18 +10,17 @@ import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and
     selector: 'app-maint-repair-form',
     templateUrl: './maint-repair-form.component.html',
     styleUrls: ['./maint-repair-form.component.scss'],
-    standalone: true,
     imports: [
-      ReactiveFormsModule,
-      ToolInputComponent,
-      MaintenanceItemComponent,
-      IonGrid, IonRow, IonCol,
-      IonCard, IonCardHeader, IonCardTitle, IonCardContent,
-      IonItem, IonList, IonListHeader, IonLabel,
-      IonButton, IonToggle,
-      IonIcon,
-      CardComponent
-  ],
+        ReactiveFormsModule,
+        ToolInputComponent,
+        MaintenanceItemComponent,
+        IonGrid, IonRow, IonCol,
+        IonCard, IonCardHeader, IonCardTitle, IonCardContent,
+        IonItem, IonList, IonListHeader, IonLabel,
+        IonButton, IonToggle,
+        IonIcon,
+        CardComponent
+    ]
 })
 export class MaintRepairFormComponent {
   public readonly maintForm = input<FormGroup>();

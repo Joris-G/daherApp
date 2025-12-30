@@ -6,8 +6,7 @@ import { IonicModule } from '@ionic/angular';
     selector: 'app-login-notice',
     templateUrl: './login-notice.component.html',
     styleUrls: ['./login-notice.component.scss'],
-    standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule]
 })
 export class LoginNoticeComponent {
   constructor(private noticeService: NoticeService) { }

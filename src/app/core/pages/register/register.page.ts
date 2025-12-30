@@ -12,11 +12,10 @@ import { UsersStore } from 'src/app/shared/services/users/users.store';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss'],
-  standalone: true,
-  imports: [IonicModule, RegisterFormComponent],
+    selector: 'app-register',
+    templateUrl: './register.page.html',
+    styleUrls: ['./register.page.scss'],
+    imports: [IonicModule, RegisterFormComponent]
 })
 export class RegisterPage {
   private readonly registerFormBuilder = inject(RegisterFormBuilder);

@@ -39,24 +39,23 @@ import { ToolInputComponent } from '../../components/tool-input/tool-input.compo
 // ];
 
 @Component({
-  selector: 'app-new-tool',
-  templateUrl: './sbo-request.page.html',
-  styleUrls: ['./sbo-request.page.scss'],
-  standalone: true,
-  imports: [IonLabel, IonHeader, IonTitle,
-    SboFormComponent,
-    CardComponent,
-    ReactiveFormsModule,
-    NgxEditorModule,
-    IonContent,
-    IonFooter,
-    IonToolbar,
-    IonButton,
-    ToolFormComponent,
-    SboComponent,
-    NzButtonModule,
-    ToolInputComponent, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView
-  ],
+    selector: 'app-new-tool',
+    templateUrl: './sbo-request.page.html',
+    styleUrls: ['./sbo-request.page.scss'],
+    imports: [IonLabel, IonHeader, IonTitle,
+        SboFormComponent,
+        CardComponent,
+        ReactiveFormsModule,
+        NgxEditorModule,
+        IonContent,
+        IonFooter,
+        IonToolbar,
+        IonButton,
+        ToolFormComponent,
+        SboComponent,
+        NzButtonModule,
+        ToolInputComponent, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView
+    ]
 })
   /**
    * Page de création d'une nouvelle demande d'outillage (SBO).

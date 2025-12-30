@@ -11,10 +11,8 @@ import { IonToolbar, IonItem, IonButton, IonIcon, IonSelect, IonSelectOption } f
     selector: 'app-tool-request-footer',
     templateUrl: './tool-request-footer.component.html',
     styleUrls: ['./tool-request-footer.component.scss'],
-    standalone: true,
-  imports: [IonIcon, IonButton, IonItem, IonToolbar, IonSelect, IonSelectOption
-
-    ],
+    imports: [IonIcon, IonButton, IonItem, IonToolbar, IonSelect, IonSelectOption
+    ]
 })
 export class ToolRequestFooterComponent implements OnInit {
   /**

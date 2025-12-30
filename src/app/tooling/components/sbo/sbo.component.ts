@@ -7,8 +7,7 @@ import { SpecSBORequest } from 'src/app/features/tooling/models/sbo.model';
     selector: 'app-sbo',
     templateUrl: './sbo.component.html',
     styleUrls: ['./sbo.component.scss'],
-    standalone: true,
-    imports: [IonicModule, DatePipe],
+    imports: [IonicModule, DatePipe]
 })
 export class SboComponent implements OnInit {
   @Input() spec: SpecSBORequest;

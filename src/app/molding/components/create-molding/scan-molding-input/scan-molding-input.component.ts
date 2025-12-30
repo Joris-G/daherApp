@@ -11,8 +11,7 @@ import { NgIf } from '@angular/common';
     selector: 'app-scan-molding-input',
     templateUrl: './scan-molding-input.component.html',
     styleUrls: ['./scan-molding-input.component.scss'],
-    standalone: true,
-    imports: [IonicModule, NgIf],
+    imports: [IonicModule, NgIf]
 })
 export class ScanMoldingInputComponent implements AfterViewInit, OnInit {
   /**

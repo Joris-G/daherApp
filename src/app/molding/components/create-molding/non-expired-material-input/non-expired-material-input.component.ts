@@ -10,14 +10,13 @@ import { NidaComponent } from '../nida/nida.component';
     selector: 'app-non-expired-material-input',
     templateUrl: './non-expired-material-input.component.html',
     styleUrls: ['./non-expired-material-input.component.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         ReactiveFormsModule,
         FormsModule,
         NgIf,
         NidaComponent,
-    ],
+    ]
 })
 export class NonExpiredMaterialInputComponent implements OnInit, OnDestroy {
   @Input() materialObject: Subject<AdditionalMaterial>;

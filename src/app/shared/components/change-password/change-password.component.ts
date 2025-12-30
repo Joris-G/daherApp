@@ -9,8 +9,7 @@ import { AuthStore } from '../../services/users/auth.store';
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.scss'],
-    standalone: true,
-    imports: [ReactiveFormsModule, IonicModule],
+    imports: [ReactiveFormsModule, IonicModule]
 })
 export class ChangePasswordComponent {
   private readonly authStore: AuthStore = inject(AuthStore);

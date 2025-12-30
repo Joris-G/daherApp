@@ -9,12 +9,11 @@ import { DateHeurePipe } from '../../../../_pipes/dateHeure.pipe';
     selector: 'app-molding-info-toolbar',
     templateUrl: './molding-info-toolbar.component.html',
     styleUrls: ['./molding-info-toolbar.component.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         NgIf,
         DateHeurePipe,
-    ],
+    ]
 })
 export class MoldingInfoToolbarComponent {
   @Input() molding: Molding;

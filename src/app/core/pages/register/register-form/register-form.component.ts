@@ -10,13 +10,12 @@ import { IdentityFormComponent } from '../identity-form/identity-form.component'
     selector: 'app-register-form',
     templateUrl: './register-form.component.html',
     styleUrls: ['./register-form.component.scss'],
-    standalone: true,
     imports: [
         ReactiveFormsModule,
         IonicModule,
         RoleFormComponent,
         IdentityFormComponent,
-    ],
+    ]
 })
 export class RegisterFormComponent {
   public registerForm = input<FormGroup>();

@@ -12,8 +12,7 @@ import { IonHeader, IonMenu, IonTitle, IonToolbar, IonContent, IonList, IonItemD
     selector: 'app-tool-request-menu',
     templateUrl: './tool-request-menu.component.html',
     styleUrls: ['./tool-request-menu.component.css'],
-    standalone: true,
-  imports: [IonList, IonMenu, IonContent, RouterLink, NgIf, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup]
+    imports: [IonList, IonMenu, IonContent, RouterLink, NgIf, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup]
 })
 export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
   ////////////////////////////////////////////////////

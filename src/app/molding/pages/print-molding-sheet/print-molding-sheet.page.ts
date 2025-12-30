@@ -15,7 +15,6 @@ import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, Ma
     selector: 'app-print-molding-sheet',
     templateUrl: './print-molding-sheet.page.html',
     styleUrls: ['./print-molding-sheet.page.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         NgIf,
@@ -33,7 +32,7 @@ import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, Ma
         NgFor,
         JsonPipe,
         DatePipe,
-    ],
+    ]
 })
 export class PrintMoldingSheetPage implements OnInit {
   public molding: Molding;

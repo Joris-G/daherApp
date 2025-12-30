@@ -9,8 +9,7 @@ import { NgIf } from '@angular/common';
     selector: 'app-create-molding-toolbar',
     templateUrl: './create-molding-toolbar.component.html',
     styleUrls: ['./create-molding-toolbar.component.scss'],
-    standalone: true,
-    imports: [IonicModule, NgIf],
+    imports: [IonicModule, NgIf]
 })
 export class CreateMoldingToolbarComponent {
   public isActive: boolean;

@@ -2,7 +2,8 @@ import { Directive, HostListener } from '@angular/core';
 import { AlertService } from '../services/divers/alert.service';
 
 @Directive({
-  selector: '[appBrowserListener]'
+    selector: '[appBrowserListener]',
+    standalone: false
 })
 export class BrowserListenerDirective {
 

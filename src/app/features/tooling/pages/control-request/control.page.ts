@@ -25,18 +25,17 @@ import { RequestHeaderComponent } from 'src/app/shared/components/request-header
     selector: 'app-control',
     templateUrl: './control.page.html',
     styleUrls: ['./control.page.scss'],
-    standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CardComponent,
-    ToolFormComponent,
-    Control3DFormComponent,
-    ToolRequestFooterComponent,
-    IonContent,
-    IonFooter,
-    ToolInputComponent,
-    RequestHeaderComponent,
-],
+    imports: [
+        ReactiveFormsModule,
+        CardComponent,
+        ToolFormComponent,
+        Control3DFormComponent,
+        ToolRequestFooterComponent,
+        IonContent,
+        IonFooter,
+        ToolInputComponent,
+        RequestHeaderComponent,
+    ]
 })
 export class Control3DPage implements OnInit, AfterContentInit {
   ////////////////////////////////////////////////////

@@ -5,8 +5,7 @@ import { IonicModule } from '@ionic/angular';
     selector: 'app-admin-molding-dashboard',
     templateUrl: './admin-molding-dashboard.component.html',
     styleUrls: ['./admin-molding-dashboard.component.scss'],
-    standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule]
 })
 export class AdminMoldingDashboardComponent implements OnInit {
 

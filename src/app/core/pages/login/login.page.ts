@@ -15,19 +15,18 @@ import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoginRedirectionService } from './services/login-redirection.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
-  standalone: true,
-  imports: [
-    IonFooter,
-    IonToolbar,
-    IonIcon,
-    IonFabButton,
-    IonFab,
-    IonContent,
-    LoginFormComponent
-  ],
+    selector: 'app-login',
+    templateUrl: './login.page.html',
+    styleUrls: ['./login.page.scss'],
+    imports: [
+        IonFooter,
+        IonToolbar,
+        IonIcon,
+        IonFabButton,
+        IonFab,
+        IonContent,
+        LoginFormComponent
+    ]
 })
 export class LoginPage implements OnInit {
   private readonly titleService: TitleService = inject(TitleService);

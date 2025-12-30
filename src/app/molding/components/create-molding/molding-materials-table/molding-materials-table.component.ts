@@ -7,8 +7,7 @@ import { NgFor } from '@angular/common';
     selector: 'app-molding-materials-table',
     templateUrl: './molding-materials-table.component.html',
     styleUrls: ['./molding-materials-table.component.scss'],
-    standalone: true,
-    imports: [IonicModule, NgFor],
+    imports: [IonicModule, NgFor]
 })
 export class MoldingMaterialsTableComponent implements OnInit {
   @Input() molding: Molding;

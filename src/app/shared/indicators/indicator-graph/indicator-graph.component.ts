@@ -7,8 +7,7 @@ import { IonicModule } from '@ionic/angular';
     selector: 'app-indicator-graph',
     templateUrl: './indicator-graph.component.html',
     styleUrls: ['./indicator-graph.component.scss'],
-    standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule]
 })
 export class IndicatorGraphComponent implements OnInit, AfterViewInit {
 

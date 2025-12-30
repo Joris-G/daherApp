@@ -6,8 +6,7 @@ import { IonicModule } from '@ionic/angular';
     selector: 'app-kit-details',
     templateUrl: './kit-details.component.html',
     styleUrls: ['./kit-details.component.scss'],
-    standalone: true,
-    imports: [IonicModule],
+    imports: [IonicModule]
 })
 export class KitDetailsComponent implements OnInit {
   @Input

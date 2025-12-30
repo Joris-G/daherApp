@@ -10,19 +10,18 @@ import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 @Component({
     templateUrl: './tool-requests.page.html',
     styleUrls: ['./tool-requests.page.scss'],
-    standalone: true,
-  imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonButton,
-    IonIcon,
-    IonContent,
-    IonGrid,
-    IonRow, IonCol,
+    imports: [
+        IonHeader,
+        IonToolbar,
+        IonTitle,
+        IonButton,
+        IonIcon,
+        IonContent,
+        IonGrid,
+        IonRow, IonCol,
         ToolRequestFiltersComponent,
-    ToolRequestTableComponent,
-    ],
+        ToolRequestTableComponent,
+    ]
 })
   /**
    * Page d'affichage et de filtrage de la liste des demandes d'outillage.

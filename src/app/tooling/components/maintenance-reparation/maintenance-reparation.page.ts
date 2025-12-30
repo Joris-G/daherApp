@@ -24,16 +24,15 @@ type ComponentMode = 'create' | 'edit' | 'view';
     selector: 'app-maintenance-reparation',
     templateUrl: './maintenance-reparation.page.html',
     styleUrls: ['./maintenance-reparation.page.scss'],
-    standalone: true,
-  imports: [
-    MaintRepairFormComponent,
-    ToolRequestFooterComponent,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonFooter
-    ],
+    imports: [
+        MaintRepairFormComponent,
+        ToolRequestFooterComponent,
+        IonHeader,
+        IonToolbar,
+        IonTitle,
+        IonContent,
+        IonFooter
+    ]
 })
 export class MaintenanceReparationPage {
   // ============================================================================

@@ -16,21 +16,20 @@ const TOOL_INPUT_VALIDATOR: ValidatorFn = (
     templateUrl: './tool-input.component.html',
     styleUrls: ['./tool-input.component.scss'],
     providers: [
-      ToolInputStore,
+        ToolInputStore,
         {
             provide: NG_VALUE_ACCESSOR,
             multi: true,
             useExisting: ToolInputComponent
         },
-      {
-        provide: NG_VALIDATORS,
-        useValue: TOOL_INPUT_VALIDATOR,
-        multi: true
-      }
+        {
+            provide: NG_VALIDATORS,
+            useValue: TOOL_INPUT_VALIDATOR,
+            multi: true
+        }
     ],
-    standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonList, ToolLabelPipe, IonItem, IonInput, IonIcon, IonSpinner, IonText, InputConfigDirective]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IonList, ToolLabelPipe, IonItem, IonInput, IonIcon, IonSpinner, IonText, InputConfigDirective]
 })
 export class ToolInputComponent implements ControlValueAccessor, Validator {
   readonly store = inject(ToolInputStore);

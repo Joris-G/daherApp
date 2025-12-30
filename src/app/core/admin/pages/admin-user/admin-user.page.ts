@@ -18,7 +18,6 @@ import { AdminUserTableComponent } from '../../components/admin-user-table/admin
     providers: [
         UsersService, SericesService
     ],
-    standalone: true,
     imports: [IonicModule, AdminUserTableComponent]
 })
 export class AdminUserPage implements OnInit {

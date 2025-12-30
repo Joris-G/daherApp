@@ -15,12 +15,11 @@ export class FiltersMolding {
     selector: 'app-moldings-filters',
     templateUrl: './moldings-filters.component.html',
     styleUrls: ['./moldings-filters.component.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         NgFor,
         AsyncPipe,
-    ],
+    ]
 })
 export class MoldingsFiltersComponent implements OnInit {
   // public filteredMoldings: Molding[] = [];

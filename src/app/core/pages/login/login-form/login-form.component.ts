@@ -10,18 +10,16 @@ import { IonButton, IonItem, IonText, IonInput, IonButtons, IonIcon } from '@ion
     selector: 'app-login-form',
     templateUrl: './login-form.component.html',
     styleUrls: ['./login-form.component.scss'],
-    standalone: true,
-  imports: [
-    ReactiveFormsModule,
+    imports: [
+        ReactiveFormsModule,
         RouterLink,
-    IonItem,
-    IonText,
-    IonInput,
-    IonButton,
-    IonButtons,
-    IonIcon,
-
-    ],
+        IonItem,
+        IonText,
+        IonInput,
+        IonButton,
+        IonButtons,
+        IonIcon,
+    ]
 })
 export class LoginFormComponent {
   private readonly formBuilder: FormBuilder = inject(FormBuilder);

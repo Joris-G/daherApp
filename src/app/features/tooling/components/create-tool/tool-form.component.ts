@@ -3,16 +3,15 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IonInput, IonItem, IonText, } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-tool-form',
-  templateUrl: './tool-form.component.html',
-  styleUrls: ['./tool-form.component.scss'],
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    IonItem,
-    IonText,
-    IonInput,
-  ]
+    selector: 'app-tool-form',
+    templateUrl: './tool-form.component.html',
+    styleUrls: ['./tool-form.component.scss'],
+    imports: [
+        ReactiveFormsModule,
+        IonItem,
+        IonText,
+        IonInput,
+    ]
 })
 /**
  * Composant responsable de la saisie des informations pour la création d'un nouvel outil.

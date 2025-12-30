@@ -6,8 +6,7 @@ import { SharedAdminHeaderComponent } from '../../components/shared-admin-header
     selector: 'app-admin',
     templateUrl: './admin.page.html',
     styleUrls: ['./admin.page.scss'],
-    standalone: true,
-    imports: [SharedAdminHeaderComponent, IonicModule],
+    imports: [SharedAdminHeaderComponent, IonicModule]
 })
 export class AdminPage {
   @ViewChild('menuAdmin') menuAdmin: IonMenu;

@@ -13,7 +13,6 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common';
     selector: 'app-nida',
     templateUrl: './nida.component.html',
     styleUrls: ['./nida.component.scss'],
-    standalone: true,
     imports: [ReactiveFormsModule, IonicModule, NgIf, NgFor, AsyncPipe]
 })
 export class NidaComponent implements OnInit {

@@ -17,7 +17,6 @@ import { CreateMoldingToolbarComponent } from '../../components/create-molding/c
     selector: 'app-create-molding',
     templateUrl: './create-molding.page.html',
     styleUrls: ['./create-molding.page.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         ScanMoldingInputComponent,
@@ -26,7 +25,7 @@ import { CreateMoldingToolbarComponent } from '../../components/create-molding/c
         MoldingMaterialsTableComponent,
         MoldingInfoToolbarComponent,
         CreateMoldingToolbarComponent,
-    ],
+    ]
 })
 
 export class CreateMoldingPage implements OnInit {

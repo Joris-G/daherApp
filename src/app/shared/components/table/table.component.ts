@@ -8,13 +8,12 @@ import { DataRowDirective } from '../../directives/data-row.directive';
     selector: 'app-table',
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         HeaderRowDirective,
         NgFor,
         DataRowDirective,
-    ],
+    ]
 })
 export class TableComponent implements OnInit {
   @Input() datas: any[];

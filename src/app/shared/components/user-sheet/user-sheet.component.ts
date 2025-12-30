@@ -11,12 +11,11 @@ import { NgIf, DatePipe } from '@angular/common';
     selector: 'app-user-sheet',
     templateUrl: './user-sheet.component.html',
     styleUrls: ['./user-sheet.component.scss'],
-    standalone: true,
     imports: [
         IonicModule,
         NgIf,
         DatePipe,
-    ],
+    ]
 })
 export class UserSheetComponent {
   @Input('user') user: User;

@@ -12,7 +12,6 @@ import { AdminMoldingDashboardComponent } from '../../components/admin-molding-d
     templateUrl: './admin-molding.page.html',
     styleUrls: ['./admin-molding.page.scss'],
     providers: [MoldingService],
-    standalone: true,
     imports: [IonicModule, AdminMoldingListComponent, AdminMoldingDashboardComponent]
 })
 export class AdminMoldingPage implements OnInit {
