@@ -2,7 +2,7 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { delay, finalize,  take } from 'rxjs';
 import { ToolRequestService } from '../../../tooling/services/tool-request.service';
 import { SpecCtrlCreation, SpecCtrlRequest, SpecCtrlUpdate } from '../models/controle-3d-request.model';
-import { RequestStatus, ToolRequestState } from '../models/tool-request.model';
+import { cantEdit, RequestStatus, ToolRequestState } from '../models/tool-request.model';
 
 
 @Injectable({
@@ -107,7 +107,7 @@ export class ControlRequestStore {
     ).subscribe({
       next: (request) => {
         if (request) {
-          this.updateState({ currentToolRequest: request, selectedTool: request.tool , canEdit: request.statut !== 'Finalisée' ||  });
+          this.updateState({ currentToolRequest: request, selectedTool: request.tool , canEdit: !cantEdit(request.statut)});
         } else {
           this.updateState({ error: `Demande avec ID ${requestId} non trouvée.` });
         }
@@ -176,4 +176,3 @@ export class ControlRequestStore {
   }
 }
 
-  type cantEdit = Pick<RequestStatus, 'Finalisée' | 'Annulée'>

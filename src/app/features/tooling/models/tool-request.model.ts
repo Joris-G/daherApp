@@ -113,6 +113,8 @@ export type RequestStatus =
   | 'Retournée'
   | 'Annulée'
   | 'En attente';
+;
+  export const cantEdit = (status: RequestStatus)=>  ['Finalisée','Annulée'].includes(status);
 
 /**
  * @constant REQUEST_STATUSES
