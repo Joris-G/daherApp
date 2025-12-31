@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-menu-button color="light" slot="start"></ion-menu-button>
     <ion-img slot="start" class="logo" src="assets/images/logoDaher.png" (click)="navigateHome()">
@@ -6,15 +6,15 @@
     <ion-title class="ion-align-center uppcase">Feuille de traçabilité moulage</ion-title>
     <svg slot=end id="barcode"></svg>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 @if (molding) {
-  <ion-content [fullscreen]="true">
+  <!-- <ion-content [fullscreen]="true"> -->
     <div class="content-top ion-margin">
       <div>
-        <ion-title color=primary>Informations</ion-title>
+        <!-- <ion-title color=primary>Informations</ion-title> -->
         <div class="flex-vertical">
-          <ion-text>ID Moulage : {{molding.id}}</ion-text>
+          <!-- <ion-text>ID Moulage : {{molding.id}}</ion-text>
           <ion-text>Outillage :
             @if (molding.outillage) {
               <span>{{molding.OT.sapToolNumber}} - {{molding.OT.designation}}</span>
@@ -29,18 +29,18 @@
             <ion-text>
               Date de mise à jour : {{molding.updatedAt | date: 'dd/MM/yyyy'}}
             </ion-text>
-          }
+          } -->
         </div>
       </div>
       <div>
-        <ion-title color=danger>Récapitulatif</ion-title>
+        <!-- <ion-title color=danger>Récapitulatif</ion-title> -->
         <div class="important">A draper avant le : {{molding.aDraperAv | date:'dd/MM/yyyy à HH:mm'}}</div>
         <div class="important">A polymériser avant le : {{molding.aCuireAv | date:'dd/MM/yyyy à HH:mm'}}</div>
       </div>
     </div>
     <mat-divider></mat-divider>
     <div class="kit-list ion-margin">
-      <ion-title color=primary>Liste des kits ({{molding.kits.length}})</ion-title>
+      <!-- <ion-title color=primary>Liste des kits ({{molding.kits.length}})</ion-title> -->
       <table mat-table [dataSource]="dataSource">
         <!-- ID MM Column -->
         <ng-container matColumnDef="idMM">
@@ -88,12 +88,12 @@
         <div class="title">Autres matériaux ({{molding.materialSupplementary.length}})</div>
         <div class="list">
           @for (mat of molding.materialSupplementary; track mat) {
-            <ion-item>
+            <!-- <ion-item>
               <ion-label>{{mat.numLot | json}}</ion-label>
-            </ion-item>
+            </ion-item> -->
           }
         </div>
       </div>
     }
-  </ion-content>
+  <!-- </ion-content> -->
 }

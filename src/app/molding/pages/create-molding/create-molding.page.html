@@ -1,42 +1,42 @@
-<ion-toolbar color=light class="ion-hide-md-down padding">
+<!-- <ion-toolbar color=light class="ion-hide-md-down padding"> -->
   <app-scan-molding-input slot=start></app-scan-molding-input>
   <!-- <app-scan-molding-input slot=start (evOnInput)="onInput($event)"></app-scan-molding-input> -->
   <!-- <ion-button size=small slot=end (click)="(expanded = !expanded) ? accordion.openAll() : accordion.closeAll()">
 {{(!expanded) ? 'Développer tout' : 'Replier tout'}}</ion-button> -->
-</ion-toolbar>
+<!-- </ion-toolbar> -->
+
+<!-- 
 <ion-content>
-
-
-  <ion-accordion-group #accordionGroup [multiple]="true">
+  <ion-accordion-group #accordionGroup [multiple]="true"> -->
     <!--  -->
     <!-- LISTE DES KITS -->
     <!--  -->
     @if (molding.kits.length > 0) {
-      <ion-accordion value="kits" toggleIcon="chevron-down-outline" toggleIconSlot="end">
+      <!-- <ion-accordion value="kits" toggleIcon="chevron-down-outline" toggleIconSlot="end">
         <ion-item color=secondary slot=header>LISTE DES KITS</ion-item>
         <app-molding-kit-table slot=content [molding]=molding!></app-molding-kit-table>
-      </ion-accordion>
+      </ion-accordion> -->
     }
     <!--  -->
     <!-- LISTE DES MATERIAUX AUTRES -->
     <!--  -->
     @if (molding?.materialSupplementary.length > 0) {
-      <ion-accordion value="materialSupplementary"
+      <!-- <ion-accordion value="materialSupplementary"
         toggleIcon="chevron-down-outline" toggleIconSlot="end">
         <ion-item color=secondary slot=header>
           <ion-label>LISTE DES NIDAS</ion-label>
         </ion-item>
         <app-molding-materials-table slot=content [molding]="molding"></app-molding-materials-table>
-      </ion-accordion>
+      </ion-accordion> -->
     }
-  </ion-accordion-group>
-</ion-content>
+  <!-- </ion-accordion-group>
+  </ion-content> -->
 
 
-<ion-footer class="ion-hide-md-down">
+<!-- <ion-footer class="ion-hide-md-down"> -->
   <app-molding-info-toolbar [molding]="molding"></app-molding-info-toolbar>
   <app-create-molding-toolbar></app-create-molding-toolbar>
-</ion-footer>
+<!-- </ion-footer> -->
 
 
 

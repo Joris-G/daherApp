@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MoldingListService } from 'src/app/molding/services/molding-list.service';
-import { Molding } from 'src/app/_interfaces/molding/molding';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
-import { IonicModule } from '@ionic/angular';
 import { AsyncPipe } from '@angular/common';
 
 export class FiltersMolding {
@@ -12,11 +10,11 @@ export class FiltersMolding {
 }
 
 @Component({
+  standalone: true,
     selector: 'app-moldings-filters',
     templateUrl: './moldings-filters.component.html',
     styleUrls: ['./moldings-filters.component.scss'],
-    imports: [
-    IonicModule,
+  imports: [
     AsyncPipe
 ]
 })

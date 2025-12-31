@@ -1,11 +1,9 @@
 import { AfterContentInit, Component, effect, inject, OnInit, signal, untracked } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { ToolRequestManager } from '../../../../tooling/services/tool-request-manager.service';
 import { Control3DFormComponent } from '../../components/control3-dform/control3-dform.component';
 import { ToolRequestFooterComponent } from '../../components/tool-request-footer/tool-request-footer.component';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonIcon } from '@ionic/angular/standalone';
 import { ToolRequestService } from '../../../../tooling/services/tool-request.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
@@ -22,6 +20,7 @@ import { RequestHeaderComponent } from 'src/app/shared/components/request-header
 
 // TODO message d'erreurs en snack
 @Component({
+  standalone: true,
     selector: 'app-control',
     templateUrl: './control.page.html',
     styleUrls: ['./control.page.scss'],
@@ -30,9 +29,7 @@ import { RequestHeaderComponent } from 'src/app/shared/components/request-header
         CardComponent,
         ToolFormComponent,
         Control3DFormComponent,
-        ToolRequestFooterComponent,
-        IonContent,
-        IonFooter,
+      ToolRequestFooterComponent,
         ToolInputComponent,
         RequestHeaderComponent,
     ]
@@ -43,13 +40,12 @@ export class Control3DPage implements OnInit, AfterContentInit {
   ////////////////////////////////////////////////////
   private readonly formBuilderService = inject(ControlRequestFormBuilder);
   private readonly programService = inject(ProgramsService);
-  private readonly router = inject(Router);
   protected readonly store = inject(ControlRequestStore);
   private readonly toolRequestService = inject(ToolRequestService);
   private readonly toolRequestManager: ToolRequestManager = inject(ToolRequestManager);
   private readonly loaderService: LoadingService = inject(LoadingService);
   private readonly alertService: AlertService = inject(AlertService);
-  private readonly navCtrl: NavController = inject(NavController);
+  private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   // ============================================================================
   // PROPRIÉTÉS
@@ -107,7 +103,7 @@ export class Control3DPage implements OnInit, AfterContentInit {
 
       if (store.isCreatingSuccess()) {
         await this.alertService.presentToast('Demande créée avec succès', 'success');
-        untracked(() => this.navCtrl.navigateForward(['tooling/requests']));
+        untracked(() => this.router.navigate(['tooling/requests']));
       }
 
       if (store.currentControlRequest() && this.isEditMode()) {

@@ -1,20 +1,26 @@
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/_interfaces/user';
-import { AsyncPipe } from '@angular/common';
 import { AuthStore } from 'src/app/shared/services/users/auth.store';
-import { IonHeader, IonMenu, IonTitle, IonToolbar, IonContent, IonList, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup } from '@ionic/angular/standalone';
+import { BadgeModule } from 'primeng/badge';
+import { DrawerModule } from 'primeng/drawer';
+
 
 @Component({
+  standalone: true,
     selector: 'app-tool-request-menu',
     templateUrl: './tool-request-menu.component.html',
     styleUrls: ['./tool-request-menu.component.css'],
-    imports: [IonList, IonMenu, IonContent, RouterLink, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonItemDivider, IonLabel, IonMenuToggle, IonBadge, IonItem, IonItemGroup]
+  imports: [RouterLink, BadgeModule, DrawerModule]
 })
-export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
+export class ToolRequestMenuComponent implements OnInit {
+
+  /** Signal pour contrôler l'ouverture de la sidebar */
+  public sidebarVisible = signal<boolean>(true);
+
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
@@ -23,12 +29,10 @@ export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
   private roleGuard = inject(RoleGuard);
 
 
-  @ViewChild('menuTool') menu: IonMenu;
-
   ////////////////////////////////////////////////////
   //PROPRIETES
   ////////////////////////////////////////////////////
-  public newRequests: number;
+  public newRequestsCount: number;
   public isManager = false;
   public newUsers$: Observable<User[]>;
 
@@ -39,19 +43,24 @@ export class ToolRequestMenuComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.buildManagerPage();
   }
-  ngAfterViewInit(): void {
-    this.menu.setOpen(true);
+
+
+  /**
+   * Ferme le menu après une sélection (équivalent de ion-menu-toggle)
+   */
+  public closeMenu(): void {
+    this.sidebarVisible.set(false);
   }
 
-
-  loadIndicators() {
+  public loadIndicators() {
     this.newUsers$ = this.userService.getUsersByService('5');
     // this.toolRequestsService.allToolRequests.asObservable()
     //   .subscribe((toolRequests: ToolRequest[]) => {
     //     this.newRequests = toolRequests.filter(request => request.statut === 'NOUVELLE').length;
     //   });
   }
-  buildManagerPage() {
+
+  private buildManagerPage() {
     this.isManager = (this.roleGuard.isRole(['ADMIN', 'RESP_OUTIL', 'CE_OUTIL']));
     if (this.isManager) { this.loadIndicators(); };
   }

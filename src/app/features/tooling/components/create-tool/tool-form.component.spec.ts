@@ -9,9 +9,8 @@ describe('ToolFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ToolFormComponent],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), ToolFormComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ToolFormComponent);
     component = fixture.componentInstance;

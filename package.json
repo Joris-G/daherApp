@@ -5,9 +5,8 @@
   "homepage": "",
   "scripts": {
     "ng": "ng",
-    "start": "ionic serve",
+    "start": "ng serve",
     "start-home": "ionic serve --host=192.168.2.2 --port=8100",
-    "start-lab": "ionic serve --lab",
     "start-pwa": "ionic build --configuration=qual && http-server -p 8080 -c-1 moldingAppQual",
     "mock:server": "nodemon 'server.js'",
     "build": "ionic build --prod",
@@ -31,6 +30,7 @@
     "@angular/common": "~21.0.6",
     "@angular/core": "~21.0.6",
     "@angular/forms": "~21.0.6",
+    "@angular/material": "^21.0.5",
     "@angular/platform-browser": "~21.0.6",
     "@angular/platform-browser-dynamic": "~21.0.6",
     "@angular/router": "~21.0.6",

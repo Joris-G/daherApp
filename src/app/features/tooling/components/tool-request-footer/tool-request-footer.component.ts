@@ -5,14 +5,12 @@ import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { PdfService } from 'src/app/shared/services/divers/pdf.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { RequestStatus } from '../../models/tool-request.model';
-import { IonToolbar, IonItem, IonButton, IonIcon, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 
 @Component({
+  standalone: true,
     selector: 'app-tool-request-footer',
     templateUrl: './tool-request-footer.component.html',
-    styleUrls: ['./tool-request-footer.component.scss'],
-    imports: [IonIcon, IonButton, IonItem, IonToolbar, IonSelect, IonSelectOption
-    ]
+  styleUrls: ['./tool-request-footer.component.scss'],
 })
 export class ToolRequestFooterComponent implements OnInit {
   /**

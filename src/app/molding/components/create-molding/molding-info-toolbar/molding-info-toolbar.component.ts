@@ -1,17 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, } from '@angular/core';
 import { MoldingService } from 'src/app/molding/services/molding.service';
 import { Molding } from 'src/app/_interfaces/molding/molding';
-import { IonicModule } from '@ionic/angular';
-import { NgIf } from '@angular/common';
+
 import { DateHeurePipe } from '../../../../_pipes/dateHeure.pipe';
 
 @Component({
+  standalone: true,
     selector: 'app-molding-info-toolbar',
     templateUrl: './molding-info-toolbar.component.html',
     styleUrls: ['./molding-info-toolbar.component.scss'],
-    imports: [
-        IonicModule,
-        NgIf,
+  imports: [
         DateHeurePipe,
     ]
 })

@@ -1,91 +1,67 @@
-<ion-menu menuId="main-menu" open="true" #menuTool side="start" type="push" contentId="tooling-content">
-  <ion-header>
-    <ion-toolbar color="succes">
-      <ion-title>
-        Menu outillage
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item-divider>
-        <ion-label color=secondary>Faire une demande</ion-label>
-      </ion-item-divider>
-      <ion-menu-toggle auto-hide="true">
-        <ion-item [disabled]="false" button routerLink="/tooling/new-tool"
-          [style.boder-right]="'solid 4px yellow'">
-          <ion-label>
-            Nouvel outillage (SBO)
-          </ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="true">
-        <ion-item button routerLink="/tooling/repair">
-          <ion-label>
-            Maintenance et réparation
-          </ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="true">
-        <ion-item button routerLink="/tooling/3d">
-          <ion-label>
-            Contrôle 3D
-          </ion-label>
-        </ion-item>
-      </ion-menu-toggle>
+<p-drawer [(visible)]="sidebarVisible" [blockScroll]="true" position="left" styleClass="w-20rem"
+  header="Menu outillage">
+  <div class="flex flex-column h-full">
+    <div class="menu-category">
+      <div class="p-3 font-bold text-secondary uppercase text-xs">Faire une demande</div>
+      <ul class="list-none p-0 m-0">
+        <li>
+          <a pRipple routerLink="/tooling/new-tool"
+            class="flex align-items-center p-3 text-700 hover:surface-100 border-right-3 border-yellow-400 transition-colors transition-duration-150 cursor-pointer"
+            (click)="closeMenu()">
+            <span class="font-medium">Nouvel outillage (SBO)</span>
+          </a>
+        </li>
+        <li>
+          <a pRipple routerLink="/tooling/repair" class="menu-item" (click)="closeMenu()">
+            <span class="font-medium">Maintenance et réparation</span>
+          </a>
+        </li>
+        <li>
+          <a pRipple routerLink="/tooling/3d" class="menu-item" (click)="closeMenu()">
+            <span class="font-medium">Contrôle 3D</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
+    <div class="menu-category mt-3">
+      <div class="p-3 font-bold text-secondary uppercase text-xs">Suivi</div>
+      <ul class="list-none p-0 m-0">
+        <li>
+          <a pRipple routerLink="/tooling/requests" class="menu-item justify-content-between" (click)="closeMenu()">
+            <span class="font-medium">Liste des demandes</span>
+            @if (newRequestsCount > 0 && isManager) {
+            <p-badge [value]="'New ' + newRequestsCount" severity="danger"></p-badge>
+            }
+          </a>
+          </li>
+          <li>
+            <a class="menu-item p-disabled">
+              <span class="font-medium">Liste des outillages</span>
+            </a>
+          </li>
+          </ul>
+          </div>
 
-      <ion-item-divider>
-        <ion-label color=secondary>Suivi</ion-label>
-      </ion-item-divider>
-
-
-      <ion-menu-toggle auto-hide="true">
-        <ion-item [button]="true" routerLink="/tooling/requests">
-          <ion-label>
-            Liste des demandes outillages
-          </ion-label>
-          @if ((newRequests && isManager)) {
-            <ion-badge color="danger">New {{newRequests}}</ion-badge>
-          }
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="true">
-        <ion-item [disabled]="true" [button]="true" [routerLink]="'tool-list'" routerDirection="forward">
-          <ion-label>
-            Liste des outillages
-          </ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-
-
-      @if (isManager) {
-        <ion-item-group>
-          <ion-item-divider>
-            <ion-label color=secondary>L'équipe</ion-label>
-          </ion-item-divider>
-          <ion-menu-toggle auto-hide="true">
-            <ion-item [button]="true" routerDirection="forward" [routerLink]="'manage-tool-team'">
-              <ion-label>
-                Gestion de l'équipe
-              </ion-label>
-              @if (newUsers$ | async; as newUsers) {
-                <ion-badge color="danger">New {{newUsers.length}}</ion-badge>
+    @if (isManager) {
+    <div class="menu-category mt-3">
+      <div class="p-3 font-bold text-secondary uppercase text-xs">L'équipe</div>
+      <ul class="list-none p-0 m-0">
+        <li>
+          <a pRipple routerLink="/manage-tool-team" class="menu-item justify-content-between" (click)="closeMenu()">
+            <span class="font-medium">Gestion de l'équipe</span>
+            @if (newRequestsCount > 0) {
+            <p-badge [value]="'New ' + newRequestsCount" severity="danger"></p-badge>
               }
-            </ion-item>
-          </ion-menu-toggle>
-          <ion-menu-toggle auto-hide="true">
-            <ion-item [button]="true"
-              [routerLink]="'tool-indicators'" routerDirection="forward">
-              <ion-label>
-                Indicateurs
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-item-group>
-      }
-    </ion-list>
-
-  </ion-content>
-</ion-menu>
+            </a>
+            </li>
+            <li>
+              <a pRipple routerLink="/tool-indicators" class="menu-item" (click)="closeMenu()">
+                <span class="font-medium">Indicateurs</span>
+              </a>
+            </li>
+            </ul>
+            </div>
+            }
+  </div>
+  </p-drawer>

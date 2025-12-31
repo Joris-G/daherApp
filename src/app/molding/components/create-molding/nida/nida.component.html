@@ -4,16 +4,15 @@
 </div>
 <form [formGroup]="nidaForm" (ngSubmit)="validate()">
 
-  <ion-radio-group #radioGroup formControlName="ref" required="true" allowEmptySelection="true">
+  <!-- <ion-radio-group #radioGroup formControlName="ref" required="true" allowEmptySelection="true">
     <ion-item>
       <ion-label>Autre :</ion-label>
-      <!-- <ion-radio slot="start"></ion-radio> -->
       <ion-radio slot="start" [value]="manualInput.value"></ion-radio>
       <ion-input #manualInput type="text" placeholder="entrée la référence du nida">
       </ion-input>
-    </ion-item>
+    </ion-item> -->
     <!-- TODO transformer le modèle pour éviter l'erreur -->
-    @if ((references$ | async); as references) {
+    <!-- @if ((references$ | async); as references) {
       <ion-list>
         @for (reference of references['NIDA']; track reference) {
           <ion-item>
@@ -31,5 +30,5 @@
         Valider
       </ion-button>
     </ion-buttons>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </form>

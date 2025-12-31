@@ -4,6 +4,7 @@ import { IonInput, IonMenu, NavController, IonicModule } from '@ionic/angular';
 import { ScanService } from 'src/app/molding/services/scan.service';
 
 @Component({
+  standalone: true,
     selector: 'app-molding-menu',
     templateUrl: './molding-menu.component.html',
     styleUrls: ['./molding-menu.component.scss'],

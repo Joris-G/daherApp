@@ -1,17 +1,18 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal, untracked, } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal, untracked, WritableSignal, } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
-import { IonIcon, IonInput, IonItem, IonSpinner, IonText, IonList } from '@ionic/angular/standalone';
 import { ToolInputStore } from './tool-input.store';
 import { ToolLabelPipe } from './tool-label-pipe';
-import { InputConfigDirective } from 'src/app/shared/directives/input-config.directive';
-import type { InputInputEventDetail, IonInputCustomEvent } from '@ionic/core';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ListboxModule } from 'primeng/listbox';
 
 const TOOL_INPUT_VALIDATOR: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => control.value ? null : { toolRequired: true };
 
 @Component({
+  standalone: true,
     selector: 'app-tool-input',
     templateUrl: './tool-input.component.html',
     styleUrls: ['./tool-input.component.scss'],
@@ -29,11 +30,10 @@ const TOOL_INPUT_VALIDATOR: ValidatorFn = (
         }
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [IonList, ToolLabelPipe, IonItem, IonInput, IonIcon, IonSpinner, IonText, InputConfigDirective]
+  imports: [FloatLabelModule, ToolLabelPipe, ProgressSpinnerModule, ListboxModule]
 })
 export class ToolInputComponent implements ControlValueAccessor, Validator {
   readonly store = inject(ToolInputStore);
-
   readonly disabled = signal(false);
 
   private onChange: (tool: Tool | null) => void = () => { };
@@ -96,9 +96,11 @@ export class ToolInputComponent implements ControlValueAccessor, Validator {
    * @description Gère la saisie utilisateur
    * @param {IonInputCustomEvent<InputInputEventDetail>} event CustomEvent de ionInput
    */
-  handleInput(event: IonInputCustomEvent<InputInputEventDetail>): void {
-    const value = event.detail.value;
-    this.store.findTool(value);
+  handleInput(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement) {
+      this.store.findTool(inputElement.value);
+    }
   }
 
 
@@ -106,3 +108,4 @@ export class ToolInputComponent implements ControlValueAccessor, Validator {
     this.store.setTool(tool);
   }
 }
+

@@ -1,22 +1,22 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonMenu, NavController, IonicModule } from '@ionic/angular';
 import { SharedAdminHeaderComponent } from '../../components/shared-admin-header/shared-admin-header.component';
 
 @Component({
+  standalone: true,
     selector: 'app-admin',
     templateUrl: './admin.page.html',
     styleUrls: ['./admin.page.scss'],
-    imports: [SharedAdminHeaderComponent, IonicModule]
+  imports: [SharedAdminHeaderComponent]
 })
 export class AdminPage {
-  @ViewChild('menuAdmin') menuAdmin: IonMenu;
+  // @ViewChild('menuAdmin') menuAdmin: IonMenu;
   constructor(
-    private navCtrl: NavController,
+    // private navCtrl: NavController,
   ) { }
   ionViewWillEnter() {
-    this.menuAdmin.open();
+    // this.menuAdmin.open();
   }
   navigate(url: string) {
-    this.navCtrl.navigateForward(url);
+    // this.navCtrl.navigateForward(url);
   }
 }

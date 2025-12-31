@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MoldingService } from 'src/app/molding/services/molding.service';
 import { IMoldingStatus } from 'src/app/_interfaces/molding/molding';
-import { IonicModule } from '@ionic/angular';
 
 
 @Component({
+  standalone: true,
     selector: 'app-create-molding-toolbar',
     templateUrl: './create-molding-toolbar.component.html',
     styleUrls: ['./create-molding-toolbar.component.scss'],
-    imports: [IonicModule]
+  imports: []
 })
 export class CreateMoldingToolbarComponent {
   public isActive: boolean;

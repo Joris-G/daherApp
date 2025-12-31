@@ -1,40 +1,55 @@
-<ng-container>
-  <!-- <ion-menu-toggle menu="tool-request-menu">
-    <ion-button>Click to open the menu</ion-button>
-  </ion-menu-toggle> -->
-  <ion-grid [fixed]="false">
-    <ion-row appHeaderRow>
-      <ion-col size="1"></ion-col>
-      <ion-col size="2">Statut</ion-col>
-      <ion-col size="8">Outillage</ion-col>
-      <ion-col size="4">Date de la demande</ion-col>
-      <ion-col size="3">Demandeur</ion-col>
-      <!-- <ion-col size="3" sort="">Date de besoin</ion-col> -->
-    </ion-row>
-    @for (toolRequest of toolRequestList(); track $index) {
-    <ion-row appDataRow [isUrgent]="toolRequest.bloquantProd" (click)="openRequestClick(toolRequest)">
-      <ion-col size="1">
-          <div class="circle" [style.border]="getBorder(toolRequest)">
-            {{toolRequest.id}}
+<div class="card">
+  <p-table [value]="toolRequestList()" [responsiveLayout]="'stack'" [breakpoint]="'960px'"
+    styleClass="p-datatable-sm p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }">
+
+    <ng-template pTemplate="header">
+      <tr class="surface-ground">
+        <th style="width: 5%">ID</th>
+        <th style="width: 15%" pSortableColumn="statut">Statut <p-sortIcon field="statut"></p-sortIcon></th>
+        <th style="width: 40%">Outillage</th>
+        <th style="width: 20%" pSortableColumn="createdAt">Date de la demande <p-sortIcon
+            field="createdAt"></p-sortIcon></th>
+        <th style="width: 20%">Demandeur</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-request>
+      <tr (click)="openRequestClick(request)" class="cursor-pointer hover:surface-100 transition-colors"
+        [class]="{'border-left-3 border-red-500': request.bloquantProd}">
+
+        <td>
+          <div class="flex align-items-center justify-content-center border-circle w-2rem h-2rem text-xs font-bold"
+            [style.border]="getBorder(request)">
+            {{ request.id }}
           </div>
-          </ion-col>
-        <ion-col size="2">{{ toolRequest.statut }}</ion-col>
-        <ion-col size="8">
-          @if(hasSapToolNumber(toolRequest.tool)){
-          <ion-label>OT{{toolRequest.tool.sapToolNumber}} -
-            {{toolRequest.tool.designation}}</ion-label>
+        </td>
+        
+        <td>
+          <p-tag [value]="request.statut" [severity]="getSeverity(request.statut)"></p-tag>
+        </td>
+        
+        <td>
+          @if(hasSapToolNumber(request.tool)) {
+          <span class="font-medium">OT{{ request.tool.sapToolNumber }}</span> - {{ request.tool.designation }}
           }
-          </ion-col>
-        <ion-col size="4"> {{toolRequest.createdAt | date :"EE dd MMM yyyy":"local" }}</ion-col>
-        <ion-col size="3" (click)="userClick()">
-          <ion-label>{{toolRequest.demandeur.nom}}</ion-label>
-          </ion-col>
-          <!-- <ion-col size="3"> -->
-          <!-- <ion-label *ngIf="request.controle"> {{request.controle.dateBesoin| date :"dd MMMM yyyy":"local"}}</ion-label>
-                            <ion-label *ngIf="request.maintenance"> {{request.maintenance.dateBesoin| date :"dd MMMM yyyy":"local"}}
-                            </ion-label> -->
-          <!-- </ion-col> -->
-          </ion-row>
-    }
-  </ion-grid>
-</ng-container>
+        </td>
+        
+        <td>
+          {{ request.createdAt | date :"EE dd MMM yyyy":"local" }}
+        </td>
+        
+        <td>
+          <div (click)="userClick()" class="text-primary hover:underline">
+            {{ request.demandeur.nom }}
+          </div>
+        </td>
+        </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="text-center p-4">Aucune demande trouvée.</td>
+          </tr>
+        </ng-template>
+        </p-table>
+        </div>

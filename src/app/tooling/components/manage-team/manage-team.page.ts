@@ -5,15 +5,14 @@ import { ProgramsService } from 'src/app/shared/services/programs/programs.servi
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { GroupeAffectation } from 'src/app/_interfaces/groupe-affectation';
 import { User } from 'src/app/_interfaces/user';
-import { IonicModule } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: true,
     selector: 'app-manage-team',
     templateUrl: './manage-team.page.html',
     styleUrls: ['./manage-team.page.scss'],
-    imports: [
-    IonicModule,
+  imports: [
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,

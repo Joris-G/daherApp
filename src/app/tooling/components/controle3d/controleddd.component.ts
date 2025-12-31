@@ -4,6 +4,7 @@ import { ToolRequest, MoyenMesure, TypeRapport } from 'src/app/features/tooling/
 import { NgFor, DatePipe, KeyValuePipe } from '@angular/common';
 
 @Component({
+  standalone: true,
     selector: 'app-controleddd',
     templateUrl: './controleddd.component.html',
     styleUrls: ['./controleddd.component.scss'],

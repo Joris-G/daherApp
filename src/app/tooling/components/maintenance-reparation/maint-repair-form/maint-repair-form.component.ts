@@ -2,23 +2,18 @@ import { Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ToolInputComponent } from '../../../../features/tooling/components/tool-input/tool-input.component';
 import { MaintenanceItemComponent } from '../maintenance-item/maintenance-item.component';
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonToggle } from '@ionic/angular/standalone';
 import { CardComponent } from "src/app/shared/components/card/card.component";
 import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and-repair.model';
 
 @Component({
+  standalone: true,
     selector: 'app-maint-repair-form',
     templateUrl: './maint-repair-form.component.html',
     styleUrls: ['./maint-repair-form.component.scss'],
     imports: [
         ReactiveFormsModule,
         ToolInputComponent,
-        MaintenanceItemComponent,
-        IonGrid, IonRow, IonCol,
-        IonCard, IonCardHeader, IonCardTitle, IonCardContent,
-        IonItem, IonList, IonListHeader, IonLabel,
-        IonButton, IonToggle,
-        IonIcon,
+      MaintenanceItemComponent,
         CardComponent
     ]
 })

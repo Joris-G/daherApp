@@ -1,4 +1,18 @@
-<ion-header>
+<p-toolbar class="bg-gray-900 border-none p-2" [style]="{'border-radius': '0'}">
+  <div class="p-toolbar-group-start">
+    <h1 class="text-white m-0 text-xl font-medium">{{ title() }}</h1>
+  </div>
+
+  <div class="p-toolbar-group-end">
+    @if (isLocked() !== null) {
+    <p-button [icon]="isLocked() ? 'pi pi-lock' : 'pi pi-lock-open'" [disabled]="!canEdit()"
+      (onClick)="toggleEditMode(isLocked())" severity="secondary" [text]="true" size="large" styleClass="text-white">
+    </p-button>
+    }
+  </div>
+</p-toolbar>
+
+<!-- <ion-header>
   <ion-toolbar color=dark no-padding>
     <ion-title>{{title()}}</ion-title>
     @if(isLocked() !== null){
@@ -13,4 +27,4 @@
     }
   }
   </ion-toolbar>
-</ion-header>
+</ion-header> -->

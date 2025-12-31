@@ -1,21 +1,18 @@
 <form [formGroup]="toolForm()">
   <!-- Numéro d'OT -->
-  <ion-item>
-    <ion-input labelPlacement="floating" formControlName="sapToolNumber" type="text" placeholder="ex. OT095999">
-      <div slot="label">Numéro d'OT SAP<ion-text color="danger"> *</ion-text></div>
-    </ion-input>
-  </ion-item>
+  <p-floatlabel variant="on">
+    <input pInputText id="on_label" autocomplete="off" formControlName="sapToolNumber" placeholder="ex. OT095999" />
+    <label for="on_label">Numéro d'OT SAP<span color="danger"> *</span></label>
+  </p-floatlabel>
   <!-- Numéro identification -->
-  <ion-item>
-    <ion-input labelPlacement="floating" formControlName="identification" type="text"
-      placeholder="ex. 19900Z01-T700P5522000123">
-      <div slot="label">Numéro d'identification<ion-text color="danger"> *</ion-text></div>
-    </ion-input>
-  </ion-item>
+  <p-floatlabel variant="on">
+    <input pInputText id="on_label" autocomplete="off" formControlName="identification"
+      placeholder="ex. 19900Z01-T700P5522000123" />
+    <label for="on_label">Numéro d'identification<span color="danger"> *</span></label>
+  </p-floatlabel>
   <!--Désignation -->
-  <ion-item>
-    <ion-input labelPlacement="floating" formControlName="designation" type="text">
-      <div slot="label">Désignation<ion-text color="danger"> *</ion-text></div>
-    </ion-input>
-  </ion-item>
+  <p-floatlabel variant="on">
+    <input pInputText id="on_label" autocomplete="off" formControlName="designation" placeholder="Désignaiton" />
+    <label for="on_label">Désignation<span color="danger"> *</span></label>
+  </p-floatlabel>
   </form>

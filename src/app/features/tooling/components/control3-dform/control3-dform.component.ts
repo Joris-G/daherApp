@@ -3,26 +3,34 @@ import { Component, input, } from '@angular/core';
 import {  KeyValuePipe } from '@angular/common';
 import { EditorComponent } from '@tinymce/tinymce-angular';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
-import { IonCol, IonGrid, IonItem, IonLabel, IonRow, IonText,  IonSelectOption, IonNote, IonInput,  IonSelect, IonToggle } from '@ionic/angular/standalone';
 import { Editor } from 'ngx-editor';
 import { RAPPORT_TYPES } from 'src/app/features/tooling/models/type-rapport.model';
 import { MOYENS_MESURE } from 'src/app/features/tooling/models/moyen-mesure.model';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
+import { DatePickerModule } from 'primeng/datepicker';
+import { InputTextModule } from 'primeng/inputtext';
+import { FloatLabel } from 'primeng/floatlabel';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { SelectModule } from 'primeng/select';
 
 @Component({
+  standalone: true,
     selector: 'app-control3-dform',
     templateUrl: './control3-dform.component.html',
     styleUrls: ['./control3-dform.component.scss'],
-    imports: [
-        ReactiveFormsModule,
+  imports: [ReactiveFormsModule,
         CardComponent,
         EditorComponent,
-        KeyValuePipe,
-        IonGrid, IonRow, IonCol, IonInput,
-        IonLabel, IonItem, IonText, IonSelectOption, IonNote,
-        IonSelect,
-        IonSelectOption,
-        IonToggle
+    DatePickerModule,
+    InputTextModule,
+    InputNumberModule,
+    SelectModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    KeyValuePipe,
+    FloatLabel
     ]
 })
 export class Control3DFormComponent {

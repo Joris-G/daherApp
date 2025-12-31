@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { IonSegment, IonicModule } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { AdditionalMaterial, Core, Densif } from 'src/app/_interfaces/molding/composite-material-types';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -7,11 +6,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NidaComponent } from '../nida/nida.component';
 
 @Component({
+  standalone: true,
     selector: 'app-non-expired-material-input',
     templateUrl: './non-expired-material-input.component.html',
     styleUrls: ['./non-expired-material-input.component.scss'],
-    imports: [
-    IonicModule,
+  imports: [
     ReactiveFormsModule,
     FormsModule,
     NidaComponent
@@ -21,7 +20,7 @@ export class NonExpiredMaterialInputComponent implements OnInit, OnDestroy {
   @Input() materialObject: Subject<AdditionalMaterial>;
   @Input() batchNumber: string;
   @Output() typeInputEv: EventEmitter<Core | Densif> = new EventEmitter();
-  @ViewChild('materialSegment') materialSegment: IonSegment;
+  // @ViewChild('materialSegment') materialSegment: IonSegment;
   public nidaIsSelected: boolean;
   public otherIsSelected: boolean;
   public material: AdditionalMaterial | any;

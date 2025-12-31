@@ -1,24 +1,16 @@
 import { Component, effect, inject, Signal } from '@angular/core';
 import { ToolRequestFiltersComponent } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.component';
 import { ToolRequestTableComponent } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-table/tool-request-table.component';
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { ToolRequestFilterService } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.service';
 import { ToolRequestListStore } from '../../stores/tool-request-list.store';
 import { ToolRequest } from '../../models/tool-request.model';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 
 @Component({
+  standalone: true,
     templateUrl: './tool-requests.page.html',
     styleUrls: ['./tool-requests.page.scss'],
-    imports: [
-        IonHeader,
-        IonToolbar,
-        IonTitle,
-        IonButton,
-        IonIcon,
-        IonContent,
-        IonGrid,
-        IonRow, IonCol,
+  imports: [
         ToolRequestFiltersComponent,
         ToolRequestTableComponent,
     ]

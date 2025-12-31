@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 import { IMoldingStatus, Molding, MoldingIri, MoldingStatus } from 'src/app/_interfaces/molding/molding';
-import { environment } from 'src/environments/environment';
 import { KitService } from './kit.service';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
@@ -14,7 +12,8 @@ import { OtherMaterialsService } from './other-materials.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { RequestService } from 'src/app/shared/services/request.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 /**
  * Service de gestion des moulages
@@ -38,7 +37,7 @@ export class MoldingService {
 		private requestService: RequestService,
 		private coreService: CoreService,
 		private alertService: AlertService,
-		private navCtrl: NavController,
+		private router: Router,
 		private loadingService: LoadingService,
 		private http: HttpClient,
 	) {
@@ -352,6 +351,6 @@ export class MoldingService {
 	 * @memberof CreateMoldingPage
 	 */
 	private printMolding() {
-		this.navCtrl.navigateForward(['molding/print-molding-sheet', this.molding.id]);
+		this.router.navigate(['molding/print-molding-sheet', this.molding.id]);
 	}
 }

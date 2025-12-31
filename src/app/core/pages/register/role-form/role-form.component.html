@@ -1,7 +1,7 @@
 <form [formGroup]="roleForm()">
   <app-card [titles]="{title: 'Role dans l\'application', subtitle: 'string'}">
-    @if(datas$ | async; as data){
-    <ion-list>
+    <!-- @if(datas$ | async; as data){ -->
+    <!-- <ion-list>
         <ion-item>
           <ion-select formControlName="site" placeholder="Selectionner un site">
             @for(site of data[0]; track site){
@@ -50,7 +50,7 @@
   <ng-template #loading>
         <ion-progress-bar type="indeterminate"></ion-progress-bar>
       </ng-template>
-}
+} -->
 
 
 </app-card>

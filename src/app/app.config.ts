@@ -7,6 +7,7 @@ import { routes } from "./app.routes";
 import { registerLocaleData } from '@angular/common';
 import fr from '@angular/common/locales/fr';
 import Material from '@primeuix/themes/material';
+import { providePrimeNG } from "primeng/config";
 
 registerLocaleData(fr);
 
@@ -32,8 +33,4 @@ export const appConfig:ApplicationConfig = {
         // PDFGenerator,
     ]
 
-}
-
-function providePrimeNG(arg0: { theme: { preset: any; }; }): import("@angular/core").Provider | import("@angular/core").EnvironmentProviders {
-    throw new Error("Function not implemented.");
 }

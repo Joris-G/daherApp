@@ -1,5 +1,4 @@
 import { Component, input, OnInit } from '@angular/core';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/angular/standalone';
 
 interface CardTitles {
   title: string;
@@ -7,15 +6,11 @@ interface CardTitles {
 }
 
 @Component({
+  standalone: true,
     selector: 'app-card',
     templateUrl: './card.component.html',
     styleUrls: ['./card.component.scss'],
-    imports: [
-        IonCard,
-        IonCardHeader,
-        IonCardTitle,
-        IonCardSubtitle,
-        IonCardContent,
+  imports: [
     ]
 })
 export class CardComponent  implements OnInit {

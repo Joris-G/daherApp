@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/_interfaces/user';
-import { map } from 'rxjs/operators';
-import { ModalController, IonicModule } from '@ionic/angular';
 import { UserSheetComponent } from 'src/app/shared/components/user-sheet/user-sheet.component';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
@@ -16,11 +14,11 @@ import { BorderColorDirective } from '../../../../shared/directives/border-color
 
 
 @Component({
+  standalone: true,
     selector: 'app-admin-user-table',
     templateUrl: './admin-user-table.component.html',
     styleUrls: ['./admin-user-table.component.scss'],
-    imports: [
-    IonicModule,
+  imports: [
     HeaderRowDirective,
     DataRowDirective,
     BorderColorDirective,
@@ -34,7 +32,7 @@ export class AdminUserTableComponent implements OnInit {
     private userService: UsersService,
     private loadingService: LoadingService,
     private alertService: AlertService,
-    private modalCtrl: ModalController,
+    // private modalCtrl: ModalController,
   ) {
   }
 
@@ -43,11 +41,11 @@ export class AdminUserTableComponent implements OnInit {
   }
 
   async onSelectUser(selectedUser: User) {
-    const modal = await this.modalCtrl.create({
-      component: UserSheetComponent,
-      componentProps: { user: selectedUser }
-    });
-    modal.present();
+    // const modal = await this.modalCtrl.create({
+    //   component: UserSheetComponent,
+    //   componentProps: { user: selectedUser }
+    // });
+    // modal.present();
   }
 
 

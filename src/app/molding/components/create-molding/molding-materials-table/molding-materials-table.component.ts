@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Molding } from 'src/app/_interfaces/molding/molding';
-import { IonicModule } from '@ionic/angular';
 
 
 @Component({
+  standalone: true,
     selector: 'app-molding-materials-table',
     templateUrl: './molding-materials-table.component.html',
     styleUrls: ['./molding-materials-table.component.scss'],
-    imports: [IonicModule]
+  imports: []
 })
 export class MoldingMaterialsTableComponent implements OnInit {
   @Input() molding: Molding;

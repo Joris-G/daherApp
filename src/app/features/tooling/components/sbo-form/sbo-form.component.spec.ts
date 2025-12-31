@@ -9,9 +9,8 @@ describe('SboFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SboFormComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), SboFormComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(SboFormComponent);
     component = fixture.componentInstance;

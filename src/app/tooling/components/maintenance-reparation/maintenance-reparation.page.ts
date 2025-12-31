@@ -1,5 +1,4 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { catchError, tap } from 'rxjs/operators';
 import { MaintenanceToolRequestService } from '../../services/maintenance-tool-request.service';
@@ -9,7 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MaintRepairFormComponent } from './maint-repair-form/maint-repair-form.component';
 import { ToolRequestFooterComponent } from '../../../features/tooling/components/tool-request-footer/tool-request-footer.component';
 import { FormGroup } from '@angular/forms';
-import { IonContent, IonFooter, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { ToolRequestStore } from '../../../features/tooling/stores/tool-request.store';
 import { ToolRequestFormBuilder } from 'src/app/features/tooling/services/forms/toolRequestFormBuilder/tool-request-form-builder';
 import { RequestStatus, ToolRequest } from '../../../features/tooling/models/tool-request.model';
@@ -21,17 +19,13 @@ import { SpecMaintRepRequest } from '../../../features/tooling/models/maintenanc
 
 type ComponentMode = 'create' | 'edit' | 'view';
 @Component({
+  standalone: true,
     selector: 'app-maintenance-reparation',
     templateUrl: './maintenance-reparation.page.html',
     styleUrls: ['./maintenance-reparation.page.scss'],
     imports: [
         MaintRepairFormComponent,
-        ToolRequestFooterComponent,
-        IonHeader,
-        IonToolbar,
-        IonTitle,
-        IonContent,
-        IonFooter
+      ToolRequestFooterComponent,
     ]
 })
 export class MaintenanceReparationPage {
@@ -40,7 +34,6 @@ export class MaintenanceReparationPage {
   // ============================================================================
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly navCtrl = inject(NavController);
   private readonly maintenanceService = inject(MaintenanceToolRequestService);
   private readonly toolRequestStore = inject(ToolRequestStore);
   private readonly alertService = inject(AlertService);
@@ -355,7 +348,7 @@ export class MaintenanceReparationPage {
   }
 
   private navigateToList(): void {
-    this.navCtrl.navigateForward('tooling/tool-request-list');
+    this.router.navigate(['tooling/tool-request-list']);
   }
 
   // ============================================================================

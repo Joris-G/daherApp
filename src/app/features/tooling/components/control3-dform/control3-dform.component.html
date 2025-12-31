@@ -1,34 +1,33 @@
 @let specCtrlFormForm = specCtrlForm();
 <form [formGroup]="specCtrlFormForm">
-  <ion-grid>
+  <!-- <ion-grid>
     <ion-row>
-      <ion-col size="6">
+      <ion-col size="6"> -->
 
         <!-- ******************************* -->
         <!-- *******   COMPLEMENT    ******* -->
         <!-- ******************************* -->
-        <app-card [titles]="{title:'Complément'}">
-            <ion-item>
-              <ion-label>Bloquant Prod</ion-label>
-              <ion-toggle slot="end" formControlName="bloquantProd"></ion-toggle>
-            </ion-item>
+        <!-- <app-card [titles]="{title:'Complément'}"> -->
+        <span>Bloquant Prod</span>
+        <p-toggleswitch formControlName="bloquantProd" />
 
             <!-- ******************************* -->
             <!-- ****   DATE MISE A DISPO   **** -->
             <!-- ******************************* -->
-                    <ion-item>
-          <ion-input name="dispoOut" id="dispoOut" labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY"
-            formControlName="dispoOut">
-            <div slot="label">Date de mise à disposition au service outillage<ion-text color="danger"> *</ion-text></div>
-          </ion-input>
-          @if (specCtrlFormForm.controls.dispoOut.hasError('dateMismatch')) {
-          <ion-note color="danger">
-            La date de mise à disposition outillage doit être avant le besoin du rapport.
-          </ion-note>
-          }
-          </ion-item>
-
-
+            <p-floatlabel variant="on">
+              <p-datepicker inputId="on_label" showIcon iconDisplay="input" formControlName="dispoOut"
+                dateFormat="EEEE DD-MM-YYYY" />
+              <label for="on_label">Date de mise à disposition au service outillage<span color="danger"> *</span></label>
+              @if (specCtrlFormForm.controls.dispoOut.hasError()) {
+              @if (specCtrlFormForm.controls.dispoOut.hasError('required')) {
+              <p-message severity="error" size="small" variant="simple">Champ obligatoire</p-message>
+              }
+              @if (specCtrlFormForm.controls.dispoOut.hasError('dateMismatch')) {
+              <p-message severity="error" size="small" variant="simple">La date de mise à disposition outillage doit être avant le
+                besoin du rapport.</p-message>
+              }
+              }
+              </p-floatlabel>
             <!-- ******************************* -->
             <!-- ********   LA PIECE   ********* -->
             <!-- ******************************* -->
@@ -37,26 +36,20 @@
               <!-- ******************************* -->
               <!-- ********   reference   ******** -->
               <!-- ******************************* -->
-
-
-              <ion-item>
-                <ion-input labelPlacement="floating" required #refPlan formControlName="refPlan" type="text"
-                  placeholder="indiquer n° de plan">
-                  <div slot="label">Référence pièce<ion-text color="danger"> *</ion-text></div>
-                </ion-input>
-              </ion-item>
+<p-floatlabel variant="on">
+  <input pInputText id="on_label" autocomplete="off" formControlName="refPlan" placeholder="indiquer n° de plan" />
+  <label for="on_label">Référence pièce<span color="danger"> *</span></label>
+</p-floatlabel>
 
               <!-- ******************************* -->
               <!-- ********   INDICE   *********** -->
               <!-- ******************************* -->
+<p-floatlabel variant="on">
+  <input pInputText id="on_label" autocomplete="off" formControlName="indPlan"
+    placeholder="indiquer l 'indice du plan" />
+  <label for="on_label">Indice plan<span color="danger"> *</span></label>
+</p-floatlabel>
 
-
-              <ion-item>
-                <ion-input labelPlacement="floating" required #indPlan formControlName="indPlan" type="text"
-                  placeholder="indiquer l 'indice du plan">
-                  <div slot="label">Indice plan<ion-text color="danger"> *</ion-text></div>
-                </ion-input>
-              </ion-item>
             </div>
 
 
@@ -64,69 +57,71 @@
             <!-- *******   CHEMIN CAO   ******** -->
             <!-- ******************************* -->
 
-
-            <ion-item>
-              <ion-input labelPlacement="floating" label="Format du modèle 3D fourni si nécessaire" #caoPath
-                formControlName="cheminCAO" type="text"
-                placeholder="Fournir CAO et / ou chemin d’accès">
-              </ion-input>
-            </ion-item>
+<p-floatlabel variant="on">
+  <input #caoPath pInputText id="on_label" autocomplete="off" formControlName="cheminCAO"
+    placeholder="Fournir CAO et / ou chemin d’accès" />
+  <label for="on_label">Format du modèle 3D fourni si nécessaire<span color="danger"> *</span></label>
+</p-floatlabel>
         </app-card>
 
 
         <!-- ******************************* -->
         <!-- *******   LE RAPPORT   ******** -->
         <!-- ******************************* -->
-        <app-card [titles]="{title:'Le rapport'}">
+        <!-- <app-card [titles]="{title:'Le rapport'}"> -->
           <!-- ******************************* -->
           <!-- *******   DATE BUTOIR   ******* -->
           <!-- ******************************* -->
-          <ion-item>
-          <ion-input labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY" formControlName="dateBesoin">
-            <div slot="label">Date butoir demandée<ion-text color="danger"> *</ion-text></div>
-          </ion-input>
-          @if (specCtrlFormForm.controls.dateBesoin.hasError('dateMismatch')) {
-          <ion-note color="danger">
-            La date buttoir doit être après la mise à dispo de l'outillage.
-          </ion-note>
-          }
-          </ion-item>
-
-
+          <p-floatlabel variant="on">
+            <p-datepicker inputId="on_label" showIcon iconDisplay="input" formControlName="dateBesoin"
+              dateFormat="EEEE DD-MM-YYYY" />
+            <label for="on_label">Date butoir demandée<span color="danger"> *</span></label>
+            @if (specCtrlFormForm.controls.dateBesoin.hasError()) {
+            @if (specCtrlFormForm.controls.dateBesoin.hasError('required')) {
+            <p-message severity="error" size="small" variant="simple">Champ obligatoire</p-message>
+            }
+            @if (specCtrlFormForm.controls.dateBesoin.hasError('dateMismatch')) {
+              <p-message severity="error" size="small" variant="simple">La date buttoir doit être après la mise à dispo de
+                l'outillage.</p-message>
+              }
+              }
+              </p-floatlabel>
           <!-- ******************************* -->
           <!-- *********   OI eOTP   ********* -->
           <!-- ******************************* -->
 
 
-          <ion-item>
-            <ion-input labelPlacement="floating" #ligneBudgetaire required formControlName="ligneBudgetaire" type="text"
-              placeholder="Indiquez le n° pour imputation">
-              <div slot="label">Oi ou Eotp<ion-text color="danger"> *</ion-text></div>
-            </ion-input>
-          </ion-item>
+<p-floatlabel variant="on">
+  <input #caoPath pInputText id="on_label" autocomplete="off" formControlName="ligneBudgetaire"
+    placeholder="Indiquez le n° pour imputation" />
+  <label for="on_label">Oi ou Eotp<span color="danger"> *</span></label>
+</p-floatlabel>
+
 
           <!-- ******************************* -->
           <!-- ******   TYPE RAPPORT   ******* -->
           <!-- ******************************* -->
 
+<p-select formControlName="typeRapport" [options]="typeRapport | keyvalue" optionLabel="name"
+  placeholder="Types de rapport" class="w-full md:w-56" />
 
-          <ion-item>
+          <!-- <ion-item>
             <ion-select  #typeRapportSelect formControlName="typeRapport">
-              @for(type of typeRapport| keyvalue; track $index){
+              <@for(type of typeRapport| keyvalue; track $index){
               <ion-select-option [value]="type.value">{{type.value}}</ion-select-option>
               }
-               <div slot="label">Types de rapport<ion-text color="danger"> *</ion-text></div>
+              <div slot="label"><ion-text color="danger"> *</ion-text></div>
             </ion-select>
-          </ion-item>
-        </app-card>
-
-
-      </ion-col>
-      <ion-col size="6">
+          </ion-item> -->
+          <!-- </app-card> -->
+          
+          
+          <!-- </ion-col>
+                                  <ion-col size="6"> -->
         <!-- ******************************* -->
         <!-- ******   LE CONTROLE   ******** -->
         <!-- ******************************* -->
-        <app-card [titles]="{title:'Le contrôle'}">
+        <!-- <app-card [titles]="{title:'Le contrôle'}"> -->
             <!-- ******************************* -->
             <!-- ******   DESCRIPTION   ******** -->
             <!-- ******************************* -->
@@ -157,11 +152,11 @@
             <!-- *********   DETAIL   ********** -->
             <!-- ******************************* -->
             <div class="vertical">
-              <ion-item lines="none">
+              <!-- <ion-item lines="none">
                 <ion-label>Détails de la mesure
                   <ion-text color="danger">*</ion-text>
                 </ion-label>
-              </ion-item>
+              </ion-item> -->
               <editor #ctrlReasons slot="" formControlName="detailsControle" [init]="{
             plugins: 'lists link image table wordcount',
             menubar: false,
@@ -177,11 +172,11 @@
             <!-- **  PRECISION / TOLERANCES   ** -->
             <!-- ******************************* -->
             <div class="vertical">
-              <ion-item lines="none">
+              <!-- <ion-item lines="none">
                 <ion-label>Précision demandée et attendue
                   <ion-text color="danger">*</ion-text>
                 </ion-label>
-              </ion-item>
+              </ion-item> -->
               <editor #ctrlReasons slot="" formControlName="tolerances" [init]="{
               plugins: 'lists link image table wordcount',
               menubar: false,
@@ -192,41 +187,53 @@
               <!-- <ion-textarea autoGrow required #tolerance formControlName="precisionTolerances" type="text"
               placeholder="IT plans et spécifications de définition"></ion-textarea> -->
             </div>
-        </app-card>
+        <!-- </app-card>
 
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="12">
+      <ion-col size="12"> -->
         <!-- *********************************************************************************************** -->
         <!-- *********************************************************************************************** -->
         <!-- ******************************* -->
         <!-- *******   LA MESURE   ********* -->
         <!-- ******************************* -->
         @if(requestState()){
-        <app-card [titles]="{title:'La Mesure'}">
-          <ion-item>
-            <!-- <ion-label position="stacked"></ion-label> -->
-            <ion-input label="Durée d'immobilisation estimée de l'outillage" labelPlacement="stacked" type="number"
+        <!-- <app-card [titles]="{title:'La Mesure'}"> -->
+        <p-inputgroup>
+          <p-floatlabel variant="on">
+            <p-inputnumber inputId="integeronly" [(ngModel)]="value1" placeholder=""
               formControlName="immobilisationOutillage" />
-            <ion-note slot="end">en jours</ion-note>
-          </ion-item>
+              <label for="on_label">Durée d'immobilisation estimée de l'outillage<span color="danger"> *</span></label>
+              <p-inputgroup-addon>jours</p-inputgroup-addon>
+              </p-floatlabel>
+              </p-inputgroup>
         
-                                         <ion-item>
-          <ion-input label="Date d'intervention" labelPlacement="floating" type="date" display-format="EEEE DD-MM-YYYY" formControlName="interventionDate">
-          </ion-input>
-          </ion-item>
 
-        
+                    <p-floatlabel variant="on">
+                      <p-datepicker inputId="on_label" showIcon iconDisplay="input" formControlName="interventionDate"
+                        dateFormat="EEEE DD-MM-YYYY" />
+                      <label for="on_label">Date d'intervention<span color="danger"> *</span></label>
+                      @if (specCtrlFormForm.controls.interventionDate.hasError()) {
+                      @if (specCtrlFormForm.controls.interventionDate.hasError('required')) {
+                      <p-message severity="error" size="small" variant="simple">Champ obligatoire</p-message>
+                      }
+                      @if (specCtrlFormForm.controls.interventionDate.hasError('dateMismatch')) {
+                      <p-message severity="error" size="small" variant="simple">La date d'intervention doit avoir lieu après la date de la
+                        demande</p-message>
+                      }
+                      }
+                    </p-floatlabel>
+
           <div class="vertical">
         
-            <ion-item>
+            <!-- <ion-item>
               <ion-label>Informations complémentaires
                 <ion-text color="danger">*</ion-text>
-              </ion-label>
+              </ion-label> -->
               <!-- <ion-input #infosComplementaire formControlName="infosComplementaire" type="text"
                        placeholder="Information complémentaire"></ion-input> -->
-            </ion-item>
+            <!-- </ion-item> -->
             <editor #infosComplementaire slot="" formControlName="infosComplementaire" [init]="{
                        plugins: 'lists link image table wordcount',
                        menubar: false,
@@ -235,19 +242,15 @@
                        height:150
                      }"></editor>
           </div>
-        
-          <ion-item>
-            <ion-label>Moyen de mesure</ion-label>
-            <ion-select #moyenMesureSelect formControlName="moyenMesure">
-              @for(moyen of moyenMesure | keyvalue; track $index){
+        <p-select formControlName="moyenMesure" [options]="moyenMesure | keyvalue" optionLabel="name"
+          placeholder="Moyen de mesure" class="w-full md:w-56" />
+        <!-- @for(moyen of ; track $index){
               <ion-select-option [value]="moyen.value">{{moyen.value}}
               </ion-select-option>
-              }
-            </ion-select>
-          </ion-item>
-        </app-card>
+              } -->
+              <!-- </app-card> -->
         }
-      </ion-col>
+      <!-- </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 </form>

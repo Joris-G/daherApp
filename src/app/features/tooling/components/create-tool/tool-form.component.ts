@@ -1,16 +1,14 @@
 import { Component, input, } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonInput, IonItem, IonText, } from '@ionic/angular/standalone';
-
+import { FloatLabelModule } from 'primeng/floatlabel'
 @Component({
+  standalone: true,
     selector: 'app-tool-form',
     templateUrl: './tool-form.component.html',
     styleUrls: ['./tool-form.component.scss'],
     imports: [
         ReactiveFormsModule,
-        IonItem,
-        IonText,
-        IonInput,
+      FloatLabelModule
     ]
 })
 /**

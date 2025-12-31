@@ -6,7 +6,7 @@
 <!-- ******************************* -->
 <!-- **********   CONTENT   *********** -->
 <!-- ******************************* -->
-<ion-content>
+
   <form [formGroup]="controlForm">
   <!-- TODO Revoir la mise en page scroll partie droite -->
   <app-card [titles]="{title:'Outillage', subtitle:'Créer ou choisir'}">
@@ -20,10 +20,9 @@
       <app-controleddd [toolRequest]="toolRequest"></app-controleddd>
     </div> -->
     </form>
-</ion-content>
+
 <!-- ******************************* -->
 <!-- **********   FOOTER   *********** -->
 <!-- ******************************* -->
-<ion-footer>
+<!-- TODO FOOTER COMPONNENT -->
   <app-tool-request-footer [canSubmit]="controlForm.valid" [canManage]="canManage()" [canUpdate]="canUpdate()" (submit)="onSubmit()" />
-</ion-footer>

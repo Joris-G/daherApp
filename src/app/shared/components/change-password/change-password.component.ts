@@ -1,15 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../services/users/auth.service';
 import { UsersService } from '../../services/users/users.service';
-import { IonicModule } from '@ionic/angular';
 import { AuthStore } from '../../services/users/auth.store';
 
 @Component({
+  standalone: true,
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.scss'],
-    imports: [ReactiveFormsModule, IonicModule]
+  imports: [ReactiveFormsModule,]
 })
 export class ChangePasswordComponent {
   private readonly authStore: AuthStore = inject(AuthStore);

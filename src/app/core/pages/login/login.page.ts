@@ -4,27 +4,19 @@ import { NoticeService } from 'src/app/shared/services/notice/notice.service';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { LoginNoticeComponent } from './login-notice/login-notice.component';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { IonContent, IonFab, IonFabButton, IonIcon, IonToolbar, IonFooter } from "@ionic/angular/standalone";
-import { UsersStore } from 'src/app/shared/services/users/users.store';
 import { User } from 'src/app/_interfaces/user';
 import { AuthStore } from 'src/app/shared/services/users/auth.store';
 import { Credentials } from 'src/app/shared/services/users/credentials.interface';
-import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoginRedirectionService } from './services/login-redirection.service';
 
 @Component({
+  standalone: true,
     selector: 'app-login',
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
-    imports: [
-        IonFooter,
-        IonToolbar,
-        IonIcon,
-        IonFabButton,
-        IonFab,
-        IonContent,
+  imports: [
         LoginFormComponent
     ]
 })

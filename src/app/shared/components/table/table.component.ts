@@ -5,6 +5,7 @@ import { HeaderRowDirective } from '../../directives/header-row.directive';
 import { DataRowDirective } from '../../directives/data-row.directive';
 
 @Component({
+  standalone: true,
     selector: 'app-table',
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],

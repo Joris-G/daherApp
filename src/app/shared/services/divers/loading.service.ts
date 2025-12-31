@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
 
+// TODO A remplacer par un spinner
 /**
  * Création d'un loader simple
  *
@@ -19,7 +19,7 @@ export class LoadingService {
    * @param  loadingController
    * @memberof LoadingService
    */
-  constructor(private loadingController: LoadingController) {
+  constructor() {
   }
 
   /**
@@ -29,15 +29,15 @@ export class LoadingService {
    * @memberof LoadingService
    */
   async startLoading(message: string = 'Chargement ...') {
-    const loader = await this.loadingController.create({
-      spinner: 'lines',
-      cssClass: 'app-loader',
-      message,
-    });
+    // const loader = await this.loadingController.create({
+    //   spinner: 'lines',
+    //   cssClass: 'app-loader',
+    //   message,
+    // });
 
-    this.hasStarted = true;
+    // this.hasStarted = true;
 
-    await loader.present();
+    // await loader.present();
 
   }
 
@@ -48,8 +48,8 @@ export class LoadingService {
    * @memberof LoadingService
    */
   async stopLoading() {
-    if (!this.hasStarted) return;
-    await this.loadingController.dismiss();
-    this.hasStarted = false;
+    // if (!this.hasStarted) return;
+    // await this.loadingController.dismiss();
+    // this.hasStarted = false;
   }
 }

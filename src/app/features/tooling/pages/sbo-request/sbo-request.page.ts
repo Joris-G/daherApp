@@ -1,10 +1,9 @@
 import { Component, computed, effect, inject,  OnInit, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonButton, IonContent, IonFooter, IonToolbar, IonTitle, IonHeader, NavController, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, IonLabel } from '@ionic/angular/standalone';
 import { NgxEditorModule } from 'ngx-editor';
 import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/features/tooling/models/sbo.model';
 import { ToolCreation } from 'src/app/features/tooling/models/tool.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
 import { SboComponent } from '../../../../tooling/components/sbo/sbo.component';
 import { ProgrammeAvion } from 'src/app/_interfaces/programme-avion';
@@ -17,8 +16,12 @@ import { SboFormComponent } from '../../components/sbo-form/sbo-form.component';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
-import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ToolInputComponent } from '../../components/tool-input/tool-input.component';
+// PrimeNG Modules
+import { ToolbarModule } from 'primeng/toolbar';
+import { CardModule } from 'primeng/card';
+import { TabsModule } from 'primeng/tabs';
+import { ButtonModule } from 'primeng/button';
 
 // TODO lorsque l'on passe sur une demande à modifier il faut changer le nom du bouton et le logo pour stipuler clairement qu'on fait une mise à jours des datas.
 // Bloquer certains champs à la modification en fonction du role.
@@ -39,22 +42,21 @@ import { ToolInputComponent } from '../../components/tool-input/tool-input.compo
 // ];
 
 @Component({
+  standalone: true,
     selector: 'app-new-tool',
     templateUrl: './sbo-request.page.html',
     styleUrls: ['./sbo-request.page.scss'],
-    imports: [IonLabel, IonHeader, IonTitle,
+  imports: [ToolbarModule,
+    CardModule,
+    TabsModule,
+    ButtonModule,
         SboFormComponent,
         CardComponent,
         ReactiveFormsModule,
-        NgxEditorModule,
-        IonContent,
-        IonFooter,
-        IonToolbar,
-        IonButton,
+      NgxEditorModule,
         ToolFormComponent,
         SboComponent,
-        NzButtonModule,
-        ToolInputComponent, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView
+      ToolInputComponent,
     ]
 })
   /**
@@ -67,7 +69,7 @@ export class NewToolPage implements OnInit {
   // ============================================================================
   private readonly formBuilderService = inject(ToolRequestFormBuilder);
   private readonly programService = inject(ProgramsService);
-  private readonly navCtrl = inject(NavController);
+  private readonly router = inject(Router);
   protected readonly store = inject(ToolRequestStore);
   private readonly alertService = inject(AlertService);
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -122,7 +124,7 @@ export class NewToolPage implements OnInit {
       const isCreatingSuccess = this.store.isCreatingSuccess();
       if (isCreatingSuccess) {
         await this.alertService.presentToast('Demande créée avec succès', 'success');
-        this.navCtrl.navigateForward(['tooling/requests']);
+        this.router.navigate(['tooling/requests']);
       } else {
 
       }
@@ -145,7 +147,7 @@ export class NewToolPage implements OnInit {
       const isUpdateSuccess = this.store.isUpdateSuccess();
       if (isUpdateSuccess) {
         await this.alertService.presentToast('Demande mise à jour avec succès', 'success');
-      this.navCtrl.navigateForward(['tooling/requests']);
+        this.router.navigate(['tooling/requests']);
        }
     });
 
@@ -284,7 +286,7 @@ export class NewToolPage implements OnInit {
     this.store.updateToolRequest(requestToUpdate);
 
     // Redirection après succès (simplifié, devrait être géré par effect)
-    this.navCtrl.navigateForward(['/tool-requests']);
+    this.router.navigate(['/tool-requests']);
   }
 
   // NOTE: onCreatedTool n'est plus nécessaire car le composant enfant ne l'émet plus.

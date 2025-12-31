@@ -3,16 +3,16 @@ import { Observable } from 'rxjs';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { MoldingService } from 'src/app/molding/services/molding.service';
 import { MoldingListService } from 'src/app/molding/services/molding-list.service';
-import { IonicModule } from '@ionic/angular';
 import { AdminMoldingListComponent } from '../../components/admin-molding-list/admin-molding-list.component';
 import { AdminMoldingDashboardComponent } from '../../components/admin-molding-dashboard/admin-molding-dashboard.component';
 
 @Component({
+  standalone: true,
     selector: 'app-admin-molding',
     templateUrl: './admin-molding.page.html',
     styleUrls: ['./admin-molding.page.scss'],
     providers: [MoldingService],
-    imports: [IonicModule, AdminMoldingListComponent, AdminMoldingDashboardComponent]
+  imports: [AdminMoldingListComponent, AdminMoldingDashboardComponent]
 })
 export class AdminMoldingPage implements OnInit {
   public moldingsError = false;

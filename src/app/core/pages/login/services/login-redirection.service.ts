@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { User } from 'src/app/_interfaces/user';
 import { RoleList } from 'src/app/_interfaces/roles';
+import { Router } from '@angular/router';
 
 interface ReRouteRole{
   roles:RoleList,
@@ -15,7 +15,7 @@ export class LoginRedirectionService {
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
-  private readonly navControler: NavController = inject(NavController);
+  private readonly router = inject(Router);
 
 
   //TODO Tester les redirection avec les roles
@@ -47,9 +47,9 @@ export class LoginRedirectionService {
         (role) => curRouteOpt.roles.find(roleOpt => roleOpt === role)));
     console.log(prefRoute);
     if (prefRoute) {
-      this.navControler.navigateRoot(prefRoute.route);
+      this.router.navigate([prefRoute.route]);
       return;
     }
-    this.navControler.navigateRoot('home');
+    this.router.navigate(['home']);
   }
 }

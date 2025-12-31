@@ -1,12 +1,21 @@
 import { Component, input, output } from '@angular/core';
 import { ToolRequestFilter } from 'src/app/tooling/tool-request-filters';
-import { IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonList, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 // TODO transformer ce composant de filtres en formulaire pour profiter des reset patch ... signaux
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ButtonModule } from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TooltipModule } from 'primeng/tooltip';
+
 @Component({
+  standalone: true,
     selector: 'app-tool-request-filters',
     templateUrl: './tool-request-filters.component.html',
     styleUrls: ['./tool-request-filters.component.scss'],
-    imports: [IonHeader, IonContent, IonToolbar, IonTitle, IonIcon, IonList, IonItem, IonSelectOption, IonButtons, IonButton, IonFooter, IonSelect]
+  imports: [MultiSelectModule,
+    ButtonModule,
+    ToolbarModule,
+    TooltipModule,
+  ]
 })
 export class ToolRequestFiltersComponent {
   ////////////////////////////////////////////////////
@@ -22,10 +31,10 @@ export class ToolRequestFiltersComponent {
   ////////////////////////////////////////////////////
   //PROPRIETES
   ////////////////////////////////////////////////////
-  private activeFilters: IonSelect[] = [];
+  private activeFilters: any[] = [];
 
   resetFiltersClick() {
-    this.activeFilters.forEach((filter: IonSelect) => {
+    this.activeFilters.forEach((filter: any) => {
       filter.value = null;
     });
     this.activeFilters = [];

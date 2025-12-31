@@ -1,18 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Kit } from 'src/app/_interfaces/molding/composite-material-types';
-import { IonicModule } from '@ionic/angular';
 
 @Component({
+  standalone: true,
     selector: 'app-kit-details',
     templateUrl: './kit-details.component.html',
     styleUrls: ['./kit-details.component.scss'],
-    imports: [IonicModule]
+  imports: []
 })
-export class KitDetailsComponent implements OnInit {
+export class KitDetailsComponent {
   @Input
     () kit: Kit;
-  constructor() { }
-
-  ngOnInit() { }
-
 }

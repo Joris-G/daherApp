@@ -1,16 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UploadFileService } from 'src/app/shared/services/upload-file.service';
-import { IonicModule } from '@ionic/angular';
-
 import { MaintenanceItemFormComponent } from '../maintenance-item-form/maintenance-item-form.component';
 import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and-repair.model';
 
 @Component({
+  standalone: true,
     selector: 'app-maintenance-item',
     templateUrl: './maintenance-item.component.html',
     styleUrls: ['./maintenance-item.component.scss'],
-    imports: [
-    IonicModule,
+  imports: [
     MaintenanceItemFormComponent
 ]
 })

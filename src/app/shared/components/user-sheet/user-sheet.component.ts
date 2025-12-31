@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from 'src/app/_interfaces/user';
-import { ModalController, IonicModule } from '@ionic/angular';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { AlertService } from '../../services/divers/alert.service';
 import { LoadingService } from '../../services/divers/loading.service';
@@ -8,11 +7,11 @@ import { UsersService } from '../../services/users/users.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: true,
     selector: 'app-user-sheet',
     templateUrl: './user-sheet.component.html',
     styleUrls: ['./user-sheet.component.scss'],
-    imports: [
-    IonicModule,
+  imports: [
     DatePipe
 ]
 })
@@ -23,7 +22,7 @@ export class UserSheetComponent {
     private loadingService: LoadingService,
     private alertService: AlertService,
     private userService: UsersService,
-    private modalCtrl: ModalController,
+    // private modalCtrl: ModalController,
 
   ) { }
 
@@ -62,14 +61,14 @@ export class UserSheetComponent {
   }
 
   closeUserSheetClick() {
-    this.modalCtrl.dismiss();
+    // this.modalCtrl.dismiss();
   }
 
   async updatePasswordClick() {
-    const changePasswordModal = await this.modalCtrl.create({
-      component: ChangePasswordComponent,
-      cssClass: 'modal-adjusted'
-    });
-    changePasswordModal.present();
+    // const changePasswordModal = await this.modalCtrl.create({
+    //   component: ChangePasswordComponent,
+    //   cssClass: 'modal-adjusted'
+    // });
+    // changePasswordModal.present();
   }
 }

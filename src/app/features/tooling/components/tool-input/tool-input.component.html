@@ -1,37 +1,43 @@
-<ion-item>
-  <!-- <ion-label *ngIf="tool"> {{(tool.sapToolNumber.length > 5) ? ' OT' : ' OT0'}}</ion-label> -->
-  <ion-input label="Outillage SAP : " placeholder="n°OT SAP ou n° Equipement SAP" [disabled]="disabled()"
-    [value]="store.tool()?.sapToolNumber" (ionInput)="handleInput($event)" (ionBlur)="onTouched()" debounce="1000" />
+<p-floatlabel variant="on">
+  <input pInputText id="on_label" autocomplete="off" placeholder="n°OT SAP ou n° Equipement SAP" [disabled]="disabled()"
+    [value]="store.tool()?.sapToolNumber" (input)="handleInput($event)" (blur)="onTouched()" debounce="1000" />
+  <label for="on_label">Outillage SAP : <span color="danger"> *</span></label>
+</p-floatlabel>
+
+<div class="flex align-items-center gap-2 p-2 relative">
   @if(store.loading()){
-  <ion-spinner slot="end" />
+    <p-progressSpinner class="w-2rem h-2rem" strokeWidth="4" />
   }
   @else if(store.error() || store.success()){
-  <ion-icon slot="end" [name]="store.error() ? 'close-outline' : 'checkmark'"
-    [color]="store.error() ? 'danger' : 'success'" [style.cursor]="store.error() ? 'pointer' : 'default'"
-    (click)="store.error() && clear()" />
+    <i [class]="store.error() ? 'pi pi-times-circle text-red-500 cursor-pointer' : 'pi pi-check-circle text-green-500'"
+      [style.fontSize]="'1.5rem'" data-testid="error-icon" (click)="store.error() && clear()">
+    </i>
   }
-</ion-item>
+</div>
+
 @if (store.error()) {
-<ion-text color="danger" class="ion-padding-start">
-  <small>{{ store.error() }}</small>
-</ion-text>
+  <div class="text-red-500 px-3 py-1">
+    <small>{{ store.error() }}</small>
+  </div>
 }
 
-
 @if(searchToolList(); as toolList){
-<ion-list>
-  @for(tool of toolList; track tool.id){
-  <ion-item (click)="onSelectedTool(tool)">{{tool.sapToolNumber}} {{tool.identification}}
-    {{tool.designation}}</ion-item>
-  }
-</ion-list>
+  <p-listbox [options]="toolList" (onChange)="onSelectedTool($event.value)" optionLabel="identification"
+    class="w-full border-none">
+    <ng-template let-tool pTemplate="item">
+      <div class="flex flex-column">
+        <span>{{tool.sapToolNumber}} {{tool.identification}}</span>
+        <span class="text-sm text-gray-500">{{tool.designation}}</span>
+      </div>
+    </ng-template>
+  </p-listbox>
 }
 
 @if(store.tool(); as tool){
-<ion-item lines="none">
-  <div slot="label">
-    <h3>{{ tool.designation }}</h3>
-    <p>{{ tool | toolLabel }} - {{ tool.programme.designation }}</p>
+  <div class="tool-details p-3 border-round bg-gray-50 mt-2">
+    <h3 class="m-0 text-lg font-bold">{{ tool.designation }}</h3>
+    <p class="m-0 text-sm text-600">
+      {{ tool | toolLabel }} - {{ tool.programme.designation }}
+    </p>
   </div>
-  </ion-item>
 }

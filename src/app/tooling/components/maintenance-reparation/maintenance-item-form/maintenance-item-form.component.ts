@@ -1,23 +1,16 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and-repair.model';
-import { IonButton, IonButtons, IonContent, IonIcon, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonModal, IonText } from '@ionic/angular/standalone';
 
 @Component({
+  standalone: true,
     selector: 'app-maintenance-item-form',
     templateUrl: './maintenance-item-form.component.html',
     styleUrls: ['./maintenance-item-form.component.scss'],
     imports: [
         ReactiveFormsModule,
-        DatePipe,
-        IonItem,
-        IonLabel,
-        IonText,
-        IonIcon,
-        IonInput,
-        IonButtons, IonButton, IonModal, IonItemGroup, IonItemDivider, IonContent
+      DatePipe,
     ]
 })
 export class MaintenanceItemFormComponent {
@@ -36,32 +29,34 @@ export class MaintenanceItemFormComponent {
       dateReal: new FormControl(),
     }
   );
-  private alertController = inject(AlertController);
+
+  // private alertController = inject(AlertController);
 
   async removeItemClick() {
     // êtes vous sûr ?
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Alerte confirmation',
-      message: 'Message <strong>Etês vous sûr de vouloir supprimer cette maintenance?</strong>!!!',
-      buttons: [
-        {
-          text: 'Non',
-          role: 'cancel',
-          cssClass: 'secondary',
-          id: 'cancel-button',
-          handler: () => { }
-        }, {
-          text: 'OUI',
-          id: 'confirm-button',
-          handler: (value) => {
-            this.confirmRemoveItem();
-          }
-        }
-      ]
-    });
+    //TODO refaire le alert
+    // const alert = await this.alertController.create({
+    //   cssClass: 'my-custom-class',
+    //   header: 'Alerte confirmation',
+    //   message: 'Message <strong>Etês vous sûr de vouloir supprimer cette maintenance?</strong>!!!',
+    //   buttons: [
+    //     {
+    //       text: 'Non',
+    //       role: 'cancel',
+    //       cssClass: 'secondary',
+    //       id: 'cancel-button',
+    //       handler: () => { }
+    //     }, {
+    //       text: 'OUI',
+    //       id: 'confirm-button',
+    //       handler: (value) => {
+    //         this.confirmRemoveItem();
+    //       }
+    //     }
+    //   ]
+    // });
 
-    await alert.present();
+    // await alert.present();
   }
 
   confirmRemoveItem(): void {

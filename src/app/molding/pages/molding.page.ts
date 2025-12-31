@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { MoldingMenuComponent } from '../components/molding-menu/molding-menu.component';
 
 @Component({
+  standalone: true,
     selector: 'app-molding',
     templateUrl: './molding.page.html',
     styleUrls: ['./molding.page.scss'],

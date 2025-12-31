@@ -2,15 +2,15 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { SharedUserHeaderComponent } from '../../shared/components/shared-user-header/shared-user-header.component';
 import { ToolRequestMenuComponent } from '../../features/tooling/components/tool-request-menu/tool-request-menu.component';
-import { IonContent, IonRouterOutlet } from '@ionic/angular/standalone';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
+  standalone: true,
     selector: 'app-tooling',
     templateUrl: './tooling.page.html',
     styleUrls: ['./tooling.page.scss'],
     imports: [
-        IonContent,
-        IonRouterOutlet,
+      RouterOutlet,
         SharedUserHeaderComponent,
         ToolRequestMenuComponent,
     ]

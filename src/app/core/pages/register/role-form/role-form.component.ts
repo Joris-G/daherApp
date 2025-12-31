@@ -11,22 +11,18 @@ import { UniteService } from 'src/app/shared/services/users/unite.service';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Role } from 'src/app/_interfaces/roles';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
-import { IonItem, IonLabel, IonProgressBar, IonSelect, IonSelectOption, IonText, IonList } from '@ionic/angular/standalone';
 
 
 @Component({
+  standalone: true,
     selector: 'app-role-form',
     templateUrl: './role-form.component.html',
     styleUrls: ['./role-form.component.scss'],
-    imports: [IonList,
-        ReactiveFormsModule,
+  imports: [
+    ReactiveFormsModule,
         CardComponent,
         AsyncPipe,
-        JsonPipe,
-        IonItem,
-        IonLabel,
-        IonText,
-        IonSelect, IonSelectOption, IonProgressBar
+    JsonPipe,
     ]
 })
 export class RoleFormComponent {

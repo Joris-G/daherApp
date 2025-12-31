@@ -1,19 +1,18 @@
 import { Component, input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IonInput, IonItem, IonLabel, IonText, IonTextarea } from '@ionic/angular/standalone';
 import { Editor, NgxEditorModule } from 'ngx-editor';
-
+import { FloatLabelModule } from 'primeng/floatlabel'
+import { MessageModule } from 'primeng/message'
 @Component({
+  standalone: true,
     selector: 'app-sbo-form',
     templateUrl: './sbo-form.component.html',
     styleUrls: ['./sbo-form.component.scss'],
     imports: [
-        ReactiveFormsModule,
-        IonInput,
-        IonItem,
-        IonText,
-        IonLabel,
+      ReactiveFormsModule,
         NgxEditorModule,
+      FloatLabelModule,
+      MessageModule
     ]
 })
 export class SboFormComponent implements OnInit {

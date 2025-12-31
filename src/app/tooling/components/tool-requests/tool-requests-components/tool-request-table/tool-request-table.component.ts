@@ -1,17 +1,18 @@
-import { Component, inject, input, InputSignal, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { Component, inject, input, InputSignal, OnInit } from '@angular/core';
 import { trigger, state, style } from '@angular/animations';
-import { NavController } from '@ionic/angular';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { DatePipe } from '@angular/common';
 import { HeaderRowDirective } from '../../../../../shared/directives/header-row.directive';
 import { DataRowDirective } from '../../../../../shared/directives/data-row.directive';
 import { Tool, OutillNoRefSAP } from 'src/app/features/tooling/models/tool.model';
-import { IonCol, IonGrid, IonLabel, IonRow } from '@ionic/angular/standalone';
 import { RequestType, ToolRequest } from 'src/app/features/tooling/models/tool-request.model';
+import { Router } from '@angular/router';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 
 
 @Component({
+  standalone: true,
     selector: 'app-tool-request-table',
     templateUrl: './tool-request-table.component.html',
     styleUrls: ['./tool-request-table.component.scss'],
@@ -24,28 +25,24 @@ import { RequestType, ToolRequest } from 'src/app/features/tooling/models/tool-r
             })),
         ])
     ],
-    imports: [
+  imports: [TableModule,
+    TagModule,
         HeaderRowDirective,
         DataRowDirective,
-        DatePipe,
-        IonGrid,
-        IonRow,
-        IonCol,
-        IonLabel
+    DatePipe,
     ]
 })
 export class ToolRequestTableComponent implements OnInit {
   ////////////////////////////////////////////////////////////////
   // INJECTION DE DEPENDANCES
   ////////////////////////////////////////////////////////////////
-  private readonly _navCtrl: NavController = inject(NavController);
+  private readonly router = inject(Router);
 
   ////////////////////////////////////////////////////////////////
   //INPUTS
   ////////////////////////////////////////////////////////////////
   public toolRequestList: InputSignal<ToolRequest[]> = input<ToolRequest[]>([]);
 
-  @ViewChild(MatSort) sort: MatSort;
   // public newToolRequestsList$: Observable<ToolRequest[]>;
   public displayedRequestColumns: string[] = ['statut', 'id', 'tool', 'createdAt', 'userCreat', 'needDate', 'buttons'];
   public isAdmin = false;
@@ -61,7 +58,7 @@ export class ToolRequestTableComponent implements OnInit {
     console.log(requestToOpen);
     const requestType: RequestType = requestToOpen.type;
     const rootUrl = this.getRootUrlByType(requestType);
-    this._navCtrl.navigateForward(rootUrl + requestToOpen.id)
+    this.router.navigate([rootUrl + requestToOpen.id])
   }
 
   private getRootUrlByType(type: RequestType): string {
@@ -105,6 +102,19 @@ export class ToolRequestTableComponent implements OnInit {
       return 'controle';
     } else if (request.type === 'MAINTENANCE') {
       return 'maintenance';
+    }
+  }
+
+
+  /**
+   * Retourne la couleur du badge en fonction du statut.
+   */
+  public getSeverity(status: string): 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' {
+    switch (status.toLowerCase()) {
+      case 'terminé': return 'success';
+      case 'en cours': return 'info';
+      case 'bloqué': return 'danger';
+      default: return 'secondary';
     }
   }
 }

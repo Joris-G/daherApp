@@ -2,7 +2,7 @@
 <!-- **********   HEADER   *********** -->
 <!-- ******************************* -->
  <!-- TODO FAIRE DE LA MISE EN FORME -->
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color=dark no-padding>
     <ion-title>{{page.pageTitle}}</ion-title>
   </ion-toolbar>
@@ -17,27 +17,27 @@
         <ion-label>Nouvel outillage</ion-label>
       </ion-segment-button>
     </ion-segment>
-    <ion-segment-view>
+    <ion-segment-view> -->
       <!-- OUTILLAGE EXISTANT -->
-      <ion-segment-content id="existing">
+      <!-- <ion-segment-content id="existing">
         <app-tool-input formControlName="tool"></app-tool-input>
-      </ion-segment-content>
+      </ion-segment-content> -->
       <!-- NOUVEL OUTILLAGE -->
-      <ion-segment-content id="new">
+      <!-- <ion-segment-content id="new">
         <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
       </ion-segment-content>
       </ion-segment-view>
   </app-card>
   <app-card [titles]="{title:'Demande'}">
     <app-sbo-form [isEditMode]="isEditMode()" [specSboForm]="specSboForm" />
-  </app-card>
+  </app-card> -->
 
   <!-- <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo> -->
-</ion-content>
+<!-- </ion-content>
 <ion-footer>
-  <ion-toolbar color="light">
+  <ion-toolbar color="light"> -->
     <!-- TODO Transformer avec une autre bibliothèque -->
-    <ion-button [disabled]="toolForm.invalid || specSboForm.invalid" (click)="onSubmit()" slot=end expand="block"
+    <!-- <ion-button [disabled]="toolForm.invalid || specSboForm.invalid" (click)="onSubmit()" slot=end expand="block"
       color=primary>
       @if(!isEditMode()){
       Créer la demande
@@ -47,4 +47,65 @@ Modifier la demande
 
     </ion-button>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
+
+
+<p-toolbar class="bg-gray-900 border-none px-4 py-3" [style]="{'border-radius': '0'}">
+  <div class="p-toolbar-group-start">
+    <h1 class="text-white m-0 text-xl font-medium">{{ page.pageTitle }}</h1>
+  </div>
+</p-toolbar>
+
+<main class="p-3 surface-ground min-h-screen">
+
+  <p-card class="mb-4">
+    <ng-template pTemplate="header">
+      <div class="px-4 pt-4">
+        <h2 class="m-0 text-900 text-xl">Outillage</h2>
+        <small class="text-secondary">Créer ou choisir</small>
+      </div>
+    </ng-template>
+
+    <p-tabs class="mt-2">
+      <p-tablist>
+        <p-tab value="0">Outillage existant</p-tab>
+        <p-tab value="1">Nouvel outillage</p-tab>
+      </p-tablist>
+
+      <p-tabpanels>
+        <p-tabpanel value="0" header="Outillage existant">
+          <div class="py-3">
+            <app-tool-input formControlName="tool"></app-tool-input>
+          </div>
+        </p-tabpanel>
+        <p-tabpanel value="1" header="Nouvel outillage">
+          <div class="py-3">
+            <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </p-card>
+
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="px-4 pt-4">
+        <h2 class="m-0 text-900 text-xl">Demande</h2>
+      </div>
+    </ng-template>
+    <div class="py-2">
+      <app-sbo-form [isEditMode]="isEditMode()" [specSboForm]="specSboForm" />
+    </div>
+  </p-card>
+</main>
+
+<footer class="sticky bottom-0 z-5">
+  <p-toolbar class="border-top-1 surface-border bg-white shadow-2">
+    <div class="p-toolbar-group-end w-full">
+      <p-button [label]="isEditMode() ? 'Modifier la demande' : 'Créer la demande'"
+        [disabled]="toolForm.invalid || specSboForm.invalid" (onClick)="onSubmit()"
+        styleClass="w-full md:w-auto p-button-lg" severity="primary">
+      </p-button>
+    </div>
+  </p-toolbar>
+</footer>

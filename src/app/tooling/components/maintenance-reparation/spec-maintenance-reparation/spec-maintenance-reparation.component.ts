@@ -4,6 +4,7 @@ import { ToolRequest } from 'src/app/features/tooling/models/sbo.model';
 import { NgFor, DatePipe } from '@angular/common';
 
 @Component({
+  standalone: true,
     selector: 'app-spec-maintenance-reparation',
     templateUrl: './spec-maintenance-reparation.component.html',
     styleUrls: ['./spec-maintenance-reparation.component.scss'],

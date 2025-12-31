@@ -1,5 +1,4 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { IonItemSliding, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { MoldingListService } from 'src/app/molding/services/molding-list.service';
 import { Molding } from 'src/app/_interfaces/molding/molding';
@@ -9,11 +8,11 @@ import { RouterLink } from '@angular/router';
 import { DateHeurePipe } from '../../../../_pipes/dateHeure.pipe';
 
 @Component({
+  standalone: true,
     selector: 'app-admin-molding-list',
     templateUrl: './admin-molding-list.component.html',
     styleUrls: ['./admin-molding-list.component.scss'],
-    imports: [
-    IonicModule,
+  imports: [
     MoldingsFiltersComponent,
     RouterLink,
     DateHeurePipe
@@ -51,10 +50,10 @@ export class AdminMoldingListComponent implements OnChanges, OnInit {
   openMoldingClick(moldingIdex: number) {
 
   }
-  toggleOptions(slidingItem: IonItemSliding) {
-    slidingItem.open('end');
-    setTimeout(() => {
-      slidingItem.close();
-    }, 3000);
-  }
+  // toggleOptions(slidingItem: IonItemSliding) {
+  //   slidingItem.open('end');
+  //   setTimeout(() => {
+  //     slidingItem.close();
+  //   }, 3000);
+  // }
 }

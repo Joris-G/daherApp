@@ -1,5 +1,4 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { User } from 'src/app/_interfaces/user';
 
 import { environment } from 'src/environments/environment';
@@ -7,30 +6,22 @@ import { UserPopoverComponent } from '../user-popover/user-popover.component';
 import { Observable } from 'rxjs';
 import { TitleService } from '../../services/title.service';
 import { AuthStore } from '../../services/users/auth.store';
-import { IonButton, IonButtons, IonChip, IonHeader, IonIcon, IonImg, IonLabel, IonMenuButton, IonTitle, IonToolbar, PopoverController } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 
 @Component({
+  standalone: true,
     selector: 'app-shared-user-header',
     templateUrl: './shared-user-header.component.html',
     styleUrls: ['./shared-user-header.component.scss'],
-    imports: [
-        IonHeader,
-        IonToolbar,
-        IonButton,
-        IonButtons,
-        IonMenuButton,
-        IonImg,
-        IonTitle,
-        IonLabel,
-        IonChip,
-        IonIcon
+  imports: [
     ]
 })
 export class SharedUserHeaderComponent implements OnInit {
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
-  private readonly popoverCtrl: PopoverController = inject(PopoverController);
+  // private readonly popoverCtrl: PopoverController = inject(PopoverController);
+  private readonly router = inject(Router);
 
   @Input()
   public title: string;
@@ -45,7 +36,7 @@ export class SharedUserHeaderComponent implements OnInit {
   private title$: Observable<string>
 
   constructor(
-    private navCtrl: NavController,
+
 
     private titleService: TitleService
 
@@ -66,19 +57,20 @@ export class SharedUserHeaderComponent implements OnInit {
   }
 
   async triggerUserPopover(ev: MouseEvent) {
+    // TODO refaire le popover
     ev.preventDefault();
-    const popover = await this.popoverCtrl.create({
-      component: UserPopoverComponent,
-      reference: 'trigger',
-      showBackdrop: true,
-      backdropDismiss: true,
-      animated: true,
-      dismissOnSelect: true
-    });
-    popover.present();
+    // const popover = await this.popoverCtrl.create({
+    //   component: UserPopoverComponent,
+    //   reference: 'trigger',
+    //   showBackdrop: true,
+    //   backdropDismiss: true,
+    //   animated: true,
+    //   dismissOnSelect: true
+    // });
+    // popover.present();
   }
   navigate(path: string) {
-    this.navCtrl.navigateRoot(path);
+    this.router.navigate([path]);
   }
 
 }

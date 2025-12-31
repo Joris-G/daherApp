@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { IonButton, IonInput, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { AdditionalMaterial, Kit } from 'src/app/_interfaces/molding/composite-material-types';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
@@ -8,10 +7,11 @@ import { ScanService } from 'src/app/molding/services/scan.service';
 
 
 @Component({
+  standalone: true,
     selector: 'app-scan-molding-input',
     templateUrl: './scan-molding-input.component.html',
     styleUrls: ['./scan-molding-input.component.scss'],
-    imports: [IonicModule]
+  imports: []
 })
 export class ScanMoldingInputComponent implements AfterViewInit, OnInit {
   /**
@@ -20,7 +20,7 @@ export class ScanMoldingInputComponent implements AfterViewInit, OnInit {
    * @type {IonInput}
    * @memberof ScanMoldingInputComponent
    */
-  @ViewChild('scanInput') scanInput: IonInput;
+  @ViewChild('scanInput') scanInput: any;
 
   /**
    *
@@ -28,7 +28,7 @@ export class ScanMoldingInputComponent implements AfterViewInit, OnInit {
    * @type {IonInput}
    * @memberof ScanMoldingInputComponent
    */
-  @ViewChild('scanButton') scanButton: IonButton;
+  @ViewChild('scanButton') scanButton: any;
 
   /**
    * Emet un évènement au moulage

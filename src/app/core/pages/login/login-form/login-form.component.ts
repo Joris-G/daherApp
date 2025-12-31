@@ -2,23 +2,17 @@ import { Component, inject, isDevMode, output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Credentials } from 'src/app/shared/services/users/credentials.interface';
-import { IonButton, IonItem, IonText, IonInput, IonButtons, IonIcon } from '@ionic/angular/standalone';
 
 
 
 @Component({
+  standalone: true,
     selector: 'app-login-form',
     templateUrl: './login-form.component.html',
     styleUrls: ['./login-form.component.scss'],
     imports: [
         ReactiveFormsModule,
-        RouterLink,
-        IonItem,
-        IonText,
-        IonInput,
-        IonButton,
-        IonButtons,
-        IonIcon,
+      RouterLink,
     ]
 })
 export class LoginFormComponent {

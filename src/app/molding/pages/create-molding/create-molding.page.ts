@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Molding } from 'src/app/_interfaces/molding/molding';
 import { MoldingService } from 'src/app/molding/services/molding.service';
-import { IonAccordionGroup, IonicModule } from '@ionic/angular';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { ScanMoldingInputComponent } from '../../components/create-molding/scan-molding-input/scan-molding-input.component';
@@ -14,11 +13,11 @@ import { MoldingInfoToolbarComponent } from '../../components/create-molding/mol
 import { CreateMoldingToolbarComponent } from '../../components/create-molding/create-molding-toolbar/create-molding-toolbar.component';
 
 @Component({
+  standalone: true,
     selector: 'app-create-molding',
     templateUrl: './create-molding.page.html',
     styleUrls: ['./create-molding.page.scss'],
-    imports: [
-    IonicModule,
+  imports: [
     ScanMoldingInputComponent,
     MoldingKitTableComponent,
     MoldingMaterialsTableComponent,
@@ -28,7 +27,7 @@ import { CreateMoldingToolbarComponent } from '../../components/create-molding/c
 })
 
 export class CreateMoldingPage implements OnInit {
-  @ViewChild('accordionGroup', { static: true }) accordionGroup: IonAccordionGroup;
+  // @ViewChild('accordionGroup', { static: true }) accordionGroup: IonAccordionGroup;
   private readonly moldingService: MoldingService = inject(MoldingService);
   public isAdmin = false;
   public molding: Molding = null;
@@ -58,8 +57,8 @@ export class CreateMoldingPage implements OnInit {
     this.molding$.subscribe({
       next: (molding: Molding) => {
         this.molding = molding;
-        if (this.molding.kits.length > 0) { this.accordionGroup.value = 'kits'; }
-        if (this.molding.materialSupplementary.length > 0) { this.accordionGroup.value = 'materialSupplementary'; }
+        // if (this.molding.kits.length > 0) { this.accordionGroup.value = 'kits'; }
+        // if (this.molding.materialSupplementary.length > 0) { this.accordionGroup.value = 'materialSupplementary'; }
 
       }
     });

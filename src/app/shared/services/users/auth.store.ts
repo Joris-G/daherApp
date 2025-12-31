@@ -4,12 +4,12 @@ import { AuthService } from './auth.service';
 import { firstValueFrom, of } from 'rxjs';
 import { Credentials } from './credentials.interface';
 import { AuthUser } from './auth.interface';
-import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
   private readonly authService: AuthService= inject(AuthService);
-  private readonly navCtrl: NavController=inject(NavController);
+  private readonly router = inject(Router);
   // Signals privés (état interne)
   private _user = signal<User | null>(null);
   private _token = signal<string | null>(null);
@@ -64,7 +64,7 @@ export class AuthStore {
       console.error('Erreur lors de la déconnexion', error);
     } finally {
       this.clearState();
-      this.navCtrl.navigateRoot('/login');
+      this.router.navigate(['/login']);
     }
   }
 

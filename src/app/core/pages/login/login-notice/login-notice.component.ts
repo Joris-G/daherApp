@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NoticeService } from 'src/app/shared/services/notice/notice.service';
-import { IonicModule } from '@ionic/angular';
 
 @Component({
+  standalone: true,
     selector: 'app-login-notice',
     templateUrl: './login-notice.component.html',
     styleUrls: ['./login-notice.component.scss'],
-    imports: [IonicModule]
+  imports: []
 })
 export class LoginNoticeComponent {
   constructor(private noticeService: NoticeService) { }

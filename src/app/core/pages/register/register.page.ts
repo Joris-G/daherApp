@@ -1,21 +1,20 @@
 import { Component, effect, inject } from '@angular/core';
 import { TitleService } from 'src/app/shared/services/title.service';
-import { IonicModule } from '@ionic/angular';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { RegisterFormBuilder } from './register-forms-builder';
 import { FormGroup } from '@angular/forms';
-import { User, UserCreate } from 'src/app/_interfaces/user';
+import { UserCreate } from 'src/app/_interfaces/user';
 import { Router } from '@angular/router';
-import { UsersService } from 'src/app/shared/services/users/users.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { UsersStore } from 'src/app/shared/services/users/users.store';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 
 @Component({
+  standalone: true,
     selector: 'app-register',
     templateUrl: './register.page.html',
     styleUrls: ['./register.page.scss'],
-    imports: [IonicModule, RegisterFormComponent]
+  imports: [RegisterFormComponent]
 })
 export class RegisterPage {
   private readonly registerFormBuilder = inject(RegisterFormBuilder);

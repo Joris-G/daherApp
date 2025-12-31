@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
-import { IonicModule } from '@ionic/angular';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 export interface IMenuItem {
   title: string;
@@ -8,11 +6,11 @@ export interface IMenuItem {
   type: string;
 }
 @Component({
+  standalone: true,
     selector: 'app-menu-home',
     templateUrl: './menu-home.component.html',
     styleUrls: ['./menu-home.component.scss'],
-    imports: [
-    IonicModule,
+  imports: [
     RouterLink
 ]
 })
