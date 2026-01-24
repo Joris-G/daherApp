@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, debounceTime, distinctUntilChanged, of, Subject, switchMap, take, tap } from 'rxjs';
+import { catchError, debounceTime, delay, distinctUntilChanged, of, Subject, switchMap, take, tap } from 'rxjs';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
 
@@ -31,6 +31,7 @@ constructor() {
       }),
       switchMap(value =>
         this.toolService.searchToolsByInput(value).pipe(
+          delay(700),
           catchError(() => {
             this.error.set('Outillage introuvable');
             return of(null);

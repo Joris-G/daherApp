@@ -13,15 +13,14 @@
       [style.fontSize]="'1.5rem'" data-testid="error-icon" (click)="store.error() && clear()">
     </i>
   }
-</div>
-
-@if (store.error()) {
+  @if (store.error()) {
   <div class="text-red-500 px-3 py-1">
     <small>{{ store.error() }}</small>
   </div>
-}
+  }
+  @if(searchToolList(); as toolList){
+    @if(toolList.length > 0){
 
-@if(searchToolList(); as toolList){
   <p-listbox [options]="toolList" (onChange)="onSelectedTool($event.value)" optionLabel="identification"
     class="w-full border-none">
     <ng-template let-tool pTemplate="item">
@@ -31,13 +30,18 @@
       </div>
     </ng-template>
   </p-listbox>
-}
-
-@if(store.tool(); as tool){
+    }@else {
+    <div class="text-red-500 px-3 py-1">
+      <small>Pas d'outillage trouvé</small>
+    </div>
+  }
+  }
+  @if(store.tool(); as tool){
   <div class="tool-details p-3 border-round bg-gray-50 mt-2">
     <h3 class="m-0 text-lg font-bold">{{ tool.designation }}</h3>
     <p class="m-0 text-sm text-600">
       {{ tool | toolLabel }} - {{ tool.programme.designation }}
     </p>
   </div>
-}
+  }
+</div>
