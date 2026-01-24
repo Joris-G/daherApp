@@ -1,9 +1,12 @@
 import { Component, input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Editor, NgxEditorModule } from 'ngx-editor';
 import { FloatLabelModule } from 'primeng/floatlabel'
 import { MessageModule } from 'primeng/message'
 import { SpecSBOForm } from '../../models/sbo.model';
+import { InputTextModule } from 'primeng/inputtext';
+import { EditorModule } from 'primeng/editor';
+import { DatePickerModule } from 'primeng/datepicker';
+
 @Component({
   standalone: true,
     selector: 'app-sbo-form',
@@ -11,9 +14,11 @@ import { SpecSBOForm } from '../../models/sbo.model';
     styleUrls: ['./sbo-form.component.scss'],
     imports: [
       ReactiveFormsModule,
-        NgxEditorModule,
+      EditorModule,
       FloatLabelModule,
-      MessageModule
+      MessageModule,
+      InputTextModule,
+      DatePickerModule
     ]
 })
 export class SboFormComponent implements OnInit {
@@ -24,24 +29,24 @@ export class SboFormComponent implements OnInit {
   isEditMode = input<boolean>(true);
 
 
-  /** Éditeur de texte riche */
-  public editor: Editor;
+  // /** Éditeur de texte riche */
+  // public editor: Editor;
 
 
   // ============================================================================
   // LIFECYCLE
   // ============================================================================
   ngOnInit() {
-    this.editor = new Editor();
+    //   this.editor = new Editor();
   }
 
 
   /**
    * Destruction du composant.
    */
-  ngOnDestroy(): void {
-    this.editor.destroy();
-  }
+  // ngOnDestroy(): void {
+  //   this.editor.destroy();
+  // }
 
 
 }

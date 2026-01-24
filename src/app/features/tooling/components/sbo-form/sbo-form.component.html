@@ -24,13 +24,19 @@
     <label for="on_label">Titre de la demande<span color="danger"> *</span></label>
   </p-floatlabel>
   
+  <div class="flex-auto">
+    <label class="mb-2 font-bold block" for="description">Description<span severity="danger"> *</span></label>
+    <p-editor inputId="description" formControlName="description" [invalid]="specSboForm().get('description').invalid"
+      [style]="{ height: '320px' }" />
+    @if (specSboForm().get('description').invalid) {
+    <p-message severity="error" size="small" variant="simple">Content is required.</p-message>
+    }
   
-  <p-floatlabel variant="on">
-    <div class="NgxEditor__Wrapper">
+  </div>
+
+<!-- <div class="NgxEditor__Wrapper">
       <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
       <ngx-editor labelPlacement="floating" [editor]="editor" formControlName="description"
         [placeholder]="'Taper la description ici'"></ngx-editor>
-    </div>
-    <label for="on_label">Description<span color="danger"> *</span></label>
-    </p-floatlabel>
+    </div> -->
     </form>

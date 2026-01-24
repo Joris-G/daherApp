@@ -1,7 +1,7 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { ApplicationConfig, LOCALE_ID } from "@angular/core";
 import { PreloadAllModules, provideRouter, withComponentInputBinding, withHashLocation, withPreloading } from "@angular/router";
-import { TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
+// import { TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
 import { AuthInterceptor } from "./shared/services/users/auth.interceptor";
 import { routes } from "./app.routes";
 import { registerLocaleData } from '@angular/common';
@@ -32,7 +32,7 @@ export const appConfig:ApplicationConfig = {
         provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'fr-FR' },
-    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
+        // { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
         // provideAnimations(), provideNzI18n(fr_FR), importProvidersFrom(FormsModule), provideAnimationsAsync(),
         providePrimeNG(
             {

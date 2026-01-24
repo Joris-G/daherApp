@@ -20,7 +20,5 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "strictStandalone":true,
-    
-
   }
 }

@@ -14,6 +14,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { SelectModule } from 'primeng/select';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   standalone: true,
@@ -30,7 +31,8 @@ import { SelectModule } from 'primeng/select';
     InputGroupModule,
     InputGroupAddonModule,
     KeyValuePipe,
-    FloatLabel
+    FloatLabel,
+    MessageModule,
     ]
 })
 export class Control3DFormComponent {
