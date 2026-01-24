@@ -1,25 +1,27 @@
-<p-floatlabel variant="on">
-  <input pInputText id="on_label" autocomplete="off" placeholder="n°OT SAP ou n° Equipement SAP" [disabled]="disabled()"
+<p-iconfield>
+  <p-inputicon iconPosition="left" class="pi pi-search" />
+  <input pInputText placeholder="Outillage SAP" id="tool_input" autocomplete="off" [disabled]="disabled()"
     [value]="store.tool()?.sapToolNumber" (input)="handleInput($event)" (blur)="onTouched()" debounce="1000" />
-  <label for="on_label">Outillage SAP : <span color="danger"> *</span></label>
-</p-floatlabel>
-
-<div class="flex align-items-center gap-2 p-2 relative">
   @if(store.loading()){
-    <p-progressSpinner class="w-2rem h-2rem" strokeWidth="4" />
-  }
-  @else if(store.error() || store.success()){
-    <i [class]="store.error() ? 'pi pi-times-circle text-red-500 cursor-pointer' : 'pi pi-check-circle text-green-500'"
+    <p-inputicon class="pi pi-spinner pi-spin" />
+    }
+    @else if(store.error() || store.success()){
+    <p-inputicon
+      [class]="store.error() ? 'pi pi-times-circle text-red-500 cursor-pointer' : 'pi pi-check-circle text-green-500'"
       [style.fontSize]="'1.5rem'" data-testid="error-icon" (click)="store.error() && clear()">
-    </i>
-  }
-  @if (store.error()) {
-  <div class="text-red-500 px-3 py-1">
-    <small>{{ store.error() }}</small>
-  </div>
-  }
+    </p-inputicon>
+    }
+    @if (store.error()) {
+    <div class="text-red-500 px-3 py-1">
+      <small>{{ store.error() }}</small>
+      <small id="tool_input-help">n°OT SAP ou n° Equipement SAP</small>
+    </div>
+    }
+  </p-iconfield>
+  
+  <div class="flex align-items-center gap-2 p-2 relative">
   @if(searchToolList(); as toolList){
-    @if(toolList.length > 0){
+  @if(toolList.length > 0){
 
   <p-listbox [options]="toolList" (onChange)="onSelectedTool($event.value)" optionLabel="identification"
     class="w-full border-none">
@@ -30,17 +32,17 @@
       </div>
     </ng-template>
   </p-listbox>
-    }@else {
-    <div class="text-red-500 px-3 py-1">
-      <small>Pas d'outillage trouvé</small>
-    </div>
+  }@else {
+  <div class="text-red-500 px-3 py-1">
+    <small>Pas d'outillage trouvé</small>
+  </div>
   }
   }
   @if(store.tool(); as tool){
   <div class="tool-details p-3 border-round bg-gray-50 mt-2">
     <h3 class="m-0 text-lg font-bold">{{ tool.designation }}</h3>
     <p class="m-0 text-sm text-600">
-      {{ tool | toolLabel }} - {{ tool.programme.designation }}
+      {{ tool.sapToolNumber }} - {{ tool.identification }}
     </p>
   </div>
   }

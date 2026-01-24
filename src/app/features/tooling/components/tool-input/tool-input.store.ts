@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, debounceTime, delay, distinctUntilChanged, of, Subject, switchMap, take, tap } from 'rxjs';
+import { catchError, delay, distinctUntilChanged, of, Subject, switchMap, tap } from 'rxjs';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
 

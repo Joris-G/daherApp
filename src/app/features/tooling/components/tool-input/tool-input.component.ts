@@ -1,11 +1,13 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal, untracked, WritableSignal, } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal, untracked, } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
 import { ToolInputStore } from './tool-input.store';
-import { ToolLabelPipe } from './tool-label-pipe';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ListboxModule } from 'primeng/listbox';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 const TOOL_INPUT_VALIDATOR: ValidatorFn = (
   control: AbstractControl
@@ -30,7 +32,7 @@ const TOOL_INPUT_VALIDATOR: ValidatorFn = (
         }
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FloatLabelModule, ToolLabelPipe, ProgressSpinnerModule, ListboxModule]
+  imports: [InputTextModule, FloatLabelModule, ProgressSpinnerModule, ListboxModule, InputIconModule, IconFieldModule]
 })
 export class ToolInputComponent implements ControlValueAccessor, Validator {
   readonly store = inject(ToolInputStore);
