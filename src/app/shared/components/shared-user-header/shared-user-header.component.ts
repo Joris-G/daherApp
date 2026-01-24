@@ -7,22 +7,28 @@ import { Observable } from 'rxjs';
 import { TitleService } from '../../services/title.service';
 import { AuthStore } from '../../services/users/auth.store';
 import { Router } from '@angular/router';
+import { ToolbarModule } from 'primeng/toolbar'
+import { ButtonModule } from 'primeng/button'
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   standalone: true,
     selector: 'app-shared-user-header',
     templateUrl: './shared-user-header.component.html',
     styleUrls: ['./shared-user-header.component.scss'],
-  imports: [
+  imports: [ToolbarModule, ButtonModule
     ]
 })
 export class SharedUserHeaderComponent implements OnInit {
+  toggleMenu(ev: Event) {
+    this.menuService.toggleMenu(ev);
+  }
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
   // private readonly popoverCtrl: PopoverController = inject(PopoverController);
   private readonly router = inject(Router);
-
+  private readonly menuService = inject(MenuService);
   @Input()
   public title: string;
   @Input()

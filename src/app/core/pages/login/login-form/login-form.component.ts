@@ -2,15 +2,19 @@ import { Component, inject, isDevMode, output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Credentials } from 'src/app/shared/services/users/credentials.interface';
-
-
+import { FloatLabelModule } from 'primeng/floatlabel'
+import { ButtonGroupModule } from 'primeng/buttongroup'
+import { ButtonModule } from 'primeng/button'
 
 @Component({
   standalone: true,
     selector: 'app-login-form',
     templateUrl: './login-form.component.html',
     styleUrls: ['./login-form.component.scss'],
-    imports: [
+  imports: [
+    FloatLabelModule,
+    ButtonGroupModule,
+    ButtonModule,
         ReactiveFormsModule,
       RouterLink,
     ]

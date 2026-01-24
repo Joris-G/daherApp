@@ -1,5 +1,8 @@
-<!-- <ion-header [translucent]="true">
-  <ion-toolbar color=primary> -->
+<div class="header">
+  <p-toolbar severity=primary>
+    <ng-template #start>
+      <p-button icon="pi pi-bars" text severity="secondary" (click)="toggleMenu($event)" />
+    </ng-template>
     <!--  -->
     <!-- left side -->
     <!--  -->
@@ -34,9 +37,9 @@
     <!-- <ion-button class="ion-hide-sm-down margin" slot=end color="danger" (click)="logoutClick()">
       <ion-icon slot="end" name="log-out-outline"></ion-icon>
       <ion-label class="ion-hide-md-down">Déconnexion</ion-label>
-    </ion-button>
-  </ion-toolbar>
-</ion-header> -->
+    </ion-button>-->
+    </p-toolbar>
+    </div>
 <!-- <ion-content> -->
 <!-- TODO transformer en modale -->
 <!-- <app-user-sheet [user]="user" [userState]="isUserOpen" (stateChangeEv)="isUserOpen = $event"></app-user-sheet> -->

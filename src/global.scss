@@ -3,56 +3,66 @@
  * ----------------------------------------------------------------------------
  *
  */
-
-/* Core CSS required for Ionic components to work properly */
 @import "primeicons/primeicons.css";
+// @import "tailwindcss";
+// @import "tailwindcss-primeui";
+
+:root{
+    /* 
+    * COLORS
+    */ 
+/* --- Brand Core (Source: daher.com) --- */
+  --daher-blue-deep: #00325F;     /* Bleu Logo/Header */
+  --daher-yellow-vivid: #FFCD00;  /* Jaune "Innovation" */
+  --daher-red: #e40033;
+  --daher-light-blue:#024A90;
+
+  
+  /* --- Surfaces & Grids (Esprit Aéronautique) --- */
+  --daher-bg-light: #F8F9FA;      /* Fond de page propre */
+  --daher-surface: #FFFFFF;       /* Cartes de graphique */
+  --daher-border: #E9ECEF;        /* Lignes de grille (Light) */
+  --daher-text-main: #1A1A1A;
+  --daher-text-muted: #6C757D;    /* Légendes des axes */
+
+  /* --- Graphique : Palette Déclarative (SOLID) --- */
+  /* On définit des rôles plutôt que des noms de couleurs */
+  --chart-primary: var(--daher-blue-deep);
+  --chart-secondary: var(--daher-light-blue);      /* Bleu ciel profond */
+  --chart-accent: var(--daher-yellow-vivid);
+  --chart-neutral: #A7A9AC;        /* Gris "Metal" */
+  --chart-info: #00A3E0;           /* Bleu Horizon */
+
+  /* UI                               --- */
+  --p-content-background : var(--daher-bg-light);
+  --p-primary-color:var(--daher-blue-deep);
+  --p-primary-hover-color:var(--daher-red);
 
 
-html,
-body {
-    height: 100%;
+  /* --- Semantic Stats --- */
+  --chart-positive: #219653;
+  --chart-negative: #EB5757;
 }
+
+// html,
+// body {
+//     height: 100%;
+// }
 
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    font-size: 10px;
+    font-size: 14px;
+    color: var(--chart-primary-font-color);
+    background-color: var(--chart-background);
 }
 
-// .simple-alert {
-//   .alert-head {
-//     .alert-title {
-//     }
-//     .alert-sub-title {
-//     }
-//   }
-//   .alert-message {
-//   }
-//   .alert-button-group {
-//   }
-// }
+.header{
+    opacity: 0.5;
+}
 
-// ion-modal.fullscreen {
-//   --width: 100%;
-//   --height: 100%;
-//   --border-radius: 0;
-// }
-
-// ion-modal.modal-adjusted{
-//  // height: fit-content;
-//   // --height: auto;
-// }
-
-// ion-item[ng-reflect-button]{
-//   --background-hover: var(--ion-color-secondary);
-//   --background-hover-opacity: 0.8;
-
-// }
-
-// ion-item[ng-reflect-button=false]{
-//   --background-focused: var(--ion-color-secondary);
-//   --background-focused-opacity: 0.8;
-// }
-// [slot="helper"]{
-//   font-size: 14px;
-// }
+.content-container {
+  position: relative;
+  min-height: calc(100vh - 50px);
+  padding: 1rem;
+}

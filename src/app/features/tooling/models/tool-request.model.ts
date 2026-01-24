@@ -16,7 +16,7 @@ export interface ToolRequestBase {
   // TODO voir si on fait un controlForm pour ce champ pour simplifier la vue de création en une seule page
   type: RequestType;
   bloquantProd: boolean; //TODO Retirer si master revision OK
-  dateBesoin: Date; //TODO Retirer si master revision OK
+  dateBesoin: Date | string; //TODO Retirer si master revision OK
   tool: Tool;
   createdAt: Date; //TODO Retirer si master revision OK
   demandeur: User; //TODO Retirer si master revision OK
@@ -50,8 +50,9 @@ export type ToolRequestRevision = {
 
 export type ToolRequestBaseForm = {
   bloquantProd: FormControl<boolean>;
-  dateBesoin: FormControl<Date>;
+  dateBesoin: FormControl<Date | string>;
   tool: FormControl<Tool>;
+  toolingNote: FormControl<string>;
 };
 
 export interface ToolRequestStorage {
@@ -62,7 +63,7 @@ export interface ToolRequestStorage {
   // toolReference: number | string;
   bloquantProd: boolean;
   createdAt: Date;
-  dateBesoin: Date;
+  dateBesoin: Date | string;
   statut: RequestStatus;
 
   groupeAffectationId?: number;

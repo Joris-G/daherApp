@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject,  OnInit, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgxEditorModule } from 'ngx-editor';
-import { SpecSBOCreation, SpecSBORequest, SpecSBOUpdate } from 'src/app/features/tooling/models/sbo.model';
+import { SpecSBOCreation, SpecSBOForm, SpecSBORequest, SpecSBOUpdate } from 'src/app/features/tooling/models/sbo.model';
 import { ToolCreation } from 'src/app/features/tooling/models/tool.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
@@ -89,7 +89,7 @@ export class NewToolPage implements OnInit {
   protected readonly isEditMode = computed<boolean>(() => !!this.requestId());
 
   /** Formulaire pour les spécifications SBO. */
-  protected specSboForm: FormGroup;
+  protected specSboForm: FormGroup<SpecSBOForm>;
   /** Formulaire pour l'outil. */
   protected toolForm: FormGroup;
 
@@ -196,9 +196,8 @@ export class NewToolPage implements OnInit {
       title: request.title,
       description: request.description,
       dateBesoin: formattedDateBesoin,
-      type: request.type,
       toolingNote: request.toolingNote,
-      tool: request.tool.sapToolNumber
+      tool: request.tool
     });
     this.toolForm.patchValue({
       sapToolNumber: request.tool.sapToolNumber,
@@ -259,7 +258,7 @@ export class NewToolPage implements OnInit {
     // }
     const toolData: ToolCreation = this.toolForm.value;
     const toolRequest: SpecSBOCreation = {
-      ...this.specSboForm.value,
+      ...this.specSboForm.getRawValue(),
       type: 'SBO',
     };
     this.store.createToolRequest(toolRequest, toolData);
@@ -278,7 +277,6 @@ export class NewToolPage implements OnInit {
 
     // L'ID de la requête et l'ID de l'outil sont nécessaires pour la mise à jour
     const requestToUpdate: SpecSBOUpdate = {
-      id: currentRequest.id,
       tool: currentRequest.tool,
       ...this.specSboForm.getRawValue(),
     };

@@ -158,7 +158,8 @@ export class ToolRequestFormBuilder {
       description: [initialValue?.description ?? '', Validators.required],
       dateBesoin: [initialValue?.dateBesoin ?? null, Validators.required],
       bloquantProd: [initialValue?.bloquantProd ?? false],
-      tool: [initialValue?.tool ?? null]
+      tool: [initialValue?.tool ?? null],
+      toolingNote: ['']
       // aircraftProgram: [initialValue?.aircraftProgram ?? '', Validators.required]
     });
   }

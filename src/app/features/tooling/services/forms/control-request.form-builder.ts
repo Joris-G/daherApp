@@ -38,6 +38,7 @@ export class ControlRequestFormBuilder {
       infosComplementaire: [initialValue?.infosComplementaire ?? ''],
       visaControleur: [initialValue?.visaControleur ?? ''],
       interventionDate: [initialValue?.interventionDate ?? null],
+      toolingNote: [''],
       // Options
       immobilisationOutillage: [initialValue?.immobilisationOutillage ?? null],
       ligneBudgetaire:[initialValue?.infosComplementaire ?? ''],

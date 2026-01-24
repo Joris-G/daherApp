@@ -9,7 +9,7 @@ export type SpecSBORequest = ToolRequestBase & {
   aircraftProgram?: string;
 };
 //TODO programme avion
-export type SpecSBOCreation = Omit<SpecSBORequest, 'id' | 'aircraftProgram'>;
+export type SpecSBOCreation = Omit<SpecSBORequest, 'id' | 'aircraftProgram' | 'createdAt' | 'demandeur' | 'statut'>;
 export type SpecSBOUpdate = Partial<SpecSBOCreation>;
 
 export type SpecSBOStorage= {

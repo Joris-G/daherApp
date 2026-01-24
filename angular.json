@@ -45,12 +45,7 @@
                 "output": "/"
               },
               "src/manifest.webmanifest",
-              "src/mockServiceWorker.js",
-              {
-                "glob": "**/*",
-                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
-                "output": "/assets/"
-              }
+              "src/mockServiceWorker.js"
             ],
             "styles": [
               // "src/theme/variables.scss",

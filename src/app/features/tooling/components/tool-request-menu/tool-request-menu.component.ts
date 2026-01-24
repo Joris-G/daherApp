@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, OnInit, signal, viewChild, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { UsersService } from 'src/app/shared/services/users/users.service';
@@ -7,14 +7,18 @@ import { User } from 'src/app/_interfaces/user';
 import { AuthStore } from 'src/app/shared/services/users/auth.store';
 import { BadgeModule } from 'primeng/badge';
 import { DrawerModule } from 'primeng/drawer';
-
+import { MenuModule } from 'primeng/menu';
+import { MenuItem } from 'primeng/api';
+import { buildMenu } from './menu-builder';
+import { MenuService } from 'src/app/shared/services/menu.service';
+import { Menu } from 'primeng/menu'
 
 @Component({
   standalone: true,
     selector: 'app-tool-request-menu',
     templateUrl: './tool-request-menu.component.html',
     styleUrls: ['./tool-request-menu.component.css'],
-  imports: [RouterLink, BadgeModule, DrawerModule]
+  imports: [BadgeModule, DrawerModule, MenuModule]
 })
 export class ToolRequestMenuComponent implements OnInit {
 
@@ -24,10 +28,10 @@ export class ToolRequestMenuComponent implements OnInit {
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
-  private userService = inject(UsersService);
-  private authStore = inject(AuthStore);
-  private roleGuard = inject(RoleGuard);
-
+  private readonly userService = inject(UsersService);
+  private readonly authStore = inject(AuthStore);
+  private readonly roleGuard = inject(RoleGuard);
+  private readonly menuService = inject(MenuService);
 
   ////////////////////////////////////////////////////
   //PROPRIETES
@@ -35,13 +39,24 @@ export class ToolRequestMenuComponent implements OnInit {
   public newRequestsCount: number;
   public isManager = false;
   public newUsers$: Observable<User[]>;
+  protected menu = viewChild<Menu>('menu');
+  protected menuIsOpen = this.menuService.isOpen
+  items: MenuItem[] | undefined;
 
-
+  constructor() {
+    effect(() => {
+      this.menuIsOpen();
+      this.menu().toggle(new Event('click'))
+      console.log('test');
+    })
+  }
   // *************************************************
   //  LIFECYCLE HOOKS   ******************************
   // *************************************************
   ngOnInit(): void {
     this.buildManagerPage();
+    this.items = buildMenu(this.isManager);
+
   }
 
 

@@ -1,27 +1,16 @@
-login form works !
-<form [formGroup]="loginForm" class="full-height" (ngSubmit)="submit()">
-      <!-- <ion-item>
-<ion-input helperText="email ou matricule" labelPlacement="floating"
-  formControlName="email" type="text" autocomplete=off autofocus="true">
-  <div slot="label">Nom d'utilisateur<ion-text color="danger">*</ion-text></div>
+<form [formGroup]="loginForm" (ngSubmit)="submit()">
+  <p-floatlabel variant="on">
+    <input pInputText id="on_label" autocomplete="off" formControlName="email" placeholder="email ou matricule" />
+    <label for="on_label">Nom d'utilisateur<span color="danger"> *</span></label>
+  </p-floatlabel>
+  <p-floatlabel variant="on">
+    <input pInputText id="on_label" autocomplete="off" formControlName="password" placeholder="" />
+    <label for="on_label">Mot de passe<span color="danger"> *</span></label>
+  </p-floatlabel>
 
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input labelPlacement="floating" label="Mot de passe" type="password" formControlName="password"></ion-input>
-      </ion-item>
-
-      <ion-buttons class="buttons">
-        <ion-button block color="primary" type="submit" fill=solid [disabled]="loginForm.invalid">
-          Se connecter
-        </ion-button>
-        <ion-button color="primary" [routerLink]="['/register']"> Créer un compte
-        </ion-button>
-        <ion-button disabled="true" color="secondary" fill=solid>
-          <ion-icon slot="start" name="accessibility-outline"></ion-icon>
-          Visiteur
-        </ion-button>
-      </ion-buttons> -->
-
-
+<p-button-group class="buttons">
+  <p-button type="submit" [disabled]="loginForm.invalid" severity="primary" label="Se connecter" icon="pi pi-user" />
+  <p-button severity="primary" label="Créer un compte" icon="pi pi-user" [routerLink]="['/register']" />
+  <p-button disabled="true" severity="secondary" label="Profile" icon="pi pi-user" />
+</p-button-group>
 </form>

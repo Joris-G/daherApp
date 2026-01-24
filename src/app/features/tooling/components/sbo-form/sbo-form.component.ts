@@ -3,6 +3,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Editor, NgxEditorModule } from 'ngx-editor';
 import { FloatLabelModule } from 'primeng/floatlabel'
 import { MessageModule } from 'primeng/message'
+import { SpecSBOForm } from '../../models/sbo.model';
 @Component({
   standalone: true,
     selector: 'app-sbo-form',
@@ -17,7 +18,7 @@ import { MessageModule } from 'primeng/message'
 })
 export class SboFormComponent implements OnInit {
   /** Formulaire pour les spécifications SBO. */
-  public specSboForm=input.required<FormGroup>();
+  public specSboForm = input.required<FormGroup<SpecSBOForm>>();
 
   /** Indique si la page est en mode édition. */
   isEditMode = input<boolean>(true);

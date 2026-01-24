@@ -11,8 +11,8 @@
     <p-datepicker inputId="on_label" showIcon iconDisplay="input" formControlName="dateBesoin"
       dateFormat="EEEE DD-MM-YYYY" />
     <label for="on_label">Date de besoin<span color="danger"> *</span></label>
-    @if (specSboForm().controls.dispoOut.hasError('')) {
-    @if (specSboForm().controls.dispoOut.hasError('required')) {
+    @if (specSboForm().controls.dateBesoin.hasError('')) {
+    @if (specSboForm().controls.dateBesoin.hasError('required')) {
     <p-message severity="error" size="small" variant="simple">Champ obligatoire</p-message>
     }
     }
@@ -31,7 +31,6 @@
       <ngx-editor labelPlacement="floating" [editor]="editor" formControlName="description"
         [placeholder]="'Taper la description ici'"></ngx-editor>
     </div>
-    placeholder="indiquer un titre bref de la demande" />
     <label for="on_label">Description<span color="danger"> *</span></label>
     </p-floatlabel>
     </form>

@@ -1,17 +1,14 @@
-Login page works !
-<!-- <ion-content [fullscreen]="true">
+<div class="fab-container">
+  <p-button icon="pi pi-info-circle" [rounded]="true" [text]="true" severity="secondary" (onClick)="showNotice()"
+    aria-label="info">
+  </p-button>
+</div>
+<main class="content-container">
   <app-login-form (onSubmit)="connection($event)" />
-  <ion-fab vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button size="small" color="light" (click)="showNotice()">
-      <ion-icon name="information-circle-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-</ion-content>
+</main>
 
-<ion-footer>
-  <ion-toolbar>
-    <div class="title" slot=end class="ion-padding">
-      Version : {{version}}
-    </div>
-  </ion-toolbar>
-</ion-footer> -->
+<footer class="version-footer">
+  <div class="version-text">
+    Version : {{ version() }}
+  </div>
+</footer>

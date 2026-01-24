@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import packageJson from 'package.json';
 import { NoticeService } from 'src/app/shared/services/notice/notice.service';
 import { TitleService } from 'src/app/shared/services/title.service';
@@ -10,6 +10,7 @@ import { Credentials } from 'src/app/shared/services/users/credentials.interface
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoginRedirectionService } from './services/login-redirection.service';
+import { ButtonModule } from 'primeng/button'
 
 @Component({
   standalone: true,
@@ -17,7 +18,8 @@ import { LoginRedirectionService } from './services/login-redirection.service';
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
   imports: [
-        LoginFormComponent
+    LoginFormComponent, ButtonModule
+
     ]
 })
 export class LoginPage implements OnInit {
@@ -27,7 +29,9 @@ export class LoginPage implements OnInit {
   private readonly loadingService: LoadingService = inject(LoadingService);
   private readonly alertService: AlertService = inject(AlertService);
   private readonly loginRedirectionService: LoginRedirectionService = inject(LoginRedirectionService);
-  public version: string = packageJson.version;
+
+  /** @description Version de l'application issue du store ou de la config */
+  public readonly version = signal(`${packageJson.version}`);
 
   constructor(){
 
@@ -76,6 +80,9 @@ export class LoginPage implements OnInit {
     });
   }
 
+  /**
+   * @description Affiche la notice d'information.
+   */
   showNotice() {
     this.noticeService.presentModal(LoginNoticeComponent);
   }
