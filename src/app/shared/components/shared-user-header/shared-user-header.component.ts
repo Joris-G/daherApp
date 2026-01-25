@@ -19,46 +19,33 @@ import { MenuService } from '../../services/menu.service';
   imports: [ToolbarModule, ButtonModule
     ]
 })
-export class SharedUserHeaderComponent implements OnInit {
-  toggleMenu(ev: Event) {
-    this.menuService.toggleMenu(ev);
-  }
+export class SharedUserHeaderComponent {
+
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
   ////////////////////////////////////////////////////
   // private readonly popoverCtrl: PopoverController = inject(PopoverController);
   private readonly router = inject(Router);
   private readonly menuService = inject(MenuService);
-  @Input()
-  public title: string;
+  private readonly authStore = inject(AuthStore);
+  private titleService = inject(TitleService);
+  /** Titre exposé via un signal ou observable pour le mode déclaratif */
+  protected readonly title$ = this.titleService.title.asObservable();
+  protected readonly user = this.authStore.user; 
+
   @Input()
   public hideMenuIcon: boolean;
 
-  private readonly authStore: AuthStore = inject(AuthStore);
+  public envMode: string = environment.name;;
 
-  public user: User;
-  public envMode: string;
-
-  private title$: Observable<string>
-
-  constructor(
-
-
-    private titleService: TitleService
-
-  ) {
-    this.user = this.authStore.user();
-    this.title$ = this.titleService.title.asObservable();
+  /**
+     * Déclenche l'ouverture/fermeture du menu via le store.
+     */
+  protected toggleMenu(ev: Event) {
+    this.menuService.toggleMenu(ev);
   }
 
-  ngOnInit() {
-    this.envMode = environment.name;
-    this.title$.subscribe((titleEm) => {
-      this.title = titleEm;
-    });
-  }
-
-  logoutClick() {
+  protected logoutClick() {
     this.authStore.logout();
   }
 

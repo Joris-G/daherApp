@@ -23,7 +23,7 @@ import { Menu } from 'primeng/menu'
 export class ToolRequestMenuComponent implements OnInit {
 
   /** Signal pour contrôler l'ouverture de la sidebar */
-  public sidebarVisible = signal<boolean>(true);
+  // public sidebarVisible = signal<boolean>(true);
 
   ////////////////////////////////////////////////////
   //INJECTION DEPENDANCES
@@ -43,6 +43,19 @@ export class ToolRequestMenuComponent implements OnInit {
   protected menuIsOpen = this.menuService.isOpen
   items: MenuItem[] | undefined;
 
+
+  /** * Utilisation d'un getter/setter pour lier le signal du service 
+   * à la propriété bidirectionnelle [(visible)] de PrimeNG 
+   */
+  public get sidebarVisible(): boolean {
+    return this.menuService.isOpen();
+  }
+
+  public set sidebarVisible(value: boolean) {
+    this.menuService.setMenuState(value);
+  }
+
+
   constructor() {
     effect(() => {
       this.menuIsOpen();
@@ -56,16 +69,15 @@ export class ToolRequestMenuComponent implements OnInit {
   ngOnInit(): void {
     this.buildManagerPage();
     this.items = buildMenu(this.isManager);
-
   }
 
 
-  /**
-   * Ferme le menu après une sélection (équivalent de ion-menu-toggle)
-   */
-  public closeMenu(): void {
-    this.sidebarVisible.set(false);
-  }
+  // /**
+  //  * Ferme le menu après une sélection (équivalent de ion-menu-toggle)
+  //  */
+  // public closeMenu(): void {
+  //   this.sidebarVisible.set(false);
+  // }
 
   public loadIndicators() {
     this.newUsers$ = this.userService.getUsersByService('5');

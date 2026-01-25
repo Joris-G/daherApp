@@ -4,13 +4,25 @@ interface MenuState {
 }
 @Injectable({providedIn:"root"})
 export class MenuService{
+  private readonly state = signal<MenuState>({ isOpen: false });
 
+  /** Signal exposé pour la lecture de l'état d'ouverture */
     public readonly isOpen = computed(()=>this.state().isOpen);
-     private readonly state = signal<MenuState>({
-        isOpen:false
-  });
-  toggleMenu(ev:Event) {
+
+  /**
+ * Alterne l'état d'ouverture du menu.
+ * @param {Event} [ev] - Optionnel : événement déclencheur.
+ */
+  public toggleMenu(ev: Event) {
     this.updateState({isOpen:!this.isOpen()})
+  }
+
+  /**
+   * Définit explicitement l'état d'ouverture.
+   * @param {boolean} open 
+   */
+  public setMenuState(open: boolean): void {
+    this.updateState({ isOpen: open });
   }
 
    /**
