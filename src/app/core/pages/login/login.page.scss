@@ -1,13 +1,17 @@
+:host{
+  --p-toolbar-background : var(--p-primary-color); 
+}
+
 app-login-form{
   height: 100%;
 }
 
-.fab-container {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 100;
-}
+// .fab-container {
+//   position: absolute;
+//   top: 1rem;
+//   right: 1rem;
+//   z-index: 100;
+// }
 
 .version-footer {
   border-top: 1px solid var(--surface-border);

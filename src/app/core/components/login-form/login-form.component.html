@@ -8,9 +8,9 @@
     <label for="on_label">Mot de passe<span color="danger"> *</span></label>
   </p-floatlabel>
 
-<p-button-group class="buttons">
-  <p-button type="submit" [disabled]="loginForm.invalid" severity="primary" label="Se connecter" icon="pi pi-user" />
-  <p-button severity="primary" label="Créer un compte" icon="pi pi-user" [routerLink]="['/register']" />
-  <p-button disabled="true" severity="secondary" label="Profile" icon="pi pi-user" />
-</p-button-group>
+<div class="flex flex-col sm:flex-row  justify-center gap-4">
+  <p-button type="submit" [disabled]="loginForm.invalid" severity="primary" label="Se connecter" icon="pi pi-sign-in" />
+  <p-button severity="primary" label="Créer un compte" icon="pi pi-user-plus" [routerLink]="['/register']" />
+  <p-button variant="outlined" disabled="true" severity="secondary" label="Visiteur" icon="pi pi-user" />
+</div>
 </form>

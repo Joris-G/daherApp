@@ -11,6 +11,7 @@ import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoginRedirectionService } from '../../services/login-redirection.service';
 import { ButtonModule } from 'primeng/button'
+import { ToolbarModule } from 'primeng/toolbar';
 
 @Component({
   standalone: true,
@@ -18,7 +19,8 @@ import { ButtonModule } from 'primeng/button'
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
   imports: [
-    LoginFormComponent, ButtonModule
+    LoginFormComponent, ButtonModule,
+    ToolbarModule,
 
     ]
 })

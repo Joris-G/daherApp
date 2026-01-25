@@ -1,9 +1,19 @@
-<div class="fab-container">
-  <p-button icon="pi pi-info-circle" [rounded]="true" [text]="true" severity="secondary" (onClick)="showNotice()"
-    aria-label="info">
-  </p-button>
-</div>
-<main class="content-container">
+<header>
+  <p-toolbar>
+    <ng-template #start>
+      <img src="assets/images/logoDaherFondBleu.png" width="100px" alt="logo entreprise">
+    </ng-template>
+    <ng-template #end>
+      <div class="fab-container">
+        <p-button icon="pi pi-info-circle" [rounded]="true" [text]="true" severity="secondary" (onClick)="showNotice()"
+          aria-label="info">
+        </p-button>
+      </div>
+    </ng-template>
+    </p-toolbar>
+    </header>
+    
+    <main class="flex justify-center items-center">
   <app-login-form (onSubmit)="connection($event)" />
 </main>
 

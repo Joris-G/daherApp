@@ -5,6 +5,7 @@ import { Credentials } from 'src/app/shared/services/users/credentials.interface
 import { FloatLabelModule } from 'primeng/floatlabel'
 import { ButtonGroupModule } from 'primeng/buttongroup'
 import { ButtonModule } from 'primeng/button'
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   standalone: true,
@@ -13,6 +14,7 @@ import { ButtonModule } from 'primeng/button'
     styleUrls: ['./login-form.component.scss'],
   imports: [
     FloatLabelModule,
+    InputTextModule,
     ButtonGroupModule,
     ButtonModule,
         ReactiveFormsModule,

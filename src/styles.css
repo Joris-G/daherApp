@@ -60,13 +60,10 @@ body {
     color: var(--chart-primary-font-color);
     background-color: var(--chart-background);
 }
+main {
+  min-height: calc(100vh - 50px);
+}
 
 .header{
     opacity: 0.5;
-}
-
-.content-container {
-  position: relative;
-  min-height: calc(100vh - 50px);
-  padding: 1rem;
 }
