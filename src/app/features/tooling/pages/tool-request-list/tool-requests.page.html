@@ -1,21 +1,22 @@
-Tool requests page works !
-<!-- <ion-header>
-  <ion-toolbar color=dark>
-    <ion-title>Liste des demandes</ion-title>
-    <ion-button color=secondary slot=end (click)="nextClick()" expand="block" fill="outline">
-      Charger plus de demandes
-    </ion-button>
-    <ion-button color=secondary slot=end (click)="reloadRequestList()" [disabled]="isLoadingList()">
-      <ion-icon slot="start" name="refresh-circle-outline"></ion-icon>
-      Recharger
-    </ion-button>
-  </ion-toolbar>
-
-</ion-header>
-<ion-content [fullscreen]="false" id="tool-request-content"> -->
-
+<main class="p-3 surface-ground min-h-screen">
+  <p-card header="Liste des demandes outillage">
+    <div class="two_column_form">
+      <div class="column_form_header">
+        <div class="px-4 pt-4">
+          <h2 class="m-0 text-900 text-xl">Outillage</h2>
+          <small class="text-secondary">Créer ou choisir</small>
+        </div>
+      </div>
+      <form>
+        <p-card class="mb-4 p-4">
+          <app-tool-request-table [toolRequestList]="filteredToolRequestList()"></app-tool-request-table>
+        </p-card>
+      </form>
+    </div>
+  </p-card>
+</main>
 <!-- <ng-container> -->
-    <!-- <app-table [datas]="toolRequests"></app-table> -->
+    
     <!-- <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col size="4">

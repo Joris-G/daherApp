@@ -1,22 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { HeaderRowDirective } from '../../directives/header-row.directive';
-
-import { DataRowDirective } from '../../directives/data-row.directive';
+import { Component, input, OnInit } from '@angular/core';
+import { TableModule } from 'primeng/table';
 
 @Component({
   standalone: true,
     selector: 'app-table',
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],
-    imports: [
-    IonicModule,
-    HeaderRowDirective,
-    DataRowDirective
+  imports: [TableModule, 
+
 ]
 })
 export class TableComponent implements OnInit {
-  @Input() datas: any[];
+  public datas: any = input<any>();
   public columns: string[];
   constructor() {
   }

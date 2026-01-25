@@ -1,16 +1,19 @@
-import { Component, effect, inject, Signal } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, Signal } from '@angular/core';
 import { ToolRequestFiltersComponent } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.component';
 import { ToolRequestTableComponent } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-table/tool-request-table.component';
 import { ToolRequestFilterService } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.service';
 import { ToolRequestListStore } from '../../stores/tool-request-list.store';
 import { ToolRequest } from '../../models/tool-request.model';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
+import { CardModule } from 'primeng/card';
+
 
 @Component({
   standalone: true,
     templateUrl: './tool-requests.page.html',
     styleUrls: ['./tool-requests.page.scss'],
-  imports: [
+  imports: [ToolRequestTableComponent,
+    CardModule,
     // ToolRequestFiltersComponent,
     // ToolRequestTableComponent,
     ]
@@ -19,7 +22,7 @@ import { LoadingService } from 'src/app/shared/services/divers/loading.service';
    * Page d'affichage et de filtrage de la liste des demandes d'outillage.
    * Utilise ToolRequestListStore pour la gestion des données de la liste.
    */
-export class ToolRequestsPage {
+export class ToolRequestsPage implements AfterViewInit {
   // ============================================================================
   // INJECTION DE DÉPENDANCES
   // ============================================================================
@@ -50,10 +53,11 @@ constructor() {
   });
 
 }
-
-  ionViewWillEnter() {
+  ngAfterViewInit(): void {
     this.reloadRequestList();
   }
+
+
 
   /**
    * Gère les changements de filtres venant du composant enfant

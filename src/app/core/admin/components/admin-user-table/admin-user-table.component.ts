@@ -6,8 +6,6 @@ import { AlertService } from 'src/app/shared/services/divers/alert.service';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { AsyncPipe } from '@angular/common';
-import { HeaderRowDirective } from '../../../../shared/directives/header-row.directive';
-import { DataRowDirective } from '../../../../shared/directives/data-row.directive';
 import { BorderColorDirective } from '../../../../shared/directives/border-color.directive';
 
 

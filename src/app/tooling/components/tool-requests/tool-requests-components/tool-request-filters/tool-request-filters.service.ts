@@ -61,7 +61,7 @@ export class ToolRequestFilterService {
     const activeFilters = this.selectedFilters();
 
     if (Object.keys(activeFilters).length === 0) {
-      return allRequests; // Pas de filtre = toutes les demandes
+      return allRequests; 
     }
 
     return allRequests.filter(request => {

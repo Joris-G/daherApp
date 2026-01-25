@@ -1,8 +1,6 @@
 <div class="card">
-  <p-table [value]="toolRequestList()" [responsiveLayout]="'stack'" [breakpoint]="'960px'"
-    styleClass="p-datatable-sm p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }">
-
-    <ng-template pTemplate="header">
+  <p-table [value]="toolRequestList()" class="p-datatable-sm p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template #header>
       <tr class="surface-ground">
         <th style="width: 5%">ID</th>
         <th style="width: 15%" pSortableColumn="statut">Statut <p-sortIcon field="statut"></p-sortIcon></th>
@@ -13,7 +11,7 @@
       </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-request>
+    <ng-template #body let-request>
       <tr (click)="openRequestClick(request)" class="cursor-pointer hover:surface-100 transition-colors"
         [class]="{'border-left-3 border-red-500': request.bloquantProd}">
 
@@ -46,7 +44,7 @@
         </tr>
         </ng-template>
         
-        <ng-template pTemplate="emptymessage">
+        <ng-template #emptymessage>
           <tr>
             <td colspan="5" class="text-center p-4">Aucune demande trouvée.</td>
           </tr>
