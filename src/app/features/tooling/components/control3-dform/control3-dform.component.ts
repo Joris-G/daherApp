@@ -1,6 +1,6 @@
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Component, input, } from '@angular/core';
-import {  KeyValuePipe } from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 import { EditorComponent } from '@tinymce/tinymce-angular';
 import { RequestState } from 'src/app/tooling/services/tool-request-manager.service';
 import { Editor } from 'ngx-editor';
@@ -18,12 +18,12 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   standalone: true,
-    selector: 'app-control3-dform',
-    templateUrl: './control3-dform.component.html',
-    styleUrls: ['./control3-dform.component.scss'],
-  imports: [ReactiveFormsModule,
-        CardComponent,
-        EditorComponent,
+  selector: 'app-control3-dform',
+  templateUrl: './control3-dform.component.html',
+  styleUrls: ['./control3-dform.component.scss'],
+  imports: [
+    ReactiveFormsModule,
+    EditorComponent,
     DatePickerModule,
     InputTextModule,
     InputNumberModule,
@@ -33,7 +33,7 @@ import { MessageModule } from 'primeng/message';
     KeyValuePipe,
     FloatLabel,
     MessageModule,
-    ]
+  ]
 })
 export class Control3DFormComponent {
   /** Formulaire pour les spécifications SBO. */

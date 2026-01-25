@@ -8,9 +8,9 @@
             </ion-select>
           </ion-item> -->
   <p-floatlabel variant="on">
-    <p-datepicker inputId="on_label" showIcon iconDisplay="input" formControlName="dateBesoin"
-      dateFormat="EEEE DD-MM-YYYY" />
-    <label for="on_label">Date de besoin<span color="danger"> *</span></label>
+    <p-datepicker inputId="date_de_besoin" showIcon iconDisplay="input" formControlName="dateBesoin"
+      dateFormat="dd-mm-yy" />
+    <label for="date_de_besoin">Date de besoin<span color="danger"> *</span></label>
     @if (specSboForm().controls.dateBesoin.hasError('')) {
     @if (specSboForm().controls.dateBesoin.hasError('required')) {
     <p-message severity="error" size="small" variant="simple">Champ obligatoire</p-message>
@@ -19,9 +19,9 @@
   </p-floatlabel>
   
   <p-floatlabel variant="on">
-    <input pInputText id="on_label" autocomplete="off" formControlName="title"
+    <input pInputText id="title" autocomplete="off" formControlName="title"
       placeholder="indiquer un titre bref de la demande" />
-    <label for="on_label">Titre de la demande<span color="danger"> *</span></label>
+    <label for="title">Titre de la demande<span color="danger"> *</span></label>
   </p-floatlabel>
   
   <div class="flex-auto">

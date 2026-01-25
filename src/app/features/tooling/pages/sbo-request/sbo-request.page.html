@@ -1,7 +1,7 @@
 <!-- ******************************* -->
 <!-- **********   HEADER   *********** -->
 <!-- ******************************* -->
- <!-- TODO FAIRE DE LA MISE EN FORME -->
+<!-- TODO FAIRE DE LA MISE EN FORME -->
 <!-- <ion-header>
   <ion-toolbar color=dark no-padding>
     <ion-title>{{page.pageTitle}}</ion-title>
@@ -18,12 +18,12 @@
       </ion-segment-button>
     </ion-segment>
     <ion-segment-view> -->
-      <!-- OUTILLAGE EXISTANT -->
-      <!-- <ion-segment-content id="existing">
+<!-- OUTILLAGE EXISTANT -->
+<!-- <ion-segment-content id="existing">
         <app-tool-input formControlName="tool"></app-tool-input>
       </ion-segment-content> -->
-      <!-- NOUVEL OUTILLAGE -->
-      <!-- <ion-segment-content id="new">
+<!-- NOUVEL OUTILLAGE -->
+<!-- <ion-segment-content id="new">
         <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
       </ion-segment-content>
       </ion-segment-view>
@@ -32,12 +32,12 @@
     <app-sbo-form [isEditMode]="isEditMode()" [specSboForm]="specSboForm" />
   </app-card> -->
 
-  <!-- <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo> -->
+<!-- <app-sbo [spec]="newToolRequestForm" [tool]="newToolForm"></app-sbo> -->
 <!-- </ion-content>
 <ion-footer>
   <ion-toolbar color="light"> -->
-    <!-- TODO Transformer avec une autre bibliothèque -->
-    <!-- <ion-button [disabled]="toolForm.invalid || specSboForm.invalid" (click)="onSubmit()" slot=end expand="block"
+<!-- TODO Transformer avec une autre bibliothèque -->
+<!-- <ion-button [disabled]="toolForm.invalid || specSboForm.invalid" (click)="onSubmit()" slot=end expand="block"
       color=primary>
       @if(!isEditMode()){
       Créer la demande
@@ -57,46 +57,54 @@ Modifier la demande
 </p-toolbar>
 
 <main class="p-3 surface-ground min-h-screen">
-
-  <p-card class="mb-4">
-    <ng-template pTemplate="header">
+  <div class="two_column_form">
+    <div class="column_form_header">
       <div class="px-4 pt-4">
         <h2 class="m-0 text-900 text-xl">Outillage</h2>
         <small class="text-secondary">Créer ou choisir</small>
       </div>
-    </ng-template>
+    </div>
+    <form>
+      <p-card class="mb-4 p-4">
+        <p-tabs>
+          <p-tablist>
+            <p-tab value="0">Outillage existant</p-tab>
+            <p-tab value="1">Nouvel outillage</p-tab>
+          </p-tablist>
 
-    <p-tabs class="mt-2">
-      <p-tablist>
-        <p-tab value="0">Outillage existant</p-tab>
-        <p-tab value="1">Nouvel outillage</p-tab>
-      </p-tablist>
+          <p-tabpanels class="pl-0">
+            <p-tabpanel class="pl-0" value="0" header="Outillage existant">
+              <div>
+                <app-tool-input></app-tool-input>
+              </div>
+            </p-tabpanel>
+              <p-tabpanel class="pl-0" value="1" header="Nouvel outillage">
+                <div class="py-3">
+                  <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
+                </div>
+              </p-tabpanel>
+              </p-tabpanels>
+              </p-tabs>
+              </p-card>
+    </form>
+    </div>
 
-      <p-tabpanels>
-        <p-tabpanel value="0" header="Outillage existant">
-          <div class="py-3">
-            <app-tool-input formControlName="tool"></app-tool-input>
-          </div>
-        </p-tabpanel>
-        <p-tabpanel value="1" header="Nouvel outillage">
-          <div class="py-3">
-            <app-tool-form [isEditMode]="isEditMode()" [toolForm]="toolForm" />
-          </div>
-        </p-tabpanel>
-      </p-tabpanels>
-    </p-tabs>
-  </p-card>
-
-  <p-card>
-    <ng-template pTemplate="header">
+  <p-divider />
+  <div class="two_column_form">
+    <div class="column_form_header">
       <div class="px-4 pt-4">
         <h2 class="m-0 text-900 text-xl">Demande</h2>
+        <small class="text-secondary">Créer ou choisir</small>
       </div>
-    </ng-template>
-    <div class="py-2">
-      <app-sbo-form [isEditMode]="isEditMode()" [specSboForm]="specSboForm" />
     </div>
-  </p-card>
+    <form>
+      <p-card class="mb-4 p-4">
+        <div>
+          <app-sbo-form [isEditMode]="isEditMode()" [specSboForm]="specSboForm" />
+        </div>
+      </p-card>
+    </form>
+    </div>
 </main>
 
 <footer class="sticky bottom-0 z-5">

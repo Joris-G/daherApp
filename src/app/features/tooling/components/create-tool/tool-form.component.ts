@@ -1,6 +1,7 @@
 import { Component, input, } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel'
+import { InputTextModule } from 'primeng/inputtext';
 @Component({
   standalone: true,
     selector: 'app-tool-form',
@@ -8,7 +9,9 @@ import { FloatLabelModule } from 'primeng/floatlabel'
     styleUrls: ['./tool-form.component.scss'],
     imports: [
         ReactiveFormsModule,
-      FloatLabelModule
+      FloatLabelModule,
+      InputTextModule,
+
     ]
 })
 /**

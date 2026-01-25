@@ -22,6 +22,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { CardModule } from 'primeng/card';
 import { TabsModule } from 'primeng/tabs';
 import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
 
 // TODO lorsque l'on passe sur une demande à modifier il faut changer le nom du bouton et le logo pour stipuler clairement qu'on fait une mise à jours des datas.
 // Bloquer certains champs à la modification en fonction du role.
@@ -51,12 +52,13 @@ import { ButtonModule } from 'primeng/button';
     TabsModule,
     ButtonModule,
         SboFormComponent,
-        CardComponent,
+    // CardComponent,
         ReactiveFormsModule,
       NgxEditorModule,
         ToolFormComponent,
-        SboComponent,
+    // SboComponent,
       ToolInputComponent,
+    DividerModule,
     ]
 })
   /**
