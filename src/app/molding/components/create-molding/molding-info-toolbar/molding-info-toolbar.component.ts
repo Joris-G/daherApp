@@ -10,7 +10,7 @@ import { DateHeurePipe } from '../../../../_pipes/dateHeure.pipe';
     templateUrl: './molding-info-toolbar.component.html',
     styleUrls: ['./molding-info-toolbar.component.scss'],
   imports: [
-        DateHeurePipe,
+    // DateHeurePipe,
     ]
 })
 export class MoldingInfoToolbarComponent {

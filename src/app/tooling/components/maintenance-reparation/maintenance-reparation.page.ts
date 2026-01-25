@@ -25,7 +25,7 @@ type ComponentMode = 'create' | 'edit' | 'view';
     styleUrls: ['./maintenance-reparation.page.scss'],
     imports: [
         MaintRepairFormComponent,
-      ToolRequestFooterComponent,
+      // ToolRequestFooterComponent,
     ]
 })
 export class MaintenanceReparationPage {

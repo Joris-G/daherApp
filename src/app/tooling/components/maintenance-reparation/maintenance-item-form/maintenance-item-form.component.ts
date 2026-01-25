@@ -10,7 +10,7 @@ import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and
     styleUrls: ['./maintenance-item-form.component.scss'],
     imports: [
         ReactiveFormsModule,
-      DatePipe,
+      // DatePipe,
     ]
 })
 export class MaintenanceItemFormComponent {

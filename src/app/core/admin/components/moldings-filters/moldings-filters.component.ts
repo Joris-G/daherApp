@@ -14,9 +14,9 @@ export class FiltersMolding {
     selector: 'app-moldings-filters',
     templateUrl: './moldings-filters.component.html',
     styleUrls: ['./moldings-filters.component.scss'],
-  imports: [
-    AsyncPipe
-]
+  //   imports: [
+  //     AsyncPipe
+  // ]
 })
 export class MoldingsFiltersComponent implements OnInit {
   // public filteredMoldings: Molding[] = [];

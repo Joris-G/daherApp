@@ -27,7 +27,7 @@ import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, Ma
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    JsonPipe,
+    // JsonPipe,
     DatePipe
 ]
 })

@@ -14,7 +14,9 @@ import { LoadingService } from 'src/app/shared/services/divers/loading.service';
     selector: 'app-register',
     templateUrl: './register.page.html',
     styleUrls: ['./register.page.scss'],
-  imports: [RegisterFormComponent]
+  imports: [
+    // RegisterFormComponent
+  ]
 })
 export class RegisterPage {
   private readonly registerFormBuilder = inject(RegisterFormBuilder);

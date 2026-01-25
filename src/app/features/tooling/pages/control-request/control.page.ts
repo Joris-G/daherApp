@@ -27,7 +27,7 @@ import { RequestHeaderComponent } from 'src/app/shared/components/request-header
     imports: [
         ReactiveFormsModule,
         CardComponent,
-        ToolFormComponent,
+      // ToolFormComponent,
         Control3DFormComponent,
       ToolRequestFooterComponent,
         ToolInputComponent,

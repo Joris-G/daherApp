@@ -12,9 +12,9 @@ import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and
     styleUrls: ['./maint-repair-form.component.scss'],
     imports: [
         ReactiveFormsModule,
-        ToolInputComponent,
-      MaintenanceItemComponent,
-        CardComponent
+      //   ToolInputComponent,
+      // MaintenanceItemComponent,
+      //   CardComponent
     ]
 })
 export class MaintRepairFormComponent {

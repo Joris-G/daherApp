@@ -21,8 +21,8 @@ import { CardComponent } from 'src/app/shared/components/card/card.component';
   imports: [
     ReactiveFormsModule,
         CardComponent,
-        AsyncPipe,
-    JsonPipe,
+    //     AsyncPipe,
+    // JsonPipe,
     ]
 })
 export class RoleFormComponent {

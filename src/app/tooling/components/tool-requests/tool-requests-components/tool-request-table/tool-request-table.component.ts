@@ -1,9 +1,9 @@
 import { Component, inject, input, InputSignal, OnInit } from '@angular/core';
-import { trigger, state, style } from '@angular/animations';
+// import { trigger, state, style } from '@angular/animations';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { DatePipe } from '@angular/common';
-import { HeaderRowDirective } from '../../../../../shared/directives/header-row.directive';
-import { DataRowDirective } from '../../../../../shared/directives/data-row.directive';
+// import { HeaderRowDirective } from '../../../../../shared/directives/header-row.directive';
+// import { DataRowDirective } from '../../../../../shared/directives/data-row.directive';
 import { Tool, OutillNoRefSAP } from 'src/app/features/tooling/models/tool.model';
 import { RequestType, ToolRequest } from 'src/app/features/tooling/models/tool-request.model';
 import { Router } from '@angular/router';
@@ -17,18 +17,19 @@ import { TagModule } from 'primeng/tag';
     templateUrl: './tool-request-table.component.html',
     styleUrls: ['./tool-request-table.component.scss'],
     animations: [
-        trigger('openClose', [
-            // animation triggers go here
-            state('open', style({
-                backgroundColor: 'DarkOrange',
-                opacity: '0.7'
-            })),
-        ])
+      // trigger('openClose', [
+      //     // animation triggers go here
+      //     state('open', style({
+      //         backgroundColor: 'DarkOrange',
+      //         opacity: '0.7'
+      //     })),
+      // ])
     ],
-  imports: [TableModule,
+  imports: [
+    TableModule,
     TagModule,
-        HeaderRowDirective,
-        DataRowDirective,
+    // HeaderRowDirective,
+    // DataRowDirective,
     DatePipe,
     ]
 })

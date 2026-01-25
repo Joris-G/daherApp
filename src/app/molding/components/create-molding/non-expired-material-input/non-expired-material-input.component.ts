@@ -13,7 +13,7 @@ import { NidaComponent } from '../nida/nida.component';
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    NidaComponent
+    // NidaComponent
 ]
 })
 export class NonExpiredMaterialInputComponent implements OnInit, OnDestroy {

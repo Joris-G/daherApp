@@ -11,7 +11,7 @@ export interface IMenuItem {
     templateUrl: './menu-home.component.html',
     styleUrls: ['./menu-home.component.scss'],
   imports: [
-    RouterLink
+    // RouterLink
 ]
 })
 export class MenuHomeComponent {

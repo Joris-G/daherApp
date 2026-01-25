@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
     templateUrl: './user-sheet.component.html',
     styleUrls: ['./user-sheet.component.scss'],
   imports: [
-    DatePipe
+    // DatePipe
 ]
 })
 export class UserSheetComponent {

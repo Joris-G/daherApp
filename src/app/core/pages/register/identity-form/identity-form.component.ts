@@ -10,7 +10,7 @@ import { CardComponent } from 'src/app/shared/components/card/card.component';
     styleUrls: ['./identity-form.component.scss'],
   imports: [
         ReactiveFormsModule,
-        CardComponent
+    // CardComponent
     ]
 })
 export class IdentityFormComponent {

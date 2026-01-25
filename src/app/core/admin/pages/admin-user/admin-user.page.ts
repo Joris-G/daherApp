@@ -18,7 +18,7 @@ import { AdminUserTableComponent } from '../../components/admin-user-table/admin
     providers: [
         UsersService, SericesService
     ],
-  imports: [AdminUserTableComponent]
+  // imports: [AdminUserTableComponent]
 })
 export class AdminUserPage implements OnInit {
   @ViewChild('newUsers') private newUsersCanvas: ElementRef;

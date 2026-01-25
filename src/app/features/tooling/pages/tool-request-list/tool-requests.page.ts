@@ -11,8 +11,8 @@ import { LoadingService } from 'src/app/shared/services/divers/loading.service';
     templateUrl: './tool-requests.page.html',
     styleUrls: ['./tool-requests.page.scss'],
   imports: [
-        ToolRequestFiltersComponent,
-        ToolRequestTableComponent,
+    // ToolRequestFiltersComponent,
+    // ToolRequestTableComponent,
     ]
 })
   /**

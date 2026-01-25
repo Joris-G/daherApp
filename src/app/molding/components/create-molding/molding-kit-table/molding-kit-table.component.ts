@@ -14,8 +14,8 @@ import { PerempDirective } from '../../../directives/peremp.directive';
     templateUrl: './molding-kit-table.component.html',
     styleUrls: ['./molding-kit-table.component.scss'],
   imports: [
-    PerempDirective,
-    DatePipe
+    // PerempDirective,
+    // DatePipe
 ]
 })
 export class MoldingKitTableComponent {

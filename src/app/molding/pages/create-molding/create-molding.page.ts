@@ -19,8 +19,8 @@ import { CreateMoldingToolbarComponent } from '../../components/create-molding/c
     styleUrls: ['./create-molding.page.scss'],
   imports: [
     ScanMoldingInputComponent,
-    MoldingKitTableComponent,
-    MoldingMaterialsTableComponent,
+    // MoldingKitTableComponent,
+    // MoldingMaterialsTableComponent,
     MoldingInfoToolbarComponent,
     CreateMoldingToolbarComponent
 ]

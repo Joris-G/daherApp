@@ -9,7 +9,7 @@ import { MaintenanceItem } from 'src/app/features/tooling/models/maintenance-and
     templateUrl: './maintenance-item.component.html',
     styleUrls: ['./maintenance-item.component.scss'],
   imports: [
-    MaintenanceItemFormComponent
+    // MaintenanceItemFormComponent
 ]
 })
 export class MaintenanceItemComponent implements OnInit, OnChanges {

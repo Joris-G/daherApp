@@ -3,13 +3,13 @@
  * ----------------------------------------------------------------------------
  *
  */
-//  @tailwind base;
-//  @tailwind components;
-//  @tailwind utilities;
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
 @import "tailwindcss";
  @import "primeicons/primeicons.css";
  
- @import "theme/forms.scss";
+ @import "./theme/forms.css";
 
 
 :root{
@@ -49,10 +49,10 @@
   --chart-negative: #EB5757;
 }
 
-// html,
+/* // html,
 // body {
 //     height: 100%;
-// }
+// } */
 
 body {
     margin: 0;

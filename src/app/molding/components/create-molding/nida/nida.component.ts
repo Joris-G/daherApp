@@ -13,7 +13,10 @@ import { AsyncPipe } from '@angular/common';
     selector: 'app-nida',
     templateUrl: './nida.component.html',
     styleUrls: ['./nida.component.scss'],
-  imports: [ReactiveFormsModule, AsyncPipe]
+  imports: [
+    ReactiveFormsModule,
+    // AsyncPipe
+  ]
 })
 export class NidaComponent implements OnInit {
   @Output() nidaEmitter: EventEmitter<AdditionalMaterial> = new EventEmitter();

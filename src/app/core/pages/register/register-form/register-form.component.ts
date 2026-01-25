@@ -12,8 +12,8 @@ import { IdentityFormComponent } from '../identity-form/identity-form.component'
     styleUrls: ['./register-form.component.scss'],
     imports: [
       ReactiveFormsModule,
-        RoleFormComponent,
-        IdentityFormComponent,
+      // RoleFormComponent,
+      // IdentityFormComponent,
     ]
 })
 export class RegisterFormComponent {

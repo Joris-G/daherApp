@@ -12,11 +12,11 @@ import { DateHeurePipe } from '../../../../_pipes/dateHeure.pipe';
     selector: 'app-admin-molding-list',
     templateUrl: './admin-molding-list.component.html',
     styleUrls: ['./admin-molding-list.component.scss'],
-  imports: [
-    MoldingsFiltersComponent,
-    RouterLink,
-    DateHeurePipe
-]
+  //   imports: [
+  //     MoldingsFiltersComponent,
+  //     RouterLink,
+  //     DateHeurePipe
+  // ]
 })
 export class AdminMoldingListComponent implements OnChanges, OnInit {
   public filteredMoldings: Molding[] = [];
