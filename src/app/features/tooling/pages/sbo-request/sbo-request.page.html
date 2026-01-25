@@ -61,7 +61,7 @@ Modifier la demande
     </div>
     <form>
       <p-card class="mb-4 p-4">
-        <p-tabs>
+        <p-tabs (valueChange)="onTabChange($event)">
           <p-tablist>
             <p-tab value="0">Outillage existant</p-tab>
             <p-tab value="1">Nouvel outillage</p-tab>
@@ -70,7 +70,7 @@ Modifier la demande
           <p-tabpanels class="pl-0">
             <p-tabpanel class="pl-0" value="0" header="Outillage existant">
               <div>
-                <app-tool-input></app-tool-input>
+                <app-tool-input (toolChange)="onToolSelectedFromInput($event)"></app-tool-input>
               </div>
             </p-tabpanel>
               <p-tabpanel class="pl-0" value="1" header="Nouvel outillage">

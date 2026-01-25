@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, delay, distinctUntilChanged, of, Subject, switchMap, tap } from 'rxjs';
+import { catchError, debounceTime, delay, distinctUntilChanged, of, Subject, switchMap, tap } from 'rxjs';
 import { ToolService } from 'src/app/tooling/services/tool.service';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
 
@@ -22,7 +22,7 @@ constructor() {
 
   private setupSearchEffect() {
     this.searchAction.pipe(
-      // debounceTime(300),
+      debounceTime(500),
       distinctUntilChanged(),
       tap(() => {
         this.loading.set(true);
@@ -65,7 +65,6 @@ constructor() {
    * @returns {*} 
    */
   findTool(input: string): void {
-    console.log(input);
     const value = input?.trim();
     if (!value) return this.clear();
     this.searchAction.next(value);

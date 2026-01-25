@@ -137,6 +137,7 @@ export const REQUEST_STATUSES: readonly RequestStatus[] = [
  * @interface ToolRequestState
  */
 export interface ToolRequestState<ToolRequesType extends ToolRequest | SpecCtrlRequest>{
+  isNewTool: boolean;
   isCreatingTool: boolean;
   isCreatingRequest: boolean;
   selectedTool: Tool | null;

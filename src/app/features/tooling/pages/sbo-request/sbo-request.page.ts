@@ -2,7 +2,7 @@ import { Component, computed, effect, inject,  OnInit, signal } from '@angular/c
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgxEditorModule } from 'ngx-editor';
 import { SpecSBOCreation, SpecSBOForm, SpecSBORequest, SpecSBOUpdate } from 'src/app/features/tooling/models/sbo.model';
-import { ToolCreation } from 'src/app/features/tooling/models/tool.model';
+import { Tool, ToolCreation } from 'src/app/features/tooling/models/tool.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from 'src/app/shared/services/programs/programs.service';
 import { SboComponent } from '../../../../tooling/components/sbo/sbo.component';
@@ -79,6 +79,7 @@ export class NewToolPage implements OnInit {
   // ============================================================================
   // PROPRIÉTÉS
   // ============================================================================
+
   private readonly routeParams = toSignal(this.activatedRoute.params);
   private readonly requestId = computed<string | null>(() => {
     const params = this.routeParams();
@@ -102,6 +103,23 @@ export class NewToolPage implements OnInit {
     // menuItems: MENU_ITEMS,
     contentId: 'tooling-content'
   };
+
+
+  // Signal pour gérer l'état de validation global du bouton
+  protected readonly isFormValid = computed(() => {
+    console.log("test isFormValid");
+    const isNewMode = this.store.isNewTool();
+    const sboValid = this.specSboForm.valid;
+    console.log(isNewMode, sboValid);
+    if (isNewMode) {
+      // En mode création : Formulaire SBO OK + Formulaire Outil OK
+      return sboValid && this.toolForm.valid;
+    } else {
+      // En mode existant : Formulaire SBO OK + un Outil est sélectionné dans le store
+      console.log(this.store.selectedTool());
+      return sboValid && this.store.selectedTool() !== null;
+    }
+  });
 
 
   /** Liste des programmes avion */
@@ -230,22 +248,46 @@ export class NewToolPage implements OnInit {
   // ============================================================================
   // ACTIONS
   // ============================================================================
+  /**
+     * Gère le changement d'onglet (Tab) pour définir le mode dans le store.
+     * @param value - L'index de l'onglet (0 = Existant, 1 = Nouveau)
+     */
+  protected onTabChange(value: string | number): void {
+    const isCreationMode = String(value) === '1';
+    this.store.setCreationMode(isCreationMode);
+  }
+
+  /**
+   * Méthode appelée lorsqu'un outil est sélectionné via le composant app-tool-input.
+   * Nous devons capturer cet événement pour mettre à jour le store principal.
+   */
+  protected onToolSelectedFromInput(tool: Tool | null): void {
+    this.store.setSelectedTool(tool);
+  }
 
   /**
    * Gère la soumission du formulaire : Création ou Mise à jour.
    */
   protected onSubmit(): void {
-    if (this.toolForm.invalid || this.specSboForm.invalid) {
-      this.toolForm.markAllAsTouched();
-      this.specSboForm.markAllAsTouched();
-      return;
-    }
-    console.log('onSubmit in page');
-    if (this.isEditMode()) {
-      this.onUpdateToolRequest();
+    console.log("submit");
+    if (!this.isFormValid()) return;
+    console.log("formIsValid");
+    // On prépare les données brutes
+    const toolRequest: SpecSBOCreation = {
+      ...this.specSboForm.getRawValue(),
+      type: 'SBO',
+    };
+    const isNewMode = this.store.isNewTool();
+    let toolData: Tool | ToolCreation
+    if (isNewMode) {
+      toolData = this.toolForm.getRawValue(); // Sera ignoré par le store si isNewTool est false
     } else {
-      this.onCreateToolRequest();
+      toolData = this.store.selectedTool();
+      console.log("not a new tool ", toolData);
     }
+
+    // On délègue toute la complexité au store
+    this.store.submitToolRequest(toolRequest, toolData);
   }
 
   /**
@@ -263,7 +305,7 @@ export class NewToolPage implements OnInit {
       ...this.specSboForm.getRawValue(),
       type: 'SBO',
     };
-    this.store.createToolRequest(toolRequest, toolData);
+    this.store.submitToolRequest(toolRequest, toolData);
   }
 
 

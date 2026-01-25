@@ -1,3 +1,7 @@
+label[required]::after {
+    content: ' *';
+    color: var(--color-red-700);
+}
 .two_column_form{
     display: grid;
     grid-template-columns: repeat(3,minmax(0,1fr));

@@ -1,5 +1,6 @@
-import { Component, input, } from '@angular/core';
+import { Component, input, output, } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel'
 import { InputTextModule } from 'primeng/inputtext';
 @Component({
@@ -11,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
         ReactiveFormsModule,
       FloatLabelModule,
       InputTextModule,
-
+      ButtonModule
     ]
 })
 /**
@@ -23,8 +24,8 @@ export class ToolFormComponent {
   // INPUTS
   // ***********************************************************
   /** Le FormGroup du formulaire d'outil passé par le parent. */
-  public toolForm = input.required<FormGroup>(); // 👈 Rendre le FormGroup obligatoire
-
+  public toolForm = input.required<FormGroup>();
+  public onValidateTool = output<null>();
   /** Indique si la page est en mode édition. */
-  isEditMode = input<boolean>(true); // 👈 Nouveau
+  isEditMode = input<boolean>(true);
 }

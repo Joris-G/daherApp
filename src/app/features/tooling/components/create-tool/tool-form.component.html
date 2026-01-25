@@ -1,18 +1,20 @@
-<form [formGroup]="toolForm()">
+<form [formGroup]="toolForm()" class="flex flex-row gap-4" (submit)="onValidateTool.emit(null)">
   <!-- Numéro d'OT -->
   <p-floatlabel variant="on">
     <input pInputText id="on_label" autocomplete="off" formControlName="sapToolNumber" placeholder="ex. OT095999" />
-    <label for="on_label">Numéro d'OT SAP<span color="danger"> *</span></label>
+    <label for="on_label" required>Numéro d'OT SAP</label>
   </p-floatlabel>
   <!-- Numéro identification -->
   <p-floatlabel variant="on">
     <input pInputText id="on_label" autocomplete="off" formControlName="identification"
       placeholder="ex. 19900Z01-T700P5522000123" />
-    <label for="on_label">Numéro d'identification<span color="danger"> *</span></label>
+    <label for="on_label" required>Numéro d'identification</label>
   </p-floatlabel>
   <!--Désignation -->
   <p-floatlabel variant="on">
-    <input pInputText id="on_label" autocomplete="off" formControlName="designation" placeholder="Désignaiton" />
-    <label for="on_label">Désignation<span color="danger"> *</span></label>
+    <input pInputText id="on_label" autocomplete="off" formControlName="designation"
+      placeholder="Désignation de l'outillage" />
+    <label for="on_label" required>Désignation</label>
   </p-floatlabel>
+<p-button type="submit">Valider</p-button>
   </form>

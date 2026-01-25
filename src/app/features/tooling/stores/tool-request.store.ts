@@ -49,7 +49,7 @@ export class ToolRequestStore {
   public readonly canEdit = computed(() => this.state().canEdit);
   public readonly canManage = computed(() => this.state().canManage);
   public readonly canUpdate = computed(() => this.state().canUpdate);
-
+  public readonly isNewTool = computed(() => this.state().isNewTool);
   // ============================================================================
   // INJECTION DE DÉPENDANCES
   // ============================================================================
@@ -60,6 +60,7 @@ export class ToolRequestStore {
   // ÉTAT INTERNE (Signals Privés Modifiables)
   // ============================================================================
   private readonly state = signal<ToolRequestState<ToolRequest>>({
+    isNewTool: false,
     isCreatingTool: false,
     isCreatingRequest: false,
     selectedTool: null,
@@ -83,7 +84,7 @@ export class ToolRequestStore {
    * Met à jour l'état `createdTool` en cas de succès.
    * @param {ToolCreation} toolData - Les données de création de l'outil.
    */
-  public createTool(toolData: ToolCreation): void {
+  private createTool(toolData: ToolCreation): void {
     this.updateState({ isCreatingTool: true, error: null });
 
     this.toolService.createTool(toolData).pipe(
@@ -100,11 +101,45 @@ export class ToolRequestStore {
   }
 
   /**
+     * Soumet la demande en fonction du mode (Création outil ou Sélection outil)
+     * @param requestData - Les données du formulaire de demande (SBO, Maintenance, etc.)
+     * @param newToolData - Les données du formulaire de création d'outil (optionnel)
+     */
+  public submitToolRequest(requestData: ToolRequestCreation, newToolData?: ToolCreation) {
+    // Cas 1 : Création d'un nouvel outil + Demande
+    if (this.isNewTool()) {
+      if (!newToolData) {
+        this.updateState({ error: 'Données de l\'outil manquantes pour la création.' });
+        return;
+      }
+      this.createToolAndRequest(requestData, newToolData);
+    }
+    // Cas 2 : Outil existant + Demande
+    else {
+      const selectedTool = this.selectedTool();
+      if (!selectedTool) {
+        this.updateState({ error: 'Aucun outil sélectionné.' });
+        return;
+      }
+      // On combine les données du formulaire avec l'outil sélectionné
+      const fullRequest: ToolRequestCreation = {
+        ...requestData,
+        tool: selectedTool,
+        type: 'SBO' // Ou dynamique selon le contexte
+      } as ToolRequestCreation;
+
+      this.createOnlyRequest(fullRequest);
+    }
+  }
+
+
+
+  /**
    * Soumet la demande d'outillage SBO.
    * @param {ToolRequestCreation} toolRequest - Les données de la demande d'outillage.
    * @param {ToolCreation} toolData - Les données de création de l'outil.
    */
-  public createToolRequest(toolRequest: ToolRequestCreation, toolData: ToolCreation): void {
+  private createToolAndRequest(toolRequest: ToolRequestCreation, toolData: ToolCreation): void {
     this.resetCreationState();
     this.updateState({ isCreatingRequest: true, error: null });
     this.toolService.createTool(toolData)
@@ -126,6 +161,18 @@ export class ToolRequestStore {
     });
   }
 
+  private createOnlyRequest(request: ToolRequestCreation): void {
+    console.log("create only request ", request);
+    this.updateState({ isCreatingRequest: true, error: null });
+    this.toolRequestService.createToolRequest(request)
+      .pipe(
+        delay(300),
+        finalize(() => this.updateState({ isCreatingRequest: false })))
+      .subscribe({
+        next: () => this.updateState({ isCreatingSuccess: true }),
+        error: () => this.updateState({ error: 'Erreur lors de la création de la demande.' })
+      });
+  }
   /**
    * Charge une demande existante par son ID pour l'édition.
    * @param {string} requestId - L'ID de la demande.
@@ -204,6 +251,22 @@ export class ToolRequestStore {
       isLoadingRequest:false,
       error: null
     });
+  }
+
+  /**
+     * Définit si l'utilisateur souhaite créer un nouvel outil ou en utiliser un existant.
+     * @param isNew - true pour création, false pour sélection existante
+     */
+  public setCreationMode(isNew: boolean): void {
+    console.log("isNew : ", isNew);
+    this.updateState({ isNewTool: isNew });
+  }
+  /**
+     * Met à jour l'outil sélectionné dans le store (depuis l'input de recherche)
+     * @param tool - L'outil sélectionné
+     */
+  public setSelectedTool(tool: Tool | null): void {
+    this.updateState({ selectedTool: tool });
   }
 
   // ============================================================================

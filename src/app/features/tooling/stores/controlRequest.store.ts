@@ -52,6 +52,7 @@ export class ControlRequestStore {
   // ÉTAT INTERNE (Signals Privés Modifiables)
   // ============================================================================
   private readonly state = signal<ToolRequestState<SpecCtrlRequest>>({
+    isNewTool: false,
     isCreatingRequest: false,
     isLoadingRequest: false,
     isUpdatingRequest: false,

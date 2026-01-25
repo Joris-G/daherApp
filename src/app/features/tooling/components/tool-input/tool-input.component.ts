@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal, untracked, } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, output, signal, untracked, } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
 import { Tool } from 'src/app/features/tooling/models/tool.model';
 import { ToolInputStore } from './tool-input.store';
@@ -37,30 +37,12 @@ const TOOL_INPUT_VALIDATOR: ValidatorFn = (
 export class ToolInputComponent implements ControlValueAccessor, Validator {
   readonly store = inject(ToolInputStore);
   readonly disabled = signal(false);
+  public readonly toolChange = output<Tool | null>();
 
   private onChange: (tool: Tool | null) => void = () => { };
   protected onTouched = () => { };
 
   protected searchToolList = this.store.searchToolList;
-
-  // readonly tool = this.store.tool;
-  // readonly loading = this.store.loading;
-  // readonly error = this.store.error;
-  // readonly success = this.store.success;
-
-  // readonly statusIcon = computed(() => {
-  //   if (this.loading()) return 'spinner';
-  //   if (this.error()) return 'close-outline';
-  //   if (this.success()) return 'checkmark';
-  //   return null;
-  // });
-
-  // readonly statusColor = computed(() => {
-  //   if (this.error()) return 'danger';
-  //   if (this.success()) return 'success';
-  //   return 'medium';
-  // });
-
 
   constructor() {
     effect(() => {
@@ -91,6 +73,8 @@ export class ToolInputComponent implements ControlValueAccessor, Validator {
 
   clear() {
     this.store.clear();
+    this.onChange(null);
+    this.toolChange.emit(null);
     this.onTouched();
   }
 
@@ -106,8 +90,13 @@ export class ToolInputComponent implements ControlValueAccessor, Validator {
   }
 
 
-  onSelectedTool(tool: Tool) {
+  protected onSelectedTool(tool: Tool) {
     this.store.setTool(tool);
+    this.onChange(tool);
+    this.toolChange.emit(tool);
+    this.onTouched();
   }
+
+
 }
 
