@@ -2,14 +2,14 @@ import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import packageJson from 'package.json';
 import { NoticeService } from 'src/app/shared/services/notice/notice.service';
 import { TitleService } from 'src/app/shared/services/title.service';
-import { LoginNoticeComponent } from './login-notice/login-notice.component';
-import { LoginFormComponent } from './login-form/login-form.component';
+import { LoginNoticeComponent } from '../../components/login-notice/login-notice.component';
+import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { User } from 'src/app/_interfaces/user';
 import { AuthStore } from 'src/app/shared/services/users/auth.store';
 import { Credentials } from 'src/app/shared/services/users/credentials.interface';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { AlertService } from 'src/app/shared/services/divers/alert.service';
-import { LoginRedirectionService } from './services/login-redirection.service';
+import { LoginRedirectionService } from '../../services/login-redirection.service';
 import { ButtonModule } from 'primeng/button'
 
 @Component({

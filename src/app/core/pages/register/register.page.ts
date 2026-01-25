@@ -1,7 +1,7 @@
 import { Component, effect, inject } from '@angular/core';
 import { TitleService } from 'src/app/shared/services/title.service';
-import { RegisterFormComponent } from './register-form/register-form.component';
-import { RegisterFormBuilder } from './register-forms-builder';
+import { RegisterFormComponent } from '../../components/register-form/register-form.component';
+import { RegisterFormBuilder } from '../../services/register-forms-builder';
 import { FormGroup } from '@angular/forms';
 import { UserCreate } from 'src/app/_interfaces/user';
 import { Router } from '@angular/router';

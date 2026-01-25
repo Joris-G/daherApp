@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NoticeService } from 'src/app/shared/services/notice/notice.service';
 import { TitleService } from 'src/app/shared/services/title.service';
-import { LoginNoticeComponent } from '../login/login-notice/login-notice.component';
+import { LoginNoticeComponent } from '../../components/login-notice/login-notice.component';
 import { SharedUserHeaderComponent } from '../../../shared/components/shared-user-header/shared-user-header.component';
-import { MenuHomeComponent } from './menu-home/menu-home.component';
+import { MenuHomeComponent } from '../../components/menu-home/menu-home.component';
 
 @Component({
   standalone: true,

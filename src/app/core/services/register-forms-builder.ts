@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { matchValues } from "./utils/password.validator";
+import { matchValues } from "../utils/password.validator";
 
 @Injectable({
     providedIn: 'root'

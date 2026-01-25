@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginRedirectionService } from 'src/app/core/pages/login/services/login-redirection.service';
+import { LoginRedirectionService } from 'src/app/core/services/login-redirection.service';
 import { User } from 'src/app/_interfaces/user';
 import { AlertService } from '../divers/alert.service';
 import { LoadingService } from '../divers/loading.service';
