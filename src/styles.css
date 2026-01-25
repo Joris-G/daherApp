@@ -37,6 +37,7 @@
   --chart-neutral: #A7A9AC;        /* Gris "Metal" */
   --chart-info: #00A3E0;           /* Bleu Horizon */
 
+--chart-primary-font-color: var (--chart-primary);
   /* UI                               --- */
   --p-content-background : var(--daher-bg-light);
   --p-primary-color:var(--daher-blue-deep);
@@ -48,22 +49,16 @@
   --chart-negative: #EB5757;
 }
 
-/* // html,
-// body {
-//     height: 100%;
-// } */
+html {
+  font-size: 11px;
+}
 
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    font-size: 14px;
     color: var(--chart-primary-font-color);
     background-color: var(--chart-background);
 }
 main {
   min-height: calc(100vh - 50px);
-}
-
-.header{
-    opacity: 0.5;
 }

@@ -50,13 +50,8 @@ Modifier la demande
 </ion-footer> -->
 
 
-<p-toolbar class="bg-gray-900 border-none px-4 py-3" [style]="{'border-radius': '0'}">
-  <div class="p-toolbar-group-start">
-    <h1 class="text-white m-0 text-xl font-medium">{{ page.pageTitle }}</h1>
-  </div>
-</p-toolbar>
-
 <main class="p-3 surface-ground min-h-screen">
+<p-card header="{{ page.pageTitle }}">
   <div class="two_column_form">
     <div class="column_form_header">
       <div class="px-4 pt-4">
@@ -105,6 +100,7 @@ Modifier la demande
       </p-card>
     </form>
     </div>
+    </p-card>
 </main>
 
 <footer class="sticky bottom-0 z-5">
