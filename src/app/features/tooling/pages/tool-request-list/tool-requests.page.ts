@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, effect, inject, Signal } from '@angular/core';
-import { ToolRequestFiltersComponent } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.component';
-import { ToolRequestTableComponent } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-table/tool-request-table.component';
-import { ToolRequestFilterService } from '../../../../tooling/components/tool-requests/tool-requests-components/tool-request-filters/tool-request-filters.service';
+import { ToolRequestTableComponent } from '../../components/tool-request-table/tool-request-table.component';
+import { ToolRequestFilterService } from '../../components/tool-request-filters/tool-request-filters.service';
 import { ToolRequestListStore } from '../../stores/tool-request-list.store';
 import { ToolRequest } from '../../models/tool-request.model';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
