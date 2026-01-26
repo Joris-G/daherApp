@@ -36,11 +36,13 @@ const toolRequestMenuItems: MenuItem[] = [
                         label: 'Liste des demandes',
                         icon: 'pi pi-inbox',
                         shortcut: 'Ctrl+O',
-                        badge: '2'
+                        badge: '2',
+                        routerLink: '/tooling/tool-request-list'
                     },
                     {
                         label: 'Liste des outillages',
                         icon: 'pi pi-wrench',
+                        routerLink: "/tooling/tool-list"
                         
                     },
                 ]

@@ -16,9 +16,9 @@ export const TOOLING_ROUTES: Routes = [
     children: [
       { path: 'new-tool', component: NewToolPage },
       { path: 'new-tool/:id', component: NewToolPage },
-      { path: 'requests', component: ToolRequestsPage },
+      { path: 'tool-request-list', component: ToolRequestsPage },
       {
-        path: 'list',
+        path: 'tool-list',
         canActivate: [RoleGuard],
         data: { expectedRole: ['ROLE_ADMIN', 'ROLE_RESP_OUTIL'] },
         component: ToolListPage
