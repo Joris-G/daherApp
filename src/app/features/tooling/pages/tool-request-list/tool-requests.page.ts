@@ -5,6 +5,7 @@ import { ToolRequestListStore } from '../../stores/tool-request-list.store';
 import { ToolRequest } from '../../models/tool-request.model';
 import { LoadingService } from 'src/app/shared/services/divers/loading.service';
 import { CardModule } from 'primeng/card';
+import { ToolRequestFiltersComponent } from '../../components/tool-request-filters/tool-request-filters.component';
 
 
 @Component({
@@ -13,8 +14,7 @@ import { CardModule } from 'primeng/card';
     styleUrls: ['./tool-requests.page.scss'],
   imports: [ToolRequestTableComponent,
     CardModule,
-    // ToolRequestFiltersComponent,
-    // ToolRequestTableComponent,
+    ToolRequestFiltersComponent,
     ]
 })
   /**

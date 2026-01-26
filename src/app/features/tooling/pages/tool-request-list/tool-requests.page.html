@@ -1,17 +1,15 @@
-<main class="p-3 surface-ground min-h-screen">
+<main class="flex p-3 surface-ground min-h-screen">
   <p-card header="Liste des demandes outillage">
     <div class="two_column_form">
       <div class="column_form_header">
         <div class="px-4 pt-4">
-          <h2 class="m-0 text-900 text-xl">Outillage</h2>
-          <small class="text-secondary">Créer ou choisir</small>
+          <app-tool-request-filters [toolRequestFilters]="toolRequestFilters()"
+            (onFilterChange)="filterChange($event)"></app-tool-request-filters>
         </div>
       </div>
-      <form>
-        <p-card class="mb-4 p-4">
+        <p-card class="mb-4 p-4 tool_request_table">
           <app-tool-request-table [toolRequestList]="filteredToolRequestList()"></app-tool-request-table>
         </p-card>
-      </form>
     </div>
   </p-card>
 </main>
