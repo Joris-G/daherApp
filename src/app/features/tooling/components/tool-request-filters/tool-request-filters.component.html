@@ -17,7 +17,7 @@
       <div class="flex flex-col gap-2">
         <label [for]="filterItem.name" class="font-bold text-700 ml-1">{{ filterItem.name }}</label>
         <p-multiSelect [id]="filterItem.name" [options]="filterItem.options"
-          [placeholder]="'Choisir ' + filterItem.name" [display]="'chip'" class="w-full"
+           [display]="'chip'" class="w-full"
           (onChange)="filterChange(filterItem, $event)">
         </p-multiSelect>
       </div>

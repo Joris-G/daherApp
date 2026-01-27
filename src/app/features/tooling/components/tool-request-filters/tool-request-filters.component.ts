@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { ToolRequestFilter } from 'src/app/tooling/tool-request-filters';
 // TODO transformer ce composant de filtres en formulaire pour profiter des reset patch ... signaux
-import { MultiSelectModule } from 'primeng/multiselect';
+import { MultiSelectChangeEvent, MultiSelectModule } from 'primeng/multiselect';
 import { ButtonModule } from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
@@ -49,12 +49,12 @@ export class ToolRequestFiltersComponent {
     * @param event
     * @memberof ToolRequestsPage
     */
-  filterChange(filter: ToolRequestFilter, event: any) {
-    const selectedValues = event.detail.value;
+  filterChange(filter: ToolRequestFilter, event: MultiSelectChangeEvent) {
+    const selectedValues = event.value;
 
     // Stocker la référence du select pour reset
-    if (event.target && !this.activeFilters.includes(event.target)) {
-      this.activeFilters.push(event.target);
+    if (selectedValues && !this.activeFilters.includes(selectedValues)) {
+      this.activeFilters.push(selectedValues);
     }
 
     // Émettre l'événement avec les données du filtre

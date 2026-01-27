@@ -65,6 +65,7 @@ constructor() {
    * @param event.selectedValues
    */
   filterChange(event: { columnProp: string; selectedValues: string[] }) {
+    console.log(event);
     if (event.columnProp === 'reset') {
       this.toolRequestFilterService.resetFilters();
     } else {

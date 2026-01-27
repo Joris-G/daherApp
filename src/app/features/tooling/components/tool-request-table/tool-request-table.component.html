@@ -1,11 +1,45 @@
 <div class="card">
-  <p-table [value]="toolRequestList()" class="p-datatable-sm p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }"
-    size="small" stripedRows>
+  <p-table #toolRequestTable [value]="toolRequestList()" class="p-datatable-sm p-datatable-striped"
+    [tableStyle]="{ 'min-width': '50rem' }" size="small" stripedRows>
+    <ng-template #caption>
+      <div class="flex">
+        <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(toolRequestTable)" />
+        <p-iconfield iconPosition="left" class="ml-auto">
+          <p-inputicon>
+            <i class="pi pi-search"></i>
+          </p-inputicon>
+          <input pInputText type="text" (input)="toolRequestTable.filterGlobal($event.target.value, 'contains')"
+            placeholder="Search keyword" />
+        </p-iconfield>
+      </div>
+    </ng-template>
     <ng-template #header>
       <tr class="surface-ground">
         <th style="width: 5%">ID</th>
-        <th style="width: 15%" pSortableColumn="statut">Statut <p-sortIcon field="statut"></p-sortIcon></th>
-        <th style="width: 40%">Outillage</th>
+        <th style="min-width: 15%" pSortableColumn="statut">
+          <div class="flex items-center justify-between">
+            Statut
+            <p-columnFilter type="text" field="status" display="menu" [showMatchModes]="false" [showOperator]="false"
+              [showAddButton]="false" showButtons="false" filterOn="input">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-select [options]="filterStatusOptions" (onChange)="filter($event.value)" placeholder="Sélectionner"
+                  [showClear]="true">
+        
+                  <ng-template let-option pTemplate="item">
+                    <span class="p-tag">{{ option }}</span>
+                  </ng-template>
+        
+                </p-select>
+              </ng-template></p-columnFilter>
+          </div>
+        </th>
+        <th style="width: 40%">
+          <div class="flex items-center justify-between">
+            Outillage
+            <p-columnFilter type="text" field="tool" display="menu" />
+            <p-sortIcon field="tool"></p-sortIcon>
+          </div>
+        </th>
         <th style="width: 20%" pSortableColumn="createdAt">Date de la demande <p-sortIcon
             field="createdAt"></p-sortIcon></th>
         <th style="width: 20%" pSortableColumn="demandeur">Demandeur<p-sortIcon field="demandeur"></p-sortIcon></th>
@@ -22,33 +56,33 @@
             {{ request.id }}
           </div>
         </td>
-        
+
         <td>
           <p-tag [value]="request.statut" [severity]="getSeverity(request.statut)"></p-tag>
         </td>
-        
+
         <td>
           @if(hasSapToolNumber(request.tool)) {
           <span class="font-medium">OT{{ request.tool.sapToolNumber }}</span> - {{ request.tool.designation }}
           }
         </td>
-        
+
         <td>
           {{ request.createdAt | date :"EE dd MMM yyyy":"local" }}
         </td>
-        
+
         <td>
           <div (click)="userClick()" class="text-primary hover:underline">
             {{ request.demandeur.nom }}
           </div>
         </td>
+      </tr>
+      </ng-template>
+      
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="5" class="text-center p-4">Aucune demande trouvée.</td>
         </tr>
-        </ng-template>
-        
-        <ng-template #emptymessage>
-          <tr>
-            <td colspan="5" class="text-center p-4">Aucune demande trouvée.</td>
-          </tr>
-        </ng-template>
-        </p-table>
-        </div>
+      </ng-template>
+      </p-table>
+      </div>

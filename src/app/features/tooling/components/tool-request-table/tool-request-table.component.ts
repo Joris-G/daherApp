@@ -1,4 +1,4 @@
-import { Component, inject, input, InputSignal, OnInit } from '@angular/core';
+import { Component, inject, input, InputSignal, OnInit, signal } from '@angular/core';
 // import { trigger, state, style } from '@angular/animations';
 import { RoleGuard } from 'src/app/shared/services/users/role.guard';
 import { DatePipe } from '@angular/common';
@@ -7,9 +7,13 @@ import { DatePipe } from '@angular/common';
 import { Tool, OutillNoRefSAP } from 'src/app/features/tooling/models/tool.model';
 import { RequestType, ToolRequest } from 'src/app/features/tooling/models/tool-request.model';
 import { Router } from '@angular/router';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-
+import { ButtonModule } from 'primeng/button';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   standalone: true,
@@ -31,6 +35,11 @@ import { TagModule } from 'primeng/tag';
     // HeaderRowDirective,
     // DataRowDirective,
     DatePipe,
+    ButtonModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    SelectModule
     ]
 })
 export class ToolRequestTableComponent implements OnInit {
@@ -46,6 +55,12 @@ export class ToolRequestTableComponent implements OnInit {
 
   // public newToolRequestsList$: Observable<ToolRequest[]>;
   public displayedRequestColumns: string[] = ['statut', 'id', 'tool', 'createdAt', 'userCreat', 'needDate', 'buttons'];
+  protected filterStatusOptions: string[] = ['Nouvelle', 'Finalisée'];
+  // TABLE PROPERTIES
+  searchValue = signal('');
+
+
+
   public isAdmin = false;
 
   constructor(
@@ -117,5 +132,13 @@ export class ToolRequestTableComponent implements OnInit {
       case 'bloqué': return 'danger';
       default: return 'secondary';
     }
+  }
+
+  /**
+ * Retire les filtres du tableau
+ */
+  clear(table: Table<ToolRequest>) {
+    table.clear();
+    this.searchValue.set('');
   }
 }
