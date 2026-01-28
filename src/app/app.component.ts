@@ -6,7 +6,10 @@ import { RouterOutlet } from '@angular/router';
     selector: 'app-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
-  imports: [RouterOutlet]
+  imports: [RouterOutlet],
+  host: {
+    'class': 'flex flex-col h-screen w-full overflow-hidden'
+  }
 })
 export class AppComponent {
 

@@ -12,6 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
     selector: 'app-login-form',
     templateUrl: './login-form.component.html',
     styleUrls: ['./login-form.component.scss'],
+  host: { class: 'flex-1 flex flex-col justify-center items-center w-full bg-gray-50 dark:bg-gray-900' },
   imports: [
     FloatLabelModule,
     InputTextModule,

@@ -13,11 +13,11 @@
     </p-toolbar>
     </header>
     
-    <main class="flex justify-center items-center">
-  <app-login-form (onSubmit)="connection($event)" />
-</main>
 
-<footer class="version-footer">
+  <app-login-form (onSubmit)="connection($event)" />
+
+
+<footer class="version-footer py-4 text-center text-sm text-gray-500">
   <div class="version-text">
     Version : {{ version() }}
   </div>

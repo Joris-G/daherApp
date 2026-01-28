@@ -12,6 +12,7 @@ import { ToolRequestFiltersComponent } from '../../components/tool-request-filte
   standalone: true,
     templateUrl: './tool-requests.page.html',
     styleUrls: ['./tool-requests.page.scss'],
+  host: { class: 'flex-1 flex flex-row h-full bg-gray-50 dark:bg-gray-900' },
   imports: [ToolRequestTableComponent,
     CardModule,
     ToolRequestFiltersComponent,

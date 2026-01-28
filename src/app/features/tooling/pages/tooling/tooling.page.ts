@@ -9,6 +9,9 @@ import { RouterOutlet } from '@angular/router';
     selector: 'app-tooling',
     templateUrl: './tooling.page.html',
     styleUrls: ['./tooling.page.scss'],
+  host: {
+    'class': 'flex flex-col h-full'
+  },
     imports: [
       RouterOutlet,
         SharedUserHeaderComponent,

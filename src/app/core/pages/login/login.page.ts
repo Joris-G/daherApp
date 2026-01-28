@@ -18,6 +18,9 @@ import { ToolbarModule } from 'primeng/toolbar';
     selector: 'app-login',
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
+  host: {
+    'class': 'flex flex-col h-full'
+  },
   imports: [
     LoginFormComponent, ButtonModule,
     ToolbarModule,

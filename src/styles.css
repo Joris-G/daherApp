@@ -49,16 +49,21 @@
   --chart-negative: #EB5757;
 }
 
-html {
+html,
+body {
+  @apply h-full m-0 p-0;
+}
+
+html,
+body {
   font-size: 11px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    color: var(--chart-primary-font-color);
-    background-color: var(--chart-background);
+    /* color: var(--chart-primary-font-color);
+                background-color: var(--chart-background); */
 }
 main {
-  min-height: calc(100vh - 50px);
+  /* min-height: calc(100vh - 50px); */
 }

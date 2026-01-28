@@ -1,0 +1,6 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Force la hauteur de l'écran */
+  overflow: hidden; /* Évite le scroll sur le body, on scrollera dans le contenu si besoin */
+}

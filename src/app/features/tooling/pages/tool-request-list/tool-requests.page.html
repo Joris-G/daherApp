@@ -1,18 +1,17 @@
-<main class="flex p-3 surface-ground min-h-screen">
-  <p-card header="Liste des demandes outillage">
-    <div class="two_column_form">
-      <div class="column_form_header">
-        <div class="px-4 pt-4">
+<p-card class="h-full" header="Liste des demandes outillage">
+  <!-- <div class="two_column_form">
+      <div class="column_form_header"> -->
+  <!-- <div class="px-4 pt-4">
           <app-tool-request-filters [toolRequestFilters]="toolRequestFilters()"
             (onFilterChange)="filterChange($event)"></app-tool-request-filters>
-        </div>
-      </div>
-        <p-card class="mb-4 p-4 tool_request_table">
+        </div> -->
+        <!-- </div> -->
+        <!-- <p-card class="mb-4 p-4 tool_request_table"> -->
           <app-tool-request-table [toolRequestList]="filteredToolRequestList()"></app-tool-request-table>
-        </p-card>
-    </div>
+        <!-- </p-card> -->
+        <!-- </div> -->
   </p-card>
-</main>
+
 <!-- <ng-container> -->
     
     <!-- <ion-grid class="ion-no-padding">
