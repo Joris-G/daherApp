@@ -1,6 +1,7 @@
 <div class="card">
   <p-table #toolRequestTable [value]="toolRequestList()" class="p-datatable-sm p-datatable-striped"
-    [tableStyle]="{ 'min-width': '50rem' }" size="small" stripedRows>
+    [tableStyle]="{ 'min-width': '50rem' }" size="small" stripedRows
+    [globalFilterFields]="['tool.designation', 'tool.sapToolNumber', 'demandeur.nom', 'createdAt', 'statut']">
     <ng-template #caption>
       <div class="flex">
         <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(toolRequestTable)" />
@@ -8,8 +9,8 @@
           <p-inputicon>
             <i class="pi pi-search"></i>
           </p-inputicon>
-          <input pInputText type="text" (input)="toolRequestTable.filterGlobal($event.target.value, 'contains')"
-            placeholder="Search keyword" />
+          <input pInputText type="text" (input)="toolRequestTable.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Mot à chercher" />
         </p-iconfield>
       </div>
     </ng-template>
@@ -19,24 +20,24 @@
         <th style="min-width: 15%" pSortableColumn="statut">
           <div class="flex items-center justify-between">
             Statut
-            <p-columnFilter type="text" field="status" display="menu" [showMatchModes]="false" [showOperator]="false"
+            <p-columnFilter type="text" field="statut" display="menu" [showMatchModes]="false" [showOperator]="false"
               [showAddButton]="false" showButtons="false" filterOn="input">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-select [options]="filterStatusOptions" (onChange)="filter($event.value)" placeholder="Sélectionner"
                   [showClear]="true">
-        
                   <ng-template let-option pTemplate="item">
                     <span class="p-tag">{{ option }}</span>
                   </ng-template>
-        
                 </p-select>
-              </ng-template></p-columnFilter>
+              </ng-template>
+              </p-columnFilter>
           </div>
         </th>
-        <th style="width: 40%">
+        <th style="width: 40%" pSortableColumn="tool.sapToolNumber">
           <div class="flex items-center justify-between">
             Outillage
-            <p-columnFilter type="text" field="tool" display="menu" />
+            <p-columnFilter filterOn="input" type="text" field="tool.designation" [showAddButton]="false" display="menu"
+              showApplyButton="false" />
             <p-sortIcon field="tool"></p-sortIcon>
           </div>
         </th>

@@ -14,6 +14,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
@@ -39,7 +40,8 @@ import { SelectModule } from 'primeng/select';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    SelectModule
+    SelectModule,
+    ReactiveFormsModule,
     ]
 })
 export class ToolRequestTableComponent implements OnInit {

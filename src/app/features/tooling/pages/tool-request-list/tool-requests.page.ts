@@ -15,7 +15,7 @@ import { ToolRequestFiltersComponent } from '../../components/tool-request-filte
   host: { class: 'flex-1 flex flex-row h-full bg-gray-50 dark:bg-gray-900' },
   imports: [ToolRequestTableComponent,
     CardModule,
-    ToolRequestFiltersComponent,
+    // ToolRequestFiltersComponent,
     ]
 })
   /**
